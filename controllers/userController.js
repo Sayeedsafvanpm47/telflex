@@ -1,5 +1,6 @@
 
 const userModel = require('../models/userModel')
+
 const bcrypt = require('bcrypt')
 const { isEmailValid, isPasswordValid, isNamesValid, isPhoneValid, isCpassValid, isEmailExists } = require('../utils/validators/signUpValidator')
 
@@ -42,31 +43,37 @@ module.exports = {
           postSignUp: async (req, res) => {
                     try {
                               const { email, password, firstname, lastname, phonenumber, chkpassword } = req.body;
+                             
                               const emailValid = isEmailValid(email);
                               const passwordValid = isPasswordValid(password);
                               const namesValid = isNamesValid(firstname, lastname)
                               const phoneValid = isPhoneValid(phonenumber)
                               const cpassValid = isCpassValid(password, chkpassword)
-                              const emailCheck = isEmailExists(email)
+                            
+                           
+
+                              const emailExists = await userModel.findOne({ email });
+      
+                              let errors = [];
+                        
+                              if (emailExists) {
+                                errors.push('Email already exists');
+                              }
 
 
 
-
-
-                              if (emailValid && passwordValid && namesValid && phoneValid && cpassValid) {
+                              if (emailValid && passwordValid && namesValid && phoneValid && cpassValid && !emailExists) {
                                         const hashedPassword = await bcrypt.hash(password, 10)
                                         const user = new userModel({ email, password: hashedPassword, firstname, lastname, phonenumber, chkpassword });
                                         await user.save();
                                         res.redirect('/user/');
                               } else {
-                                        const findUser = await userModel.findOne({ email })
-                                        let errors = [];
-                                        if(emailCheck){
-                                                  errors.push('Email exists');
-                                        }
+                                       
+                                       
                                        
 
                                         if (!emailValid) {
+                                                  
                                                   errors.push('Invalid email. Please enter a valid email address.');
                                         }
                                         if (!passwordValid) {

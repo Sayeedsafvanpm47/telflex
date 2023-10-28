@@ -6,7 +6,7 @@ let userSchema = new mongoose.Schema({
           email:{
                     type : String,
                     required : true,
-                    unique : true
+                    
           },
           password:{
                     type : String,
@@ -20,7 +20,8 @@ let userSchema = new mongoose.Schema({
           phonenumber : {
                     type : Number,
                     required : true
-          }
+          },
+          verified : Boolean
 })
 
 module.exports = mongoose.model(USER,userSchema)
