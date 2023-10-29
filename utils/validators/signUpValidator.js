@@ -26,4 +26,4 @@ const isCpassValid = (password, chkpassword) => {
           return existingUser !== null; 
         };
         
-module.exports = {isEmailValid,isPasswordValid,isNamesValid,isPhoneValid,isCpassValid,isEmailExists}
+module.exports = {isEmailValid,isPasswordValid,isNamesValid,isPhoneValid,isCpassValid}

@@ -11,4 +11,5 @@ router.get('/home',controller.getHome)
 router.get('/signup',controller.getSignUp)
 router.post('/signup',controller.postSignUp)
 
+router.post('/verifyOtp',controller.verifyOTP)
 module.exports = router

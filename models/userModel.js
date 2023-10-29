@@ -20,7 +20,10 @@ let userSchema = new mongoose.Schema({
           phonenumber : {
                     type : Number,
                     required : true
-          }
+          },
+          otp :String,
+          otpExpires : Date,
+          otpAttempts:Number
 })
 
 module.exports = mongoose.model(USER,userSchema)
