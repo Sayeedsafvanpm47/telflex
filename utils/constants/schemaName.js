@@ -1,6 +1,5 @@
 const schemaName = {
-          USER : 'user',
-         
+          USER : 'user'
 }
 
 

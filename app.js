@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const userRoute = require('./routes/user/user')
+
 const dbConnect = require('./config/database')
 
 
