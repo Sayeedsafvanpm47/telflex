@@ -9,7 +9,13 @@
   <form method="POST" action="/user/verifyOtp">
     <input type="text" name="enteredOTP" placeholder="Enter OTP" required>
     <input type="hidden" name="email" value="<%= email %>">
+  
     <button type="submit">Verify OTP</button>
   </form>
+  <form method="POST" action="/user/resendOtp">
+    <input type="hidden" name="email" value="<%= email %>">
+    <button type="submit">Resend OTP</button>
+  </form>
+  
 </body>
 </html>

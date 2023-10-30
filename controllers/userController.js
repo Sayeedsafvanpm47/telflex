@@ -1,6 +1,6 @@
 const userModel = require('../models/userModel')
-const nodemailer = require('nodemailer')
 const sendOTPByEmail = require('../utils/sendMail')
+const session = require('express-session')
 const bcrypt = require('bcrypt')
 const {
           isEmailValid,
@@ -10,6 +10,7 @@ const {
           isCpassValid
 } = require('../utils/validators/signUpValidator')
 const otpGenerator = require('../utils/otpGenerator')
+const sendOtp = require('../utils/generateAndSendOtp')
 
 module.exports = {
           getLogin: async (req, res) => {
@@ -20,21 +21,49 @@ module.exports = {
                     }
           },
           postLogin: async (req, res) => {
-                    try {
-                              if (req.body.email === "sayeed" && req.body.password === "syd") {
-                                        console.log('success')
-                                        await res.redirect('/home')
-                              } else {
-                                        res.redirect('/')
-                                        console.log('error in else');
-                              }
-                    } catch (err) {
-                              console.log('error in catch');
-                              res.redirect('/')
-                    }
-          },
+           
+            try {
+                const { email, password } = req.body;
+                const emailValid = isEmailValid(email);
+                const passwordValid = isPasswordValid(password);
+                const user = await userModel.findOne({ email });
+                let errors = [];
+
+                if (!emailValid) {
+                    errors.push('Invalid email');
+                }
+                if (!passwordValid) {
+                    errors.push('Invalid password');
+                }
+                if (!user) {
+                  console.log('User not found');
+                  errors.push('Account doesnt exist')
+                }
+                if (errors.length > 0) {
+                   
+                    res.render('user/login', { errors });
+                }
+                 else {
+                    const passwordMatch = await bcrypt.compare(password, user.password);
+                    if (passwordMatch) {
+                      
+                        console.log('Login successful');
+                        res.redirect('/user/getHome');
+                    } else {
+                        
+                        console.log('Invalid password');
+                        res.redirect('/user/');
+                    
+                  }
+                }
+            } catch (err) {
+                console.error('Error in catch:', err);
+                res.redirect('/');
+            }
+        }
+        ,
           getHome: async (req, res) => {
-                    await res.send('hello home')
+                    await res.render('user/index.ejs')
           },
           getSignUp: async (req, res) => {
                     try {
@@ -58,86 +87,117 @@ module.exports = {
                               const cpassValid = isCpassValid(password, chkpassword)
                               const emailCheck = await userModel.findOne({email})
                               let errors = [];
-                           
-                                                  if (emailCheck) {
-                                                            errors.push('Email exists');
-                                                  }
-                                                  if (! emailValid) {
-                                                            errors.push('Invalid email. Please enter a valid email address.');
-                                                  }
-                                                  if (! passwordValid) {
-                                                            errors.push('Invalid password. Please enter password with atleast 8 charecters.');
-                                                  }
-                                                  if (! namesValid) {
-                                                            errors.push('Fill in your details correctly')
-                                                  }
-                                                  if (! phoneValid) {
-                                                            errors.push('Enter your contact number correctly')
-                                                  }
-                                                  if (! cpassValid) {
-                                                            errors.push('Password doesnt match')
-                                                  }
-                                                     if(errors.length>0){                                     
-                                                  res.render('user/signup', {errors});
-                                                     }
-                                      
-                            
 
-                                        if (emailValid && passwordValid && namesValid && phoneValid && cpassValid) {
-
-                                                  const hashedPassword = await bcrypt.hash(password, 10)
-                                                  const user = new userModel({
-                                                            email,
-                                                            password: hashedPassword,
-                                                            firstname,
-                                                            lastname,
-                                                            phonenumber,
-                                                            chkpassword
-                                                  });
-                                                  const otp = await otpGenerator.generateOTP()
-
-                                                  console.log(otp)
-
-                                                  user.otp = otp
-                                                  user.otpExpires = new Date(Date.now() + 5 * 60 * 1000)
-                                                  user.otpAttempts = 0
-                                                  await user.save();
-                                                  try {
-                                                            const emailResponse = await sendOTPByEmail(email, user.otp);
-                                                            console.log('Email sent successfully:', emailResponse);
-                                                          } catch (error) {
-                                                            console.error('Error sending email:', error);
-                                                          }
-                                                  res.render('user/verify-otp', { email: email });
-                                        }
+                              if (emailCheck) {
+                                        errors.push('Email exists');
                               }
-                     catch (err) {
+                              if (! emailValid) {
+                                        errors.push('Invalid email. Please enter a valid email address.');
+                              }
+                              if (! passwordValid) {
+                                        errors.push('Invalid password. Please enter password with atleast 8 charecters.');
+                              }
+                              if (! namesValid) {
+                                        errors.push('Fill in your details correctly')
+                              }
+                              if (! phoneValid) {
+                                        errors.push('Enter your contact number correctly')
+                              }
+                              if (! cpassValid) {
+                                        errors.push('Password doesnt match')
+                              }
+                              if (errors.length > 0) {
+                                        res.render('user/signup', {errors});
+                              }
+
+
+                              if (emailValid && passwordValid && namesValid && phoneValid && cpassValid) {
+
+                                        const hashedPassword = await bcrypt.hash(password, 10)
+                                        const user = new userModel({
+                                                  email,
+                                                  password: hashedPassword,
+                                                  firstname,
+                                                  lastname,
+                                                  phonenumber,
+                                                  chkpassword
+                                        });
+                                        const otp = await otpGenerator.generateOTP()
+
+                                        console.log(otp)
+
+                                        user.otp = otp
+                                        user.otpExpires = new Date(Date.now() + 5 * 60 * 1000)
+                                        user.otpAttempts = 0
+                                        await user.save();
+                                        try {
+                                                  const emailResponse = await sendOTPByEmail(email, user.otp);
+                                                  console.log('Email sent successfully:', emailResponse);
+                                        } catch (error) {
+                                                  console.error('Error sending email:', error);
+                                        }
+                                        req.session.isLogin = true
+                                        res.render('user/verify-otp', {email: email});
+                              }
+                    } catch (err) {
                               console.error('Error:', err);
                               res.send('error')
                     }
           },
-        
-          
-          verifyOTP : async (req,res) => {
-                    const { email, enteredOTP } = req.body;
+
+
+          verifyOTP: async (req, res) => {
+                    const {email, enteredOTP} = req.body;
                     const user = await userModel.findOne({email})
-                    if (!user || !user.otp || user.otpExpires <= new Date() || user.otpAttempts >= 3) {
-                              
-                               res.send('OTP verification failed');
-                          }
-                    if(user.otp === enteredOTP){
+                    if (! user || ! user.otp || user.otpExpires<= new Date() || user.otpAttempts>= 3) {
+
+                              res.send('OTP verification failed');
+                    }
+                    if (user.otp === enteredOTP) {
                               user.otp = null
                               user.otpExpires = null
                               user.otpAttempts = 0
                               await user.save()
-                              res.redirect('/user/')
-                    }
-                    else
-                    {
+                              if(req.session.isLogin){
+                             await res.redirect('/user/getHome')
+                              }if(req.session.isForgot){
+                               await res.render('user/createPass',{email :email})
+                              }
+                    } else {
                               user.otpAttempts += 1
                               await user.save()
                               res.send('Invalid OTP');
                     }
+          },
+
+          resendOtp: async (req, res) => {
+                    const {email} = req.body;
+                   await sendOtp(email)
+                    res.render('user/verify-otp', {email: email});
+
+          },
+          getForgotPassword: async (req,res)=>{
+            res.render('user/forgotPassword')
+          }
+          ,
+          forgotPassword : async (req,res)=>{
+            const {email} = req.body
+         await sendOtp(email)
+         req.session.isForgot = true
+    res.render('user/verify-otp', {email: email});
+          },
+         
+          updatePass: async (req,res)=>{
+            const {password,chkpassword,email} = req.body
+            const user = await userModel.findOne({email})
+            if(password === chkpassword){
+              let hashedPass = await bcrypt.hash(password, 10);
+
+            user.password = hashedPass
+            await user.save()
+            }
+            res.redirect('/user/getsignup')
+      
           }
 
 }

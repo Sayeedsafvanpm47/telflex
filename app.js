@@ -2,8 +2,9 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const userRoute = require('./routes/user/user')
-
 const dbConnect = require('./config/database')
+const session = require('express-session');
+
 
 
 // connect to database
@@ -11,7 +12,13 @@ dbConnect()
 
 app.use(express.urlencoded({ extended: true }));
 
-
+app.use(
+          session({
+            secret: 'your-secret-key',
+            resave: false,
+            saveUninitialized: true,
+          })
+        );
 app.use('/user',userRoute)
 
 

@@ -5,10 +5,18 @@
 
     <h1><span class="fa fa-sign-in"></span> Login</h1>
 
-
+    <% if (typeof(errors) !== 'undefined' && errors.length > 0) { %>
+        <div id="error-message" class="alert alert-danger">
+            <span>
+                <% errors.forEach(error => { %>
+                    <p><%= error %></p>
+                <% }); %>
+            </span>
+        </div>
+    <% } %>
 
     <!-- LOGIN FORM -->
-    <form action="/user/home" method="post">
+    <form action="/user/postLogin" method="post">
         <div class="form-group">
             <label>Email</label>
             <input type="text" class="form-control" name="email">
@@ -24,8 +32,9 @@
     <hr>
 
     <p>Don't have an account? <a href="/">Sign up</a></p>
+    <a href="/user/getForgotPassword">forgot password?</a>
   
-
+    <script src="/scripts/hideerror.js"></script>
 
 </div>
 </div>
