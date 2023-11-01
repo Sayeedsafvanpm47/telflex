@@ -1,0 +1,53 @@
+<%- include('../partials/header') %>
+<body>
+  <div class="container">
+    <div class="col-sm-6 col-sm-offset-3">
+      <h1>
+        <span class="fas fa-sign-in-alt"></span> Create Category
+      </h1>
+      <form action="/admin/submitCategory" method="post">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" class="form-control" name="categoryname">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea class="form-control" name="description"></textarea>
+        </div>
+        <button type="submit" class="btn btn-warning btn-lg">Create Category</button>
+      </form>
+      <hr>
+      <table>
+        <thead>
+          <tr>
+            <td>Category Name</td>
+            <td>Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% category.forEach((item) => { %>
+            <tr>
+              <td><%= item.categoryName %></td>
+              <td><%= item.description %></td>
+              <td>
+                <a href="/admin/viewEditCategory?categoryId=<%= item._id %>">
+                  <i class="fas fa-edit text-warning"></i>
+                </a>
+                
+                  
+                  
+              </td>
+              <td>
+                <a href="/admin/deleteCategory?categoryId=<%= item._id%>">
+                  <i class="fas fa-trash text-danger"></i>
+                </a>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <script src="/scripts/hideerror.js"></script>
+    </div>
+  </div>
+</body>
+<%- include('../partials/footer') %>

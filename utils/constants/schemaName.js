@@ -1,8 +1,5 @@
 const schemaName = {
-          USER : 'user'
-}
-
-
-
+	USER: "user"
+};
 
 module.exports = schemaName;

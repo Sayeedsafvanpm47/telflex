@@ -27,13 +27,18 @@ a {
 	@include anchor;
 }
 
-
-h1, .h1,
-h2, .h2,
-h3, .h3,
-h4, .h4,
-h5, .h5,
-h6, .h6 {
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
 	@include font-fam-pop-b;
 	margin: 0 0 $space 0;
 	color: $text-color;
@@ -43,7 +48,8 @@ h6, .h6 {
 	}
 }
 
-h1, .h1 {
+h1,
+.h1 {
 	font-size: 4rem;
 	font-weight: 700;
 	line-height: 4rem;
@@ -58,7 +64,8 @@ h1, .h1 {
 	}
 }
 
-h2, .h2 {
+h2,
+.h2 {
 	font-size: 3rem;
 	font-weight: 700;
 	line-height: 3.25rem;
@@ -73,7 +80,8 @@ h2, .h2 {
 	}
 }
 
-h3, .h3 {
+h3,
+.h3 {
 	font-size: 2rem;
 	font-weight: 700;
 	line-height: 2.25rem;
@@ -84,7 +92,8 @@ h3, .h3 {
 	}
 }
 
-h4, .h4 {
+h4,
+.h4 {
 	font-size: 1.5rem;
 	font-weight: 700;
 	line-height: 1.75rem;
@@ -95,13 +104,15 @@ h4, .h4 {
 	}
 }
 
-h5, .h5 {
+h5,
+.h5 {
 	font-size: 1.25rem;
 	font-weight: 700;
 	line-height: 1.5rem;
 }
 
-h6, .h6 {
+h6,
+.h6 {
 	font-size: 1rem;
 	font-weight: 700;
 	line-height: 1.5rem;
