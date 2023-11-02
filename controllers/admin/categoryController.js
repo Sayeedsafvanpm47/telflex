@@ -3,7 +3,7 @@ const categoryModel = require("../../models/categoryModel");
 module.exports = {
 	createCategory: async (req, res) => {
 		const category = await categoryModel.find({});
-		 res.render("admin/createCategory", { category });
+		 res.render("admin/admin/category", { category });
 	},
 	submitCategory: async (req, res) => {
 		const { categoryname, description } = req.body;
@@ -45,10 +45,11 @@ editCategory: async (req, res) => {
 		const categoryId = req.query.categoryId; 
 		try {
 		  const category = await categoryModel.findById(categoryId);
+		  const show = await categoryModel.find({})
 		  if (!category) {
 		    res.send('Category not found');
 		  } else {
-		    res.render('admin/editCategory', { category });
+		    res.render('admin/admin/editCategory', { category,show });
 		  }
 		} catch (err) {
 		  console.log(err);
@@ -70,7 +71,21 @@ editCategory: async (req, res) => {
 		  res.send('Error occurred');
 		}
 	        }
-	        
+	        , unlistToggle : async (req,res)=>{
+		const categoryId = req.query.categoryId
+		const category = await categoryModel.findOne({_id:categoryId})
+		category.published = 'false'
+		await category.save()
+		
+		res.redirect('/admin/createCategory')
+	        },
+	        listToggle : async (req,res)=>{
+		const categoryId = req.query.categoryId
+		const category = await categoryModel.findOne({_id:categoryId})
+		category.published = 'true'
+		await category.save()
+		res.redirect('/admin/createCategory')
+	        }
 	    
 	
 	    

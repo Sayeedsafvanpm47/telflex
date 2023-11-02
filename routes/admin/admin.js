@@ -26,5 +26,48 @@ router.post("/submitCategory", controllerCategory.submitCategory);
 router.get('/viewEditCategory',controllerCategory.viewEditCategory)
 router.post('/editCategory',controllerCategory.editCategory)
 router.get('/deleteCategory',controllerCategory.deleteCategory)
-// router.get('/toggleList',controllerCategory.listToggle)
+router.get('/toggleList',controllerCategory.listToggle)
+router.get('/toggleunList',controllerCategory.unlistToggle)
+router.get('/addproducts',(req,res)=>{
+          res.render('admin/admin/add_product_1')
+})
+router.get('/error',(req,res)=>{
+          res.render('admin/admin/error')
+})
+router.get('/home',(req,res)=>{
+          res.render('admin/admin/home')
+})
+router.get('/login',(req,res)=>{
+          res.render('admin/admin/login')
+})
+router.get('/blank',(req,res)=>{
+          res.render('admin/admin/blank')
+})
+
+router.get('/orders',(req,res)=>{
+          res.render('admin/admin/pageorders')
+})
+router.get('/review',(req,res)=>{
+          res.render('admin/admin/reviews')
+})
+router.get('/seller',(req,res)=>{
+          res.render('admin/admin/sellercard')
+})
+router.get('/settings',(req,res)=>{
+          res.render('admin/admin/settings')
+})
+
+router.get('/transaction',(req,res)=>{
+          res.render('admin/admin/transaction')
+})
+
+router.get('/products',(req,res)=>{
+          res.render('admin/admin/products')
+})
+router.get('/category',(req,res)=>{
+          res.render('admin/admin/category')
+})
+
+
+
 module.exports = router;
