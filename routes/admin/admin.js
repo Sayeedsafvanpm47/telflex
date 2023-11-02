@@ -1,9 +1,17 @@
 const express = require("express");
 const router = express.Router();
 
+
+
+router.use(express.urlencoded({extended: true}));
+const multer = require('multer')
+const upload = multer({dest:'uploads/'})
+
 const controller = require("../../controllers/admin/adminController");
 const controllerUserManage = require("../../controllers/admin/adminUserManage");
 const controllerCategory = require("../../controllers/admin/categoryController");
+const controllerProducts = require('../../controllers/admin/productController');
+const productModel = require("../../models/productModel");
 
 router.get("/", controller.getAdminLogin);
 router.post("/postLogin", controller.postAdminLogin);
@@ -21,6 +29,7 @@ router.get("/searchView", controllerUserManage.searchView);
 router.post("/sortUser", controllerUserManage.sortUser);
 router.get("/sortUserView", controllerUserManage.sortUserView);
 
+
 router.get("/createCategory", controllerCategory.createCategory);
 router.post("/submitCategory", controllerCategory.submitCategory);
 router.get('/viewEditCategory',controllerCategory.viewEditCategory)
@@ -28,9 +37,11 @@ router.post('/editCategory',controllerCategory.editCategory)
 router.get('/deleteCategory',controllerCategory.deleteCategory)
 router.get('/toggleList',controllerCategory.listToggle)
 router.get('/toggleunList',controllerCategory.unlistToggle)
-router.get('/addproducts',(req,res)=>{
-          res.render('admin/admin/add_product_1')
-})
+router.get('/addproducts',controllerProducts.addProductsView)
+router.post('/saveproducts',upload.array('images'),controllerProducts.addProducts)
+
+
+
 router.get('/error',(req,res)=>{
           res.render('admin/admin/error')
 })
@@ -67,6 +78,11 @@ router.get('/products',(req,res)=>{
 router.get('/category',(req,res)=>{
           res.render('admin/admin/category')
 })
+router.get('/viewSaved',async (req,res)=>{
+          const products = await productModel.findOne({})
+          res.render('admin/productsShow',{products})
+})
+
 
 
 

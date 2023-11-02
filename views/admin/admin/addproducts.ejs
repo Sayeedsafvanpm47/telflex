@@ -1,0 +1,133 @@
+<%- include('partials/head') %>
+
+<body>
+    <div class="screen-overlay"></div>
+    <%- include('partials/aside') %>
+    <main class="main-wrap">
+        <%- include('partials/header') %> 
+        <section class="content-main">
+            <div class="row">
+                <div class="col-9">
+                    <div class="content-header">
+                        <h2 class="content-title">Add New Product</h2>
+                       
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Product Info</h4>
+                        </div>
+                        <div class="card-body">
+                            <form action="/admin/saveProducts" method="Post" enctype="multipart/form-data">
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Product title</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="product_name" name="productname">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Product Price</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="product_name" name="productprice">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Product Discount</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="product_name" name="productdiscount">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Product Stock</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="product_name" name="productstock">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Cloth</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="product_name" name="cloth">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Model</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="product_name" name="model">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Feature</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="product_name" name="feature">
+                                </div>
+                              
+                               
+                                <div class="mb-4">
+                                    <label class="form-label">Full description</label>
+                                    <textarea placeholder="Type here" class="form-control" rows="4" name="description"></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Short description</label>
+                                    <textarea placeholder="Type here" class="form-control" rows="4" name="shortdescription"></textarea>
+                                </div>
+                                <div class="d-grid">
+                                    <label for="file-upload" class="custom-file-upload">
+                                        <img src="/admin/imgs/theme/upload.svg" alt="Upload Image">
+                                    <input type="file" name="images" class="form-control" accept="image/*" multiple>
+                                </div>
+                              
+                                <div class="d-grid">
+                                    <button class="btn btn-primary">Create Product</button>
+                                </div>
+                               
+                            </form>
+                        </div>
+                    </div> <!-- card end// -->
+                 
+                </div>
+               
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Organization</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row gx-2">
+                                <div class="col-sm-6 mb-3">
+                                    <label class="form-label">Category</label>
+                                    <select class="form-select">
+                                        <option> Automobiles </option>
+                                        <option> Home items </option>
+                                        <option> Electronics </option>
+                                        <option> Smartphones </option>
+                                        <option> Sport items </option>
+                                        <option> Baby and Tous </option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <label class="form-label">Sub-category</label>
+                                    <select class="form-select">
+                                        <option> Nissan </option>
+                                        <option> Honda </option>
+                                        <option> Mercedes </option>
+                                        <option> Chevrolet </option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Tags</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div> <!-- row.// -->
+                        </div>
+                    </div> <!-- card end// -->
+                </div>
+            </div>
+        </section> <!-- content-main end// -->
+        <footer class="main-footer font-xs">
+            <div class="row pb-30 pt-15">
+                <div class="col-sm-6">
+                    <script>
+                    document.write(new Date().getFullYear())
+                    </script> 
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end">
+                        All rights reserved
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <%- include('partials/script') %>
+</body>
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-form-product-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:32 GMT -->
+</html>

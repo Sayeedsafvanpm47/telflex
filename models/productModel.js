@@ -28,20 +28,17 @@ let productSchema = new mongoose.Schema({
 	isFeatured: {
 		type: Boolean
 	},
-	image: {
-		type: String
-	},
-	images: [
-		{
-			type: String
-		}
-	],
-	isNew: {
-		type: Boolean
+
+	images:{
+		type : Array
 	},
 	description: {
 		type: String
 	},
+	shortDescription : {
+		type : String
+	}
+	,
 	createdOn: {
 		type: Date
 	},
