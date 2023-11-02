@@ -39,7 +39,7 @@ router.get('/toggleList',controllerCategory.listToggle)
 router.get('/toggleunList',controllerCategory.unlistToggle)
 router.get('/addproducts',controllerProducts.addProductsView)
 router.post('/saveproducts',upload.array('images'),controllerProducts.addProducts)
-
+router.get('/viewproducts',controllerProducts.viewProducts)
 
 
 router.get('/error',(req,res)=>{
@@ -73,7 +73,7 @@ router.get('/transaction',(req,res)=>{
 })
 
 router.get('/products',(req,res)=>{
-          res.render('admin/admin/products')
+          res.render('admin/admin/products2')
 })
 router.get('/category',(req,res)=>{
           res.render('admin/admin/category')

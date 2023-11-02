@@ -1,0 +1,109 @@
+<%- include('partials/head') %>
+<body>
+    <div class="screen-overlay"></div>
+    <%- include('partials/aside') %>
+    <main class="main-wrap">
+        <%- include('partials/header') %> 
+        <section class="content-main">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Products grid</h2>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
+                <div>
+                 
+                    <a href="#" class="btn btn-primary btn-sm rounded">Create new</a>
+                </div>
+            </div>
+            <header class="card card-body mb-4">
+                <div class="row gx-3">
+                    <form action="get">
+                    <div class="col-lg-4 col-md-6 me-auto">
+                        <input type="text" placeholder="Search..." class="form-control" name="searchTerm">
+                    </div>
+                </form>
+                    <div class="col-lg-2 col-6 col-md-3">
+                        <form method="GET" id="categoryForm" >
+                            <select class="form-select" name="category" onchange="submitForm()">
+                                <option value="">All Categories</option>
+                                <% categories.forEach(category => { %>
+                                    <option value="<%= category._id %>"><%= category.categoryName %></option>
+                                <% }); %>
+                               
+                            </select>
+                          
+                          
+                        </form>
+                    </div>
+                    
+                   
+                    </div>
+                </div>
+            </header> <!-- card-header end// -->
+
+            <div class="row">
+                <% products.forEach(products=>{%>
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                    <div class="card card-product-grid">
+                        <a href="#" class="img-wrap"> <img src="/<%=products.images[0]%>" alt="Product"> </a>
+                        <div class="info-wrap">
+                            <div class="dropdown float-end">
+                                <a href="#" class="btn btn-sm btn-brand rounded">
+                                    <i class="material-icons md-edit mr-5"></i>Edit
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="#">Edit info</a>
+                                    <a class="dropdown-item text-danger" href="#">Delete</a>
+                                </div>
+                            </div>
+                            <a href="#" class="title"><%=products.productName%></a>
+                            <div class="price mt-1"><%= products.productPrice  %></div>
+                        </div>
+                     
+                    </div> <!-- card-product  end// -->
+                 
+                </div> <!-- col.// -->
+                <% }) %>
+             
+               
+            <div class="pagination-area mt-15 mb-50">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-start">
+                        <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                        <li class="page-item"><a class="page-link" href="#">02</a></li>
+                        <li class="page-item"><a class="page-link" href="#">03</a></li>
+                        <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                        <li class="page-item"><a class="page-link" href="#">16</a></li>
+                        <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </section> <!-- content-main end// -->
+        <footer class="main-footer font-xs">
+            <div class="row pb-30 pt-15">
+                <div class="col-sm-6">
+                    <script>
+                    document.write(new Date().getFullYear())
+                    </script> ©, Evara - HTML Ecommerce Template .
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end">
+                        All rights reserved
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <%- include('partials/script') %>
+    <script>
+        function submitForm() {
+            document.getElementById('categoryForm').submit();
+        }
+    </script>
+
+    
+</body>
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-products-grid-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:21 GMT -->
+</html>

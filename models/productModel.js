@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema
 
 let productSchema = new mongoose.Schema({
 	productName: {
@@ -11,7 +12,10 @@ let productSchema = new mongoose.Schema({
 	productDiscount: {
 		type: Number,
 		default: 0
-	},
+	},category: {
+		type: Schema.Types.ObjectId,
+		ref: 'Category', 
+	        },
 	stock: {
 		type: Number,
 		default: 0
