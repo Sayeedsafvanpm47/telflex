@@ -38,17 +38,19 @@
                                           
                                     </div>
                                     
-                                    <label for="product_name" class="form-label">Product Price</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="product_name" name="productprice">
+                                    <label for="product_name" class="form-label">Product Size</label>
+                                    <input style="width: 15%;" type="text" placeholder="Type here" class="form-control" id="product_name" name="numberSize">
+                                    <input type="button" class="btn btn-primary" id="showSizeButton" value="Show size">
+                                    <div id="sizeFieldsContainer" style="padding: 10px;"></div>
+
+                                 
                                 </div>
+                             
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Product Discount</label>
                                     <input type="text" placeholder="Type here" class="form-control" id="product_name" name="productdiscount">
                                 </div>
-                                <div class="mb-4">
-                                    <label for="product_name" class="form-label">Product Stock</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="product_name" name="productstock">
-                                </div>
+                              
 
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Cloth</label>
@@ -91,6 +93,71 @@
                    
     </main>
     <%- include('partials/script') %>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            
+          const showSizeButton = document.getElementById("showSizeButton");
+          const sizeFieldsContainer = document.getElementById("sizeFieldsContainer");
+        
+          showSizeButton.addEventListener("click", function() {
+            // Clear any existing dynamic fields
+            sizeFieldsContainer.innerHTML = "";
+        
+            const numberSize = parseInt(document.querySelector("input[name='numberSize']").value);
+            
+            if (isNaN(numberSize) || numberSize <= 0) {
+              alert("Please enter a valid number for Product Size.");
+              return;
+            }
+        
+            // Create dynamic size and price input fields
+            for (let i = 0; i < numberSize; i++) {
+                
+              const sizeInput = document.createElement("input");
+              sizeInput.type = "text";
+              sizeInput.style.width = "50%";
+              sizeInput.style.marginTop = "10px";
+              sizeInput.placeholder = "Enter Size";
+              sizeInput.classList.add("form-control");
+              sizeInput.name = `size_${i}`;
+        
+              const priceInput = document.createElement("input");
+              priceInput.type = "number";
+              priceInput.style.width = "50%";
+              priceInput.style.marginTop = "10px";
+              priceInput.placeholder = "Enter Price";
+              priceInput.classList.add("form-control");
+              priceInput.name = `productprice_${i}`;
+
+              const stockInput = document.createElement("input");
+              stockInput.type = "number";
+              stockInput.style.width = "50%";
+              stockInput.style.marginTop = "10px";
+              stockInput.placeholder = "Enter Stock";
+              stockInput.classList.add("form-control");
+              stockInput.name = `stock_${i}`;
+              
+              const mrpInput = document.createElement("input");
+              mrpInput.type = "number";
+              mrpInput.style.width = "50%";
+              mrpInput.style.marginTop = "10px";
+              mrpInput.placeholder = "Enter MRP";
+              mrpInput.classList.add("form-control");
+              mrpInput.name = `mrp_${i}`;
+           
+        
+              // Append the inputs to the container
+              sizeFieldsContainer.appendChild(sizeInput);
+              sizeFieldsContainer.appendChild(priceInput);
+              sizeFieldsContainer.appendChild(stockInput);
+              sizeFieldsContainer.appendChild(mrpInput);
+            }
+          });
+        });
+        </script>
+
+
 </body>
 
 

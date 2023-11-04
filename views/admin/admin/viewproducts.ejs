@@ -15,30 +15,42 @@
                     <a href="#" class="btn btn-primary btn-sm rounded">Create new</a>
                 </div>
             </div>
-            <header class="card card-body mb-4">
+            <header class="card card-body mb-4" ">
+                
                 <div class="row gx-3">
-                    <form action="get">
+                    <form method="post" action="/admin/searchProducts">
                     <div class="col-lg-4 col-md-6 me-auto">
                         <input type="text" placeholder="Search..." class="form-control" name="searchTerm">
+               
                     </div>
                 </form>
-                    <div class="col-lg-2 col-6 col-md-3">
+       
+                </div>
+                <div style="display: flex; align-items: center; justify-content: flex-end; ">
+                    <div class="col-lg-2 col-6 col-md-3" style="margin-top: 10px; margin-right: 10px;">
                         <form method="GET" id="categoryForm" >
                             <select class="form-select" name="category" onchange="submitForm()">
-                                <option value="">All Categories</option>
+                               
+                                    <option value="">All Categories</option>
+                              
+
+                                
                                 <% categories.forEach(category => { %>
                                     <option value="<%= category._id %>"><%= category.categoryName %></option>
                                 <% }); %>
+                                
                                
                             </select>
                           
                           
                         </form>
                     </div>
-                    
+                    <div style="margin-top: 10px;"><button class="btn btn-primary"><a href="/admin/viewProducts" class="text-white">View all</a></button></div>
                    
                     </div>
+              </div>
                 </div>
+            
             </header> <!-- card-header end// -->
 
             <div class="row">
@@ -46,19 +58,65 @@
                 <div class="col-xl-3 col-lg-4 col-md-6">
                     <div class="card card-product-grid">
                         <a href="#" class="img-wrap"> <img src="/<%=products.images[0]%>" alt="Product"> </a>
+                  
                         <div class="info-wrap">
-                            <div class="dropdown float-end">
-                                <a href="#" class="btn btn-sm btn-brand rounded">
-                                    <i class="material-icons md-edit mr-5"></i>Edit
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">Edit info</a>
-                                    <a class="dropdown-item text-danger" href="#">Delete</a>
-                                </div>
+                       
+                        
+                                <span>
+                                <a href="/admin/editProductsView?_id=<%= products._id %>" class="btn btn-sm btn-brand rounded">
+                                    <i class="fa fa-edit mb-1"  aria-hidden="true"></i>Edit
+                                  </a>
+                                  <a href="/admin/toggleListProducts?_id=<%= products._id %>" class="btn btn-sm btn-warning rounded">
+                                    <i class="fa fa-check mb-1" aria-hidden="true"></i>Status
+                                  </a>
+                                  <a href="/admin/deleteProducts?_id=<%= products._id %>" class="btn btn-sm btn-danger rounded">
+                                    <i class="fa fa-check mb-1" aria-hidden="true"></i>Delete
+                                  </a>
+                                </span>
+                               
+                               
+                                  
+                            
+                              
+                            <p style="font-size: medium; font-weight: bolder;"><%=products.productName%></p>
+                            <div>
+                                <label for="size">Price:</label>
+                            <span class="price mt-1">  <% if (products.size && products.size.length > 0 && products.size[0].productPrice) { %>
+                                <%= products.size[0].productPrice %>
+                              <% } else { %>
+                                Price Not Available
+                              <% } %> </span></div>
+                              <div>
+                              <label for="size">Size:</label>
+                              <span class="price mt-1">  <% if (products.size && products.size.length > 0 && products.size[0].size) { %>
+                                <%= products.size[0].size %>
+                              <% } else { %>
+                                Size Not Available
+                              <% } %> </span></div>
+                            <div>
+                              <label for="size">Stock:</label>
+                              <span class="price mt-1">  <% if (products.size && products.size.length > 0 && products.size[0].stock) { %>
+                                <%= products.size[0].stock %>
+                              <% } else { %>
+                                Stock Not Available
+                              <% } %> </span></div>
+
+                              <div>
+                                <label for="status">Status : </label>
+                               <% if(products && products.isListed){%>
+                               <% if(products.isListed===true){ %>
+                                    <span>listed</span>
+    
+                                <% } %>
+                                <% } else { %>
+                                 <span>unlisted</span>
+                                <% } %>
                             </div>
-                            <a href="#" class="title"><%=products.productName%></a>
-                            <div class="price mt-1"><%= products.productPrice  %></div>
+
                         </div>
+                       
+                       
+
                      
                     </div> <!-- card-product  end// -->
                  
@@ -97,8 +155,11 @@
     <%- include('partials/script') %>
     <script>
         function submitForm() {
+            
             document.getElementById('categoryForm').submit();
         }
+
+
     </script>
 
     

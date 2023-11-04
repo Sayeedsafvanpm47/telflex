@@ -40,7 +40,13 @@ router.get('/toggleunList',controllerCategory.unlistToggle)
 router.get('/addproducts',controllerProducts.addProductsView)
 router.post('/saveproducts',upload.array('images'),controllerProducts.addProducts)
 router.get('/viewproducts',controllerProducts.viewProducts)
-
+router.get('/searchProductsView',controllerProducts.searchProductsView)
+router.post('/searchProducts',controllerProducts.searchProducts)
+router.get('/editProductsView',controllerProducts.editProductsView)
+router.get('/deleteImage',controllerProducts.deleteImage)
+router.post('/editProducts',upload.array('images'),controllerProducts.editProducts)
+router.get('/toggleListProducts',controllerProducts.toggleList)
+router.get('/deleteProducts',controllerProducts.deleteProducts)
 
 router.get('/error',(req,res)=>{
           res.render('admin/admin/error')

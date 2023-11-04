@@ -3,7 +3,7 @@ const categoryModel = require("../../models/categoryModel");
 module.exports = {
 	createCategory: async (req, res) => {
 		const category = await categoryModel.find({});
-		 res.render("admin/admin/category", { category });
+		 res.render("admin/admin/category", { category:category });
 	},
 	submitCategory: async (req, res) => {
 		const { categoryname, description } = req.body;

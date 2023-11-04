@@ -36,5 +36,11 @@ router.get('/shoplist',(req,res)=>{
 router.get('/productdetail',(req,res)=>{
           res.render('user/user/productdetails')
 })
+router.get('/logintemp',(req,res)=>{
+          res.render('user/user/login')
+})
+router.get('/regtemp',(req,res)=>{
+          res.render('user/user/register')
+})
 
 module.exports = router;

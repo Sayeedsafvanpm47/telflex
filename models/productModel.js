@@ -1,34 +1,48 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema
 
+
+const sizeRateSchema = new Schema({
+	size: {
+	  type: String,
+	  
+	},
+	productPrice: {
+	  type: Number,
+	 default : 0
+	},
+	stock : {
+		type : Number,
+		default : 0
+	},
+	mrp : {
+		type : Number,
+		default : 0
+	}
+        });
+
+
 let productSchema = new mongoose.Schema({
 	productName: {
 		type: String
 	},
-	productPrice: {
-		type: Number,
-		default: 0
-	},
+	size:[sizeRateSchema]
+	,
 	productDiscount: {
 		type: Number,
 		default: 0
 	},category: {
-		type: Schema.Types.ObjectId,
-		ref: 'Category', 
+		type: String
+		
 	        },
-	stock: {
-		type: Number,
-		default: 0
-	},
+	
 	cloth: {
 		type: String
 	},
 	model: {
 		type: String
 	},
-	size: {
-		type: String
-	},
+	
 	isFeatured: {
 		type: Boolean
 	},
@@ -48,6 +62,13 @@ let productSchema = new mongoose.Schema({
 	},
 	updatedOn: {
 		type: Date
+	},
+	mrp : {
+		type : Number
+	},
+	isListed : {
+		type : Boolean,
+		default : true
 	}
 });
 
