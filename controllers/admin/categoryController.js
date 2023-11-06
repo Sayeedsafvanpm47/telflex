@@ -1,4 +1,5 @@
 const categoryModel = require("../../models/categoryModel");
+const mongoose = require('mongoose')
 
 module.exports = {
 	createCategory: async (req, res) => {
@@ -11,6 +12,7 @@ module.exports = {
 			res.send("fill properly");
 		} else {
 			const category = await new categoryModel({
+				_id : new mongoose.Types.ObjectId(),
 				categoryName: categoryname,
 				description: description,
 				createdOn: Date.now()

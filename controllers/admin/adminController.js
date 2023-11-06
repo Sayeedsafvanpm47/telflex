@@ -6,12 +6,15 @@ const sendOtp = require("../../utils/generateAndSendOtp");
 const { isEmailValid, isPasswordValid } = require("../../utils/validators/signUpValidator");
 module.exports = {
 	getAdminLogin: async (req, res) => {
-		await res.render("admin/login");
+		
+		await res.render("admin/admin/login");
 	},
 	postAdminLogin: async (req, res) => {
 		const { email, password } = req.body;
 		const errors = [];
-
+                     if(!email || !password){
+			errors.push('fill the fields properly')
+		 }
 		// Validation checks
 		if (!email) {
 			errors.push("Enter an email");
@@ -22,7 +25,7 @@ module.exports = {
 		}
 
 		if (errors.length > 0) {
-			return res.render("admin/login", { errors });
+			return res.render("admin/admin/login", { errors });
 		}
 
 		try {
@@ -34,11 +37,11 @@ module.exports = {
 					res.send("Welcome admin");
 				} else {
 					errors.push("Invalid credentials");
-					res.render("admin/login", { errors });
+					res.render("admin/admin/login", { errors });
 				}
 			} else {
 				errors.push("User not found");
-				res.render("admin/login", { errors });
+				res.render("admin/admin/login", { errors });
 			}
 		} catch (err) {
 			console.error(err);
@@ -57,7 +60,7 @@ module.exports = {
 			user.otpAttempts = 0;
 			await user.save();
 
-			await res.render("admin/createPass", { email: email });
+			await res.render("admin/admin/createPass", { email: email });
 		} else {
 			user.otpAttempts += 1;
 			await user.save();
@@ -67,10 +70,10 @@ module.exports = {
 	resendOtp: async (req, res) => {
 		const { email } = req.body;
 		await sendOtp(email);
-		res.render("admin/verify-otp", { email: email });
+		res.render("admin/admin/otpVerify", { email: email });
 	},
 	getForgotPassAdmin: async (req, res) => {
-		await res.render("admin/forgotPassword");
+		await res.render("admin/admin/forgotPassword");
 	},
 	postForgotPassAdmin: async (req, res) => {
 		try {
@@ -84,7 +87,7 @@ module.exports = {
 			if (user.isAdmin === true) {
 				// If user is an admin, proceed with OTP sending and rendering the verification page
 				await sendOtp(email);
-				res.render("admin/verify-otp", { email: email });
+				res.render("admin/admin/otpVerify", { email: email });
 			} else {
 				res.send("User is not an admin");
 			}
@@ -106,10 +109,10 @@ module.exports = {
 				res.send("welcome admin");
 			} catch (error) {
 				console.error("Error updating password:", error);
-				res.redirect("/admin/");
+				res.redirect("/admin/createPass");
 			}
 		} else {
-			res.redirect("/admin/");
+			res.redirect("/admin/createPass");
 		}
 	}
 };

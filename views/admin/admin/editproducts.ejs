@@ -39,7 +39,7 @@
                                                 <option value="">Select a Category
                                                 </option>
                                                 <% categories.filter(category => category.published === true).forEach(category => { %>
-                                                    <option value="<%= category._id %>"><%= category.categoryName %></option>
+                                                    <option value="<%= category.categoryName %>"><%= category.categoryName %></option>
                                                 <% }); %>
                                                
                                         

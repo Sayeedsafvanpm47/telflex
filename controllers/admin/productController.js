@@ -54,7 +54,7 @@ module.exports = {
 				images: req.files.map((file) => file.path),
 				size: sizes,
        
-			});
+			})
 
 			await products.save();
 			res.redirect("/admin/addproducts");

@@ -8,56 +8,61 @@ const sendOtp = require("../../utils/generateAndSendOtp");
 module.exports = {
 	getLogin: async (req, res) => {
 		try {
-			await res.render("user/login");
+			await res.render("user/user/login");
 		} catch (err) {
 			res.status(200).send("error occured");
 		}
 	},
 	postLogin: async (req, res) => {
 		try {
-			const { email, password } = req.body;
-			const emailValid = isEmailValid(email);
-			const passwordValid = isPasswordValid(password);
-			const user = await userModel.findOne({ email });
-			let errors = [];
-
-			if (!emailValid) {
-				errors.push("Invalid email");
-			}
-			if (!passwordValid) {
-				errors.push("Invalid password");
-			}
-			if (!user) {
-				console.log("User not found");
-				errors.push("Account doesnt exist");
-			}
-			if (user.isBlocked === true) {
-				console.log("User is Blocked");
-				errors.push("This user is Blocked");
-			}
-			if (errors.length > 0) {
-				res.render("user/login", { errors });
-			} else {
-				const passwordMatch = await bcrypt.compare(password, user.password);
-				if (passwordMatch) {
-					console.log("Login successful");
-					res.redirect("/user/getHome");
-				} else {
-					console.log("Invalid password");
-					res.redirect("/user/");
-				}
-			}
+		  const { email, password } = req.body;
+		  const emailValid = isEmailValid(email);
+		  const passwordValid = isPasswordValid(password);
+		  const user = await userModel.findOne({ email });
+		  let errors = [];
+	        
+		  if (!email || !password) {
+		    errors.push('Please fill out all fields');
+		  }
+	        
+		  if (!emailValid) {
+		    errors.push("Invalid email");
+		  }
+		  if (!passwordValid) {
+		    errors.push("Invalid password");
+		  }
+		  if (!user) {
+		    console.log("User not found");
+		    errors.push("Account doesn't exist");
+		  } else if (user.isBlocked === true) {
+		    console.log("User is Blocked");
+		    errors.push("This user is blocked");
+		  }
+	        
+		  if (errors.length > 0) {
+		    res.render("user/user/login", { errors });
+		  } else {
+		    const passwordMatch = await bcrypt.compare(password, user.password);
+		    if (passwordMatch) {
+		      console.log("Login successful");
+		      res.redirect("/user/getHome");
+		    } else {
+		      console.log("Invalid password");
+		      res.redirect("/user/");
+		    }
+		  }
 		} catch (err) {
-			console.error("Error in catch:", err);
-			res.redirect("/");
+		  console.error("Error in catch:", err);
+		  res.redirect("/user");
 		}
-	},
+	        },
+	        
 	getHome: async (req, res) => {
 		await res.render("user/index.ejs");
 	},
 	getSignUp: async (req, res) => {
 		try {
-			await res.render("user/signup");
+			await res.render("user/user/register");
 		} catch (err) {}
 	},
 	postSignUp: async (req, res) => {
@@ -70,6 +75,10 @@ module.exports = {
 			const cpassValid = isCpassValid(password, chkpassword);
 			const emailCheck = await userModel.findOne({ email });
 			let errors = [];
+			if(!email || !password || !firstname || !lastname || !phonenumber || !chkpassword)
+			{
+				errors.push('fill details properly')
+			}
 
 			if (emailCheck) {
 				errors.push("Email exists");
@@ -90,7 +99,7 @@ module.exports = {
 				errors.push("Password doesnt match");
 			}
 			if (errors.length > 0) {
-				res.render("user/signup", { errors });
+				res.render("user/user/register", { errors });
 			}
 
 			if (emailValid && passwordValid && namesValid && phoneValid && cpassValid) {
@@ -117,7 +126,7 @@ module.exports = {
 					console.error("Error sending email:", error);
 				}
 				req.session.isLogin = true;
-				res.render("user/verify-otp", { email: email });
+				res.render("user/user/otpVerify", { email: email });
 			}
 		} catch (err) {
 			console.error("Error:", err);
@@ -127,6 +136,7 @@ module.exports = {
 
 	verifyOTP: async (req, res) => {
 		const { email, enteredOTP } = req.body;
+		
 		const user = await userModel.findOne({ email });
 		if (!user || !user.otp || user.otpExpires <= new Date() || user.otpAttempts >= 3) {
 			res.send("OTP verification failed");
@@ -137,10 +147,11 @@ module.exports = {
 			user.otpAttempts = 0;
 			await user.save();
 			if (req.session.isLogin) {
+				
 				await res.redirect("/user/getHome");
 			}
 			if (req.session.isForgot) {
-				await res.render("user/createPass", { email: email });
+				await res.render("user/user/createPass", { email: email });
 			}
 		} else {
 			user.otpAttempts += 1;
@@ -152,22 +163,22 @@ module.exports = {
 	resendOtp: async (req, res) => {
 		const { email } = req.body;
 		await sendOtp(email);
-		res.render("user/verify-otp", { email: email });
+		res.render("user/user/otpVerify", { email: email });
 	},
 	getForgotPassword: async (req, res) => {
-		res.render("user/forgotPassword");
+		res.render("user/user/forgotPassword");
 	},
 	forgotPassword: async (req, res) => {
 		const { email } = req.body;
 		await sendOtp(email);
 		req.session.isForgot = true;
-		res.render("user/verify-otp", { email: email });
+		res.render("user/user/otpVerify", { email: email });
 	},
 
 	updatePass: async (req, res) => {
 		const { password, chkpassword, email } = req.body;
 		const user = await userModel.findOne({ email });
-
+                    const errors = []
 		if (password === chkpassword) {
 			try {
 				const hashedPass = await bcrypt.hash(password, 10);
@@ -178,10 +189,11 @@ module.exports = {
 				res.redirect("/user/getsignup");
 			} catch (error) {
 				console.error("Error updating password:", error);
-				res.redirect("/user/getsignup"); // Handle the error as needed
+				res.redirect("/user/"); // Handle the error as needed
 			}
 		} else {
-			res.redirect("/user/getsignup"); // Handle password mismatch error
+			errors.push('password mismatch')
+			res.render('user/user/otpVerify',{errors,email})
 		}
 	}
 };

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const controller = require("../../controllers/user/userController");
+const productController = require('../../controllers/user/userProductController')
 
 router.get("/", controller.getLogin);
 router.post("/postLogin", controller.postLogin);
@@ -13,6 +14,15 @@ router.post("/verifyOtp", controller.verifyOTP);
 router.get("/getForgotPassword", controller.getForgotPassword);
 router.post("/forgotPassword", controller.forgotPassword);
 router.post("/updatePass", controller.updatePass);
+router.get('/shop',productController.productGridView)
+router.get('/sortCategory',productController.sortProducts)
+router.post('/sortPrice',productController.sortPrice)
+router.post('/searchProducts',productController.searchProducts)
+router.get('/productdetail',productController.productdetail)
+
+router.get('/showPrice',productController.showPrice)
+
+
 router.get('/blog',(req,res)=>{
           res.render('user/user/blog')
 })
@@ -33,12 +43,8 @@ router.get('/shopgrid',(req,res)=>{
 router.get('/shoplist',(req,res)=>{
           res.render('user/user/shoplist')
 })
-router.get('/productdetail',(req,res)=>{
-          res.render('user/user/productdetails')
-})
-router.get('/logintemp',(req,res)=>{
-          res.render('user/user/login')
-})
+
+
 router.get('/regtemp',(req,res)=>{
           res.render('user/user/register')
 })

@@ -4505,12 +4505,13 @@ table .product-thumbnail img {
   background: #ff596d;
 }
 
-.product-color-yellow {
-  background: #ffdb33;
+.product-color-black {
+  background: #010101;
 }
 
 .product-color-white {
   background: #ffffff;
+  border: 0.3px;
 }
 
 .product-color-orange {

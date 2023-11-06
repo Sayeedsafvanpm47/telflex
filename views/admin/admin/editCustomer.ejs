@@ -1,0 +1,67 @@
+﻿<%- include('partials/head') %>
+<body>
+    
+    
+    
+    <% if (typeof(errors) !== 'undefined' && errors.length > 0) { %>
+        <div id="error-message" class="alert alert-danger">
+            <span>
+                <% errors.forEach(error => { %>
+                    <p><%= error %></p>
+                <% }); %>
+            </span>
+        </div>
+    <% } %>
+    <div class="container" >
+        <section class="content-main mt-80 mb-80">
+  <div class="container d-flex justify-content-center mt-5 mb-5" >
+    <div class="col-lg-4" >
+        <div class="login_wrap widget-taber-content p-30 background-white border-radius-5">
+            <div class="padding_eight_all bg-white">
+                <div class="heading_s1">
+                    <h3 class="mb-30">Create an Account</h3>
+                </div>
+                <p class="mb-50 font-sm">
+                    Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy
+                </p>
+                <form method="post" action="/admin/updateUser">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input  type="text" class="form-control" name="firstname" value="<%= user.firstname %>">
+                        <label>Last Name</label>
+                        <input type="text" class="form-control" name="lastname" value="<%= user.firstname %>" >
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" name="email" value="<%= user.firstname %>" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="text" class="form-control" name="phonenumber" value="<%= user.firstname %>" >
+                    </div>
+                  
+                  
+                       
+                    </div>
+                    <div class="form-group d-flex justify-content-center">
+                        <button type="submit" class='btn btn-primary' name="login">Edit User</button>
+                    </div>
+                </form>
+            
+         
+            </div>
+        </div>
+    </div>
+</div>
+
+</section>
+</div>
+   
+    <script src="/scripts/hideerror.js"></script>
+    <!-- Vendor JS-->
+   
+</body>
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/page-login-register.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:07 GMT -->
+</html>

@@ -3,7 +3,7 @@ module.exports = {
 	viewCustomers: async (req, res) => {
 		const { email } = req.body;
 		const user = await userModel.find({});
-		res.render("admin/customerManagement", { user });
+		res.render("admin/admin/sellercard", { user });
 	},
 	editCustomers: async (req, res) => {
 		try {
@@ -14,7 +14,7 @@ module.exports = {
 				return res.status(404).send("User not found");
 			}
 
-			res.render("admin/editCustomers", { user });
+			res.render("admin/admin/editCustomer", { user });
 		} catch (error) {
 			console.error("Error:", error);
 			res.status(500).send("Internal Server Error");
@@ -82,7 +82,7 @@ module.exports = {
 	searchView: async (req, res) => {
 		try {
 			const user = req.session.searchResults || [];
-			res.render("admin/customerManagement", { user });
+			res.render("admin/admin/sellercard", { user });
 		} catch (err) {
 			console.log(err);
 		}
@@ -106,6 +106,6 @@ module.exports = {
 	},
 	sortUserView: async (req, res) => {
 		const user = req.session.isSort || [];
-		res.render("admin/customerManagement", { user });
+		res.render("admin/admin/sellercard", { user });
 	}
 };
