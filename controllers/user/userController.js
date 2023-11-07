@@ -45,7 +45,7 @@ module.exports = {
 		    const passwordMatch = await bcrypt.compare(password, user.password);
 		    if (passwordMatch) {
 		      console.log("Login successful");
-		      res.redirect("/user/getHome");
+		      res.redirect("/user/shop");
 		    } else {
 		      console.log("Invalid password");
 		      res.redirect("/user/");
@@ -136,10 +136,13 @@ module.exports = {
 
 	verifyOTP: async (req, res) => {
 		const { email, enteredOTP } = req.body;
+		const errors = []
 		
 		const user = await userModel.findOne({ email });
 		if (!user || !user.otp || user.otpExpires <= new Date() || user.otpAttempts >= 3) {
-			res.send("OTP verification failed");
+			errors.push('verification failed, try again..., or request for another otp')
+
+			res.render('user/user/otpVerify',{errors,email:email})
 		}
 		if (user.otp === enteredOTP) {
 			user.otp = null;
@@ -148,15 +151,20 @@ module.exports = {
 			await user.save();
 			if (req.session.isLogin) {
 				
-				await res.redirect("/user/getHome");
+				await res.redirect("/user/shop");
 			}
-			if (req.session.isForgot) {
+			else if (req.session.isForgot) {
 				await res.render("user/user/createPass", { email: email });
 			}
 		} else {
+			
 			user.otpAttempts += 1;
+			attempts = 3 -user.otpAttempts
 			await user.save();
-			res.send("Invalid OTP");
+			
+			errors.push(attempts + 'attempts left')
+
+			res.render('user/user/otpVerify',{errors,email:email})
 		}
 	},
 
@@ -166,10 +174,27 @@ module.exports = {
 		res.render("user/user/otpVerify", { email: email });
 	},
 	getForgotPassword: async (req, res) => {
-		res.render("user/user/forgotPassword");
+		try {
+			if(req.session.forgotError)
+			{
+				let errors = []
+				errors.push('corrupt credentials or fill in details properly')
+				res.render('user/user/forgotPassword',{errors})
+			}else{
+			res.render("user/user/forgotPassword");
+			}
+		} catch (error) {
+			res.redirect('/user')
+		}
+		
 	},
 	forgotPassword: async (req, res) => {
 		const { email } = req.body;
+		const emailExist =  await userModel.findOne({email:email})
+		if(!emailExist){
+			req.session.forgotError = true
+			res.redirect('/user/getForgotPassword')
+		}
 		await sendOtp(email);
 		req.session.isForgot = true;
 		res.render("user/user/otpVerify", { email: email });
@@ -179,6 +204,8 @@ module.exports = {
 		const { password, chkpassword, email } = req.body;
 		const user = await userModel.findOne({ email });
                     const errors = []
+
+		if(password.length>8 && chkpassword.length > 8){
 		if (password === chkpassword) {
 			try {
 				const hashedPass = await bcrypt.hash(password, 10);
@@ -186,14 +213,22 @@ module.exports = {
 				await user.save();
 
 				// Wait for the password update to complete before redirecting
-				res.redirect("/user/getsignup");
+				res.redirect("/user/shop");
 			} catch (error) {
 				console.error("Error updating password:", error);
-				res.redirect("/user/"); // Handle the error as needed
+				await res.redirect("/user/"); // Handle the error as needed
 			}
-		} else {
+		}
+		else {
 			errors.push('password mismatch')
-			res.render('user/user/otpVerify',{errors,email})
+			await res.render('user/user/createPass',{errors,email})
 		}
 	}
+
+		 else {
+			errors.push('fill in details properly')
+			await res.render('user/user/createPass',{errors,email})
+		}
+	}
+	
 };

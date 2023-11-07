@@ -5158,10 +5158,10 @@ h6.post-title {
 /*Header default*/
 .header-top-ptb-1 {
   padding: 10px 0;
-  border-bottom: 1px solid #e2e9e1;
-  background-color: #f2f3f8;
+  border-bottom: 1px solid #f9f9f9;
+  background-color: #ffffff;
   font-size: 14px;
-  background-image: url(../imgs/theme/topbar-bg.jpg);
+
   line-height: 1;
 }
 
@@ -5900,6 +5900,7 @@ h6.post-title {
 
 .header-bottom .header-action-right a span.pro-count {
   background-color: #088178;
+  
   color: #fff;
 }
 
@@ -9924,3 +9925,23 @@ span.fi-rs-apps {
 .zoomContainer{ z-index: 9999;}
 .zoomWindow{ z-index: 9999;}
 /*# sourceMappingURL=main.css.map */
+
+
+/* Default styles for larger screens */
+
+
+.loginform {
+  margin-left: 900px;
+  width: 700px;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+ 
+
+  .loginform {
+      margin-left: 0;
+      width: 700px;
+      background-color: rgba(255, 255, 255, 0.8);
+  }
+}

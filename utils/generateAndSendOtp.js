@@ -8,7 +8,7 @@ async function generateAndSendOTP(email) {
 		const otp = await otpGenerator.generateOTP();
 		console.log(otp);
 		user.otp = otp;
-		user.otpExpires = new Date(Date.now() + 5 * 60 * 1000);
+		user.otpExpires = new Date(Date.now() + 2 * 60 * 1000);
 		user.otpAttempts = 0;
 		await user.save();
 

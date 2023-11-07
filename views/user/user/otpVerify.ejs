@@ -53,7 +53,7 @@
             </div>
         </div>
     </div>
-    <%- include('partials/headerlogin') %>
+ 
     <% if (typeof(errors) !== 'undefined' && errors.length > 0) { %>
         <div id="error-message" class="alert alert-danger">
             <span>
@@ -72,25 +72,27 @@
                                 <div class="padding_eight_all bg-white">
                                     <div class="heading_s1">
                                         <h3 class="mb-30">Enter Otp</h3>
+                                        
                                     </div>
                                     <form method="post" action="/user/verifyOtp">
                                         <div class="form-group">
                                             <input type="text" name="enteredOTP" placeholder="Enter OTP" required>
                                             <input type="hidden" name="email" value="<%= email %>">
+                                            <span>Otp expires in : </span>  <span id="timer">120</span>s
                                            
                                         </div>
                                         
                                     
-                                            <a class="text-muted" href="/user/logintemp">Go back</a>
+                                            
                                            
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login">Submit</button>
+                                            <input type="submit" class="btn btn-fill-out btn-block hover-up" name="login" value="Verify Otp" >
                                         </div>
                                     </form>
                                     <form method="POST" action="/user/resendOtp">
                                         <input type="hidden" name="email" value="<%= email %>">
-                                        <button type="submit">Resend OTP</button>
+                                        <input id="resend" type="submit" value="Resend Otp" hidden>
                                       </form>
                                 </div>
                             </div>
@@ -138,6 +140,24 @@
     <script src="/user/js/plugins/jquery.theia.sticky.js"></script>
     <!-- Template  JS -->
     <script src="/user/js/maind134.js?v=3.4"></script>
+    <script>
+
+
+
+    let time = parseInt(document.getElementById('timer').textContent);
+
+function updateTimer() {
+    if (time > 0) {
+        time--;
+        document.getElementById('timer').textContent = time;
+    } else {
+        clearInterval(countdownInterval);
+        document.getElementById('resend').removeAttribute('hidden');
+    }
+}
+
+let countdownInterval = setInterval(updateTimer, 1000);
+    </script>
 </body>
 
 

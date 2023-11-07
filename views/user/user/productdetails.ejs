@@ -2,7 +2,7 @@
 
 <body>
     <!-- Quick view -->
-    <%- include('partials/userproductgridheader') %>
+    <%- include('partials/header') %>
         <section class="mt-50 mb-50">
             <div class="container">
                 <div class="row">
@@ -33,13 +33,15 @@
                                          </script> 
                                         <!-- THUMBNAILS -->
                                         <div class="slider-nav-thumbnails pl-15 pr-15">
-                                            <div><img src="/user/imgs/shop/thumbnail-3.jpg" alt="product image"></div>
-                                            <div><img src="/user/imgs/shop/thumbnail-4.jpg" alt="product image"></div>
-                                            <div><img src="/user/imgs/shop/thumbnail-5.jpg" alt="product image"></div>
-                                            <div><img src="/user/imgs/shop/thumbnail-6.jpg" alt="product image"></div>
-                                            <div><img src="/user/imgs/shop/thumbnail-7.jpg" alt="product image"></div>
-                                            <div><img src="/user/imgs/shop/thumbnail-8.jpg" alt="product image"></div>
-                                            <div><img src="/user/imgs/shop/thumbnail-9.jpg" alt="product image"></div>
+                                             <% if (products && products.images && products.images.length > 0) { %>
+                                                <% for (let i = 0; i < products.images.length; i++) { %>
+                                                   <img src="/<%= products.images[i] %>">
+                                                 
+                               
+                                            <% } %>
+                                            <% } else { %>
+                                                  <p>No images available for this product</p>
+                                      <% } %>
                                         </div>
                                     </div>
                                     <!-- End Gallery -->
@@ -64,8 +66,9 @@
                                            
                                                 
                                             <div class="product-price primary-color float-left">
-                                                <ins>&#8377;<span class="text-brand" id="priceView"> <%= products.size[0].productPrice %>   </span></ins>
-                                                <ins><span class="old-price " style="margin-left: 30px;">&#8377;</span> <span class="old-price " id="mrpView"><%= products.size[0].mrp  %></span></ins>
+                                                <ins><span class="fs-1" id="sizeView"> <%= products.size[0].size %>   </span></ins> <br>
+                                                <ins> <span class="text-brand"> sale price : &#8377;</span><span class="text-brand" id="priceView"> <%= products.size[0].productPrice %>   </span></ins>
+                                              <br>  <ins><span style="text-decoration: line-through;" class="text-muted fs-4"  >mrp : &#8377;</span> <span style="text-decoration: line-through;" class="text-muted fs-4"  id="mrpView"><%= products.size[0].mrp  %></span></ins>
                                              <br><span>In Stock:</span>   <span class="save-price font-md color3 ml-15" id="stockView"><%= products.size[0].stock %></span>
                                               </div>
                                               
@@ -117,8 +120,8 @@
                                         </div>
                                         <ul class="product-meta font-xs color-grey mt-50">
                                             <li class="mb-5">SKU: <a href="#">FWM15VKT</a></li>
-                                            <li class="mb-5">Tags: <a href="#" rel="tag">Cloth</a>, <a href="#" rel="tag">Women</a>, <a href="#" rel="tag">Dress</a> </li>
-                                            <li>Availability:<span class="in-stock text-success ml-5">8 Items In Stock</span></li>
+                                            <li class="mb-5">Tags: <a href="#" rel="tag">Mattress</a>, <a href="#" rel="tag">Furniture</a>, <a href="#" rel="tag">Pillows</a> </li>
+                                        
                                         </ul>
                                     </div>
                                     <!-- Detail Info -->
@@ -150,95 +153,7 @@
                                             dachshund.
                                         </p>
                                     </div>
-                                    <h3 class="section-title style-1 mb-30">Additional info</h3>
-                                    <table class="font-md mb-30">
-                                        <tbody>
-                                            <tr class="stand-up">
-                                                <th>Stand Up</th>
-                                                <td>
-                                                    <p>35″L x 24″W x 37-45″H(front to back wheel)</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="folded-wo-wheels">
-                                                <th>Folded (w/o wheels)</th>
-                                                <td>
-                                                    <p>32.5″L x 18.5″W x 16.5″H</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="folded-w-wheels">
-                                                <th>Folded (w/ wheels)</th>
-                                                <td>
-                                                    <p>32.5″L x 24″W x 18.5″H</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="door-pass-through">
-                                                <th>Door Pass Through</th>
-                                                <td>
-                                                    <p>24</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="frame">
-                                                <th>Frame</th>
-                                                <td>
-                                                    <p>Aluminum</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="weight-wo-wheels">
-                                                <th>Weight (w/o wheels)</th>
-                                                <td>
-                                                    <p>20 LBS</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="weight-capacity">
-                                                <th>Weight Capacity</th>
-                                                <td>
-                                                    <p>60 LBS</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="width">
-                                                <th>Width</th>
-                                                <td>
-                                                    <p>24″</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="handle-height-ground-to-handle">
-                                                <th>Handle height (ground to handle)</th>
-                                                <td>
-                                                    <p>37-45″</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="wheels">
-                                                <th>Wheels</th>
-                                                <td>
-                                                    <p>12″ air / wide track slick tread</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="seat-back-height">
-                                                <th>Seat back height</th>
-                                                <td>
-                                                    <p>21.5″</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="head-room-inside-canopy">
-                                                <th>Head room (inside canopy)</th>
-                                                <td>
-                                                    <p>25″</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="pa_color">
-                                                <th>Color</th>
-                                                <td>
-                                                    <p>Black, Blue, Red, White</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="pa_size">
-                                                <th>Size</th>
-                                                <td>
-                                                    <p>M, S</p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    
                                     <div class="social-icons single-share">
                                         <ul class="text-grey-5 d-inline-block">
                                             <li><strong class="mr-10">Share this:</strong></li>
@@ -404,14 +319,18 @@
                                     <h3 class="section-title style-1 mb-30">Related products</h3>
                                 </div>
                                 <div class="col-12">
+                                  
                                     <div class="row related-products">
+                                        <% relatedProducts.forEach(items=>{ %>
                                         <div class="col-lg-3 col-md-4 col-12 col-sm-6">
+                                     
                                             <div class="product-cart-wrap small hover-up">
                                                 <div class="product-img-action-wrap">
                                                     <div class="product-img product-img-zoom">
                                                         <a href="shop-product-right.html" tabindex="0">
-                                                            <img class="default-img" src="/user/imgs/shop/product-2-1.jpg" alt="">
-                                                            <img class="hover-img" src="/user/imgs/shop/product-2-2.jpg" alt="">
+                                                       
+                                                            <img class="default-img" src="/<%= items.images[0] %>" alt="">
+                                                            <img class="hover-img" src="/<%= items.images[1] %>" alt="">
                                                         </a>
                                                     </div>
                                                     <div class="product-action-1">
@@ -425,127 +344,26 @@
                                                     </div>
                                                 </div>
                                                 <div class="product-content-wrap">
-                                                    <h2><a href="shop-product-right.html" tabindex="0">Ulstra Bass Headphone</a></h2>
+                                                    <h2><a href="shop-product-right.html" tabindex="0"><%= items.productName %></a></h2>
                                                     <div class="rating-result" title="90%">
                                                         <span>
                                                         </span>
                                                     </div>
                                                     <div class="product-price">
-                                                        <span>$238.85 </span>
-                                                        <span class="old-price">$245.8</span>
+                                                        <span><%= items.size[0].productPrice%> </span>
+                                                        <span class="old-price"><%items.size[0].mrp  %></span>
                                                     </div>
                                                 </div>
                                             </div>
+                                          
                                         </div>
-                                        <div class="col-lg-3 col-md-4 col-12 col-sm-6">
-                                            <div class="product-cart-wrap small hover-up">
-                                                <div class="product-img-action-wrap">
-                                                    <div class="product-img product-img-zoom">
-                                                        <a href="shop-product-right.html" tabindex="0">
-                                                            <img class="default-img" src="/user/imgs/shop/product-3-1.jpg" alt="">
-                                                            <img class="hover-img" src="/user/imgs/shop/product-4-2.jpg" alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="product-action-1">
-                                                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal
-"><i class="fi-rs-search"></i></a>
-                                                        <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html" tabindex="0"><i class="fi-rs-heart"></i></a>
-                                                        <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html" tabindex="0"><i class="fi-rs-shuffle"></i></a>
-                                                    </div>
-                                                    <div class="product-badges product-badges-position product-badges-mrg">
-                                                        <span class="sale">-12%</span>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content-wrap">
-                                                    <h2><a href="shop-product-right.html" tabindex="0">Smart Bluetooth Speaker</a></h2>
-                                                    <div class="rating-result" title="90%">
-                                                        <span>
-                                                        </span>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <span>$138.85 </span>
-                                                        <span class="old-price">$145.8</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-4 col-12 col-sm-6">
-                                            <div class="product-cart-wrap small hover-up">
-                                                <div class="product-img-action-wrap">
-                                                    <div class="product-img product-img-zoom">
-                                                        <a href="shop-product-right.html" tabindex="0">
-                                                            <img class="default-img" src="/user/imgs/shop/product-4-1.jpg" alt="">
-                                                            <img class="hover-img" src="/user/imgs/shop/product-4-2.jpg" alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="product-action-1">
-                                                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal
-"><i class="fi-rs-search"></i></a>
-                                                        <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html" tabindex="0"><i class="fi-rs-heart"></i></a>
-                                                        <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html" tabindex="0"><i class="fi-rs-shuffle"></i></a>
-                                                    </div>
-                                                    <div class="product-badges product-badges-position product-badges-mrg">
-                                                        <span class="new">New</span>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content-wrap">
-                                                    <h2><a href="shop-product-right.html" tabindex="0">HomeSpeak 12UEA Goole</a></h2>
-                                                    <div class="rating-result" title="90%">
-                                                        <span>
-                                                        </span>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <span>$738.85 </span>
-                                                        <span class="old-price">$1245.8</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-4 col-12 col-sm-6">
-                                            <div class="product-cart-wrap small hover-up mb-0">
-                                                <div class="product-img-action-wrap">
-                                                    <div class="product-img product-img-zoom">
-                                                        <a href="shop-product-right.html" tabindex="0">
-                                                            <img class="default-img" src="/user/imgs/shop/product-5-1.jpg" alt="">
-                                                            <img class="hover-img" src="/user/imgs/shop/product-3-2.jpg" alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="product-action-1">
-                                                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal
-"><i class="fi-rs-search"></i></a>
-                                                        <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html" tabindex="0"><i class="fi-rs-heart"></i></a>
-                                                        <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html" tabindex="0"><i class="fi-rs-shuffle"></i></a>
-                                                    </div>
-                                                    <div class="product-badges product-badges-position product-badges-mrg">
-                                                        <span class="hot">Hot</span>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content-wrap">
-                                                    <h2><a href="shop-product-right.html" tabindex="0">Dadua Camera 4K 2022EF</a></h2>
-                                                    <div class="rating-result" title="90%">
-                                                        <span>
-                                                        </span>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <span>$89.8 </span>
-                                                        <span class="old-price">$98.8</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="banner-img banner-big wow fadeIn f-none animated mt-50">
-                                <img class="border-radius-10" src="/user/imgs/banner/banner-4.png" alt="">
-                                <div class="banner-text">
-                                    <h4 class="mb-15 mt-40">Repair Services</h4>
-                                    <h2 class="fw-600 mb-20">We're an Apple <br>Authorised Service Provider</h2>
-                                </div>
-                            </div>
-                        </div>
+                                        <% }) %>
+                                    
+                                       
                     </div>
+                 
                 </div>
+             
             </div>
         </section>
     </main>
@@ -705,6 +523,7 @@
             const price = document.getElementById('priceView');
   const mrp = document.getElementById('mrpView');
   const stock = document.getElementById('stockView');
+  const size = document.getElementById('sizeView')
 
             fetch('/user/showPrice?id='+id,{method:'get'}).then((response)=>{
            
@@ -715,6 +534,7 @@
                 price.innerText = res.product.size[sizeIndex].productPrice
                 mrp.innerText = res.product.size[sizeIndex].mrp
                 stock.innerText = res.product.size[sizeIndex].stock
+                size.innerText = res.product.size[sizeIndex].size
                 
             })
           }

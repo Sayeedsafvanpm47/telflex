@@ -1,13 +1,13 @@
 ﻿<%- include('partials/head') %>
 <body>
     <%- include('partials/header') %>
-    <div class="mobile-header-active mobile-header-wrapper-style">
-        <div class="mobile-header-wrapper-inner">
+    <div class="mobile-header-active mobile-header-wrapper-style"  >
+        <div class="mobile-header-wrapper-inner" >
             <div class="mobile-header-top">
                 <div class="mobile-header-logo">
-                    <a href="index.html"><img src="/user/imgs/theme/logo.svg" alt="logo"></a>
+                    <a href=""><img src="/user/imgs/theme/logo.svg" alt="logo"></a>
                 </div>
-                <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
+                <div class="mobile-menu-close close-style-wrap close-style-position-inherit"  >
                     <button class="close-style search-close">
                         <i class="icon-top"></i>
                         <i class="icon-bottom"></i>
@@ -31,17 +31,7 @@
                     <!-- mobile menu start -->
                     <%- include('partials/navlogin') %>
                 </div>
-                <div class="mobile-header-info-wrap mobile-header-border">
-                    <div class="single-mobile-header-info mt-30">
-                        <a  href="page-contact.html"> Our location </a>
-                    </div>
-                    <div class="single-mobile-header-info">
-                        <a href="page-login-register.html">Log In / Sign Up </a>
-                    </div>
-                    <div class="single-mobile-header-info">
-                        <a href="#">(+01) - 2345 - 6789 </a>
-                    </div>
-                </div>
+               
                 <div class="mobile-social-icon">
                     <h5 class="mb-15 text-grey-4">Follow Us</h5>
                     <a href="#"><img src="/user/imgs/theme/icons/icon-facebook.svg" alt=""></a>
@@ -53,36 +43,45 @@
             </div>
         </div>
     </div>
-    <%- include('partials/headerlogin') %>
-    <% if (typeof(errors) !== 'undefined' && errors.length > 0) { %>
-        <div id="error-message" class="alert alert-danger">
-            <span>
-                <% errors.forEach(error => { %>
-                    <p><%= error %></p>
-                <% }); %>
-            </span>
-        </div>
-    <% } %>
+
+
+
   
-    <section class="pt-150 pb-150">
-        <div class="container d-flex justify-content-center mt-5 mb-5">
+    <section class="pt-150 pb-150 "  style="background-image: url('/user/imgs/theme/loginbg.jpg'); background-size: cover; background-repeat: no-repeat; margin-top: 0px;"  >
+        <div class="logincontainer container d-flex justify-content-center mt-5 mb-5" >
        
-                        <div class="col-lg-5">
-                            <div class="login_wrap widget-taber-content p-30 background-white border-radius-10 mb-md-5 mb-lg-0 mb-sm-5">
-                                <div class="padding_eight_all bg-white">
-                                    <div class="heading_s1">
+                        <div class="loginform" style="background-color: rgba(232, 232, 232, 0.459); "  >
+                            <div class="login_wrap widget-taber-content p-30 border-radius-10 mb-md-5 mb-lg-0 mb-sm-5" style="background-color: rgba(255, 255, 255, 0.596); box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);">
+                                <div class="padding_eight_all "  >
+                                    <div class="heading_s1" style="background-color: rgba(232, 232, 232, 0.459); "  >
                                         <h3 class="mb-30">Login</h3>
                                     </div>
-                                    <form method="post" action="/user/postLogin">
+
+                                    <div style="display: flex; justify-content: center; margin-top: 50px;">
+                                        <% if (typeof(errors) !== 'undefined' && errors.length > 0) { %>
+                                            <div id="error-message" class="alert" style="background-color: rgba(164, 4, 4, 0.444);  width: 400px; " >
+                                                <span>
+                                                    <% errors.forEach(error => { %>
+                                                        <p><%= error %></p>
+                                                    <% }); %>
+                                                </span>
+                                            </div>
+                                      
+                                        <% } %>
+                                    </div>
+
+                                    <form method="post" action="/user/postLogin"  style="background-color: rgba(232, 232, 232, 0.459); ">
                                         <div class="form-group">
                                             <input type="text"  name="email" placeholder="Your Email">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="password" placeholder="Password">
                                         </div>
-                                        <div class="login_footer form-group">
+                                        <div class="login_footer form-group" style="background-color: rgba(232, 232, 232, 0.459); "  >
                                             <p>Don't have an account? <a href="/user/getsignup">Sign up</a></p>
+                                         
                                             <a class="text-muted" href="/user/getForgotPassword">forgot password?</a>
+                                       
                                            
                                         </div>
                                         <div class="form-group">
@@ -101,7 +100,7 @@
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
                 <div class="text-center">
-                    <h5 class="mb-5">Now Loading</h5>
+                    <h5 class="mb-5">Get comfortable</h5>
                     <div class="loader">
                         <div class="bar bar1"></div>
                         <div class="bar bar2"></div>

@@ -1,7 +1,7 @@
 ﻿<%- include('partials/head') %>
 
 <body>
-    <%- include('partials/userproductgridheader') %>
+    <%- include('partials/header') %>
     <main class="main">
         <div class="page-header breadcrumb-wrap">
             <div class="container">
@@ -17,7 +17,7 @@
                     <div class="col-lg-9">
                         <div class="shop-product-fillter">
                             <div class="totall-product">
-                                <p> We found <strong class="text-brand">688</strong> items for you!</p>
+                                <p> We found some items for you!</p>
                             </div>
                             <div class="sort-by-product-area">
                                 <div class="sort-by-cover mr-10">
@@ -144,7 +144,7 @@
                         <div class="widget-category mb-30">
                             <h5 class="section-title style-1 mb-30 wow fadeIn animated">Category</h5>
                             <ul class="categories">
-                             
+                                  <li><a href="/user/shop">View all</a></li>
                                 <% category.forEach(category=>{%>
                                     <% if(category.published=== true){ %>
                                 <li><a href="/user/sortCategory?categoryName=<%=category.categoryName%>"><%=category.categoryName%></a></li>
@@ -288,6 +288,11 @@
                 </div>
             </div>
         </section>
+
+
+
+
+        
         <section class="section-padding footer-mid">
             <div class="container pt-15 pb-20">
                 <div class="row">

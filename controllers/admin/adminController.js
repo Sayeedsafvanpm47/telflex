@@ -6,8 +6,13 @@ const sendOtp = require("../../utils/generateAndSendOtp");
 const { isEmailValid, isPasswordValid } = require("../../utils/validators/signUpValidator");
 module.exports = {
 	getAdminLogin: async (req, res) => {
+		try {
+			await res.render("admin/admin/login");
+			
+		} catch (error) {
+			res.status(404).send('error occured')
+		}
 		
-		await res.render("admin/admin/login");
 	},
 	postAdminLogin: async (req, res) => {
 		const { email, password } = req.body;
