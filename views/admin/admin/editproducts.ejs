@@ -36,8 +36,7 @@
                                         <div class="mb-4">
                                             <label for="product_category" class="form-label">Product Category</label>
                                             <select class="form-control" id="product_category" value="<%= categories.categoryName %>" name="category">
-                                                <option value="">Select a Category
-                                                </option>
+                                              
                                                 <% categories.filter(category => category.published === true).forEach(category => { %>
                                                     <option value="<%= category.categoryName %>"><%= category.categoryName %></option>
                                                 <% }); %>
@@ -74,13 +73,15 @@
                                           <input type="text" value="" class="form-control" id="product_name" name="productdiscount">
                                         <% } %>
                                       </div>
+
+                                      
                                       
                                       <div class="mb-4">
-                                        <label for="product_name" class="form-label">Color</label>
-                                        <% if (products && products.cloth) { %>
-                                          <input type="text" value="<%= products.cloth %>" class="form-control" id="product_name" name="cloth">
+                                        <label for="product_name" class="form-label">Features</label>
+                                        <% if (products && products.features) { %>
+                                          <input type="text" value="<%= products.features %>" class="form-control" id="product_name" name="features">
                                         <% } else { %>
-                                          <input type="text" value="" class="form-control" id="product_name" name="cloth">
+                                          <input type="text" value="" class="form-control" id="product_name" name="features">
                                         <% } %>
                                       </div>
                                       

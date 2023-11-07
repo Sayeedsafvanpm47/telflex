@@ -19,6 +19,16 @@
                             <h4>Product Info</h4>
                         </div>
                         <div class="card-body">
+                            <% if (typeof(errors) !== 'undefined' && errors.length > 0) { %>
+                                <div id="error-message" style="background-color: rgba(255, 23, 23, 0.215); border-radius: 10px;">
+                                    <span>
+                                        <% errors.forEach(error => { %>
+                                            <p style="color: red;"><%= error %></p>
+                                        <% }); %>
+                                    </span>
+                                </div>
+                            <% } %>
+
                             <form action="/admin/saveProducts" method="Post" enctype="multipart/form-data">
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Product title</label>
@@ -52,23 +62,20 @@
                                 </div>
                               
 
-                                <div class="mb-4">
-                                    <label for="product_name" class="form-label">Cloth</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="product_name" name="cloth">
-                                </div>
+              
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Model</label>
                                     <input type="text" placeholder="Type here" class="form-control" id="product_name" name="model">
                                 </div>
                                 <div class="mb-4">
-                                    <label for="product_name" class="form-label">Feature</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="product_name" name="feature">
+                                    <label for="product_name" class="form-label">Features</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="product_name" name="features" >
                                 </div>
                               
                                
                                 <div class="mb-4">
                                     <label class="form-label">Full description</label>
-                                    <textarea placeholder="Type here" class="form-control" rows="4" name="description"></textarea>
+                                    <textarea placeholder="Type here" class="form-control" rows="4" name="description" ></textarea>
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Short description</label>
@@ -77,7 +84,7 @@
                                 <div class="d-grid">
                                     <label for="file-upload" class="custom-file-upload">
                                         <img src="/admin/imgs/theme/upload.svg" alt="Upload Image">
-                                    <input type="file" name="images" class="form-control" accept="image/*" multiple>
+                                    <input type="file" name="images" class="form-control" accept="image/*" multiple >
                                 </div>
                               
                                 <div class="d-grid">

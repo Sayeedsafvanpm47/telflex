@@ -14,6 +14,14 @@ module.exports = {
 		}
 		
 	},
+	adminHome:async (req,res)=>{
+		try {
+			res.render('admin/admin/home')
+		} catch (error) {
+			res.status(404).send('error occured')
+		}
+	}
+	,
 	postAdminLogin: async (req, res) => {
 		const { email, password } = req.body;
 		const errors = [];
@@ -39,7 +47,7 @@ module.exports = {
 				const passCheck = await bcrypt.compare(password, user.password);
 				if (user.isAdmin === true && passCheck) {
 					console.log(user.isAdmin);
-					res.send("Welcome admin");
+					res.redirect('/admin/home')
 				} else {
 					errors.push("Invalid credentials");
 					res.render("admin/admin/login", { errors });

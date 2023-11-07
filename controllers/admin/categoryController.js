@@ -73,18 +73,11 @@ editCategory: async (req, res) => {
 		  res.send('Error occurred');
 		}
 	        }
-	        , unlistToggle : async (req,res)=>{
-		const categoryId = req.query.categoryId
-		const category = await categoryModel.findOne({_id:categoryId})
-		category.published = 'false'
-		await category.save()
-		
-		res.redirect('/admin/createCategory')
-	        },
+	        ,
 	        listToggle : async (req,res)=>{
 		const categoryId = req.query.categoryId
 		const category = await categoryModel.findOne({_id:categoryId})
-		category.published = 'true'
+		category.published = !category.published
 		await category.save()
 		res.redirect('/admin/createCategory')
 	        }

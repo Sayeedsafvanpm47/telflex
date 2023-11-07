@@ -1,22 +1,21 @@
 <%- include('partials/head') %>
 <body style="background-image: url('/admin/imgs/adminlogin.jpg');"   >
-    <main>
+
     
       
-        <section class="content-main mt-80 mb-80" >
-            <div class="card mx-auto card-login">
-                <div class="">
+    <div class="container" style="margin-top: 10%; border-radius: 25px; height: 400px; width: 500px; background-color: rgba(250, 235, 215, 0.414);" >
                     <h4 class="card-title mb-4">Login As Admin</h4>
                     
         <% if (typeof(errors) !== 'undefined' && errors.length > 0) { %>
-            <div id="error-message" class="alert alert-danger">
+            <div id="error-message" style="background-color: rgba(255, 23, 23, 0.215); border-radius: 10px;">
                 <span>
                     <% errors.forEach(error => { %>
-                        <p><%= error %></p>
+                        <p style="color: red;"><%= error %></p>
                     <% }); %>
                 </span>
             </div>
         <% } %>
+
                     <form  method="post" action="/admin/postLogin">
                         <div class="mb-3">
                             
@@ -28,24 +27,16 @@
                           
                         </div> <!-- form-group// -->
                         <div class="mb-3">
-                            <a href="/admin/getForgotPassword" class="float-end font-sm text-muted">Forgot password?</a>
+                            <a href="/admin/getForgotPassword" class="float-end font-sm text-danger">Forgot password?</a>
                          
                         </div> <!-- form-group form-check .// -->
                         <div class="mb-4">
                             <button type="submit" class="btn btn-primary w-100"> Login </button>
                         </div> <!-- form-group// -->
                     </form>
-                 
-        </section>
-        <footer class="main-footer text-center">
-            <p class="font-xs">
-                <script>
-                document.write(new Date().getFullYear())
-                </script> ©, Evara - HTML Ecommerce Template .
-            </p>
-            <p class="font-xs mb-30">All rights reserved</p>
-        </footer>
-    </main>
+                </div>
+ 
+    
     <%- include('partials/script') %>
     <script src="/scripts/hideerror.js"></script>
 </body>

@@ -31,8 +31,8 @@ let productSchema = new mongoose.Schema({
 	productDiscount: {
 		type: Number,
 		default: 0
-	},  category: { type: String,
-		ref: 'categories'},
+	},  category: { type: String},
+		
 	
 	
 	
@@ -44,7 +44,7 @@ let productSchema = new mongoose.Schema({
 	},
 	
 	isFeatured: {
-		type: Boolean
+		type: String
 	},
 
 	images:{

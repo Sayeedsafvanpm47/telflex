@@ -7,12 +7,15 @@ module.exports = {
 			const categories = await categoryModel.find({});
 			res.render("admin/admin/addproducts", { categories });
 		} catch (error) {
-			res.send("couldnt fetch");
+			res.status(404).send('erorr');
 		}
 	},
 	addProducts: async (req, res) => {
+		const errors = []
+		const categories = await categoryModel.find({});
 		try {
 			const sizes = [];
+			
 			for (let i = 0; req.body[`size_${i}`] && req.body[`productprice_${i}`] && req.body[`stock_${i}`]; i++) {
 				sizes.push({
 					size: req.body[`size_${i}`],
@@ -21,30 +24,35 @@ module.exports = {
           ,mrp : req.body[`mrp_${i}`]
 				});
 			}
-			const { productname, productprice, productdiscount, stock, cloth, size, model, feature, description, shortdescription, category } =
+			const { productname, productdiscount,  model, feature, description, shortdescription, category } =
 				req.body;
 
 			if (
-				(productname ||
+				(!productname || !category || !sizes ||
 				
-					productdiscount ||
+					!productdiscount ||
 		
-					cloth ||
-			
-					model ||
-					feature ||
-					description ||
-					shortdescription ||
-					category) === ""
+					
+					!model ||
+					!feature ||
+					!description ||
+					!shortdescription ||
+					!category)
 			) {
-				res.send("fields should not be empty");
+				errors.push('fields must be properly filled')
+				res.render("admin/admin/addproducts", { errors , categories});
 			}
+else if(!req.files || !req.files.images || req.files.images.length === 0) {
+	errors.push('select an image')
+				res.render("admin/admin/addproducts", { errors , categories});
+}
 
+else{
 			const products = await new productModel({
 				productName: productname,
 				productDiscount: productdiscount,
 
-				cloth: cloth,
+				
 				model: model,
 				category: category,
 
@@ -58,8 +66,11 @@ module.exports = {
 
 			await products.save();
 			res.redirect("/admin/addproducts");
+		}
 		} catch (error) {
 			console.log(error);
+			errors.push('some error occured')
+				res.render("admin/admin/addproducts", { errors,categories });
 		}
 	},
 	editProductsView: async (req, res) => {
@@ -74,7 +85,12 @@ module.exports = {
 		} catch (error) {
 			req.session.isProduct = _id;
 			console.log(_id);
-			res.send("couldnt fetch");
+			res.status(404).send('error')
+			if (error.errors) {
+				Object.keys(error.errors).forEach(field => {
+				    console.log(`Validation error for field '${field}': ${error.errors[field].message}`);
+				});
+			      }
 		}
 	},
 	editProducts: async (req, res) => {
@@ -85,7 +101,7 @@ module.exports = {
 			
 				productdiscount,
 	
-				cloth,
+				
 		
 				model,
 				mrp,
@@ -109,7 +125,7 @@ module.exports = {
     
 			result.productName = productname;
 			(result.productDiscount = productdiscount),
-				(result.cloth = cloth),
+				
 				(result.model = model),
 				(result.category = category),
 				(result.description = description),

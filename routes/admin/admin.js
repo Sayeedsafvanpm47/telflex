@@ -13,6 +13,7 @@ const controllerCategory = require("../../controllers/admin/categoryController")
 const controllerProducts = require('../../controllers/admin/productController');
 const productModel = require("../../models/productModel");
 
+// admin
 router.get("/", controller.getAdminLogin);
 router.post("/postLogin", controller.postAdminLogin);
 router.get("/getForgotPassword", controller.getForgotPassAdmin);
@@ -20,6 +21,10 @@ router.post("/forgotPassword", controller.postForgotPassAdmin);
 router.post("/verifyOtp", controller.verifyOtp);
 router.post("/updatePass", controller.updatePass);
 router.post("/resendOtp", controller.resendOtp);
+router.get('/home',controller.adminHome)
+
+
+// customer management
 router.get("/viewCustomers", controllerUserManage.viewCustomers);
 router.get("/editCustomers", controllerUserManage.editCustomers);
 router.post("/updateUser", controllerUserManage.updateUser);
@@ -29,14 +34,14 @@ router.get("/searchView", controllerUserManage.searchView);
 router.post("/sortUser", controllerUserManage.sortUser);
 router.get("/sortUserView", controllerUserManage.sortUserView);
 
-
+// product and category management
 router.get("/createCategory", controllerCategory.createCategory);
 router.post("/submitCategory", controllerCategory.submitCategory);
 router.get('/viewEditCategory',controllerCategory.viewEditCategory)
 router.post('/editCategory',controllerCategory.editCategory)
 router.get('/deleteCategory',controllerCategory.deleteCategory)
 router.get('/toggleList',controllerCategory.listToggle)
-router.get('/toggleunList',controllerCategory.unlistToggle)
+
 router.get('/addproducts',controllerProducts.addProductsView)
 router.post('/saveproducts',upload.array('images'),controllerProducts.addProducts)
 router.get('/viewproducts',controllerProducts.viewProducts)
@@ -51,9 +56,7 @@ router.get('/deleteProducts',controllerProducts.deleteProducts)
 router.get('/error',(req,res)=>{
           res.render('admin/admin/error')
 })
-router.get('/home',(req,res)=>{
-          res.render('admin/admin/home')
-})
+
 router.get('/login',(req,res)=>{
           res.render('admin/admin/login')
 })
