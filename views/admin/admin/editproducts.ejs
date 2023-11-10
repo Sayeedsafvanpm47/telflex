@@ -5,6 +5,16 @@
         <%- include('partials/aside') %>
         <main class="main-wrap">
             <%- include('partials/header') %> 
+<% if(errors){ %>
+  
+  <div id="error-message" class="alert alert-danger" role="alert">
+  Failed to update product, fill in details properly!
+</div>
+ 
+  <% } %>
+           
+          
+
             <section class="content-main">
                 <div class="row">
                     <div class="col-9">
@@ -78,8 +88,8 @@
                                       
                                       <div class="mb-4">
                                         <label for="product_name" class="form-label">Features</label>
-                                        <% if (products && products.features) { %>
-                                          <input type="text" value="<%= products.features %>" class="form-control" id="product_name" name="features">
+                                        <% if (products && products.isFeatured) { %>
+                                          <input type="text" value="<%= products.isFeatured %>" class="form-control" id="product_name" name="features">
                                         <% } else { %>
                                           <input type="text" value="" class="form-control" id="product_name" name="features">
                                         <% } %>
@@ -98,9 +108,9 @@
                                         <label for="product_name" class="form-label">Description</label>
                                         <% if (products && products.description){ %>
                                          
-                                           <textarea name="description" id="product_name" class="form-control" cols="30" rows="10"><%= products.description %></textarea>
+                                           <textarea name="description" id="dynamicTextArea" class="form-control" cols="30" rows="10"><%= products.description %></textarea>
                                         <% } else { %>
-                                          <textarea name="description" id="product_name" class="form-control" cols="30" rows="10"></textarea>
+                                          <textarea name="description" id="dynamicTextArea" class="form-control" cols="30" rows="10"></textarea>
                                         <% } %>
                                       </div>
                                       <div class="mb-4">
@@ -118,7 +128,7 @@
                                 
                                 
                                   
-                                
+                                <p>Click to delete the images, once pressed, cannot be reverted!</p>
                                     
                                       <% if (products && products.images && products.images.length > 0) { %>
                                         <% for (let i = 0; i < products.images.length; i++) { %>
@@ -158,9 +168,8 @@
         </main>
         <%- include('partials/script') %>
 
-
+<script src="/scripts/hideerror.js"></script>
      
-        
 
         
     </body>

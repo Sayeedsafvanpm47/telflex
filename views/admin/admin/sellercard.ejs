@@ -6,49 +6,36 @@
         <%- include('partials/header') %> 
         <section class="content-main">
             <div class="content-header">
-                <h2 class="content-title">Sellers cards</h2>
-                <div>
-                    <a href="#" class="btn btn-primary"><i class="material-icons md-plus"></i> Create new</a>
-                </div>
+                <h2 class="content-title">Manage Customers</h2>
+            
             </div>
             <div class="card mb-4">
                 <header class="card-header">
                     <div class="row gx-3">
                         <div class="col-lg-4 col-md-6 me-auto">
-                            <input type="text" placeholder="Search..." class="form-control">
+                            <form action="/admin/searchUser" method="POST">
+                            <input type="text" placeholder="Search..." class="form-control" name="searchTerm">
+                        </form>
                         </div>
-                        <div class="col-lg-2 col-6 col-md-3">
-                            <select class="form-select">
-                                <option>Show 20</option>
-                                <option>Show 30</option>
-                                <option>Show 40</option>
-                                <option>Show all</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-2 col-6 col-md-3">
-                            <select class="form-select">
-                                <option>Status: all</option>
-                                <option>Active only</option>
-                                <option>Disabled</option>
-                            </select>
-                        </div>
+                       
                     </div>
                 </header> <!-- card-header end// -->
-                <form action="/admin/searchUser" method="POST">
-                    <input type="search" name="searchTerm">
-                    <button type="submit" class="btn btn-warning btn-lg">search</button>
-                   </form>
+             
                    <form action="/admin/sortUser" method="POST">
-                    <select name="sortingLogic" onchange="this.form.submit()">
+                    <div class="col-lg-2 col-6 col-md-3">
+                    <select class="form-select mt-20" style="margin-left: 20px;" name="sortingLogic" onchange="this.form.submit()">
+                        <option value="">Sort</option>
                       <option value="alphaplus">A-Z</option>
                       <option value="alphaminus">Z-A</option>
                       <option value="admin">Admin</option>
                       <option value="blocked">Blocked</option>
                     </select>
+                </div>
                   </form>
                   
-                    <p>Manage the customers</p>
-                    <table class="table">
+                  <div style="overflow-x: auto;">
+                    <table class="table table-striped table-bordered mt-20" 
+                    width="100%">
                               <thead>
                                         <tr class="transparent-hd">
 
@@ -58,7 +45,7 @@
                                                   <th scope="col">Phone Number</th>
                                                   <th scope="col">Admin</th>
                                                   <th scope="col">Blocked</th>
-                                                  <th scope="col">Edit User</th>
+                                           
                                                   <th scope="col">Block User</th>
                                         </tr>
                               </thead>
@@ -85,7 +72,7 @@
                                                               </td>
                                                               
                                                             
-                                                            <td><a href="/admin/editCustomers?email=<%= item.email %>"><i class="fas fa-edit text-warning"></i></a></td> 
+                                                           
                                                                   
                                                                   <td>
                                                                       <a href="/admin/blockUser?email=<%= item.email%>"><i class="fa-solid fa-trash text-danger"></i></a>
@@ -95,35 +82,14 @@
                                         </tbody>
                            
                               </table>
-            <div class="pagination-area mt-15 mb-50">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-start">
-                        <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                        <li class="page-item"><a class="page-link" href="#">02</a></li>
-                        <li class="page-item"><a class="page-link" href="#">03</a></li>
-                        <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">16</a></li>
-                        <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
-                    </ul>
-                </nav>
-            </div>
+                              </div>
+           
         </section> <!-- content-main end// -->
-        <footer class="main-footer font-xs">
-            <div class="row pb-30 pt-15">
-                <div class="col-sm-6">
-                    <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-                    document.write(new Date().getFullYear())
-                    </script> ©, Evara - HTML Ecommerce Template .
-                </div>
-                <div class="col-sm-6">
-                    <div class="text-sm-end">
-                        All rights reserved
-                    </div>
-                </div>
-            </div>
-        </footer>
+
     </main>
     <%- include('partials/script') %>
+
+   
 </body>
 
 

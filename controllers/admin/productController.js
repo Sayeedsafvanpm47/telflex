@@ -1,6 +1,7 @@
 const productModel = require("../../models/productModel");
 const categoryModel = require("../../models/categoryModel");
 
+
 module.exports = {
 	addProductsView: async (req, res) => {
 		try {
@@ -24,7 +25,7 @@ module.exports = {
           ,mrp : req.body[`mrp_${i}`]
 				});
 			}
-			const { productname, productdiscount,  model, feature, description, shortdescription, category } =
+			const { productname, productdiscount,  model, features, description, shortdescription, category } =
 				req.body;
 
 			if (
@@ -34,23 +35,21 @@ module.exports = {
 		
 					
 					!model ||
-					!feature ||
+					!features ||
 					!description ||
 					!shortdescription ||
-					!category)
+					!category ||req.files.length === 0)
 			) {
 				errors.push('fields must be properly filled')
 				res.render("admin/admin/addproducts", { errors , categories});
 			}
-else if(!req.files || !req.files.images || req.files.images.length === 0) {
-	errors.push('select an image')
-				res.render("admin/admin/addproducts", { errors , categories});
-}
+
 
 else{
 			const products = await new productModel({
 				productName: productname,
 				productDiscount: productdiscount,
+				isFeatured : features,
 
 				
 				model: model,
@@ -75,22 +74,20 @@ else{
 	},
 	editProductsView: async (req, res) => {
 		try {
+			
 			const _id = req.query._id;
-
+const errors = req.query.errors
 			const categories = await categoryModel.find({});
 
 			const products = await productModel.findById(_id);
 		
-			res.render("admin/admin/editproducts", { categories, products, _id });
+			res.render("admin/admin/editproducts", { categories, products, _id ,errors});
+		
 		} catch (error) {
 			req.session.isProduct = _id;
 			console.log(_id);
 			res.status(404).send('error')
-			if (error.errors) {
-				Object.keys(error.errors).forEach(field => {
-				    console.log(`Validation error for field '${field}': ${error.errors[field].message}`);
-				});
-			      }
+			
 		}
 	},
 	editProducts: async (req, res) => {
@@ -101,7 +98,7 @@ else{
 			
 				productdiscount,
 	
-				
+				features,
 		
 				model,
 				mrp,
@@ -110,7 +107,15 @@ else{
 				category
 			} = req.body;
 
+if(!productname || !productdiscount || !features || !model ||  !description || !shortdescription || !category)
+{
+	
+	res.redirect('/admin/editProductsView?_id='+_id+'&errors=true')
+	
+	
+	
 
+}else {
 			let result = await productModel.findById(_id);
 			console.log(result);
 			if (req.files.length !== 0) {
@@ -125,7 +130,7 @@ else{
     
 			result.productName = productname;
 			(result.productDiscount = productdiscount),
-				
+				(result.isFeatured = features),
 				(result.model = model),
 				(result.category = category),
 				(result.description = description),
@@ -161,6 +166,7 @@ else{
 			}
 
 			res.redirect("/admin/viewProducts");
+		}
 		} catch (error) {
 			console.error(error);
 			res.status(500).send("Error updating product");
@@ -211,27 +217,24 @@ else{
 	},
 	viewProducts: async (req, res) => {
 		try {
-			const categories = await categoryModel.find({});
-
-			
-			const selectedCategory = req.query.category;
-
-			let products;
-
-			if (selectedCategory) {
-			
-				products = await productModel.find({ category: selectedCategory });
-			} else {
-
-				products = await productModel.find({});
-			}
-
-			await res.render("admin/admin/viewProducts", { products, categories, selectedCategory });
+		  const categories = await categoryModel.find({});
+		  const selectedCategory = req.query.category;
+		  let products;
+	        
+		  if (selectedCategory) {
+		    products = await productModel.find({ category: selectedCategory });
+		  } else {
+		    products = await productModel.find({});
+		  }
+	        
+		  // Render your view with the filtered products.
+		  res.render("admin/admin/viewProducts", { products, categories, selectedCategory });
 		} catch (error) {
-			console.error(error);
-			res.send("Error");
+		  console.error(error);
+		  res.send("Error");
 		}
-	},
+	        },
+	        
 	searchProducts: async (req, res) => {
 		try {
 			const { searchTerm } = req.body;

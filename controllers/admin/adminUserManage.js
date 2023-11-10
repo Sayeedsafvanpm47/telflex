@@ -5,21 +5,21 @@ module.exports = {
 		const user = await userModel.find({});
 		res.render("admin/admin/sellercard", { user });
 	},
-	editCustomers: async (req, res) => {
-		try {
-			const { email } = req.query;
-			const user = await userModel.findOne({ email });
+	// editCustomers: async (req, res) => {
+	// 	try {
+	// 		const { email } = req.query;
+	// 		const user = await userModel.findOne({ email });
 
-			if (!user) {
-				return res.status(404).send("User not found");
-			}
+	// 		if (!user) {
+	// 			return res.status(404).send("User not found");
+	// 		}
 
-			res.render("admin/admin/editCustomer", { user });
-		} catch (error) {
-			console.error("Error:", error);
-			res.status(500).send("Internal Server Error");
-		}
-	},
+	// 		res.render("admin/admin/editCustomer", { user });
+	// 	} catch (error) {
+	// 		console.error("Error:", error);
+	// 		res.status(500).send("Internal Server Error");
+	// 	}
+	// },
 	updateUser: async (req, res) => {
 		const { email } = req.body;
 

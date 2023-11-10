@@ -3,6 +3,7 @@ const router = express.Router();
 
 const controller = require("../../controllers/user/userController");
 const productController = require('../../controllers/user/userProductController')
+const cartController = require('../../controllers/user/userCartController')
 
 router.get("/", controller.getLogin);
 router.post("/postLogin", controller.postLogin);
@@ -14,14 +15,21 @@ router.post("/verifyOtp", controller.verifyOTP);
 router.get("/getForgotPassword", controller.getForgotPassword);
 router.post("/forgotPassword", controller.forgotPassword);
 router.post("/updatePass", controller.updatePass);
+router.get('/account',controller.userAccount)
+router.post('/updateAccount',controller.updateAccount)
+
+
 router.get('/shop',productController.productGridView)
 router.get('/sortCategory',productController.sortProducts)
 router.post('/sortPrice',productController.sortPrice)
 router.post('/searchProducts',productController.searchProducts)
 router.get('/productdetail',productController.productdetail)
-
 router.get('/showPrice',productController.showPrice)
 
+
+router.post('/addToCart',cartController.addToCart)
+router.get('/showCart',cartController.showCart)
+router.get('/deleteCart',cartController.deleteCart)
 
 router.get('/blog',(req,res)=>{
           res.render('user/user/blog')

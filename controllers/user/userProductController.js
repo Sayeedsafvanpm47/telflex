@@ -7,26 +7,20 @@ module.exports = {
                     const products = await productModel.find({})
                     const category = await categoryModel.find({})
                   
-                    const viewAll = ''
+                    
                     const relatedProducts = ''
 
 
-       if(req.session.priceSort)
-        {
-          const products = req.session.price
-          {
-                    res.render('user/user/shopgrid',{products,category,viewAll,relatedProducts})
-          }
-        }
-        else if(req.session.search)
+   
+       if(req.session.search)
         {
           const products = req.session.searchProducts
          
-          res.render('user/user/shopgrid',{products,category,viewAll,relatedProducts})
+          res.render('user/user/shopgrid',{products,category,relatedProducts})
         }
         
         else{
-          res.render('user/user/shopgrid',{products,category,viewAll,relatedProducts})
+          res.render('user/user/shopgrid',{products,category,relatedProducts})
         }
                    
           },
@@ -44,12 +38,15 @@ module.exports = {
                   
                      
                       const products = await productModel.find({ category: categoryName});
-                      const viewAll = await productModel.find({})
+                      
+                      
+                      
+                      
                     
 
                      
                   
-                       res.render('user/user/shopgrid',{products,category,viewAll})
+                       res.render('user/user/shopgrid',{products,category})
                   
                     
                  
@@ -63,15 +60,20 @@ module.exports = {
                   },
                   sortPrice: async (req, res) => {
                     const { sortingLogic } = req.body;
-                    let sort;
+                  
+                    const category = await categoryModel.find({})
+                 
+                    
+                    const relatedProducts = ''
+                    let products;
                     if(sortingLogic === 'noprice'){
-                              sort = await productModel.find({})
+                              products = await productModel.find({})
                     }         
                   
                     else if (sortingLogic === 'price1') {
                               let minprice = +0
                               let maxprice = +5000
-                      sort = await productModel.find({
+                      products = await productModel.find({
                         
 
                         'size.productPrice': { $gte: minprice, $lte: maxprice }
@@ -81,36 +83,30 @@ module.exports = {
                      
                               let minprice = +5001
                               let maxprice = +20000
-                      sort = await productModel.find({
+                      products = await productModel.find({
                               'size.productPrice': { $gte: minprice, $lte: maxprice }
                       });
-                      console.log(sort)
-                      sort = sort.filter((item)=>{
-                        const arr = item.size
-                        if(arr[0].productPrice>minprice && arr[0].productPrice<maxprice){
-                          return item
-                        }
-                      })
+                     
+                   
+                     
                     }
                     else if (sortingLogic === 'price3') {
                               let minprice = +20001
                               let maxprice = +40000
-                              sort = await productModel.find({
+                              products = await productModel.find({
                                         'size.productPrice': { $gte: minprice, $lte: maxprice }
                               });
                             }
                             else if (sortingLogic === 'price4') {
                               let minprice = +40001
                              
-                              sort = await productModel.find({
+                              products = await productModel.find({
                                 'size.productPrice': { $gte: minprice }
                               });
                             }
-                    console.log("Sorting Logic: ", sortingLogic);
-                    console.log("Products: ", sort);
-                    req.session.priceSort = true;
-                    req.session.price = sort; 
-                    res.redirect('/user/shop');
+                console.log(products)
+                    
+                    res.render('user/user/shopgrid',{products,category,relatedProducts})
                   }
                   ,
                   searchProducts : async (req,res)=>{
@@ -121,7 +117,7 @@ module.exports = {
                     });
                  
                   
-                    req.session.results = results
+                   
                     req.session.search = true
                     req.session.searchProducts = products
                     res.redirect('/user/shop')
@@ -143,6 +139,7 @@ module.exports = {
                     let product =await productModel.findById(req.query.id)
                     res.status(200).json({product})
                   },
+                
                   
                   
 

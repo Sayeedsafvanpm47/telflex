@@ -47,12 +47,14 @@
                                     <!-- End Gallery -->
                                 </div>
                                 <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <form action="/user/addToCart" method="post">
+                                        <input name="_id" value="<%= products._id%>" hidden>
                                     <div class="detail-info">
-                                        <h2 class="title-detail"><%= products.productName%></h2>
-                                        <h4 class="title-detail"><%= products.shortDescription%></h2>
+                                        <input class="title-detail" name="productname" value="<%= products.productName%>" hidden>  <h2 class="title-detail"><%= products.productName%></h2>
+                                       <h4 class="title-detail"><%= products.shortDescription%></h2>
                                         <div class="product-detail-rating">
                                             <div class="pro-details-brand">
-                                                <span> Category: <a href="/user/sortCategory?categoryName=<%=products.category%>"><%= products.category  %></a></span>
+                                                <input class="title-detail" name="category" value="<%= products.category%>" hidden>   <span> Category: <a href="/user/sortCategory?categoryName=<%=products.category%>"><%= products.category  %></a></span>
                                             </div>
                                             <div class="product-rate-cover text-end">
                                                 <div class="product-rate d-inline-block">
@@ -66,10 +68,16 @@
                                            
                                                 
                                             <div class="product-price primary-color float-left">
-                                                <ins><span class="fs-1" id="sizeView"> <%= products.size[0].size %>   </span></ins> <br>
-                                                <ins> <span class="text-brand"> sale price : &#8377;</span><span class="text-brand" id="priceView"> <%= products.size[0].productPrice %>   </span></ins>
-                                              <br>  <ins><span style="text-decoration: line-through;" class="text-muted fs-4"  >mrp : &#8377;</span> <span style="text-decoration: line-through;" class="text-muted fs-4"  id="mrpView"><%= products.size[0].mrp  %></span></ins>
-                                             <br><span>In Stock:</span>   <span class="save-price font-md color3 ml-15" id="stockView"><%= products.size[0].stock %></span>
+                                                <input  name="size" type="text" id="sizeView" class="text-brand" value="" hidden>
+                                                <ins> <span class="text-brand"> size :</span><span class="text-brand" id="sizeView2"> <%= products.size[0].size %>   </span></ins> <br>
+                                                <input  name="price" type="text" id="priceView" class="text-brand" value="" hidden>
+                                                      <ins> <span class="text-brand"> sale price : &#8377;</span><span class="text-brand" id="priceView2"> <%= products.size[0].productPrice %>   </span></ins>
+                                                      <input  name="mrp" type="text" id="mrpView" class="text-brand" value="" hidden>
+                                              <br> <ins><span style="text-decoration: line-through;" class="text-muted fs-4"  >mrp : &#8377;</span> <span style="text-decoration: line-through;" class="text-muted fs-4"  id="mrpView2"><%= products.size[0].mrp  %></span></ins>
+                                             
+                                              &nbsp;  <input name="discount" class="title-detail" value="<%= products.productDiscount%>" hidden>   <span class="text-muted fs-4"  id="mrpView"><%= products.productDiscount  %>% off</span></ins>
+                                              <input  name="stock" type="text" id="stockView" class="text-brand" value="" hidden>
+                                             <br><span>In Stock:</span>     <span class="save-price font-md color3 ml-15" id="stockView2"><%= products.size[0].stock %></span>
                                               </div>
                                               
                                         </div>
@@ -107,16 +115,15 @@
                                           </div>
                                         <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                                         <div class="detail-extralink">
-                                            <div class="detail-qty border radius">
-                                                <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                                <span class="qty-val">1</span>
-                                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                            </div>
+                                          
+                                                <input type="number" name="quantity" value="1" min="0">
+                                         
                                             <div class="product-extra-link2">
                                                 <button type="submit" class="button button-add-to-cart">Add to cart</button>
                                                 <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
                                                 <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
                                             </div>
+                                        </form>
                                         </div>
                                         <ul class="product-meta font-xs color-grey mt-50">
                                             <li class="mb-5">SKU: <a href="#">FWM15VKT</a></li>
@@ -140,17 +147,28 @@
                                             <li><span>Raw Material</span>Petroleum foam sheets, rubberized coir, spring</li>
                                             
                                         </ul>
-                                        <hr class="wp-block-separator is-style-dots">
-                                        <p>Laconic overheard dear woodchuck wow this outrageously taut beaver hey hello far meadowlark imitatively egregiously hugged that yikes minimally unanimous pouted flirtatiously as beaver beheld above forward
-                                            energetic across this jeepers beneficently cockily less a the raucously that magic upheld far so the this where crud then below after jeez enchanting drunkenly more much wow callously irrespective limpet.</p>
+                                      
                                         <h4 class="mt-30">Packaging & Delivery</h4>
                                         <hr class="wp-block-separator is-style-wide">
-                                        <p>Less lion goodness that euphemistically robin expeditiously bluebird smugly scratched far while thus cackled sheepishly rigid after due one assenting regarding censorious while occasional or this more crane
-                                            went more as this less much amid overhung anathematic because much held one exuberantly sheep goodness so where rat wry well concomitantly.
-                                        </p>
-                                        <p>Scallop or far crud plain remarkably far by thus far iguana lewd precociously and and less rattlesnake contrary caustic wow this near alas and next and pled the yikes articulate about as less cackled dalmatian
-                                            in much less well jeering for the thanks blindly sentimental whimpered less across objectively fanciful grimaced wildly some wow and rose jeepers outgrew lugubrious luridly irrationally attractively
-                                            dachshund.
+                                        <p><strong>Packaging:</strong>
+
+                                            <br> Quality Assurance: <br> Before your mattress is prepared for shipping, it undergoes a thorough quality inspection. We make sure it meets our high standards for comfort, durability, and cleanliness.
+                                        
+                                            <br>   Vacuum Sealed: <br> To make the mattress more manageable for shipping, we use state-of-the-art vacuum-sealing technology. This reduces its size without compromising on quality.
+                                        
+                                            <br> Protection Layers: <br> Your mattress is wrapped in protective layers to safeguard it during transit. This extra care ensures that it reaches you in the same pristine condition as when it left our facility.
+                                        <br>
+                                       <strong>Delivery:</strong>
+                                        
+                                       <br> Fast and Reliable: <br> We understand that you're eager to experience a better night's sleep. That's why we partner with trusted delivery services to bring your mattress to your door as quickly as possible.
+                                        
+                                       <br> Real-Time Tracking: <br> Stay informed about the status of your delivery with real-time tracking. You'll receive notifications about the progress of your order from the moment it's dispatched until it reaches your home.
+                                        
+                                       <br> Contactless Delivery: <br> In consideration of your safety and convenience, our delivery partners offer contactless delivery options. You can receive your mattress without physical contact, providing peace of mind.
+                                        
+                                       <br> White-Glove Delivery (Optional): <br> For those who prefer extra assistance, we offer an optional white-glove delivery service. Our professionals will not only deliver your mattress but also set it up in your bedroom, ensuring you're ready for a comfortable night's sleep.
+                                        
+                                       <br> Environmentally Conscious: <br> We are committed to sustainability. Our packaging materials are eco-friendly, and we strive to minimize our carbon footprint in every aspect of our operations.
                                         </p>
                                     </div>
                                     
@@ -350,8 +368,8 @@
                                                         </span>
                                                     </div>
                                                     <div class="product-price">
-                                                        <span><%= items.size[0].productPrice%> </span>
-                                                        <span class="old-price"><%items.size[0].mrp  %></span>
+                                                     sale price: &#8377;<span><%= items.size[0].productPrice%> </span>
+                                                       <br> mrp: &#8377; <span class="old-price"><%=items.size[0].mrp  %></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -483,7 +501,7 @@
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
                 <div class="text-center">
-                    <h5 class="mb-5">Now Loading</h5>
+                    <h5 class="mb-5">Get Comfortable...</h5>
                     <div class="loader">
                         <div class="bar bar1"></div>
                         <div class="bar bar2"></div>
@@ -520,10 +538,16 @@
     
     <script>
          async  function show(sizeIndex,id) {
-            const price = document.getElementById('priceView');
+            const price2 = document.getElementById('priceView2');
+  const mrp2 = document.getElementById('mrpView2');
+  const stock2 = document.getElementById('stockView2');
+  const size2 = document.getElementById('sizeView2')
+  const size = document.getElementById('sizeView')
+  const price = document.getElementById('priceView');
   const mrp = document.getElementById('mrpView');
   const stock = document.getElementById('stockView');
-  const size = document.getElementById('sizeView')
+
+  var sizeVal;
 
             fetch('/user/showPrice?id='+id,{method:'get'}).then((response)=>{
            
@@ -531,14 +555,24 @@
             response.json().then((res)=>{
                 
                 console.log(res.product.productName);
-                price.innerText = res.product.size[sizeIndex].productPrice
-                mrp.innerText = res.product.size[sizeIndex].mrp
-                stock.innerText = res.product.size[sizeIndex].stock
-                size.innerText = res.product.size[sizeIndex].size
+                price.value = res.product.size[sizeIndex].productPrice
+                mrp.value = res.product.size[sizeIndex].mrp
+                stock.value = res.product.size[sizeIndex].stock
+                size.value = res.product.size[sizeIndex].size
+size2.innerText = res.product.size[sizeIndex].size
+price2.innerText = res.product.size[sizeIndex].productPrice
+                mrp2.innerText = res.product.size[sizeIndex].mrp
+                stock2.innerText = res.product.size[sizeIndex].stock
+               
+
                 
+             
+             
             })
           }
            })
+           const sizeInp = document.getElementById('sizeinp')
+           sizeInp.value = sizeVal
          
         //     console.log(products.size.length);
         //   const price = document.getElementsByName('priceView')[sizeIndex];

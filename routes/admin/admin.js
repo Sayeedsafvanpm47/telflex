@@ -26,7 +26,7 @@ router.get('/home',controller.adminHome)
 
 // customer management
 router.get("/viewCustomers", controllerUserManage.viewCustomers);
-router.get("/editCustomers", controllerUserManage.editCustomers);
+// router.get("/editCustomers", controllerUserManage.editCustomers);
 router.post("/updateUser", controllerUserManage.updateUser);
 router.get("/blockUser", controllerUserManage.blockUser);
 router.post("/searchUser", controllerUserManage.searchUser);

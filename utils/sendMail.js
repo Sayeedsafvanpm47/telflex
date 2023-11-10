@@ -7,7 +7,7 @@ async function sendOTPByEmail(email, otp) {
 	}
 
 	const transporter = nodemailer.createTransport({
-		service: "gmail", // Update with your email service
+		service: "gmail", 
 		auth: {
 			user: process.env.MAIL_USER,
 			pass: process.env.MAIL_PASS
@@ -18,7 +18,7 @@ async function sendOTPByEmail(email, otp) {
 		from: "Telflex<sayeedportfolio47@gmail.com>",
 		to: email,
 		subject: "Sending email",
-		text: otp
+		text: `Otp for login to your account ${otp}`
 	};
 
 	return new Promise((resolve, reject) => {

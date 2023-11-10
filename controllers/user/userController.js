@@ -34,16 +34,25 @@ module.exports = {
 		  if (!user) {
 		    console.log("User not found");
 		    errors.push("Account doesn't exist");
-		  } else if (user.isBlocked === true) {
+		  }
+		  if(user.otp !== null)
+		  {
+			errors.push('user account has not been verified yet')
+		  }
+		  
+		  if (user.isBlocked === true) {
 		    console.log("User is Blocked");
 		    errors.push("This user is blocked");
 		  }
+
 	        
 		  if (errors.length > 0) {
 		    res.render("user/user/login", { errors });
 		  } else {
 		    const passwordMatch = await bcrypt.compare(password, user.password);
 		    if (passwordMatch) {
+			req.session.userId = user._id
+			console.log(req.session.userId)
 		      console.log("Login successful");
 		      res.redirect("/user/shop");
 		    } else {
@@ -63,7 +72,10 @@ module.exports = {
 	getSignUp: async (req, res) => {
 		try {
 			await res.render("user/user/register");
-		} catch (err) {}
+		} catch (err) {
+			console.log(err)
+			res.redirect('/user/')
+		}
 	},
 	postSignUp: async (req, res) => {
 		try {
@@ -74,15 +86,32 @@ module.exports = {
 			const phoneValid = isPhoneValid(phonenumber);
 			const cpassValid = isCpassValid(password, chkpassword);
 			const emailCheck = await userModel.findOne({ email });
+			console.log(emailCheck);
+			
+			
 			let errors = [];
 			if(!email || !password || !firstname || !lastname || !phonenumber || !chkpassword)
 			{
 				errors.push('fill details properly')
 			}
 
-			if (emailCheck) {
-				errors.push("Email exists");
+			
+
+		if(emailCheck)
+{
+	if(emailCheck.isVerified){
+		errors.push("email already exists")
+	}
+
+			if( emailCheck.isVerified == false){
+				console.log(emailCheck)
+				await userModel.findByIdAndDelete(emailCheck._id)
+				
 			}
+		}
+			
+				
+			
 			if (!emailValid) {
 				errors.push("Invalid email. Please enter a valid email address.");
 			}
@@ -99,10 +128,11 @@ module.exports = {
 				errors.push("Password doesnt match");
 			}
 			if (errors.length > 0) {
-				res.render("user/user/register", { errors });
+				return res.render("user/user/register", { errors });
 			}
 
 			if (emailValid && passwordValid && namesValid && phoneValid && cpassValid) {
+				
 				const hashedPassword = await bcrypt.hash(password, 10);
 				const user = new userModel({
 					email,
@@ -116,18 +146,22 @@ module.exports = {
 				console.log(otp);
 
 				user.otp = otp;
-				user.otpExpires = new Date(Date.now() + 5 * 60 * 1000);
+				user.otpExpires = new Date(Date.now() + 2 * 60 * 1000);
 				user.otpAttempts = 0;
-				await user.save();
+					await user.save();
+
+				
 				try {
 					const emailResponse = await sendOTPByEmail(email, user.otp);
 					console.log("Email sent successfully:", emailResponse);
 				} catch (error) {
 					console.error("Error sending email:", error);
 				}
+			}
 				req.session.isLogin = true;
 				res.render("user/user/otpVerify", { email: email });
-			}
+		
+			
 		} catch (err) {
 			console.error("Error:", err);
 			res.send("error");
@@ -135,6 +169,7 @@ module.exports = {
 	},
 
 	verifyOTP: async (req, res) => {
+		try{
 		const { email, enteredOTP } = req.body;
 		const errors = []
 		
@@ -148,6 +183,7 @@ module.exports = {
 			user.otp = null;
 			user.otpExpires = null;
 			user.otpAttempts = 0;
+			user.isVerified = true
 			await user.save();
 			if (req.session.isLogin) {
 				
@@ -166,12 +202,22 @@ module.exports = {
 
 			res.render('user/user/otpVerify',{errors,email:email})
 		}
+	}catch(err){
+		console.log(err)
+		res.redirect('/user/')
+	}
 	},
 
 	resendOtp: async (req, res) => {
-		const { email } = req.body;
+		try {
+			const { email } = req.body;
 		await sendOtp(email);
 		res.render("user/user/otpVerify", { email: email });
+		} catch (error) {
+			console.log(error)
+			res.redirect('/user/')
+		}
+		
 	},
 	getForgotPassword: async (req, res) => {
 		try {
@@ -189,7 +235,8 @@ module.exports = {
 		
 	},
 	forgotPassword: async (req, res) => {
-		const { email } = req.body;
+		try {
+			const { email } = req.body;
 		const emailExist =  await userModel.findOne({email:email})
 		if(!emailExist){
 			req.session.forgotError = true
@@ -198,9 +245,16 @@ module.exports = {
 		await sendOtp(email);
 		req.session.isForgot = true;
 		res.render("user/user/otpVerify", { email: email });
+			
+		} catch (error) {
+			console.log(error)
+			res.redirect('/user/')
+		}
+		
 	},
 
 	updatePass: async (req, res) => {
+		
 		const { password, chkpassword, email } = req.body;
 		const user = await userModel.findOne({ email });
                     const errors = []
@@ -212,11 +266,11 @@ module.exports = {
 				user.password = hashedPass;
 				await user.save();
 
-				// Wait for the password update to complete before redirecting
+				
 				res.redirect("/user/shop");
 			} catch (error) {
 				console.error("Error updating password:", error);
-				await res.redirect("/user/"); // Handle the error as needed
+				await res.redirect("/user/"); 
 			}
 		}
 		else {
@@ -229,6 +283,59 @@ module.exports = {
 			errors.push('fill in details properly')
 			await res.render('user/user/createPass',{errors,email})
 		}
+	},
+	userAccount : async (req,res)=>{
+		const userId = req.session.userId
+		const users = await userModel.findById(userId)
+		res.render('user/user/account',{users})
+		console.log(users.firstname)
+		console.log(users)
+		
+
 	}
+	,
+	updateAccount : async(req,res)=>{
+		try{
+		const userId = req.session.userId
+		const users = await userModel.findById(userId)
+		const {password,newpassword,confirmpassword,firstname,lastname} = req.body
+		const passCheck = bcrypt.compare(users.password,password)
+		if (!users) {
+			return res.status(404).send('User not found');
+		        }
+		if (!passCheck) {
+			
+			console.log('password dont match')
+		        }
+		    
+		        // Check if the new password and confirm password match
+		        if (newpassword !== confirmpassword) {
+			console.log('error in new passwords, cnfrm pss')
+		        }
+		    
+		     
+		        const hashedPassword = await bcrypt.hash(newpassword, 10);
+		    
+		       
+		        await userModel.findByIdAndUpdate(userId, {
+			
+			password: hashedPassword,
+		        });
+		    
+		        res.redirect('/user/account');
+		
+		      } catch (error) {
+		        console.error(error);
+		        res.status(500).send('Internal Server Error');
+		      }
+	},
+	addAddress : async (req,res)=>{
+		const userId = req.session.userId
+		
+
+	}
+		    
+		  
+		    
 	
 };
