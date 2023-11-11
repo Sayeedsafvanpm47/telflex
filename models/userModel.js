@@ -64,7 +64,10 @@ let userSchema = new mongoose.Schema({
 			Addresstype : {
 				type : String, required :true
 
-			}
+			},
+			addressmode : {
+				type : String
+			} 
 		}
 	]
 });

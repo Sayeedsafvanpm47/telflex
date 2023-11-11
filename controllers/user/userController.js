@@ -288,7 +288,7 @@ module.exports = {
 		const userId = req.session.userId
 		const users = await userModel.findById(userId)
 		res.render('user/user/account',{users})
-		console.log(users.firstname)
+		
 		console.log(users)
 		
 
@@ -330,11 +330,49 @@ module.exports = {
 		      }
 	},
 	addAddress : async (req,res)=>{
-		const userId = req.session.userId
+
+		try {
+
+			const userId = req.session.userId
+		const {name,phonenumber,pincode,address,city,state,landmark,addresstype,addressmode} = req.body
+		await userModel.updateOne({_id : userId},{$push:{address : [{name:name,phone:phonenumber,pincode:pincode,Address:address,city:city,state:state,landmark:landmark,addresstype:addresstype,addressmode:addressmode}]}})
+		res.redirect('/user/account')
+			
+		} catch (error) {
+			console.log(error)
+		}
+		
 		
 
-	}
-		    
+	},
+	deleteAddress : async (req,res)=>{
+		const user = req.session.userId
+		const addressId = req.query._id;
+
+		await userModel.updateOne(
+		  { _id: user },
+		  { $pull: { 'address': { _id: addressId } } }
+		);
+		
+	         res.redirect('/user/account')
+		
+		
+	},
+	editAddress : async (req,res)=>{
+		try {
+			const addressId = req.query._id
+
+		const users = await userModel.findOne({'address._id' : addressId},{'address.$':1})
+		const user = users.address[0].name
+		console.log(user)
+		res.render('user/user/editAddress',{users})
+			
+		} catch (error) {
+			console.log(error)
+			res.send('error occured')
+		}
+				
+	}		    
 		  
 		    
 	

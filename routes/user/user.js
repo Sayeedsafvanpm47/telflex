@@ -17,6 +17,9 @@ router.post("/forgotPassword", controller.forgotPassword);
 router.post("/updatePass", controller.updatePass);
 router.get('/account',controller.userAccount)
 router.post('/updateAccount',controller.updateAccount)
+router.post('/addAddress',controller.addAddress)
+router.get('/deleteAddress',controller.deleteAddress)
+router.get('/editAddress',controller.editAddress)
 
 
 router.get('/shop',productController.productGridView)
