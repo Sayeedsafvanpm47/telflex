@@ -68,15 +68,15 @@
                                            
                                                 
                                             <div class="product-price primary-color float-left">
-                                                <input  name="size" type="text" id="sizeView" class="text-brand" value="" hidden>
+                                                <input  name="size" type="text" id="sizeView" class="text-brand" value="<%= products.size[0].size %>" hidden>
                                                 <ins> <span class="text-brand"> size :</span><span class="text-brand" id="sizeView2"> <%= products.size[0].size %>   </span></ins> <br>
-                                                <input  name="price" type="text" id="priceView" class="text-brand" value="" hidden>
+                                                <input  name="price" type="text" id="priceView" class="text-brand" value="<%= products.size[0].productPrice %>" hidden>
                                                       <ins> <span class="text-brand"> sale price : &#8377;</span><span class="text-brand" id="priceView2"> <%= products.size[0].productPrice %>   </span></ins>
-                                                      <input  name="mrp" type="text" id="mrpView" class="text-brand" value="" hidden>
+                                                      <input  name="mrp" type="text" id="mrpView" class="text-brand" value="<%= products.size[0].mrp  %>" hidden>
                                               <br> <ins><span style="text-decoration: line-through;" class="text-muted fs-4"  >mrp : &#8377;</span> <span style="text-decoration: line-through;" class="text-muted fs-4"  id="mrpView2"><%= products.size[0].mrp  %></span></ins>
                                              
                                               &nbsp;  <input name="discount" class="title-detail" value="<%= products.productDiscount%>" hidden>   <span class="text-muted fs-4"  id="mrpView"><%= products.productDiscount  %>% off</span></ins>
-                                              <input  name="stock" type="text" id="stockView" class="text-brand" value="" hidden>
+                                              <input  name="stock" type="text" id="stockView" class="text-brand" value="<%= products.size[0].stock %>" hidden>
                                              <br><span>In Stock:</span>     <span class="save-price font-md color3 ml-15" id="stockView2"><%= products.size[0].stock %></span>
                                               </div>
                                               

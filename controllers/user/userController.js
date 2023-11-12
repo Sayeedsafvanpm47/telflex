@@ -335,7 +335,7 @@ module.exports = {
 
 			const userId = req.session.userId
 		const {name,phonenumber,pincode,address,city,state,landmark,addresstype,addressmode} = req.body
-		await userModel.updateOne({_id : userId},{$push:{address : [{name:name,phone:phonenumber,pincode:pincode,Address:address,city:city,state:state,landmark:landmark,addresstype:addresstype,addressmode:addressmode}]}})
+		await userModel.updateOne({_id : userId},{$push:{address : [{name:name,phone:phonenumber,pincode:pincode,Address:address,city:city,state:state,landmark:landmark,Addresstype:addresstype,addressmode:addressmode}]}})
 		res.redirect('/user/account')
 			
 		} catch (error) {
@@ -361,10 +361,12 @@ module.exports = {
 	editAddress : async (req,res)=>{
 		try {
 			const addressId = req.query._id
+			req.session.address = addressId
+			
 
 		const users = await userModel.findOne({'address._id' : addressId},{'address.$':1})
 		const user = users.address[0].name
-		console.log(user)
+		
 		res.render('user/user/editAddress',{users})
 			
 		} catch (error) {
@@ -372,7 +374,50 @@ module.exports = {
 			res.send('error occured')
 		}
 				
-	}		    
+	},
+	updateAddress: async (req, res) => {
+		try {
+		  const addressId = req.session.address;
+		  const { name, phonenumber, pincode, address, city, state, landmark, addresstype } = req.body;
+	        
+		  // Update the specific element in the array
+		  const result = await userModel.updateOne(
+		    { 'address._id': addressId },
+		    {
+		      $set: {
+		        'address.$.name': name,
+		        'address.$.phone': phonenumber,
+		        'address.$.pincode': pincode,
+		        'address.$.Address': address,
+		        'address.$.city': city,
+		        'address.$.state': state,
+		        'address.$.landmark': landmark,
+		        'address.$.Addresstype': addresstype,
+		      },
+		    }
+		  );
+	        
+		  if (result) {
+			res.redirect('/user/account');
+		  }
+	        else{
+		res.send('error')
+	        }
+		 
+		} catch (error) {
+		  console.log(error);
+		  res.status(500).send('Error occurred');
+		}
+	        },
+	        checkOut : async (req,res)=>{
+		
+
+
+
+
+
+	        }
+	        
 		  
 		    
 	

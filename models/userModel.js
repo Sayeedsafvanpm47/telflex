@@ -62,7 +62,7 @@ let userSchema = new mongoose.Schema({
 				type :String, required : true
 			},
 			Addresstype : {
-				type : String, required :true
+				type : String,
 
 			},
 			addressmode : {
