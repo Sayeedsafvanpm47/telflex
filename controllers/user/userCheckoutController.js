@@ -1,5 +1,6 @@
 const userModel = require('../../models/userModel')
 const cartModel = require('../../models/cartModel')
+const orderModel = require('../../models/orderModel')
 const { USER } = require('../../utils/constants/schemaName');
 
 module.exports = {
@@ -39,9 +40,61 @@ module.exports = {
             
         
           },
-          placeOrder : async (req,res)=>{
-            const userId = req.session.userId
-            const {selectedAddress,creditcard,netbanking,paypal,stripe,cashondelivery} = req.body 
+        placeOrder: async (req, res) => {
+    const userId = req.session.userId;
+    const ordered = [];
+    let total = 0;
 
-          }
+    try {
+        const cart = await cartModel.findOne({ userId: userId }).populate({
+            path: 'userId',
+            model: USER,
+            select: 'firstname email address',
+        }).populate({
+            path: 'products.product_id',
+            model: 'products',
+            select: 'images productName size productDiscount',
+        });
+
+        if (cart && cart.products) {
+            total = cart.total;
+
+            for (let i = 0; i < cart.products.length; i++) {
+                const product = cart.products[i];
+
+                ordered.push({
+                    productId: product.product_id,
+                    quantity: product.quantity,
+                    size: product.size,
+                    price: product.price,
+                    mrp: product.mrp,
+                    status: false,
+                });
+            }
+        } else {
+            console.log('Error occurred');
+        }
+
+       const {selectedAddressDetails,payment_option} = req.body
+
+        console.log(selectedAddressDetails);
+
+        const order = new orderModel({
+            userId: userId,
+            items: ordered,
+            paymentMethod: payment_option,
+            totalAmount: total,
+            address: selectedAddressDetails,
+        });
+
+        await order.save();
+        cart.products = []
+        cart.total = 0
+        await cart.save()
+        res.status(200).json({ message: 'Order placed successfully' });
+    } catch (error) {
+        console.error('Error placing order:', error);
+        res.status(500).json({ message: 'Error placing order' });
+    }
+}
 }

@@ -39,6 +39,7 @@ router.post('/checkOut',cartController.checkOut)
 
 router.get('/checkoutPage',userCheckoutController.checkOutPage)
 router.post('/checkOutAddress',userCheckoutController.addAddress)
+router.post('/placeOrder',userCheckoutController.placeOrder)
 
 router.get('/blog',(req,res)=>{
           res.render('user/user/blog')

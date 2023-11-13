@@ -35,29 +35,14 @@ let orderSchema = new mongoose.Schema({
 		}
 	],
 	orderId: { type: mongoose.Schema.Types.ObjectId },
-	paymentMethod: {
-		type: String
+	orderStatus : {
+
+		type: String,
+		enum: ["Placed", "Shipped", "Delivered" , "Cancelled", "Returned"],
+		default: "Placed"
+
 	},
-	orderPlaced: {
-		type: Boolean,
-		default: false
-	},
-	orderShipped: {
-		type: Boolean,
-		default: false
-	},
-	orderDelivered: {
-		type: Boolean,
-		default: false
-	},
-	orderCanceled: {
-		type: Boolean,
-		default: true
-	},
-	orderReturned: {
-		type: Boolean,
-		default: false
-	},
+	
 	orderDate: {
 		type: Date
 	},
@@ -75,11 +60,8 @@ let orderSchema = new mongoose.Schema({
 	totalAmount: {
 		type: Number,
 		required: true
-	},
-          products : {
-                    type : mongoose.Schema.Types.ObjectId,
-                    ref : 'products'
-          }
+	}
+         
 });
 
 module.exports = mongoose.model("Order", orderSchema);

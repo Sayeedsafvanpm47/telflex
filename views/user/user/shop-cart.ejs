@@ -393,16 +393,15 @@ const quantityUpdate = document.getElementById("quantity" + productId).value;
 
 <script>
     window.onload = function () {
-      // Get all elements with class "calctotal"
+   
       var allSums = document.querySelectorAll('.calctotal');
   
-      // Calculate the total sum
       var sumtotal = 0;
       allSums.forEach(function (element) {
         sumtotal += parseFloat(element.innerText);
       });
   
-      // Update the content of the "showtotal" span
+
       if (!isNaN(sumtotal)) {
         document.getElementById('showtotal').innerHTML =  sumtotal.toFixed(2);
         document.getElementById('showtotalamount').innerHTML =  sumtotal.toFixed(2);

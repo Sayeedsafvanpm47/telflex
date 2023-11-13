@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-
+const Swal = require('sweetalert2')
 const userRoute = require("./routes/user/user");
 const adminRoute = require("./routes/admin/admin");
 const dbConnect = require("./config/database");
