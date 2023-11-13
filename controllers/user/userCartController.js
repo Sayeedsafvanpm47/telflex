@@ -74,27 +74,48 @@ module.exports = {
           },
           updateCart: async (req, res) => {
             const productId = req.query.productId;
-            const user = req.session.userId
-            const { quantity,total } = req.body;
+            const { quantity } = req.body;
             console.log(quantity);
             console.log(productId);
-            console.log(total)
         
             try {
                 const updatequantity = await cartModel.findOne(
                     { 'products._id': productId } 
                 );
-               updatequantity.products[0].quantity = quantity
-           
-                updatequantity.total = total
-      
-               updatequantity.save()
+                if (updatequantity) {
+                    const productToUpdate = updatequantity.products.find(product => product._id == productId);
+                    if (productToUpdate) {
+                        productToUpdate.quantity = quantity;
+                        console.log(`Updated Quantity: ${productToUpdate.quantity}`);
+                        updatequantity.save();
+                    } else {
+                        console.log('Product not found in the cart.');
+                    }
+                }
         
                 res.json({ success: true }); 
             } catch (error) {
                 console.error('Error:', error);
                 res.status(500).json({ success: false, error: 'Internal Server Error' });
             }
-        }
-          
+        },
+        
+        checkOut: async (req, res) => {
+          try {
+              const userId = req.query.userId;
+              const { totalamountcheckout } = req.body;
+              
+      
+              const result = await cartModel.findOne({ userId: userId });
+              result.total = totalamountcheckout;
+              result.save();
+
+              
+              res.redirect('/user/checkoutpage')
+          } catch (error) {
+              console.log(error);
+              res.status(500).json({ success: false, error: 'Internal Server Error' });
+          }
+      }
+      
 }

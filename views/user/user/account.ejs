@@ -396,16 +396,16 @@
                                                         </div>
                                                     </form>
 
-<hr>
-                                                       <% for(let i=0; i<users.address.length; i++) { %>
-                                                         <div class="card-body">
-                                                        <address>Name : <%= users.address[i].name %><br> Phone : <%= users.address[i].phone  %><br> Pincode : <%= users.address[i].pincode  %> <br> 
-                                                          Address :  <%= users.address[i].Address  %> <br>
-                                                           City : <%= users.address[i].city  %> <br>
-                                                           State : <%= users.address[i].state  %> <br>    
-                                                           Landmark : <%= users.address[i].landmark  %> <br>    
-                                                        
-                                                        </address>
+    <hr>
+                                                        <% for(let i=0; i<users.address.length; i++) { %>
+                                                            <div class="card-body">
+                                                            <address>Name : <%= users.address[i].name %><br> Phone : <%= users.address[i].phone  %><br> Pincode : <%= users.address[i].pincode  %> <br> 
+                                                            Address :  <%= users.address[i].Address  %> <br>
+                                                            City : <%= users.address[i].city  %> <br>
+                                                            State : <%= users.address[i].state  %> <br>    
+                                                            Landmark : <%= users.address[i].landmark  %> <br>    
+                                                            
+                                                            </address>
                                                      
                                                         <a href="/user/editAddress?_id=<%= users.address[i]._id%>" class="btn-small">Edit</a>
                                                         <button 

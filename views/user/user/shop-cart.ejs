@@ -32,6 +32,7 @@
                                         <% for(let j = 0; j < cart.length; j++) { %>
                                           <% for(let i = 0; i < cart[j].products.length; i++) { %>
                                             <tr>
+                                                <input type="text" value="<%= cart[j].products[i].product_id  %>" id="" hidden>
                                               <td class="image product-thumbnail">
                                                 <img src="/<%= cart[j].products[i].product_id.images[0] %>" alt="#">
                                               </td>
@@ -106,9 +107,9 @@
                                     <div class="heading_s1 mb-3">
                                         <h4>Cart Totals</h4>
                                     </div>
-                                    <form action="/user/checkOut">
+                                    <form action="/user/checkOut?userId=<%= cart[0].userId %>" method="post">
                                     <div class="table-responsive">
-                                      
+                                 
                                         <table class="table">
                                             <tbody>
                                                 <tr>
@@ -123,12 +124,15 @@
                                                 <tr>
                                                     <td class="cart_total_label">Total</td>
                                                     <td class="cart_total_amount"><span id="showtotalamount" class="font-lg fw-900 text-brand"></span></td>
-                                                    <input type="number" value="" id="totalinputfield" hidden>
+                                                    <input type="number" name="totalamountcheckout" value="" id="totalinputfield" hidden>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <button type="submit"> <i class="fi-rs-box-alt mr-10"></i> Proceed To CheckOut</button>
+                                    <% if(user && cart && cart.length > 0) { %>
+                                        <button type="submit" onclick="updateTotalAndSubmit()" > <i class="fi-rs-box-alt mr-10"></i> Proceed To CheckOut</button>
+                                       
+                                    <% } %>
                                     </form>
                                 </div>
                             </div>
@@ -287,7 +291,7 @@
     <!-- Template  JS -->
     <script src="/user/js/maind134.js?v=3.4"></script>
     <script src="/user/js/shopd134.js?v=3.4"></script>
-    <script>
+    <!-- <script>
        function calc(productId) {
   var mul = document.getElementById("mul" + productId).value;
   var quantity = document.getElementById("quantity" + productId).value;
@@ -316,8 +320,13 @@ if (!isNaN(sumtotal)) {
   document.getElementById('showtotalamount').innerHTML =  sumtotal.toFixed(2);
 
 
-  const quantityUpdate = document.getElementById("quantity" + productId).value;
-  const totalPriceShow = sumtotal
+
+ 
+
+}
+
+const quantityUpdate = document.getElementById("quantity" + productId).value;
+
   console.log(totalPriceShow)
     fetch(`/user/updateCart?productId=${productId}`, {
     method: 'POST',
@@ -326,7 +335,7 @@ if (!isNaN(sumtotal)) {
     },
     body: JSON.stringify({
         quantity: quantityUpdate,
-        total : totalPriceShow,
+       
     }),
 })
     .then(response => {
@@ -345,17 +354,39 @@ if (!isNaN(sumtotal)) {
 
 }
 
-}
+
+      </script> -->
 
 
-      </script>
+
+
 
 <script>
-
-function deleteProduct()
-{
-    
-}
+//    function checkout(userId) {
+//     const totalPriceShow = document.getElementById('showtotalamount').innerHTML 
+//     console.log(`price : ${totalPriceShow}`)
+//     fetch(`/user/checkOut?userId=${userId}`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//             total: totalPriceShow
+//         }),
+//     })
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error(`HTTP error! Status: ${response.status}`);
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             console.log('Success:', data);
+//         })
+//         .catch(error => {
+//             console.log('Error:', error);
+//         });
+// }
 
 </script>
 
@@ -375,9 +406,88 @@ function deleteProduct()
       if (!isNaN(sumtotal)) {
         document.getElementById('showtotal').innerHTML =  sumtotal.toFixed(2);
         document.getElementById('showtotalamount').innerHTML =  sumtotal.toFixed(2);
+    
       }
     };
   </script>
+
+<script>
+    function updateTotalAndSubmit() {
+    
+        var showTotalAmount = document.getElementById('showtotalamount').innerText;
+
+
+        document.getElementById('totalinputfield').value = showTotalAmount;
+
+
+        document.getElementById('checkoutForm').submit();
+    }
+</script>
+
+
+
+<script>
+    function calc(productId) {
+var mul = document.getElementById("mul" + productId).value;
+var quantity = document.getElementById("quantity" + productId).value;
+
+var sum = document.getElementById('calcprice' + productId);
+var totalPrice = parseFloat(sum.innerText) || parseFloat(sum.textContent);
+
+var total = parseFloat(mul) * parseFloat(quantity);
+
+if (!isNaN(total)) {
+ sum.innerHTML =  total.toFixed(2);
+}
+
+var sumtotal = 0;
+var allSums = document.querySelectorAll('.calctotal');
+
+for (let i = 0; i < allSums.length; i++) {
+ console.log(allSums)
+sumtotal += +allSums[i].innerText;
+}
+console.log(sumtotal)
+
+if (!isNaN(sumtotal)) {
+document.getElementById('showtotal').innerHTML =  sumtotal.toFixed(2);
+document.getElementById('showtotalamount').innerHTML =  sumtotal.toFixed(2);
+
+
+}
+const quantityUpdate = document.getElementById("quantity" + productId).value;
+console.log(quantityUpdate);
+
+    fetch(`/user/updateCart?productId=${productId}`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        quantity: quantityUpdate,
+       
+    }),
+})
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch(error => {
+        console.log('Error:', error);
+    });
+
+
+
+
+}
+
+
+   </script>
 
   
   

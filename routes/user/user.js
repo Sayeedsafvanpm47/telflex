@@ -4,6 +4,7 @@ const router = express.Router();
 const controller = require("../../controllers/user/userController");
 const productController = require('../../controllers/user/userProductController')
 const cartController = require('../../controllers/user/userCartController')
+const userCheckoutController = require('../../controllers/user/userCheckoutController')
 
 router.get("/", controller.getLogin);
 router.post("/postLogin", controller.postLogin);
@@ -34,6 +35,10 @@ router.get('/showPrice',productController.showPrice)
 router.post('/addToCart',cartController.addToCart)
 router.get('/showCart',cartController.showCart)
 router.get('/deleteCart',cartController.deleteCart)
+router.post('/checkOut',cartController.checkOut)
+
+router.get('/checkoutPage',userCheckoutController.checkOutPage)
+router.post('/checkOutAddress',userCheckoutController.addAddress)
 
 router.get('/blog',(req,res)=>{
           res.render('user/user/blog')

@@ -409,14 +409,7 @@ module.exports = {
 		  res.status(500).send('Error occurred');
 		}
 	        },
-	        checkOut : async (req,res)=>{
-		
-
-
-
-
-
-	        }
+	       
 	        
 		  
 		    

@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-
+const { USER } = require('../utils/constants/schemaName');
 let cartSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'USER',
+    ref: USER,
     required: true
   },
   products: [{
