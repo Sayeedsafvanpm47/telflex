@@ -67,4 +67,5 @@ router.get('/regtemp',(req,res)=>{
           res.render('user/user/register')
 })
 
+
 module.exports = router;

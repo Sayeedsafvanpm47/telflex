@@ -45,6 +45,9 @@ module.exports = {
     const ordered = [];
     let total = 0;
 
+    const { selectedAddressDetails, payment_option } = req.body;
+
+
     try {
         const cart = await cartModel.findOne({ userId: userId }).populate({
             path: 'userId',
@@ -55,6 +58,7 @@ module.exports = {
             model: 'products',
             select: 'images productName size productDiscount',
         });
+      
 
         if (cart && cart.products) {
             total = cart.total;
@@ -75,17 +79,25 @@ module.exports = {
             console.log('Error occurred');
         }
 
-       const {selectedAddressDetails,payment_option} = req.body
-
-        console.log(selectedAddressDetails);
-
+    console.log(selectedAddressDetails)
+    console.log(payment_option)
+       const address = cart.userId.address[selectedAddressDetails]
+  
+console.log(address)
+      
+       
+       
         const order = new orderModel({
             userId: userId,
+            orderId:Date.now(),
             items: ordered,
             paymentMethod: payment_option,
             totalAmount: total,
-            address: selectedAddressDetails,
+            address: address,
         });
+        if(cart.total<=0){
+            res.redirect('/checkoutpage')
+        }
 
         await order.save();
         cart.products = []

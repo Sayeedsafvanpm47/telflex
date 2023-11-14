@@ -231,28 +231,21 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>#1357</td>
-                                                                <td>March 45, 2020</td>
-                                                                <td>Processing</td>
-                                                                <td>$125.00 for 2 item</td>
-                                                                <td><a href="#" class="btn-small d-block">View</a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>#2468</td>
-                                                                <td>June 29, 2020</td>
-                                                                <td>Completed</td>
-                                                                <td>$364.00 for 5 item</td>
-                                                                <td><a href="#" class="btn-small d-block">View</a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>#2366</td>
-                                                                <td>August 02, 2020</td>
-                                                                <td>Completed</td>
-                                                                <td>$280.00 for 3 item</td>
-                                                                <td><a href="#" class="btn-small d-block">View</a></td>
-                                                            </tr>
+                                                            <% if (orders && orders.length > 0) { %>
+                                                                <% for (let i = 0; i < orders.length; i++) { %>
+                                                                    <tr>
+                                                                        <td><%= orders[i].orderId %></td>
+                                                                        <td>March 45, 2020</td>
+                                                                        <td><%= orders[i].orderStatus %></td>
+                                                                        <% for (let j = 0; j < orders[i].items.length; j++) { %>
+                                                                            <td><%= orders[i].items[j].price %> for <%= orders[i].items[j].quantity %> item</td>
+                                                                        <% } %>
+                                                                        <td><a href="#" class="btn-small d-block">View</a></td>
+                                                                    </tr>
+                                                                <% } %>
+                                                            <% } %>
                                                         </tbody>
+                                                        
                                                     </table>
                                                 </div>
                                             </div>

@@ -1,4 +1,5 @@
 const userModel = require("../../models/userModel");
+const orderModel = require('../../models/orderModel')
 const sendOTPByEmail = require("../../utils/sendMail");
 const bcrypt = require("bcrypt");
 const { isEmailValid, isPasswordValid, isNamesValid, isPhoneValid, isCpassValid } = require("../../utils/validators/signUpValidator");
@@ -285,12 +286,20 @@ module.exports = {
 		}
 	},
 	userAccount : async (req,res)=>{
-		const userId = req.session.userId
-		const users = await userModel.findById(userId)
-		res.render('user/user/account',{users})
-		
-		console.log(users)
-		
+		try {
+			const userId = req.session.userId;
+			const users = await userModel.findById(userId);
+			const orders = await orderModel.find({ userId });
+		  
+			res.render('user/user/account', { users, orders });
+		  
+			console.log(users);
+			console.log(orders);
+		      } catch (error) {
+			console.error('Error fetching user account details:', error);
+			// Handle the error, perhaps by rendering an error page
+			res.render('error', { error });
+		      }
 
 	}
 	,

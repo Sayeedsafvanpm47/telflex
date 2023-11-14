@@ -14,7 +14,14 @@ const session = require("express-session");
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json())
-
+app.use((err, req, res, next) => {
+          if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+            console.error('Bad JSON in request body:', err);
+            res.status(400).send({ error: 'Invalid JSON' });
+          } else {
+            next();
+          }
+        });
 app.use(session({secret: "your-secret-key", resave: false, saveUninitialized: true}));
 
 

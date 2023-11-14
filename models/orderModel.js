@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const { v4: uuidv4 } = require('uuid')
 let orderSchema = new mongoose.Schema({
 	userId: {
 		type: mongoose.Schema.Types.ObjectId,
@@ -34,7 +34,10 @@ let orderSchema = new mongoose.Schema({
 			}
 		}
 	],
-	orderId: { type: mongoose.Schema.Types.ObjectId },
+	orderId: { 
+		type: String,
+        default: () => uuidv4()
+	},
 	orderStatus : {
 
 		type: String,
@@ -60,6 +63,12 @@ let orderSchema = new mongoose.Schema({
 	totalAmount: {
 		type: Number,
 		required: true
+	},
+	paymentMethod : {
+		type : String
+	},
+	address : {
+		type : Object
 	}
          
 });
