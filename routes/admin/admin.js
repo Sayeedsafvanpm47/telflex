@@ -11,7 +11,9 @@ const controller = require("../../controllers/admin/adminController");
 const controllerUserManage = require("../../controllers/admin/adminUserManage");
 const controllerCategory = require("../../controllers/admin/categoryController");
 const controllerProducts = require('../../controllers/admin/productController');
+const adminOrderController = require('../../controllers/admin/adminOrderController')
 const productModel = require("../../models/productModel");
+
 
 // admin
 router.get("/", controller.getAdminLogin);
@@ -53,6 +55,9 @@ router.post('/editProducts',upload.array('images'),controllerProducts.editProduc
 router.get('/toggleListProducts',controllerProducts.toggleList)
 router.get('/deleteProducts',controllerProducts.deleteProducts)
 
+router.get('/orderDetails',adminOrderController.orderDetails)
+router.get('/viewOrderDetails',adminOrderController.viewOrderDetails)
+router.post('/updateOrderStatus',adminOrderController.updateOrderStatus)
 router.get('/error',(req,res)=>{
           res.render('admin/admin/error')
 })
