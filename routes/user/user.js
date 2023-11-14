@@ -22,6 +22,7 @@ router.post('/addAddress',controller.addAddress)
 router.get('/deleteAddress',controller.deleteAddress)
 router.get('/editAddress',controller.editAddress)
 router.post('/updateAddress',controller.updateAddress)
+router.get('/viewOrderDetails',controller.viewOrderDetails)
 router.post('/updateCart',cartController.updateCart)
 
 router.get('/shop',productController.productGridView)

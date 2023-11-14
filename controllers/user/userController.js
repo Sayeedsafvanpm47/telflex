@@ -418,6 +418,22 @@ module.exports = {
 		  res.status(500).send('Error occurred');
 		}
 	        },
+	        viewOrderDetails : async (req,res)=>{
+		try {
+			const orderId = req.query.orderId
+			const orders = await orderModel.find({orderId}).populate({
+				
+				path: 'items.productId',
+            model: 'products',
+            select: 'images productName size productDiscount',
+			})
+			console.log(orders[0].items[0].productId.images[0])
+			await res.render('user/user/order-details',{orders})
+
+		} catch (error) {
+			console.log(error)
+		}
+	        }
 	       
 	        
 		  

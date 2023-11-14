@@ -9945,3 +9945,9 @@ span.fi-rs-apps {
       background-color: rgba(255, 255, 255, 0.8);
   }
 }
+
+@media print {
+  #printbtn {
+      display :  none;
+  }
+}

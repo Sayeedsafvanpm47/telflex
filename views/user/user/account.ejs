@@ -240,7 +240,7 @@
                                                                         <% for (let j = 0; j < orders[i].items.length; j++) { %>
                                                                             <td><%= orders[i].items[j].price %> for <%= orders[i].items[j].quantity %> item</td>
                                                                         <% } %>
-                                                                        <td><a href="#" class="btn-small d-block">View</a></td>
+                                                                        <td><a href="/user/viewOrderDetails?orderId=<%= orders[i].orderId%>" class="btn-small d-block">View</a></td>
                                                                     </tr>
                                                                 <% } %>
                                                             <% } %>

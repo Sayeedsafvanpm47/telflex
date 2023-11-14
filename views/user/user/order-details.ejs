@@ -4,9 +4,39 @@
 
 
 <body>
+          <% if(orders && orders.length > 0){ %>
+                                       
+                    <% for(let i = 0; i < orders.length; i++) { %>
+          <div class="d-flex justify-content-center">
+                    <a href=""><img style="width: 300px; height: 200px;" src="/user/imgs/theme/logo.png" alt="logo"></a>
+          </div>
+          <section class="mt-50 mb-50">
+               
+                    <div class="container">
+                        <div style="margin-top: -70px;" class="row">
+                              <div class="col-lg-3 col-sm-6">
+                                        <h5>Bill To</h5>
+                                    <p>Name : <%= orders[i].address.name%></p>
+                                    <p>Phone : <%= orders[i].address.phone%></p>
+                                    <p>Address : <%= orders[i].address.Address%></p>
+                                    <p>City : <%= orders[i].address.city%></p>
+                                    <p>State : <%= orders[i].address.state%></p>
+                                    <p>Pin Code : <%= orders[i].address.pincode%></p>
+                                    <p>Landmark : <%= orders[i].address.landmark%></p>
+                                       </div>
+                                       <div class="col-lg-3 col-sm-6">
+                                        <h5>Ship To</h5>
+                                        <p>Name : <%= orders[i].address.name%></p>
+                                        <p>Phone : <%= orders[i].address.phone%></p>
+                                        <p>Address : <%= orders[i].address.Address%></p>
+                                        <p>City : <%= orders[i].address.city%></p>
+                                        <p>State : <%= orders[i].address.state%></p>
+                                        <p>Pin Code : <%= orders[i].address.pincode%></p>
+                                        <p>Landmark : <%= orders[i].address.landmark%></p>
+                              </div>
+                              </div></div></section>
 
-    
-<%- include('partials/header') %>
+
   
         <section class="mt-50 mb-50">
         
@@ -23,54 +53,38 @@
                                         <th scope="col">Price</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Subtotal</th>
-                                        <th scope="col">Remove</th>
+                                     
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% if (user) { %>
-                                      <% if(cart && cart.length > 0){ %>
-                                        <% for(let j = 0; j < cart.length; j++) { %>
-                                          <% for(let i = 0; i < cart[j].products.length; i++) { %>
+                                  
+                                        
                                             <tr>
-                                                <input type="text" value="<%= cart[j].products[i].product_id  %>" id="" hidden>
+                                                <input type="text" value="<%= orders[i].items[i].productId  %>" id="" hidden>
                                               <td class="image product-thumbnail">
-                                                <img src="/<%= cart[j].products[i].product_id.images[0] %>" alt="#">
+                                                <img src="/<%= orders[i].items[i].productId.images[0] %>" alt="#">
                                               </td>
                                               <td class="product-des product-name">
                                                 <h5 class="product-name">
-                                                  <a href="shop-product-right.html"><%= cart[j].products[i].product_id.productName %></a>
+                                                  <a href="shop-product-right.html"><%= orders[i].items[i].productId.productName %></a>
                                                 </h5>
                                                 <p class="font-xs">Maboriosam in a tonto nesciung eget<br> distingy magndapibus.</p>
                                               </td>
-                                              <td class="price" data-title="Price"><span><%= cart[j].products[i].price %> </span></td>
-                                              <td class="text-center" data-title="Stock">
-                                                <!-- <div class="detail-qty border radius  m-auto">
-                                                  <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                                  <span class="qty-val"></span>
-                                                  <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                                </div> -->
-
-                                                <input name="quantity" type="number" id="quantity<%= cart[j].products[i]._id %>" min="1" value="<%= cart[j].products[i].quantity %>" onchange="calc('<%= cart[j].products[i]._id %>')">
-
-
-
-
-                                              </td>
-                                              <!-- <td class="text-right" data-title="Cart">
-                                                <span>$ cart[j].products[i].price </span>
-                                              </td> -->
+                                              <td class="price" data-title="Price"><span><%= orders[i].items[i].price %> </span></td>
+                                              <td class="quantity" data-title="Quantity"><span><%= orders[i].items[i].quantity %> </span></td>
+                                            
+                                           
 
                                              
 <td class="text-right" data-title="Cart">
-    <input type="number" id="mul<%= cart[j].products[i]._id %>" value="<%= cart[j].products[i].price %>" hidden>
-    <span class="calctotal" id="calcprice<%= cart[j].products[i]._id %>"><%= (cart[j].products[i].price) * (cart[j].products[i].quantity)%> </span>
+   
+    <span class="calctotal" id="calcprice"><%= (orders[i].items[i].price) * (orders[i].items[i].quantity)%> </span>
   </td>
-                                              <td class="action" data-title="Remove"><a href="/user/deleteCart?productId=<%= cart[j].products[i]._id %>" class="text-muted"><i class="fi-rs-trash"></i></a></td>
+                                            
                                             </tr>
-                                          <% } %>
-                                        <% } %>
-                                      <% } %>
-                                    <% } %>
+                                      
+                                  
+                                
                                   </tbody>
                             </table>
                         </div>
@@ -80,42 +94,22 @@
                             
                                    
                                
-                                <div class="mb-30 mt-50">
-                                    <div class="heading_s1 mb-3">
-                                        <h4>Apply Coupon</h4>
-                                    </div>
-                                    <div class="total-amount">
-                                        <div class="left">
-                                            <div class="coupon">
-                                                <form action="#" target="_blank">
-                                                    <div class="form-row row justify-content-center">
-                                                        <div class="form-group col-lg-6">
-                                                            <input class="font-medium" name="Coupon" placeholder="Enter Your Coupon">
-                                                        </div>
-                                                        <div class="form-group col-lg-6">
-                                                            <button class="btn  btn-sm"><i class="fi-rs-label mr-10"></i>Apply</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                             
                             </div>
                             <div class="col-lg-12 col-md-12">
                                 <div class="border p-md-4 p-30 border-radius cart-totals">
                                     <div class="heading_s1 mb-3">
-                                        <h4>Cart Totals</h4>
+                                        <h4>Bill Totals</h4>
                                     </div>
-                                    <form action="/user/checkOut?userId=<%= cart[0].userId %>" method="post">
+                                    <form action="/user/cancelOrder" method="post">
                                     <div class="table-responsive">
                                  
                                         <table class="table">
                                             <tbody>
                                                 <tr>
-                                                    <td class="cart_total_label">Cart Subtotal</td>
+                                                    <td class="cart_total_label">Bill Subtotal</td>
                                                 
-                                                    <td class="cart_total_amount"><span id="showtotal" class="font-lg fw-900 text-brand"></span></td>
+                                                    <td class="cart_total_amount"><span id="showtotal" class="font-lg fw-900 text-brand"></span><%= orders[i].totalAmount %></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="cart_total_label">Shipping</td>
@@ -123,17 +117,23 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="cart_total_label">Total</td>
-                                                    <td class="cart_total_amount"><span id="showtotalamount" class="font-lg fw-900 text-brand"></span></td>
+                                                    <td class="cart_total_amount"><span id="showtotalamount" class="font-lg fw-900 text-brand"></span><%= orders[i].totalAmount  %></td>
                                                     <input type="number" name="totalamountcheckout" value="" id="totalinputfield" hidden>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <% if(user && cart && cart.length > 0) { %>
-                                        <button type="submit" onclick="updateTotalAndSubmit()" > <i class="fi-rs-box-alt mr-10"></i> Proceed To CheckOut</button>
-                                       
-                                    <% } %>
+                                   <div class="row">
+                                        <div class="col-2">
+                                    <input type="button" id="printbtn" onclick="window.print()" style="background-color: rgb(6, 75, 12); color: white; border: none; padding: 10px 20px; cursor: pointer;" value="Print Invoice">
+                              </div>
+                                   
+                                    <div class="col-2">
+                                        <input id="printbtn" type="submit" style="background-color: rgb(151, 7, 7); color: white; border: none; padding: 10px 20px; cursor: pointer;" value="Cancel Order" >
+                              </div>
+                                 
                                     </form>
+                               
                                 </div>
                             </div>
                         </div>
@@ -143,117 +143,8 @@
             </form>
         </section>
     </main>
-    <footer class="main">
-        <section class="newsletter p-30 text-white wow fadeIn animated">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-7 mb-md-3 mb-lg-0">
-                        <div class="row align-items-center">
-                            <div class="col flex-horizontal-center">
-                                <img class="icon-email" src="/user/imgs/theme/icons/icon-email.svg" alt="">
-                                <h4 class="font-size-20 mb-0 ml-3">Sign up to Newsletter</h4>
-                            </div>
-                            <div class="col my-4 my-md-0 des">
-                                <h5 class="font-size-15 ml-4 mb-0">...and receive <strong>$25 coupon for first shopping.</strong></h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-5">
-                        <!-- Subscribe Form -->
-                        <form class="form-subcriber d-flex wow fadeIn animated">
-                            <input type="email" class="form-control bg-white font-small" placeholder="Enter your email">
-                            <button class="btn bg-dark text-white" type="submit">Subscribe</button>
-                     
-                        <!-- End Subscribe Form -->
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="section-padding footer-mid">
-            <div class="container pt-15 pb-20">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="widget-about font-md mb-md-5 mb-lg-0">
-                            <div class="logo logo-width-1 wow fadeIn animated">
-                                <a href="index.html"><img src="/user/imgs/theme/logo.svg" alt="logo"></a>
-                            </div>
-                            <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">Contact</h5>
-                            <p class="wow fadeIn animated">
-                                <strong>Address: </strong>562 Wellington Road, Street 32, San Francisco
-                            </p>
-                            <p class="wow fadeIn animated">
-                                <strong>Phone: </strong>+01 2222 365 /(+91) 01 2345 6789
-                            </p>
-                            <p class="wow fadeIn animated">
-                                <strong>Hours: </strong>10:00 - 18:00, Mon - Sat
-                            </p>
-                            <h5 class="mb-10 mt-30 fw-600 text-grey-4 wow fadeIn animated">Follow Us</h5>
-                            <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0">
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-facebook.svg" alt=""></a>
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-twitter.svg" alt=""></a>
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-youtube.svg" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3">
-                        <h5 class="widget-title wow fadeIn animated">About</h5>
-                        <ul class="footer-list wow fadeIn animated mb-sm-5 mb-md-0">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Delivery Information</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms &amp; Conditions</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Support Center</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-2  col-md-3">
-                        <h5 class="widget-title wow fadeIn animated">My Account</h5>
-                        <ul class="footer-list wow fadeIn animated">
-                            <li><a href="#">Sign In</a></li>
-                            <li><a href="#">View Cart</a></li>
-                            <li><a href="#">My Wishlist</a></li>
-                            <li><a href="#">Track My Order</a></li>
-                            <li><a href="#">Help</a></li>
-                            <li><a href="#">Order</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-4">
-                        <h5 class="widget-title wow fadeIn animated">Install App</h5>
-                        <div class="row">
-                            <div class="col-md-8 col-lg-12">
-                                <p class="wow fadeIn animated">From App Store or Google Play</p>
-                                <div class="download-app wow fadeIn animated">
-                                    <a href="#" class="hover-up mb-sm-4 mb-lg-0"><img class="active" src="/user/imgs/theme/app-store.jpg" alt=""></a>
-                                    <a href="#" class="hover-up"><img src="/user/imgs/theme/google-play.jpg" alt=""></a>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
-                                <p class="mb-20 wow fadeIn animated">Secured Payment Gateways</p>
-                                <img class="wow fadeIn animated" src="/user/imgs/theme/payment-method.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <div class="container pb-20 wow fadeIn animated">
-            <div class="row">
-                <div class="col-12 mb-20">
-                    <div class="footer-bottom"></div>
-                </div>
-                <div class="col-lg-6">
-                    <p class="float-md-left font-sm text-muted mb-0">&copy; 2022, <strong class="text-brand">Evara</strong> - HTML Ecommerce Template </p>
-                </div>
-                <div class="col-lg-6">
-                    <p class="text-lg-end text-start font-sm text-muted mb-0">
-                        Designed by <a href="http://alithemes.com/" target="_blank">Alithemes.com</a>. All rights reserved
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <% } %>
+    <% } %>
     <!-- Preloader Start -->
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
