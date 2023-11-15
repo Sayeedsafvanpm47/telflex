@@ -47,10 +47,11 @@
                                             <td><%= orders[i].userId.email %></td>
                                             <td><%= orders[i].totalAmount %></td>
                                             <td>
-                                                <form id="updateOrderStatus_<%= i %>">
+                                                <form id="formSubmit" method="post" action="/admin/updateOrderStatus?orderId=<%= orders[i].orderId%>">
                                                     <div class="col-lg-2 col-6 col-md-3">
-                                                        <input type="text" value="<%= orders[i].orderId %>" name="orderId<%= i %>" hidden>
-                                                        <select onchange="updateOrderStatus('<%= i %>')" name="orderStatus<%= i %>" class="form-select">
+                                    
+                                                        <select style="width: 100px;" name="orderStatus" onchange="this.form.submit()" class="form-select">
+                                                            <option>Placed</option>
                                                             <option>Shipped</option>
                                                             <option>Delivered</option>
                                                             <option>Cancelled</option>
@@ -102,29 +103,7 @@
     </main>
     <%- include('partials/script') %>
 
-    <script>
-        async function updateOrderStatus(i) {
-            var form = document.getElementById(`updateOrderStatus_${i}`);
-            const formData = new FormData(form);
-    
-            await fetch('/admin/updateOrderStatus', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    </script>
+
      
 </body>
 

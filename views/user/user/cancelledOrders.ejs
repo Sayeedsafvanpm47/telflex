@@ -64,7 +64,7 @@
                                         <% orders.forEach(order => { %>
                                             <% if (order.items && order.items.length > 0) { %>
                                                 <% order.items.forEach(item => { %>
-                                                    <% if (item.status !== 'Cancelled') { %>
+                                                    <% if (item.status === 'Cancelled') { %>
                                                         <tr>
                                                             <input type="text" value="<%= item.productId %>" id="" hidden>
                                                             <td class="image product-thumbnail">
@@ -82,7 +82,7 @@
                                                                 <span class="calctotal" id="calcprice"><%= item.price * item.quantity %></span>
                                                             </td>
                                                             <td class="cancel" data-title="Cancel">
-                                                                <button class="btn btn-danger" onclick="cancelOrder('<%= item._id %>')">Cancel</button>
+                                                                
                                                             </td>
                                                         </tr>
                                                     <% } %>

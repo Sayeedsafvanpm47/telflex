@@ -421,19 +421,61 @@ module.exports = {
 	        viewOrderDetails : async (req,res)=>{
 		try {
 			const orderId = req.query.orderId
+		
 			const orders = await orderModel.find({orderId}).populate({
 				
 				path: 'items.productId',
             model: 'products',
             select: 'images productName size productDiscount',
 			})
-			console.log(orders[0].items[0].productId.images[0])
+			
+			console.log('this is :' + orders[0].items[0])
 			await res.render('user/user/order-details',{orders})
 
 		} catch (error) {
 			console.log(error)
 		}
-	        }
+	        },
+	        cancelOrder: async (req, res) => {
+		try {
+		    const _id = req.query._id;
+		    console.log(_id);
+	      
+		    const product = await orderModel.updateOne(
+		        { 'items._id': _id }, 
+		        {
+			  $set: { 'items.$.status': 'Cancelled' ,'orderStatus':'Cancelled'}
+		        },
+		        {
+			  arrayFilters: [{ 'elem._id': _id }]
+		        }
+		    );
+	      
+		   
+	      
+		    console.log(product);
+	      
+		    res.status(200).json({ message: 'Order item cancelled successfully' });
+		} catch (error) {
+		    // Handle errors appropriately and send an error response
+		    console.error(error);
+		    res.status(500).json({ error: 'Internal server error' });
+		}
+	      },
+	      cancelledOrders : async (req,res)=>{
+
+		
+			const orders = await orderModel.find({}).populate({
+				
+				path: 'items.productId',
+            model: 'products',
+            select: 'images productName size productDiscount',
+			})
+			
+			
+			await res.render('user/user/cancelledOrders',{orders})
+	      }
+	      
 	       
 	        
 		  

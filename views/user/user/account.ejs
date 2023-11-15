@@ -217,40 +217,68 @@
                                         <div class="card">
                                             <div class="card-header">
                                                 <h5 class="mb-0">Your Orders</h5>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <table class="table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Order</th>
-                                                                <th>Date</th>
-                                                                <th>Status</th>
-                                                                <th>Total</th>
-                                                                <th>Actions</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <% if (orders && orders.length > 0) { %>
-                                                                <% for (let i = 0; i < orders.length; i++) { %>
-                                                                    <tr>
-                                                                        <td><%= orders[i].orderId %></td>
-                                                                        <td>March 45, 2020</td>
-                                                                        <td><%= orders[i].orderStatus %></td>
-                                                                        <% for (let j = 0; j < orders[i].items.length; j++) { %>
-                                                                            <td><%= orders[i].items[j].price %> for <%= orders[i].items[j].quantity %> item</td>
-                                                                        <% } %>
-                                                                        <td><a href="/user/viewOrderDetails?orderId=<%= orders[i].orderId%>" class="btn-small d-block">View</a></td>
-                                                                    </tr>
-                                                                <% } %>
-                                                            <% } %>
-                                                        </tbody>
-                                                        
-                                                    </table>
                                                 </div>
-                                            </div>
+                                           
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <% if (orders && orders.length > 0) { %>
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Order</th>
+                                                                        <th>Date</th>
+                                                                        <th>Status</th>
+                                                                        <th>Total</th>
+                                                                        <th>Actions</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <% for (let i = 0; i < orders.length; i++) { %>
+                                                                        <% if (orders[i].items.length > 0) { %>
+                                                                            <% let activeFound = false; %>
+                                                                            <% let cancelledFound = false; %>
+                                                                            <% for (let j = 0; j < orders[i].items.length; j++) { %>
+                                                                                <% if (orders[i].items[j].status === 'Active' && !activeFound) { %>
+                                                                                    <tr>
+                                                                                        <td><%= orders[i].orderId %></td>
+                                                                                        <td>March 45, 2020</td>
+                                                                                        <td><%= orders[i].orderStatus %></td>
+                                                                                        <td>
+                                                                                            <%= orders[i].items[j].price %> for <%= orders[i].items[j].quantity %> item<br>
+                                                                                        </td>
+                                                                                        <td><a href="/user/viewOrderDetails?orderId=<%= orders[i].orderId%>" class="btn-small d-block">View</a></td>
+                                                                                    </tr>
+                                                                                    <% activeFound = true; %>
+                                                                                <% } else if (orders[i].items[j].status === 'Cancelled' && !cancelledFound) { %>
+                                                                                    <tr>
+                                                                                        <td><%= orders[i].orderId %></td>
+                                                                                        <td>March 45, 2020</td>
+                                                                                        <td>Cancelled</td>
+                                                                                        <td>
+                                                                                            <%= orders[i].items[j].price %> for <%= orders[i].items[j].quantity %> item<br>
+                                                                                        </td>
+                                                                                        <td><a href="/user/viewOrderDetails?orderId=<%= orders[i].orderId%>" class="btn-small d-block">View</a></td>
+                                                                                    </tr>
+                                                                                    <% cancelledFound = true; %>
+                                                                                <% } %>
+                                                                            <% } %>
+                                                                        <% } %>
+                                                                    <% } %>
+                                                                </tbody>
+                                                            </table>
+                                                        <% } %>
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                                
+                                                
+
                                         </div>
                                     </div>
+                                    <a href="/user/cancelledOrders">
+                                        view cancelled order
+                                    </a>
                                     <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
                                         <div class="card">
                                             <div class="card-header">

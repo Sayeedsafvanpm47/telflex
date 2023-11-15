@@ -72,7 +72,7 @@ module.exports = {
                     size: product.size,
                     price: product.price,
                     mrp: product.mrp,
-                    status: false,
+                    
                 });
             }
         } else {

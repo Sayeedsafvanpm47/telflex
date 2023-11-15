@@ -30,8 +30,8 @@ let orderSchema = new mongoose.Schema({
 				required: true
 			},
 			status: {
-				type: Boolean,
-				default: false
+				type: String,
+				default: 'Active'
 			}
 		}
 	],
@@ -70,6 +70,10 @@ let orderSchema = new mongoose.Schema({
 	},
 	address : {
 		type : Object
+	},
+	adminCancel : {
+		type : String,
+		
 	}
          
 });

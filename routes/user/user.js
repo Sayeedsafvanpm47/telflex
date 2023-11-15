@@ -24,6 +24,8 @@ router.get('/editAddress',controller.editAddress)
 router.post('/updateAddress',controller.updateAddress)
 router.get('/viewOrderDetails',controller.viewOrderDetails)
 router.post('/updateCart',cartController.updateCart)
+router.get('/cancelOrder',controller.cancelOrder)
+router.get('/cancelledOrders',controller.cancelledOrders)
 
 router.get('/shop',productController.productGridView)
 router.get('/sortCategory',productController.sortProducts)
