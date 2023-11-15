@@ -228,7 +228,7 @@
                                                                         <th>Order</th>
                                                                         <th>Date</th>
                                                                         <th>Status</th>
-                                                                        <th>Total</th>
+                                                                   
                                                                         <th>Actions</th>
                                                                     </tr>
                                                                 </thead>
@@ -243,9 +243,7 @@
                                                                                         <td><%= orders[i].orderId %></td>
                                                                                         <td>March 45, 2020</td>
                                                                                         <td><%= orders[i].orderStatus %></td>
-                                                                                        <td>
-                                                                                            <%= orders[i].items[j].price %> for <%= orders[i].items[j].quantity %> item<br>
-                                                                                        </td>
+                                                                                      
                                                                                         <td><a href="/user/viewOrderDetails?orderId=<%= orders[i].orderId%>" class="btn-small d-block">View</a></td>
                                                                                     </tr>
                                                                                     <% activeFound = true; %>
@@ -254,9 +252,7 @@
                                                                                         <td><%= orders[i].orderId %></td>
                                                                                         <td>March 45, 2020</td>
                                                                                         <td>Cancelled</td>
-                                                                                        <td>
-                                                                                            <%= orders[i].items[j].price %> for <%= orders[i].items[j].quantity %> item<br>
-                                                                                        </td>
+                                                                                      
                                                                                         <td><a href="/user/viewOrderDetails?orderId=<%= orders[i].orderId%>" class="btn-small d-block">View</a></td>
                                                                                     </tr>
                                                                                     <% cancelledFound = true; %>

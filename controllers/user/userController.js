@@ -444,7 +444,7 @@ module.exports = {
 		    const product = await orderModel.updateOne(
 		        { 'items._id': _id }, 
 		        {
-			  $set: { 'items.$.status': 'Cancelled' ,'orderStatus':'Cancelled'}
+			  $set: { 'items.$.status': 'Cancelled' ,'orderStatus':'Modified'}
 		        },
 		        {
 			  arrayFilters: [{ 'elem._id': _id }]

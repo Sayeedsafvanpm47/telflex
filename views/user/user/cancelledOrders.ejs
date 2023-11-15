@@ -13,30 +13,11 @@
           <section class="mt-50 mb-50">
                
                     <div class="container">
-                        <% if(orders && orders.length>0 ){ %>
                       
-         <% for(let i = 0; i < orders.length; i++) { %>
                         <div style="margin-top: -70px;" class="row">
                               <div class="col-lg-3 col-sm-6">
                               
-                                        <h5>Bill To</h5>
-                                    <p>Name : <%= orders[i].address.name%></p>
-                                    <p>Phone : <%= orders[i].address.phone%></p>
-                                    <p>Address : <%= orders[i].address.Address%></p>
-                                    <p>City : <%= orders[i].address.city%></p>
-                                    <p>State : <%= orders[i].address.state%></p>
-                                    <p>Pin Code : <%= orders[i].address.pincode%></p>
-                                    <p>Landmark : <%= orders[i].address.landmark%></p>
-                                       </div>
-                                       <div class="col-lg-3 col-sm-6">
-                                        <h5>Ship To</h5>
-                                        <p>Name : <%= orders[i].address.name%></p>
-                                        <p>Phone : <%= orders[i].address.phone%></p>
-                                        <p>Address : <%= orders[i].address.Address%></p>
-                                        <p>City : <%= orders[i].address.city%></p>
-                                        <p>State : <%= orders[i].address.state%></p>
-                                        <p>Pin Code : <%= orders[i].address.pincode%></p>
-                                        <p>Landmark : <%= orders[i].address.landmark%></p>
+                                       
                               </div>
                               </div></div></section>
 
@@ -56,15 +37,16 @@
                                         <th scope="col">Price</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Subtotal</th>
-                                        <th scope="col">Cancel</th>
+                                    
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <% if (orders && orders.length > 0) { %>
                                         <% orders.forEach(order => { %>
                                             <% if (order.items && order.items.length > 0) { %>
+                                              
                                                 <% order.items.forEach(item => { %>
-                                                    <% if (item.status === 'Cancelled') { %>
+                                                    <% if (item.status === 'Cancelled' ) { %>
                                                         <tr>
                                                             <input type="text" value="<%= item.productId %>" id="" hidden>
                                                             <td class="image product-thumbnail">
@@ -106,44 +88,7 @@
                              
                             </div>
                             <div class="col-lg-12 col-md-12">
-                                <div class="border p-md-4 p-30 border-radius cart-totals">
-                                    <div class="heading_s1 mb-3">
-                                        <h4>Bill Totals</h4>
-                                    </div>
-                                    <form action="/user/cancelOrder" method="post">
-                                    <div class="table-responsive">
-                                 
-                                        <table class="table">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="cart_total_label">Bill Subtotal</td>
-                                                
-                                                    <td class="cart_total_amount"><span id="showtotal" class="font-lg fw-900 text-brand"></span><%= orders[i].totalAmount %></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="cart_total_label">Shipping</td>
-                                                    <td class="cart_total_amount"> <i class="ti-gift mr-5"></i> Free Shipping</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="cart_total_label">Total</td>
-                                                    <td class="cart_total_amount"><span id="showtotalamount" class="font-lg fw-900 text-brand"></span><%= orders[i].totalAmount  %></td>
-                                                    <input type="number" name="totalamountcheckout" value="" id="totalinputfield" hidden>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                   <div class="row">
-                                        <div class="col-2">
-                                    <input type="button" id="printbtn" onclick="window.print()" style="background-color: rgb(6, 75, 12); color: white; border: none; padding: 10px 20px; cursor: pointer;" value="Print Invoice">
-                              </div>
-                                   
-                                    <div class="col-2">
-                                        <input id="printbtn" type="submit" style="background-color: rgb(151, 7, 7); color: white; border: none; padding: 10px 20px; cursor: pointer;" value="Cancel Order" >
-                              </div>
-                                 
-                                    </form>
                                
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -152,8 +97,7 @@
             </form>
         </section>
     </main>
-    <% } %>
-    <% } %>
+
   
     <!-- Preloader Start -->
     <div id="preloader-active">
