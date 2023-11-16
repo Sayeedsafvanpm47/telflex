@@ -10,27 +10,30 @@ module.exports = {
 
                               
                      })
+                     console.log(orders[0].address.name);
                      res.render('admin/admin/pageorders',{orders})  
                     } catch (error) {
                               console.log(error)
                     }
           },
           viewOrderDetails : async (req,res)=>{
-                    try {
-                    
-			const orderId = req.query.orderId
-			const orders = await orderModel.findOne({orderId}).populate({
-				
-				path: 'items.productId',
-            model: 'products',
-            select: 'images productName size productDiscount',
-			})
-			
-			await res.render('admin/admin/order-details',{orders})
-                              
-                    } catch (error) {
-                            console.log(error)  
-                    }
+                   
+                        try {
+                            const orderId = req.query.orderId
+                        
+                            const orders = await orderModel.find({orderId}).populate({
+                                
+                                path: 'items.productId',
+                            model: 'products',
+                            select: 'images productName size productDiscount',
+                            })
+                            
+                        
+                            await res.render('admin/admin/order-details',{orders})
+                
+                        } catch (error) {
+                            console.log(error)
+                        }
           },
           updateOrderStatus: async (req, res) => {
             try {
@@ -43,13 +46,13 @@ module.exports = {
                 if (orderStatus === 'Cancelled') {
                     await orderModel.updateOne({ orderId: orderId }, { adminCancel: 'Cancelled' });
         
-                    // Find the product and update all items' status to 'Cancelled'
+                 
                     const product = await orderModel.findOne({ orderId: orderId });
         
                     if (product.adminCancel === 'Cancelled' || product.orderStatus === 'Cancelled') {
                         await orderModel.updateOne(
                             { _id: product._id },
-                            { $set: { 'items.$[elem].status': 'Cancelled' } },
+                            { $set: { 'items.$[elem].status': 'Cancelled','totalAmount' : 0 } },
                             { arrayFilters: [{ 'elem.status': { $ne: 'Cancelled' } }] }
                         );
                     }

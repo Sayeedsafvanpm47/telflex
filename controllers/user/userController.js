@@ -458,27 +458,31 @@ res.redirect('/user/account');
 		    const _id = req.query._id;
 		    console.log(_id);
 	      
-		    const product = await orderModel.updateOne(
-		        { 'items._id': _id }, 
+		    // Find the order item to be canceled and its price
+		    const orderItem = await orderModel.findOne({ 'items._id': _id });
+		    const canceledItem = orderItem.items.find(item => item._id.toString() === _id);
+		    const canceledItemPrice = canceledItem.price;
+	      
+		    // Calculate the updated total amount after canceling the item
+		    const updatedTotal = orderItem.totalAmount - canceledItemPrice;
+	      
+		    // Update the order: set item status to 'Cancelled' and update the total amount
+		    const updatedOrder = await orderModel.updateOne(
+		        { 'items._id': _id },
 		        {
-			  $set: { 'items.$.status': 'Cancelled' ,'orderStatus':'Modified'}
+			  $set: { 'items.$.status': 'Cancelled', 'orderStatus': 'Modified' },
+			  $inc: { 'totalAmount': -canceledItemPrice }
 		        },
-		        {
-			  arrayFilters: [{ 'elem._id': _id }]
-		        }
+		        { arrayFilters: [{ 'elem._id': _id }] }
 		    );
 	      
-		   
-	      
-		    console.log(product);
-	      
-		    res.status(200).json({ message: 'Order item cancelled successfully' });
+		    res.status(200).json({ message: 'Order item cancelled successfully', updatedTotal });
 		} catch (error) {
-		    // Handle errors appropriately and send an error response
 		    console.error(error);
 		    res.status(500).json({ error: 'Internal server error' });
 		}
-	      },
+	      }
+	      ,
 	      cancelledOrders : async (req,res)=>{
 
 		
@@ -491,7 +495,9 @@ res.redirect('/user/account');
 			
 			
 			await res.render('user/user/cancelledOrders',{orders})
-	      }
+	      },
+	
+	      
 	      
 	       
 	        

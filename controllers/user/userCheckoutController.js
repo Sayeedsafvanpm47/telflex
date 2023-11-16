@@ -78,7 +78,9 @@ module.exports = {
         } else {
             console.log('Error occurred');
         }
-
+        if (!selectedAddressDetails) {
+            return res.status(400).json({ message: 'Address details not selected' });
+        }
     console.log(selectedAddressDetails)
     console.log(payment_option)
        const address = cart.userId.address[selectedAddressDetails]
@@ -96,7 +98,7 @@ console.log(address)
             address: address,
         });
         if(cart.total<=0){
-            res.redirect('/checkoutpage')
+            res.redirect('/user/checkoutpage')
         }
 
         await order.save();
