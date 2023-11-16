@@ -178,7 +178,7 @@
                     <div class="col-lg-10 m-auto">
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="dashboard-menu">
+                                <div class="dashboard-menu" >
                                     <ul class="nav flex-column" role="tablist">
                                         <li class="nav-item">
                                             <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="false"><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
@@ -251,7 +251,7 @@
                                                                                     <tr>
                                                                                         <td><%= orders[i].orderId %></td>
                                                                                         <td>March 45, 2020</td>
-                                                                                        <td>Cancelled</td>
+                                                                                        <td><%= orders[i].orderStatus  %></td>
                                                                                       
                                                                                         <td><a href="/user/viewOrderDetails?orderId=<%= orders[i].orderId%>" class="btn-small d-block">View</a></td>
                                                                                     </tr>
@@ -262,6 +262,9 @@
                                                                     <% } %>
                                                                 </tbody>
                                                             </table>
+                                                            <a href="/user/cancelledOrders">
+                                                                view cancelled order
+                                                            </a>
                                                         <% } %>
                                                     </div>
                                                 </div>
@@ -271,10 +274,9 @@
                                                 
 
                                         </div>
+                                 
                                     </div>
-                                    <a href="/user/cancelledOrders">
-                                        view cancelled order
-                                    </a>
+                                
                                     <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
                                         <div class="card">
                                             <div class="card-header">
@@ -302,7 +304,7 @@
                                     </div>
                                     <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
                                         <div class="row">
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-12">
                                                 <div class="card mb-3 mb-lg-0">
                                                     <div class="card-header">
                                                         <h5 class="mb-0">Billing Address</h5>
@@ -316,38 +318,38 @@
                                                           <div class="address-row">
                                                             <div class="address-field-with-label main-part margin-right">
                                                               <label for="name">Name:</label>
-                                                              <input name="name" id="street" >
+                                                              <input name="name" id="street" required>
                                                             </div>
                                                         
                                                             <div class="address-field-with-label">
                                                               <label for="phonenumber">Phone Number :</label>
-                                                              <input id="phonenumber" name="phonenumber" >
+                                                              <input id="phonenumber" name="phonenumber" required>
                                                             </div>
                                                           </div>
                                                         
                                                           <div class="address-row">
                                                             <div class="address-field-with-label main-part">
                                                               <label for="address-additional">Pincode : </label>
-                                                              <input id="address-additional" name="pincode" >
+                                                              <input id="address-additional" name="pincode" required>
                                                             </div>
                                                           </div>
                                                         
                                                           <div class="address-row">
                                                             <div class="address-field-with-label main-part margin-right">
                                                               <label for="address">Address :</label>
-                                                              <input id="address" name="address" >
+                                                              <input id="address" name="address" required>
                                                             </div>
                                                         
                                                             <div class="address-field-with-label">
                                                               <label for="city">City :</label>
-                                                              <input id="city" name="city" />
+                                                              <input id="city" name="city" required />
                                                             </div>
                                                           </div>
                                                         
                                                           <div class="address-row">
                                                             <div class="address-field-with-label main-part margin-right">
                                                                 <label for="inputState">State :</label>
-                                                                <select name="state" class="form-control" id="inputState">
+                                                                <select name="state" class="form-control" id="inputState" required>
                                                                                     <option value="SelectState">Select State</option>
                                                                                     <option value="Andra Pradesh">Andra Pradesh</option>
                                                                                     <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -391,13 +393,13 @@
                                                         
                                                             <div class="address-field-with-label main-part">
                                                               <label for="country">Landmark :</label>
-                                                              <input id="landmark" name="landmark" >
+                                                              <input id="landmark" name="landmark" required >
                                                             </div>
                                                           </div>
                                                           <div class="address-type-container">
                                                             <label for="country">Address Type :</label>
                                                             <div>
-                                                               <select name="addresstype" id="">
+                                                               <select name="addresstype" id="" required>
                                                                 <option value="work">Work</option>
                                                                 <option value="home">Home</option>
                                                                </select>
@@ -412,8 +414,11 @@
                                                           <div class="button-container"><input type="submit" value="submit"></div>
                                                         </div>
                                                     </form>
-
+                                                </div>
+                                            </div>
     <hr>
+    <div class="col-lg-12">
+        <div class="card">
                                                         <% for(let i=0; i<users.address.length; i++) { %>
                                                             <div class="card-body">
                                                             <address>Name : <%= users.address[i].name %><br> Phone : <%= users.address[i].phone  %><br> Pincode : <%= users.address[i].pincode  %> <br> 
@@ -433,27 +438,17 @@
 >
   Delete
 </button>
+ 
                                                     </div>
                                                         <hr>
                                                         <% } %>
                                                     
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5 class="mb-0">Shipping Address</h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <address>4299 Express Lane<br>
-                                                            Sarasota, <br>FL 34249 USA <br>Phone: 1.941.227.4444</address>
-                                                        <p>Sarasota</p>
-                                                        <a href="#" class="btn-small">Edit</a>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
+                                          
+                                        
                                     <div class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
                                         <div class="card">
                                             <div class="card-header">

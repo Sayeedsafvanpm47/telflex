@@ -227,40 +227,45 @@
                                             <th>Total</th>
                                         </tr>
                                     </thead>
-                                  
-                                   <% if(cart && cart.products){ %>
-                                   
-                                    <tbody>
-                                     
-                                          <%  for(let i=0; i<cart.products.length; i++) { %>
-                                           
-                                          
-                                        <tr>
-                                            <td class="image product-thumbnail"><img src="/<%=cart.products[i].product_id.images[0]%>" alt="#"></td>
-                                            <td>
-                                                <h5><a href="shop-product-full.html"><%=cart.products[i].product_id.productName%></a></h5>
-                                                <span class="product-qty">x <%=cart.products[i].quantity%></span>
-                                            </td>
-                                            <td>$<%=cart.products[i].product_id.size[0].productPrice%></td>
-                                        </tr>
-                                       <% } %>
-                                      
-                                        <tr>
-                                            <th>SubTotal</th>
-                                            <td class="product-subtotal" colspan="2">$<%=cart.total%></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Shipping</th>
-                                            <td colspan="2"><em>Free Shipping</em></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Total</th>
-                                            <td colspan="2" class="product-subtotal"><span id="totalfieldload" class="font-xl text-brand fw-900">$<%=cart.total%></span></td>
-                                        </tr>
-                                    </tbody>
+                                    <% if(cart && cart.products){ %>
+                                        <tbody>
+                                            <% let productsTotal = 0; %> <!-- Initialize a variable to hold the total -->
+                                            
+                                            <% for(let i=0; i<cart.products.length; i++) { %>
+                                                <tr>
+                                                    <td class="image product-thumbnail"><img src="/<%=cart.products[i].product_id.images[0]%>" alt="#"></td>
+                                                    <td>
+                                                        <h5><a href="shop-product-full.html"><%=cart.products[i].product_id.productName%></a></h5>
+                                                        <span class="product-qty">x <%=cart.products[i].quantity%></span>
+                                                    </td>
+                                                    <td>$<%=cart.products[i].price%></td>
+                                                </tr>
+                                                
+                                                <% /* Calculate the subtotal for each product and add it to the total */ %>
+                                                <% productsTotal += cart.products[i].price * cart.products[i].quantity; %> 
+                                            <% } %>
+                                            
+                                            <!-- Display the products subtotal -->
+                                            <tr>
+                                                <th>SubTotal</th>
+                                                <td class="product-subtotal" colspan="2">$<%= productsTotal %></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Shipping</th>
+                                                <td colspan="2"><em>Free Shipping</em></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Total</th>
+                                                <td colspan="2" class="product-subtotal">
+                                                    <span id="totalfieldload" class="font-xl text-brand fw-900">$<%= productsTotal %></span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    <% } %>
+                                    
                                 
                                 </table>
-                                <% } %>
+                             
                             </div>
                             <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                             <div class="payment_method">
@@ -445,7 +450,7 @@ async function placeOrder() {
                 title: 'Order Placed Successfully!',
                 text: 'Thank you for your order.',
             });
-            window.location.href = 'shop';
+            window.location.href = 'account';
         } else {
             Swal.fire({
                 icon: 'error',

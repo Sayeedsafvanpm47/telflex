@@ -22,16 +22,32 @@
                           </div>
                       </div>
                       <div class="col-xl-3 col-lg-4">
-                          <div class="header-info header-info-right">
-                              <ul>
-                                  <li>
-                                      <a class="language-dropdown-active" href="#"> <i class="fi-rs-world"></i> English <i class="fi-rs-angle-small-down"></i></a>
-                                   
-                                  </li>
-                                  <li><i class="fi-rs-user"></i><a href="page-login-register.html">Log In </a></li>
-                                  <li><i class="fi-rs-user"></i><a href="page-login-register.html">Sign Up </a></li>
-                              </ul>
+                        <div class="header-info header-info-right">
+                          <div class="dropdown">
+                            <a href="#" role="button" id="loginDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i class="fi-rs-user"></i> User 
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="loginDropdown">
+                              <!-- Dropdown items for logged-in user -->
+                              <% if (loggedIn) { %>
+                                <li><a class="dropdown-item" href="/user/account">Profile</a></li>
+                                <li><a class="dropdown-item" href="/wishlist">Wishlist</a></li>
+                                <li><a class="dropdown-item" href="/coupons">Coupons</a></li>
+                                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                              <% } else { %>
+                                <!-- Dropdown items for logged-out user -->
+                                <li><a class="dropdown-item" href="/user/shop">Login</a></li>
+                                <li><a class="dropdown-item" href="/user/getsignup">Register</a></li>
+                              <% } %>
+                              <!-- Additional dropdown items can be added here -->
+                            </ul>
                           </div>
+                        </div>
+                      </div>
+                      
+                        
+
+
                       </div>
                   </div>
               </div>
@@ -49,7 +65,7 @@
                                   <li><a id="homelink" onclick="setActiveLink(this)"  href="index.html">Home </i></a>
                                     
                                   </li>
-                                  <li><a id="shoplink" onclick="setActiveLink(this)"  href="/user/shop">Shop</a>
+                                  <li><a id="shoplink" onclick="setActiveLink(this)"  href="/user/">Shop</a>
                                       <ul class="sub-menu">
                                           <li><a href="shop-grid-right.html">Shop Grid – Right Sidebar</a></li>
                                           <li><a href="shop-grid-left.html">Shop Grid – Left Sidebar</a></li>
@@ -90,47 +106,18 @@
                                   </a>
                               </div>
                               <div class="header-action-icon-2">
-                                  <a class="mini-cart-icon" href="shop-cart.html">
+                                <% if(loggedIn){ %>
+                                  <a class="mini-cart-icon" href="/user/showCart">
                                       <img alt="Evara" src="/user/imgs/theme/icons/icon-cart.svg">
                                       <span class="pro-count blue">2</span>
                                   </a>
-                                  <div class="cart-dropdown-wrap cart-dropdown-hm2">
-                                      <ul>
-                                          <li>
-                                              <div class="shopping-cart-img">
-                                                  <a href="shop-product-right.html"><img alt="Evara" src="/user/imgs/shop/thumbnail-3.jpg"></a>
-                                              </div>
-                                              <div class="shopping-cart-title">
-                                                  <h4><a href="shop-product-right.html">Plain Striola Shirts</a></h4>
-                                                  <h3><span>1 × </span>$800.00</h3>
-                                              </div>
-                                              <div class="shopping-cart-delete">
-                                                  <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                              </div>
-                                          </li>
-                                          <li>
-                                              <div class="shopping-cart-img">
-                                                  <a href="shop-product-right.html"><img alt="Evara" src="/user/imgs/shop/thumbnail-1.jpg"></a>
-                                              </div>
-                                              <div class="shopping-cart-title">
-                                                  <h4><a href="shop-product-right.html">Macbook Pro 2022</a></h4>
-                                                  <h3><span>1 × </span>$3200.00</h3>
-                                              </div>
-                                              <div class="shopping-cart-delete">
-                                                  <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                              </div>
-                                          </li>
-                                      </ul>
-                                      <div class="shopping-cart-footer">
-                                          <div class="shopping-cart-total">
-                                              <h4>Total <span>$4000.00</span></h4>
-                                          </div>
-                                          <div class="shopping-cart-button">
-                                              <a href="shop-cart.html">View cart</a>
-                                              <a href="shop-checkout.html">Checkout</a>
-                                          </div>
-                                      </div>
-                                  </div>
+                                  <% }else { %>
+                                    <a class="mini-cart-icon" href="/user/shop">
+                                        <img alt="Evara" src="/user/imgs/theme/icons/icon-cart.svg">
+                                        <span class="pro-count blue">2</span>
+                                    </a>
+                                    <% } %>
+                                 
                               </div>
                               <div class="header-action-icon d-block d-lg-none">
                                   <div class="burger-icon">

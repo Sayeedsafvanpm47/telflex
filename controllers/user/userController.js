@@ -6,6 +6,7 @@ const { isEmailValid, isPasswordValid, isNamesValid, isPhoneValid, isCpassValid 
 const otpGenerator = require("../../utils/otpGenerator");
 const sendOtp = require("../../utils/generateAndSendOtp");
 
+
 module.exports = {
 	getLogin: async (req, res) => {
 		try {
@@ -53,17 +54,24 @@ module.exports = {
 		    const passwordMatch = await bcrypt.compare(password, user.password);
 		    if (passwordMatch) {
 			req.session.userId = user._id
+			
 			console.log(req.session.userId)
 		      console.log("Login successful");
-		      res.redirect("/user/shop");
+		      if(req.session.cart){
+		      res.redirect("/user/");
+		      }
+		      else
+		      {
+			res.redirect('/user/')
+		      }
 		    } else {
 		      console.log("Invalid password");
-		      res.redirect("/user/");
+		      res.redirect("/user/shop");
 		    }
 		  }
 		} catch (err) {
 		  console.error("Error in catch:", err);
-		  res.redirect("/user");
+		  res.redirect("/user/shop");
 		}
 	        },
 	        
@@ -304,39 +312,48 @@ module.exports = {
 	}
 	,
 	updateAccount : async(req,res)=>{
-		try{
-		const userId = req.session.userId
-		const users = await userModel.findById(userId)
-		const {password,newpassword,confirmpassword,firstname,lastname} = req.body
-		const passCheck = bcrypt.compare(users.password,password)
-		if (!users) {
-			return res.status(404).send('User not found');
+		try {
+			const userId = req.session.userId;
+const user = await userModel.findOne({ _id: userId });
+
+
+if (!user) {
+  return res.status(404).send('User not found');
+}
+
+const currentPassword = user.password;
+console.log('current password: ', currentPassword)
+const { password, newpassword, confirmpassword, firstname, lastname } = req.body;
+
+const passwordMatch = await bcrypt.compare(password, currentPassword);
+console.log('Password Match:',passwordMatch)
+
+if (!passwordMatch) {
+  console.log('Current password is incorrect');
+  return res.redirect('/user/account')
+}
+
+if (newpassword !== confirmpassword) {
+  console.log('New passwords do not match');
+  return res.redirect('/user/account')
+}
+console.log(newpassword)
+console.log(confirmpassword)
+const hashedPassword = await bcrypt.hash(newpassword, 10);
+console.log(hashedPassword)
+
+
+
+
+await userModel.updateOne({ _id: userId }, { $set: { password: hashedPassword } });
+
+res.redirect('/user/account');
+		        } catch (error) {
+			console.error(error);
+			res.status(500).send('Internal Server Error');
 		        }
-		if (!passCheck) {
-			
-			console.log('password dont match')
-		        }
-		    
-		        // Check if the new password and confirm password match
-		        if (newpassword !== confirmpassword) {
-			console.log('error in new passwords, cnfrm pss')
-		        }
-		    
-		     
-		        const hashedPassword = await bcrypt.hash(newpassword, 10);
-		    
-		       
-		        await userModel.findByIdAndUpdate(userId, {
-			
-			password: hashedPassword,
-		        });
-		    
-		        res.redirect('/user/account');
-		
-		      } catch (error) {
-		        console.error(error);
-		        res.status(500).send('Internal Server Error');
-		      }
+		         
+		        
 	},
 	addAddress : async (req,res)=>{
 
@@ -429,7 +446,7 @@ module.exports = {
             select: 'images productName size productDiscount',
 			})
 			
-			console.log('this is :' + orders[0].items[0])
+		
 			await res.render('user/user/order-details',{orders})
 
 		} catch (error) {

@@ -9951,3 +9951,13 @@ span.fi-rs-apps {
       display :  none;
   }
 }
+
+.dashboard-content {
+  height: 600px; /* Adjust this height as needed */
+  overflow-y: auto; /* Add a vertical scrollbar when content exceeds the defined height */
+}
+
+/* Optionally, you can adjust padding and margins for better layout */
+.dashboard-content .card {
+  margin-bottom: 20px; /* Add space between cards */
+}

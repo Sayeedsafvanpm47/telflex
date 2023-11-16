@@ -4,10 +4,17 @@ const cartModel = require('../../models/cartModel')
 module.exports = {
           addToCart : async (req,res)=>{
                     try {
+                        const userId = req.session.userId;
+                        if(!req.session.userId){
+                            req.session.cart = true
+                            res.redirect('/user/shop')
+                            
+                            
+                        }else{
                        
-                      const { _id, productname, category, size, price, mrp, discount, quantity } = req.body;
+                      const { _id, size, price, mrp, quantity } = req.body;
 
-                      const userId = req.session.userId;
+                      
           
                    
                       const existingCart = await cartModel.findOne({ userId: userId });
@@ -40,6 +47,7 @@ module.exports = {
                       }
           
                       res.redirect('/user/showCart');
+                    }
 
 
                     } catch (error) {

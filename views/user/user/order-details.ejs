@@ -65,6 +65,7 @@
                                             <% if (order.items && order.items.length > 0) { %>
                                                 <% order.items.forEach(item => { %>
                                                     <% if (item.status !== 'Cancelled') { %>
+                                                        <!-- Display items with item.status !== 'Cancelled' -->
                                                         <tr>
                                                             <input type="text" value="<%= item.productId %>" id="" hidden>
                                                             <td class="image product-thumbnail">
@@ -85,12 +86,32 @@
                                                                 <button class="btn btn-danger" onclick="cancelOrder('<%= item._id %>')">Cancel</button>
                                                             </td>
                                                         </tr>
+                                                    <% } else { %>
+                                                        <!-- Display items with item.status === 'Cancelled' without the cancel button -->
+                                                        <tr>
+                                                            <td class="image product-thumbnail">
+                                                                <img src="/<%= item.productId.images[0] %>" alt="#">
+                                                            </td>
+                                                            <td class="product-des product-name">
+                                                                <h5 class="product-name">
+                                                                    <a href="shop-product-right.html"><%= item.productId.productName %></a>
+                                                                </h5>
+                                                                <p class="font-xs">Maboriosam in a tonto nesciung eget<br> distingy magndapibus.</p>
+                                                            </td>
+                                                            <td class="price" data-title="Price"><span><%= item.price %></span></td>
+                                                            <td class="quantity" data-title="Quantity"><span><%= item.quantity %></span></td>
+                                                            <td class="text-right" data-title="Cart">
+                                                                <span class="calctotal" id="calcprice"><%= item.price * item.quantity %></span>
+                                                            </td>
+                                                            <!-- No cancel button for items with status 'Cancelled' -->
+                                                        </tr>
                                                     <% } %>
                                                 <% }) %>
                                             <% } %>
                                         <% }) %>
                                     <% } %>
                                 </tbody>
+                                
                                 
                             </table>
                         </div>
@@ -232,7 +253,7 @@
                         text: 'Your order has been cancelled successfully!',
                     });
                     console.log(data); 
-                    window.location.reload(); 
+                    window.location.href = 'account'
                 })
                 .catch((error) => {
                    

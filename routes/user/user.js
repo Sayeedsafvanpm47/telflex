@@ -6,8 +6,15 @@ const productController = require('../../controllers/user/userProductController'
 const cartController = require('../../controllers/user/userCartController')
 const userCheckoutController = require('../../controllers/user/userCheckoutController')
 
-router.get("/", controller.getLogin);
+router.use((req, res, next) => {
+          res.locals.loggedIn = req.session.userId ? true : false; 
+          next();
+        });
+
+router.get("/shop", controller.getLogin);
 router.post("/postLogin", controller.postLogin);
+
+
 router.get("/gethome", controller.getHome);
 router.get("/getsignup", controller.getSignUp);
 router.post("/signup", controller.postSignUp);
@@ -27,7 +34,7 @@ router.post('/updateCart',cartController.updateCart)
 router.get('/cancelOrder',controller.cancelOrder)
 router.get('/cancelledOrders',controller.cancelledOrders)
 
-router.get('/shop',productController.productGridView)
+router.get('/',productController.productGridView)
 router.get('/sortCategory',productController.sortProducts)
 router.post('/sortPrice',productController.sortPrice)
 router.post('/searchProducts',productController.searchProducts)

@@ -178,7 +178,7 @@
                                   
                                     
                                         <div class="row">
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-12">
                                                 <div class="card mb-3 mb-lg-0">
                                                     <div class="card-header">
                                                         <h5 class="mb-0">Edit Address</h5>
@@ -193,14 +193,14 @@
                                                             <div class="address-field-with-label main-part margin-right">
                                                               <label for="name">Name:</label>
                                                               <% if (users && users.address && users.address.length > 0) { %>
-                                                              <input name="name" id="street"  value="<%= users.address[0].name  %>" >
+                                                              <input name="name" id="street"  value="<%= users.address[0].name  %>" required >
                                                               <% } %>
                                                             </div>
                                                         
                                                             <div class="address-field-with-label">
                                                               <label for="phonenumber">Phone Number :</label>
                                                               <% if (users && users.address && users.address.length > 0) { %>
-                                                              <input id="phonenumber" name="phonenumber" value="<%= users.address[0].phone  %>" >
+                                                              <input id="phonenumber" name="phonenumber" value="<%= users.address[0].phone  %>" required>
                                                               <% } %>
                                                             </div>
                                                           </div>
@@ -209,7 +209,7 @@
                                                             <div class="address-field-with-label main-part">
                                                               <label for="address-additional">Pincode : </label>
                                                               <% if (users && users.address && users.address.length > 0) { %>
-                                                              <input id="address-additional" name="pincode" value="<%= users.address[0].pincode %>" >
+                                                              <input id="address-additional" name="pincode" value="<%= users.address[0].pincode %>" required >
                                                               <% } %>
                                                             </div>
                                                           </div>
@@ -218,14 +218,14 @@
                                                             <div class="address-field-with-label main-part margin-right">
                                                               <label for="address">Address :</label>
                                                               <% if (users && users.address && users.address.length > 0) { %>
-                                                              <input id="address" name="address" value="<%= users.address[0].Address  %>" >
+                                                              <input id="address" name="address" value="<%= users.address[0].Address  %>" required>
                                                               <% } %>
                                                             </div>
                                                         
                                                             <div class="address-field-with-label">
                                                               <label for="city">City :</label>
                                                               <% if (users && users.address && users.address.length > 0) { %>
-                                                              <input id="city" name="city" value="<%= users.address[0].city  %>" />
+                                                              <input id="city" name="city" value="<%= users.address[0].city  %>" required/>
                                                               <% } %>
                                                             </div>
                                                           </div>
@@ -233,7 +233,7 @@
                                                           <div class="address-row">
                                                             <div class="address-field-with-label main-part margin-right">
                                                                 <label for="inputState">State :</label>
-                                                                <select name="state" class="form-control" id="inputState">
+                                                                <select name="state" class="form-control" id="inputState" required>
                                                                   <% if (users && users.address && users.address.length > 0) { %>
                                                                                     <option value="SelectState"><%= users.address[0].state  %></option>
                                                                                     <% } %>
@@ -280,14 +280,14 @@
                                                             <div class="address-field-with-label main-part">
                                                               <label for="country">Landmark :</label>
                                                               <% if (users && users.address && users.address.length > 0) { %>
-                                                              <input id="landmark" name="landmark" value="<%= users.address[0].landmark %>" >
+                                                              <input id="landmark" name="landmark" value="<%= users.address[0].landmark %>" required >
                                                               <% } %>
                                                             </div>
                                                           </div>
                                                           <div class="address-type-container">
                                                             <label for="country">Address Type :</label>
                                                             <div>
-                                                               <select name="addresstype" id="">
+                                                               <select name="addresstype" id="" required>
                                                                 <option value="work">Work</option>
                                                                 <option value="home">Home</option>
                                                                </select>
@@ -307,19 +307,7 @@
                                                     
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5 class="mb-0">Shipping Address</h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <address>4299 Express Lane<br>
-                                                            Sarasota, <br>FL 34249 USA <br>Phone: 1.941.227.4444</address>
-                                                        <p>Sarasota</p>
-                                                        <a href="#" class="btn-small">Edit</a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                          
                                         </div>
                                     </div>
                                    
