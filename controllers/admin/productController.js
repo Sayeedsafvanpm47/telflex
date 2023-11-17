@@ -21,7 +21,8 @@ module.exports = {
 				sizes.push({
 					size: req.body[`size_${i}`],
 					productPrice: req.body[`productprice_${i}`],
-					stock: req.body[`stock_${i}`]
+					stock: req.body[`stock_${i}`],
+					productid : Date.now()
           ,mrp : req.body[`mrp_${i}`]
 				});
 			}

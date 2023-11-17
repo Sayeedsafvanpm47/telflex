@@ -1,6 +1,7 @@
 const userModel = require('../../models/userModel')
 const cartModel = require('../../models/cartModel')
 const orderModel = require('../../models/orderModel')
+const productModel = require('../../models/productModel')
 const { USER } = require('../../utils/constants/schemaName');
 
 module.exports = {
@@ -74,6 +75,12 @@ module.exports = {
                     mrp: product.mrp,
                     
                 });
+
+
+            
+
+
+            
             }
         } else {
             console.log('Error occurred');
@@ -81,11 +88,10 @@ module.exports = {
         if (!selectedAddressDetails) {
             return res.status(400).json({ message: 'Address details not selected' });
         }
-    console.log(selectedAddressDetails)
-    console.log(payment_option)
+      
        const address = cart.userId.address[selectedAddressDetails]
   
-console.log(address)
+
       
        
        
@@ -102,6 +108,29 @@ console.log(address)
         }
 
         await order.save();
+
+for (let i = 0; i < ordered.length; i++) {
+    const orderedItem = ordered[i];
+
+ 
+    const product = await productModel.findById(orderedItem.productId);
+
+    if (product) {
+     
+        product.size.forEach((sizeObj) => {
+            if (sizeObj.size === orderedItem.size) {
+                sizeObj.stock -= orderedItem.quantity;
+            }
+        });
+
+     
+        await product.save();
+    } else {
+        console.log(`Product with ID ${orderedItem.productId} not found`);
+    }
+}
+
+
         cart.products = []
         cart.total = 0
         await cart.save()

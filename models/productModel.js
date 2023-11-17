@@ -18,6 +18,9 @@ const sizeRateSchema = new Schema({
 	mrp : {
 		type : Number,
 		default : 0
+	},
+	productselect : {
+		type : String
 	}
         });
 

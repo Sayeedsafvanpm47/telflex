@@ -1,5 +1,6 @@
 const userModel = require("../../models/userModel");
 const orderModel = require('../../models/orderModel')
+const productModel = require('../../models/productModel')
 const sendOTPByEmail = require("../../utils/sendMail");
 const bcrypt = require("bcrypt");
 const { isEmailValid, isPasswordValid, isNamesValid, isPhoneValid, isCpassValid } = require("../../utils/validators/signUpValidator");
@@ -458,15 +459,15 @@ res.redirect('/user/account');
 		    const _id = req.query._id;
 		    console.log(_id);
 	      
-		    // Find the order item to be canceled and its price
+	
 		    const orderItem = await orderModel.findOne({ 'items._id': _id });
 		    const canceledItem = orderItem.items.find(item => item._id.toString() === _id);
 		    const canceledItemPrice = canceledItem.price;
 	      
-		    // Calculate the updated total amount after canceling the item
+		 
 		    const updatedTotal = orderItem.totalAmount - canceledItemPrice;
 	      
-		    // Update the order: set item status to 'Cancelled' and update the total amount
+		
 		    const updatedOrder = await orderModel.updateOne(
 		        { 'items._id': _id },
 		        {
@@ -475,6 +476,22 @@ res.redirect('/user/account');
 		        },
 		        { arrayFilters: [{ 'elem._id': _id }] }
 		    );
+
+		   
+
+		    const products = await productModel.findById(canceledItem._id)
+		    if(products){
+		    products.forEach(size=>{
+			if(size.size === canceledItem.size)
+			{
+				size.stock += canceledItem.quantity
+			}
+		    })
+		    await products.save()
+		}else {
+			console.log(`Product with ID ${canceledItem.productId} not found`);
+		      }
+		    
 	      
 		    res.status(200).json({ message: 'Order item cancelled successfully', updatedTotal });
 		} catch (error) {
