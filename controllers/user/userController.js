@@ -324,7 +324,7 @@ if (!user) {
 
 const currentPassword = user.password;
 console.log('current password: ', currentPassword)
-const { password, newpassword, confirmpassword, firstname, lastname } = req.body;
+const { password, newpassword, confirmpassword} = req.body;
 
 const passwordMatch = await bcrypt.compare(password, currentPassword);
 console.log('Password Match:',passwordMatch)
@@ -392,7 +392,7 @@ res.redirect('/user/account');
 			
 
 		const users = await userModel.findOne({'address._id' : addressId},{'address.$':1})
-		const user = users.address[0].name
+		// const user = users.address[0].name
 		
 		res.render('user/user/editAddress',{users})
 			
@@ -490,6 +490,7 @@ res.redirect('/user/account');
 		        if (sizeToUpdate) {
 			  sizeToUpdate.stock += proquantity;
 			  await productFound.save();
+			 
 			  console.log(`Stock updated for product ${proId}, size ${prosize}`);
 		        } else {
 			  console.log(`Size ${prosize} not found for product ${proId}`);

@@ -40,7 +40,7 @@
                                                 <h5 class="product-name">
                                                   <a href="shop-product-right.html"><%= cart[j].products[i].product_id.productName %></a>
                                                 </h5>
-                                                <p class="font-xs">Maboriosam in a tonto nesciung eget<br> distingy magndapibus.</p>
+                                                <p class="font-xs">Size : <%= cart[j].products[i].size  %><br> <%= cart[j].products[i].product_id.shortDescription  %> </p>
                                               </td>
                                               <td class="price" data-title="Price"><span><%= cart[j].products[i].price %> </span></td>
                                               <td class="text-center" data-title="Stock">
@@ -68,9 +68,8 @@
                                               <td class="action" data-title="Remove"><a href="/user/deleteCart?productId=<%= cart[j].products[i]._id %>" class="text-muted"><i class="fi-rs-trash"></i></a></td>
                                             </tr>
                                           <% } %>
-                                        <% } %>
-                                      <% } %>
-                                    <% } %>
+                                        
+                                   
                                   </tbody>
                             </table>
                         </div>
@@ -107,7 +106,8 @@
                                     <div class="heading_s1 mb-3">
                                         <h4>Cart Totals</h4>
                                     </div>
-                                    <form action="/user/checkOut?userId=<%= cart[0].userId %>" method="post">
+                                  
+                                    <form action="/user/checkOut?userId=<%= cart[j].userId %>" method="post">
                                     <div class="table-responsive">
                                  
                                         <table class="table">
@@ -129,6 +129,9 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                    <% } %>
+                                    <% } %>
+                                    <% } %>
                                     <% if(user && cart && cart.length > 0) { %>
                                         <button type="submit" onclick="updateTotalAndSubmit()" > <i class="fi-rs-box-alt mr-10"></i> Proceed To CheckOut</button>
                                        
@@ -291,104 +294,13 @@
     <!-- Template  JS -->
     <script src="/user/js/maind134.js?v=3.4"></script>
     <script src="/user/js/shopd134.js?v=3.4"></script>
-    <!-- <script>
-       function calc(productId) {
-  var mul = document.getElementById("mul" + productId).value;
-  var quantity = document.getElementById("quantity" + productId).value;
-  
-  var sum = document.getElementById('calcprice' + productId);
-  var totalPrice = parseFloat(sum.innerText) || parseFloat(sum.textContent);
-  
-  var total = parseFloat(mul) * parseFloat(quantity);
-
-  if (!isNaN(total)) {
-    sum.innerHTML =  total.toFixed(2);
-   
-  }
-
-  var sumtotal = 0;
-var allSums = document.querySelectorAll('.calctotal');
-
-for (let i = 0; i < allSums.length; i++) {
-    console.log(allSums)
-  sumtotal += +allSums[i].innerText;
-}
-console.log(sumtotal)
-
-if (!isNaN(sumtotal)) {
-  document.getElementById('showtotal').innerHTML =  sumtotal.toFixed(2);
-  document.getElementById('showtotalamount').innerHTML =  sumtotal.toFixed(2);
-
-
-
- 
-
-}
-
-const quantityUpdate = document.getElementById("quantity" + productId).value;
-
-  console.log(totalPriceShow)
-    fetch(`/user/updateCart?productId=${productId}`, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-        quantity: quantityUpdate,
-       
-    }),
-})
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch(error => {
-        console.log('Error:', error);
-    });
-
-
-}
-
-
-      </script> -->
 
 
 
 
 
-<script>
-//    function checkout(userId) {
-//     const totalPriceShow = document.getElementById('showtotalamount').innerHTML 
-//     console.log(`price : ${totalPriceShow}`)
-//     fetch(`/user/checkOut?userId=${userId}`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//             total: totalPriceShow
-//         }),
-//     })
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error(`HTTP error! Status: ${response.status}`);
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             console.log('Success:', data);
-//         })
-//         .catch(error => {
-//             console.log('Error:', error);
-//         });
-// }
 
-</script>
+
 
 
 <script>
