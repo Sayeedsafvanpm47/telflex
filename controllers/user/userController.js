@@ -463,7 +463,10 @@ res.redirect('/user/account');
 		    const orderItem = await orderModel.findOne({ 'items._id': _id });
 		    const canceledItem = orderItem.items.find(item => item._id.toString() === _id);
 		    const canceledItemPrice = canceledItem.price;
-	      
+	      const proId = canceledItem.productId
+	      console.log(proId)
+	      const prosize = canceledItem.size
+	      const proquantity = canceledItem.quantity
 		 
 		    const updatedTotal = orderItem.totalAmount - canceledItemPrice;
 	      
@@ -477,20 +480,24 @@ res.redirect('/user/account');
 		        { arrayFilters: [{ 'elem._id': _id }] }
 		    );
 
-		   
+		    
 
-		    const products = await productModel.findById(canceledItem._id)
-		    if(products){
-		    products.forEach(size=>{
-			if(size.size === canceledItem.size)
-			{
-				size.stock += canceledItem.quantity
-			}
-		    })
-		    await products.save()
-		}else {
-			console.log(`Product with ID ${canceledItem.productId} not found`);
-		      }
+		   
+		    const productFound = await productModel.findOne({ _id: proId });
+
+		    if (productFound) {
+		        const sizeToUpdate = productFound.size.find(sizeObj => sizeObj.size === prosize);
+		        if (sizeToUpdate) {
+			  sizeToUpdate.stock += proquantity;
+			  await productFound.save();
+			  console.log(`Stock updated for product ${proId}, size ${prosize}`);
+		        } else {
+			  console.log(`Size ${prosize} not found for product ${proId}`);
+		        }
+		    } else {
+		        console.log(`Product with ID ${proId} not found`);
+		    }
+		    
 		    
 	      
 		    res.status(200).json({ message: 'Order item cancelled successfully', updatedTotal });
