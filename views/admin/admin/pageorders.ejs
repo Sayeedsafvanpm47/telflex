@@ -34,7 +34,7 @@
                                     <th scope="col">Total</th>
                                     <th scope="col">Change Status</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Date</th>
+                                    <!-- <th scope="col">Date</th> -->
                                     <th scope="col" class="text-end"> Action </th>
                                 </tr>
                             </thead>
@@ -62,13 +62,14 @@
                                                 </form>
                                             </td>
                                             <td><span class="badge rounded-pill alert-warning"><%= orders[i].orderStatus %></span></td>
-                                            <td><%= orders[i].orderDate %></td>
+                                            <!-- <td><%= orders[i].orderDate %></td> -->
                                             <td class="text-end">
                                                 <a href="/admin/viewOrderDetails?orderId=<%= orders[i].orderId %>" class="btn btn-md rounded font-sm">Detail</a>
                                             </td>
                                         </tr>
                                     <% } %>
                                 <% } %>
+                                
                             </tbody>
                         </table>
                     </div> <!-- table-responsive //end -->

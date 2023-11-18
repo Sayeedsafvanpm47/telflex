@@ -85,6 +85,10 @@
                                                             <td class="cancel" data-title="Cancel">
                                                                 <button class="btn btn-danger" onclick="cancelOrder('<%= item._id %>')">Cancel</button>
                                                             </td>
+                                                            <!-- <td class="cancel" data-title="Cancel">
+                                                                <button class="btn btn-danger" onclick="handleOrder('return', '<%= item._id %>')">Return</button>
+                                                            </td> -->
+                                                            
                                                         </tr>
                                                     <% } else { %>
                                                         <!-- Display items with item.status === 'Cancelled' without the cancel button -->
@@ -277,6 +281,57 @@
         });
     }
 </script>
+
+
+<!-- <script>
+    function returnOrder(_id) {
+    
+        Swal.fire({
+            icon: 'warning',
+            title: 'Are you sure?',
+            text: 'Do you want to return this order?',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, request for return!',
+            cancelButtonText: 'No, keep it'
+        }).then((result) => {
+            if (result.isConfirmed) {
+               
+                fetch(`/user/returnOrder?_id=${_id}`, {
+                    method: 'GET',
+                })
+                .then((res) => {
+                    if (!res.ok) {
+                        throw new Error('response was not okay');
+                    }
+                    return res.json();
+                })
+                .then((data) => {
+                 
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Requested for returning',
+                        text: 'Your request has been submitted!',
+                    });
+                    console.log(data); 
+                    window.location.href = 'account'
+                })
+                .catch((error) => {
+                   
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong! Unable to return the order.',
+                        footer: `<p>${error.message}</p>`,
+                    });
+                    console.log(error);
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+             
+                Swal.fire('Cancelled', 'Your order is safe :)');
+            }
+        });
+    }
+</script> -->
 
 
 
