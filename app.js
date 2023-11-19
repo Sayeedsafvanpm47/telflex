@@ -5,24 +5,27 @@ const Swal = require('sweetalert2')
 const userRoute = require("./routes/user/user");
 const adminRoute = require("./routes/admin/admin");
 const dbConnect = require("./config/database");
-const session = require("express-session");
+
+const {sessionMiddleware,setNoCache} = require('./middlewares/sessionMiddleware')
 
 
 
-// connect to database
 
+app.use(setNoCache);
+
+app.use(sessionMiddleware);
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json())
-app.use((err, req, res, next) => {
-          if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
-            console.error('Bad JSON in request body:', err);
-            res.status(400).send({ error: 'Invalid JSON' });
-          } else {
-            next();
-          }
-        });
-app.use(session({secret: "your-secret-key", resave: false, saveUninitialized: true}));
+// app.use((err, req, res, next) => {
+//           if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+//             console.error('Bad JSON in request body:', err);
+//             res.status(400).send({ error: 'Invalid JSON' });
+//           } else {
+//             next();
+//           }
+//         });
+// app.use(session({secret: "your-secret-key", resave: false, saveUninitialized: true}));
 
 
 app.use("/user", userRoute);

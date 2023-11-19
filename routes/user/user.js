@@ -18,10 +18,13 @@ router.post("/postLogin", controller.postLogin);
 router.get("/gethome", controller.getHome);
 router.get("/getsignup", controller.getSignUp);
 router.post("/signup", controller.postSignUp);
+router.get('/logout',controller.logout)
+router.get('/showOtp',controller.showOtp)
 router.post("/resendOtp", controller.resendOtp);
 router.post("/verifyOtp", controller.verifyOTP);
 router.get("/getForgotPassword", controller.getForgotPassword);
 router.post("/forgotPassword", controller.forgotPassword);
+router.get('/showCreatePass',controller.showCreatePass)
 router.post("/updatePass", controller.updatePass);
 router.get('/account',controller.userAccount)
 router.post('/updateAccount',controller.updateAccount)

@@ -118,7 +118,7 @@ module.exports = {
               result.total = totalamountcheckout;
               result.save();
 
-              
+              req.session.checkOut = true
               res.redirect('/user/checkoutpage')
           } catch (error) {
               console.log(error);

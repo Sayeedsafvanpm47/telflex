@@ -7,6 +7,9 @@ const { USER } = require('../../utils/constants/schemaName');
 module.exports = {
           checkOutPage : async (req,res)=>{
                     try {
+                        if(req.session.checkOut){
+                            delete req.session.checkOut
+
                               const user = req.session.userId
                               console.log(user);
                               const cart = await cartModel.findOne({userId : user}).populate({
@@ -20,6 +23,11 @@ module.exports = {
                                     })
                                    console.log(cart.total)
                               res.render('user/user/shop-checkout',{cart})
+                                }
+                                else
+                                {
+                                    res.redirect('/user/showCart')
+                                }
                               
                     } catch (error) {
                               console.log(error);
