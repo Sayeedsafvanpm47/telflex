@@ -63,7 +63,7 @@
                         <div class="row product-grid-3">
                             
                             <% products.forEach(products=>{%>
-                                <% if(products.category && products.category.published === true){ %>
+                             <% if(products && products.isListed === true){ %>
                                 <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                 <div class="product-cart-wrap mb-30">
                                     <div class="product-img-action-wrap">
@@ -125,7 +125,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <% } %>
+                           <% } %>
 
                           <%  }); %>
                         
@@ -156,17 +156,18 @@
                         <div class="widget-category mb-30">
                             <h5 class="section-title style-1 mb-30 wow fadeIn animated">Category</h5>
                             <ul class="categories">
-                                  <li><a href="/user/shop">View all</a></li>
-                                <% category.forEach(category=>{%>
-                                    <% if (category && category.category && category.category.published === true) { %>
-                                        <li><a href="/user/sortCategory?categoryId=<%= category.category._id%>">
-                                            <%= category.category.categoryName %> </a></li>
-                                <% } %>
+                                <li><a href="/user/">View All</a></li>
+                                <% category.forEach(categoryItem => { %>
+                                    <% if (categoryItem && categoryItem.published === true) { %>
+                                        <li>
+                                            <a href="/user/sortCategory?categoryId=<%= categoryItem._id %>">
+                                                <%= categoryItem.categoryName %>
+                                            </a>
+                                        </li>
+                                    <% } %>
                                 <% }) %>
-                            
-                             
-                                
                             </ul>
+                            
                         </div>
                         <!-- Fillter By Price -->
                         <div class="sidebar-widget price_range range mb-30">

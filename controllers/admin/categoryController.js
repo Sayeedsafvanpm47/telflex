@@ -1,4 +1,5 @@
 const categoryModel = require("../../models/categoryModel");
+const productModel = require('../../models/productModel')
 const mongoose = require('mongoose')
 
 module.exports = {
@@ -8,9 +9,19 @@ module.exports = {
 	},
 	submitCategory: async (req, res) => {
 		const { categoryname, description } = req.body;
+		const categories = await categoryModel.find({})
+		const categoryNameToCompare = categoryname.toLowerCase().replace(/\s+/g, '');
+		const existingCategoryName = categories.find(category => {
+			return category.categoryName.toLowerCase().replace(/\s+/g, '') === categoryNameToCompare;
+		      });
 		if (categoryname === "" || description === "") {
 			res.send("fill properly");
-		} else {
+		}
+		else if(existingCategoryName){
+			res.send("existing category");
+		}
+		
+		else {
 			const category = await new categoryModel({
 				_id : new mongoose.Types.ObjectId(),
 				categoryName: categoryname,
@@ -74,13 +85,28 @@ editCategory: async (req, res) => {
 		}
 	        }
 	        ,
-	        listToggle : async (req,res)=>{
-		const categoryId = req.query.categoryId
-		const category = await categoryModel.findOne({_id:categoryId})
-		category.published = !category.published
-		await category.save()
-		res.redirect('/admin/createCategory')
-	        }
+	        listToggle: async (req, res) => {
+		try {
+		    const categoryId = req.query.categoryId;
+		    const category = await categoryModel.findOne({ _id: categoryId });
+		    category.published = !category.published;
+	      
+		    const products = await productModel.find({ category: categoryId });
+	      
+		    for (const product of products) {
+		        product.isListed = !product.isListed;
+		        await product.save();
+		    }
+	      
+		    await category.save();
+	      
+		    res.redirect('/admin/createCategory');
+		} catch (error) {
+		    console.error(error);
+		    res.status(500).send('Internal Server Error');
+		}
+	      }
+	      
 	    
 	
 	    

@@ -7,9 +7,9 @@ module.exports = {
             try{
             let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
             let numberOfDocs = 2;
-            const category = await productModel.find({}).populate({path:'category',model:'categories',select:'_id categoryName published'})
+            const category = await categoryModel.find({})
             console.log(category)
-            const totalProductsCount = await productModel.find().countDocuments();
+            const totalProductsCount = await productModel.countDocuments({isListed:true});
             const totalPages = Math.ceil(totalProductsCount / numberOfDocs); 
       
         
@@ -40,7 +40,7 @@ module.exports = {
             
             else {
               
-              searchProducts = await productModel.find({})
+              searchProducts = await productModel.find({isListed : true})
                 .skip((currentPage - 1) * numberOfDocs)
                 .limit(numberOfDocs).populate({path:'category',model:'categories',select:'_id categoryName published'})
             }
@@ -80,7 +80,7 @@ module.exports = {
                  
                   
                      
-                      const products = await productModel.find({ 'category._id': categoryId})
+                      const products = await productModel.find({ 'category': categoryId}).populate({path:'category',model:'categories',select:'_id categoryName published'})
                       console.log('product found : ' + products)
                       
                       
@@ -115,7 +115,8 @@ module.exports = {
                   
                     let products;
                     if(sortingLogic === 'noprice'){
-                              products = await productModel.find({})
+                              products = await productModel.find({}).populate({path:'category',model:'categories',select:'_id categoryName published'})
+                              console.log('product found : ' + products)
                     }         
                   
                     else if (sortingLogic === 'price1') {
@@ -125,7 +126,8 @@ module.exports = {
                         
 
                         'size.0.productPrice': { $gte: minprice, $lte: maxprice }
-                      });
+                      }).populate({path:'category',model:'categories',select:'_id categoryName published'})
+                      console.log('product found : ' + products)
                      
                     } else if (sortingLogic === 'price2') {
                      
@@ -133,7 +135,8 @@ module.exports = {
                               let maxprice = +20000
                       products = await productModel.find({
                               'size.0.productPrice': { $gte: minprice, $lte: maxprice }
-                      });
+                      }).populate({path:'category',model:'categories',select:'_id categoryName published'})
+                      console.log('product found : ' + products);
                      
                    
                      
@@ -143,14 +146,16 @@ module.exports = {
                               let maxprice = +40000
                               products = await productModel.find({
                                         'size.0.productPrice': { $gte: minprice, $lte: maxprice }
-                              });
+                              }).populate({path:'category',model:'categories',select:'_id categoryName published'})
+                              console.log('product found : ' + products);
                             }
                             else if (sortingLogic === 'price4') {
                               let minprice = +40001
                              
                               products = await productModel.find({
                                 'size.0.productPrice': { $gte: minprice }
-                              });
+                              }).populate({path:'category',model:'categories',select:'_id categoryName published'})
+                              console.log('product found : ' + products);
                             }
                             req.session.sortPrice = true
                             req.session.priceSort = products
@@ -170,7 +175,8 @@ module.exports = {
                     const products = await productModel.find({
                               productName: { $regex: searchTerm, $options: "i" } 
                              
-                    })
+                    }).populate({path:'category',model:'categories',select:'_id categoryName published'})
+                    console.log('product found : ' + products)
                  
                   
                    
