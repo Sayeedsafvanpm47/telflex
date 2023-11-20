@@ -3,33 +3,75 @@ const productModel = require('../../models/productModel')
 const categoryModel = require('../../models/categoryModel')
 
 module.exports = {
-          productGridView : async (req,res)=>{
-                    const products = await productModel.find({})
-                    const category = await categoryModel.find({})
-                  
-                    
-                    const relatedProducts = ''
+          productGridView : async (req, res) => {
+            try{
+            let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
+            let numberOfDocs = 2;
+            const category = await categoryModel.find({});
+            const totalProductsCount = await productModel.find().countDocuments();
+            const totalPages = Math.ceil(totalProductsCount / numberOfDocs); 
+            
+        
+            const relatedProducts = ''; 
+        
+           
 
+            let searchProducts; 
 
-   
-       if(req.session.search)
-        {
-          const products = req.session.searchProducts
+            if (req.session.search) {
+           
+        
+              searchProducts = req.session.searchProducts
+             delete req.session.search
+        
+            }
+
+           else if(req.session.sort){
+              searchProducts = req.session.sortedProducts
+              delete req.session.sort
+             
+           }
+           else if(req.session.sortPrice){
+            searchProducts = req.session.priceSort
+            delete req.session.sortPrice
+        
+           }
+            
+            else {
+              
+              searchProducts = await productModel.find({})
+                .skip((currentPage - 1) * numberOfDocs)
+                .limit(numberOfDocs);
+            }
+
          
-          res.render('user/user/shopgrid',{products,category,relatedProducts})
+          
+
+                res.render('user/user/shopgrid', {
+                    products: searchProducts,
+                    category,
+                    relatedProducts,
+                    productCount: totalProductsCount,
+                    totalPages,
+                    currentPage,
+                    checkUserRoute
+                });
+          
+            }
+          catch(error){
+            console.log(error)
+          }
         }
         
-        else{
-          res.render('user/user/shopgrid',{products,category,relatedProducts})
-        }
-                   
-          },
+      ,
         
          
           sortProducts: async (req, res) => {
                     try {
+                    
+        
                       const categoryName = req.query.categoryName
-                      const category = await categoryModel.find({})
+                    
                   
                
                    
@@ -37,16 +79,16 @@ module.exports = {
                  
                   
                      
-                      const products = await productModel.find({ category: categoryName});
-                      
-                      
+                      const products = await productModel.find({ category: categoryName})
                       
                       
                     
 
                      
-                  
-                       res.render('user/user/shopgrid',{products,category})
+                       req.session.sort = true
+                       req.session.sortedProducts = products
+
+                       res.redirect('/user/')
                   
                     
                  
@@ -59,12 +101,16 @@ module.exports = {
                     }
                   },
                   sortPrice: async (req, res) => {
+
+              
+
+
                     const { sortingLogic } = req.body;
                   
-                    const category = await categoryModel.find({})
+                  
                  
                     
-                    const relatedProducts = ''
+                  
                     let products;
                     if(sortingLogic === 'noprice'){
                               products = await productModel.find({})
@@ -76,7 +122,7 @@ module.exports = {
                       products = await productModel.find({
                         
 
-                        'size.productPrice': { $gte: minprice, $lte: maxprice }
+                        'size.0.productPrice': { $gte: minprice, $lte: maxprice }
                       });
                      
                     } else if (sortingLogic === 'price2') {
@@ -84,7 +130,7 @@ module.exports = {
                               let minprice = +5001
                               let maxprice = +20000
                       products = await productModel.find({
-                              'size.productPrice': { $gte: minprice, $lte: maxprice }
+                              'size.0.productPrice': { $gte: minprice, $lte: maxprice }
                       });
                      
                    
@@ -94,33 +140,41 @@ module.exports = {
                               let minprice = +20001
                               let maxprice = +40000
                               products = await productModel.find({
-                                        'size.productPrice': { $gte: minprice, $lte: maxprice }
+                                        'size.0.productPrice': { $gte: minprice, $lte: maxprice }
                               });
                             }
                             else if (sortingLogic === 'price4') {
                               let minprice = +40001
                              
                               products = await productModel.find({
-                                'size.productPrice': { $gte: minprice }
+                                'size.0.productPrice': { $gte: minprice }
                               });
                             }
-                console.log(products)
+                            req.session.sortPrice = true
+                            req.session.priceSort = products
+
+               
                     
-                    res.render('user/user/shopgrid',{products,category,relatedProducts})
+                    // res.render('user/user/shopgrid',{products,category,relatedProducts})
+                    res.redirect('/user/')
                   }
                   ,
                   searchProducts : async (req,res)=>{
+
+                   
+
+
                     const searchTerm = req.body.searchTerm
                     const products = await productModel.find({
                               productName: { $regex: searchTerm, $options: "i" } 
                              
-                    });
+                    })
                  
                   
                    
                     req.session.search = true
                     req.session.searchProducts = products
-                    res.redirect('/user/shop')
+                    res.redirect('/user/')
 
                   },
                   productdetail : async (req,res)=>{
