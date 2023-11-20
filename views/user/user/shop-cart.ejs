@@ -50,8 +50,34 @@
                                                   <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
                                                 </div> -->
 
-                                                <input name="quantity" type="number" id="quantity<%= cart[j].products[i]._id %>" min="1" value="<%= cart[j].products[i].quantity %>" onchange="calc('<%= cart[j].products[i]._id %>')">
+                                                <input name="quantity" type="number" id="quantity<%= cart[j].products[i]._id %>" min="1" value="<%= cart[j].products[i].quantity %>" onchange="calc('<%= cart[j].products[i]._id %>')" hidden>
+                                              
+                                         
+                                                <button  style="height: 30px; width: 30px; border-radius: 100px; background-color: rgba(13, 14, 13, 0);"  onclick="decrease('<%= cart[j].products[i]._id %>')"><i class="fa-solid fa-minus"></i></button>
+                                                <span id="newQuantity<%= cart[j].products[i]._id %>"><%= cart[j].products[i].quantity %></span>
+                                                <button style="height: 30px; width: 30px; border-radius: 100px; background-color: rgb(13, 14, 13);" onclick="increase('<%= cart[j].products[i]._id %>')"><i class="fa-solid fa-plus text-white"></i></button>
 
+                                               <script>
+                                                    function increase(productId) {
+                                                        var target = document.getElementById('quantity' + productId);
+                                                        var newQuantity = document.getElementById('newQuantity' + productId)
+                                                        target.value = parseInt(target.value) + 1;
+                                                       
+                                                        calc(productId); 
+                                                        
+                                                        newQuantity.innerHTML = target.value
+                                                    }
+                                                
+                                                    function decrease(productId) {
+                                                        var target = document.getElementById('quantity' + productId);
+                                                        if (parseInt(target.value) > 1) {
+                                                            target.value = parseInt(target.value) - 1;
+                                                            var newQuantity = document.getElementById('newQuantity' + productId)
+                                                        newQuantity.innerHTML = target.value
+                                                            calc(productId); 
+                                                        }
+                                                    }
+                                                </script>
 
 
 

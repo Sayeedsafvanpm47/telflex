@@ -61,8 +61,9 @@
                             </div>
                         </div>
                         <div class="row product-grid-3">
+                            
                             <% products.forEach(products=>{%>
-                                
+                                <% if(products.category && products.category.published === true){ %>
                                 <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                 <div class="product-cart-wrap mb-30">
                                     <div class="product-img-action-wrap">
@@ -84,7 +85,11 @@
                                     </div>
                                     <div class="product-content-wrap">
                                         <div class="product-category">
-                                            <a href="shop-grid-right.html"><%= products.category%></a>
+                                            <% if (products.category &&  products.category.categoryName) { %>
+                                                <a href="shop-grid-right.html"><%= products.category.categoryName %></a>
+                                            <% } else { %>
+                                                Category Not Available <!-- Display a message if category data is not present -->
+                                            <% } %>
                                         </div>
                                         <h2><a href="shop-product-right.html"><%= products.productName %>   -  <span class="text-muted" style="font-size: 15px;"><%= products.shortDescription  %></span></a></h2>
                                         <div>
@@ -120,8 +125,10 @@
                                     </div>
                                 </div>
                             </div>
+                            <% } %>
 
                           <%  }); %>
+                        
                             
                   
                      
@@ -151,8 +158,9 @@
                             <ul class="categories">
                                   <li><a href="/user/shop">View all</a></li>
                                 <% category.forEach(category=>{%>
-                                    <% if(category.published=== true){ %>
-                                <li><a href="/user/sortCategory?categoryName=<%=category.categoryName%>"><%=category.categoryName%></a></li>
+                                    <% if (category && category.category && category.category.published === true) { %>
+                                        <li><a href="/user/sortCategory?categoryId=<%= category.category._id%>">
+                                            <%= category.category.categoryName %> </a></li>
                                 <% } %>
                                 <% }) %>
                             

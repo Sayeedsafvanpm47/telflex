@@ -241,7 +241,8 @@
                                                                                 <% if (orders[i].items[j].status === 'Active' && !activeFound) { %>
                                                                                     <tr>
                                                                                         <td><%= orders[i].orderId %></td>
-                                                                                        <td>March 45, 2020</td>
+                                                                                        
+                                                                                        <td><%= orders[i].orderDate  %></td>
                                                                                         <td><%= orders[i].orderStatus %></td>
                                                                                       
                                                                                         <td><a href="/user/viewOrderDetails?orderId=<%= orders[i].orderId%>" class="btn-small d-block">View</a></td>

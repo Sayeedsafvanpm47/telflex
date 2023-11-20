@@ -34,7 +34,10 @@ let productSchema = new mongoose.Schema({
 	productDiscount: {
 		type: Number,
 		default: 0
-	},  category: { type: String},
+	},  category: { 
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'categories',
+	},
 		
 	
 	

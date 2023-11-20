@@ -7,10 +7,11 @@ module.exports = {
             try{
             let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
             let numberOfDocs = 2;
-            const category = await categoryModel.find({});
+            const category = await productModel.find({}).populate({path:'category',model:'categories',select:'_id categoryName published'})
+            console.log(category)
             const totalProductsCount = await productModel.find().countDocuments();
             const totalPages = Math.ceil(totalProductsCount / numberOfDocs); 
-            
+      
         
             const relatedProducts = ''; 
         
@@ -41,7 +42,7 @@ module.exports = {
               
               searchProducts = await productModel.find({})
                 .skip((currentPage - 1) * numberOfDocs)
-                .limit(numberOfDocs);
+                .limit(numberOfDocs).populate({path:'category',model:'categories',select:'_id categoryName published'})
             }
 
          
@@ -54,7 +55,7 @@ module.exports = {
                     productCount: totalProductsCount,
                     totalPages,
                     currentPage,
-                    checkUserRoute
+               
                 });
           
             }
@@ -70,7 +71,7 @@ module.exports = {
                     try {
                     
         
-                      const categoryName = req.query.categoryName
+                      const categoryId = req.query.categoryId
                     
                   
                
@@ -79,7 +80,8 @@ module.exports = {
                  
                   
                      
-                      const products = await productModel.find({ category: categoryName})
+                      const products = await productModel.find({ 'category._id': categoryId})
+                      console.log('product found : ' + products)
                       
                       
                     

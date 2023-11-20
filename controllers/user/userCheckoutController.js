@@ -101,8 +101,7 @@ module.exports = {
   
 
       
-       
-       
+      
         const order = new orderModel({
             userId: userId,
             orderId:Date.now(),
@@ -110,6 +109,7 @@ module.exports = {
             paymentMethod: payment_option,
             totalAmount: total,
             address: address,
+            orderDate : new Date()
         });
         if(cart.total<=0){
             res.redirect('/user/checkoutpage')

@@ -116,7 +116,31 @@
                                         <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                                         <div class="detail-extralink">
                                           
-                                                <input type="number" name="quantity" value="1" min="0">
+                                                <input type="number" name="quantity" id="quantity" value="1" min="1" hidden>
+                                                <button style="height: 30px; width: 30px; border-radius: 100px; background-color: rgba(230, 233, 230, 0);"  type="button" onclick="decrease()"><i class="fa-solid fa-minus"></i></button>
+                                               
+                                                <span id="quantityvalue">1</span>
+                                                <button style="height: 30px; width: 30px; border-radius: 100px; background-color: rgb(13, 14, 13);"  type="button" onclick="increase()"><i class="fa-solid fa-plus text-white"></i></button>
+                                              
+                                                <script>
+                                                    function increase(){
+                                                        event.preventDefault()
+                                                        var target = document.getElementById('quantity')
+                                                        target.value = parseInt(target.value)+1
+                                                        var quantityValue = document.getElementById('quantityvalue')
+                                                        quantityValue.innerHTML = target.value
+                                                    }
+
+                                                    function decrease(){
+                                                        event.preventDefault()
+                                                        var target = document.getElementById('quantity')
+                                                        if (parseInt(target.value) > 1) {
+                                                        target.value = parseInt(target.value)-1
+                                                        }
+                                                        var quantityValue = document.getElementById('quantityvalue')
+                                                        quantityValue.innerHTML = target.value
+                                                    }
+                                                </script>
                                          
                                             <div class="product-extra-link2">
                                                 <button type="submit" class="button button-add-to-cart">Add to cart</button>

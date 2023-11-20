@@ -411,7 +411,7 @@ module.exports = {
 		try {
 			const userId = req.session.userId;
 			const users = await userModel.findById(userId);
-			const orders = await orderModel.find({ userId });
+			const orders = await orderModel.find({ userId }).sort({orderDate:-1})
 		  
 			res.render('user/user/account', { users, orders });
 		  
