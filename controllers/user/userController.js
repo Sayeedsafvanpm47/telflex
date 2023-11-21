@@ -587,8 +587,8 @@ res.redirect('/user/account');
 		    const updatedOrder = await orderModel.updateOne(
 		        { 'items._id': _id },
 		        {
-			  $set: { 'items.$.status': 'Cancelled', 'orderStatus': 'Modified' },
-			  $inc: { 'totalAmount': -canceledItemPrice }
+			  $set: { 'items.$.status': 'Cancelled', 'orderStatus': 'Modified' }
+			  
 		        },
 		        { arrayFilters: [{ 'elem._id': _id }] }
 		    );
