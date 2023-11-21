@@ -5,7 +5,7 @@ const Swal = require('sweetalert2')
 const userRoute = require("./routes/user/user");
 const adminRoute = require("./routes/admin/admin");
 const dbConnect = require("./config/database");
-
+const upload = require('./controllers/imageController')
 const {sessionMiddleware,setNoCache} = require('./middlewares/sessionMiddleware')
 
 
@@ -39,19 +39,10 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 
-const multer = require('multer')
-app.use('/uploads',express.static('uploads'))
-const storage = multer.diskStorage({
-          destination : (req,file,cb)=>{
-                    cb(null,'/uploads')
-          },
-          filename : (req,file,cb)=>{
-                    cb(null,file.originalname)
-          }
-          
-})
-const upload = multer({storage:storage})
-     
+
+app.use('/uploads', express.static('uploads'));     
+
+
 
 dbConnect().then(() => {
           app.listen(3000, () => console.log("listening to port 3000"));

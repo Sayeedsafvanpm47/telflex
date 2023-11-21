@@ -4,8 +4,8 @@ const router = express.Router();
 
 
 router.use(express.urlencoded({extended: true}));
-const multer = require('multer')
-const upload = multer({dest:'uploads/'})
+// const multer = require('multer')
+// const upload = multer({dest:'uploads/'})
 
 const controller = require("../../controllers/admin/adminController");
 const controllerUserManage = require("../../controllers/admin/adminUserManage");
@@ -13,7 +13,7 @@ const controllerCategory = require("../../controllers/admin/categoryController")
 const controllerProducts = require('../../controllers/admin/productController');
 const adminOrderController = require('../../controllers/admin/adminOrderController')
 const productModel = require("../../models/productModel");
-
+const imageController = require('../../controllers/imageController')
 
 // admin
 router.get("/", controller.getAdminLogin);
@@ -45,13 +45,13 @@ router.get('/deleteCategory',controllerCategory.deleteCategory)
 router.get('/toggleList',controllerCategory.listToggle)
 
 router.get('/addproducts',controllerProducts.addProductsView)
-router.post('/saveproducts',upload.array('images'),controllerProducts.addProducts)
+router.post('/saveproducts',imageController.upload.array('images'),imageController.processImage,controllerProducts.addProducts)
 router.get('/viewproducts',controllerProducts.viewProducts)
 router.get('/searchProductsView',controllerProducts.searchProductsView)
 router.post('/searchProducts',controllerProducts.searchProducts)
 router.get('/editProductsView',controllerProducts.editProductsView)
 router.get('/deleteImage',controllerProducts.deleteImage)
-router.post('/editProducts',upload.array('images'),controllerProducts.editProducts)
+// router.post('/editProducts',upload.array('images'),controllerProducts.editProducts)
 router.get('/toggleListProducts',controllerProducts.toggleList)
 router.get('/deleteProducts',controllerProducts.deleteProducts)
 

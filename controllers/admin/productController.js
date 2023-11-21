@@ -7,6 +7,7 @@ module.exports = {
 		try {
 			const categories = await categoryModel.find({});
 			res.render("admin/admin/addproducts", { categories });
+
 		} catch (error) {
 			res.status(404).send('erorr');
 		}
@@ -16,6 +17,7 @@ module.exports = {
 		const categories = await categoryModel.find({});
 		try {
 			const sizes = [];
+			const processedImages = req.processedImages || [];
 			
 			for (let i = 0; req.body[`size_${i}`] && req.body[`productprice_${i}`] && req.body[`stock_${i}`]; i++) {
 				sizes.push({
@@ -26,6 +28,8 @@ module.exports = {
           ,mrp : req.body[`mrp_${i}`]
 				});
 			}
+			// console.log('uploaded' + req.uploads)
+			console.log('processed' + req.processImages)
 			const { productname, productdiscount,  model, features, description, shortdescription, category } =
 				req.body;
 
@@ -59,7 +63,7 @@ else{
 				description: description,
 				shortDescription: shortdescription,
 				createdOn: Date.now(),
-				images: req.files.map((file) => file.path),
+				images: processedImages,
 				size: sizes,
        
 			})
@@ -226,6 +230,10 @@ if(!productname || !productdiscount || !features || !model ||  !description || !
 		    products = await productModel.find({ category: selectedCategory });
 		  } else {
 		    products = await productModel.find({});
+		
+		
+		
+		
 		  }
 	        
 		  // Render your view with the filtered products.
