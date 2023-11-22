@@ -3,6 +3,14 @@ const cartModel = require('../../models/cartModel')
 const orderModel = require('../../models/orderModel')
 const productModel = require('../../models/productModel')
 const { USER } = require('../../utils/constants/schemaName');
+require('dotenv').config()
+const Razorpay = require('razorpay');
+const { v4 :uuidv4 } = require('uuid');
+
+const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_ID,
+    key_secret: process.env.RAZORPAY_KEY
+});
 
 module.exports = {
           checkOutPage : async (req,res)=>{
@@ -49,7 +57,108 @@ module.exports = {
             
         
           },
-        placeOrder: async (req, res) => {
+//         placeOrder: async (req, res) => {
+//     const userId = req.session.userId;
+//     const ordered = [];
+//     let total = 0;
+
+//     const { selectedAddressDetails, payment_option } = req.body;
+
+
+//     try {
+//         const cart = await cartModel.findOne({ userId: userId }).populate({
+//             path: 'userId',
+//             model: USER,
+//             select: 'firstname email address',
+//         }).populate({
+//             path: 'products.product_id',
+//             model: 'products',
+//             select: 'images productName size productDiscount',
+//         });
+      
+
+//         if (cart && cart.products) {
+//             total = cart.total;
+
+//             for (let i = 0; i < cart.products.length; i++) {
+//                 const product = cart.products[i];
+
+//                 ordered.push({
+//                     productId: product.product_id,
+//                     quantity: product.quantity,
+//                     size: product.size,
+//                     price: product.price,
+//                     mrp: product.mrp,
+                    
+//                 });
+
+
+            
+
+
+            
+//             }
+//         } else {
+//             console.log('Error occurred');
+//         }
+//         if (!selectedAddressDetails) {
+//             return res.status(400).json({ message: 'Address details not selected' });
+//         }
+      
+//        const address = cart.userId.address[selectedAddressDetails]
+  
+
+      
+      
+//         const order = new orderModel({
+//             userId: userId,
+//             orderId:Date.now(),
+//             items: ordered,
+//             paymentMethod: payment_option,
+//             totalAmount: total,
+//             address: address,
+//             orderDate : new Date()
+//         });
+//         if(cart.total<=0){
+//             res.redirect('/user/checkoutpage')
+//         }
+
+//         await order.save();
+
+// for (let i = 0; i < ordered.length; i++) {
+//     const orderedItem = ordered[i];
+
+ 
+//     const product = await productModel.findById(orderedItem.productId);
+
+//     if (product) {
+     
+//         product.size.forEach((sizeObj) => {
+//             if (sizeObj.size === orderedItem.size) {
+//                 sizeObj.stock -= orderedItem.quantity;
+//             }
+//         });
+
+     
+//         await product.save();
+//     } else {
+//         console.log(`Product with ID ${orderedItem.productId} not found`);
+//     }
+// }
+
+
+//         cart.products = []
+//         cart.total = 0
+//         await cart.save()
+//         res.status(200).json({ message: 'Order placed successfully' });
+//     } catch (error) {
+//         console.error('Error placing order:', error);
+//         res.status(500).json({ message: 'Error placing order' });
+//     }
+// }
+
+
+placeOrder: async (req, res) => {
     const userId = req.session.userId;
     const ordered = [];
     let total = 0;
@@ -98,6 +207,44 @@ module.exports = {
         }
       
        const address = cart.userId.address[selectedAddressDetails]
+
+       let paymentMethod;
+        if (payment_option === 'Razorpay') {
+           paymentMethod = 'Razorpay';
+           console.log('selected ADdress ' + selectedAddressDetails)
+           if (!selectedAddressDetails) {
+            return res.status(400).json({ error: 'Address details not selected' });
+        }
+
+           const razorpayOrder = await razorpay.orders.create({
+            amount: total * 100, 
+            currency: 'INR',
+            receipt: uuidv4(), 
+            payment_capture: 1
+        });
+
+      
+        // const order = new orderModel({
+        //     userId: userId,
+        //     orderId: razorpayOrder.id, 
+        //     items: ordered,
+        //     paymentStatus : 'paid',
+        //     paymentMethod: paymentMethod,
+        //     totalAmount: total,
+        //     address: address,
+        //     orderDate: new Date()
+        // });
+
+        // await order.save();
+
+      
+        // cart.products = [];
+        // cart.total = 0;
+        // await cart.save();
+
+        return res.status(200).json({ order: razorpayOrder });
+       }  
+       
   
 
       
@@ -133,6 +280,7 @@ for (let i = 0; i < ordered.length; i++) {
 
      
         await product.save();
+    
     } else {
         console.log(`Product with ID ${orderedItem.productId} not found`);
     }
@@ -143,9 +291,12 @@ for (let i = 0; i < ordered.length; i++) {
         cart.total = 0
         await cart.save()
         res.status(200).json({ message: 'Order placed successfully' });
+
     } catch (error) {
         console.error('Error placing order:', error);
         res.status(500).json({ message: 'Error placing order' });
     }
 }
+
+
 }

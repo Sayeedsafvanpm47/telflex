@@ -24,7 +24,7 @@ router.post("/verifyOtp", controller.verifyOtp);
 router.post("/updatePass", controller.updatePass);
 router.post("/resendOtp", controller.resendOtp);
 router.get('/home',controller.adminHome)
-
+router.get('/chart',controller.chart)
 
 // customer management
 router.get("/viewCustomers", controllerUserManage.viewCustomers);

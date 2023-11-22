@@ -80,5 +80,9 @@ router.get('/regtemp',(req,res)=>{
           res.render('user/user/register')
 })
 
+router.get('/razorpay',(req,res)=>{
+  res.render('user/user/razorpay')
+})
+
 
 module.exports = router;
