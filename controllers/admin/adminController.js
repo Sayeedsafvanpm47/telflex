@@ -16,10 +16,153 @@ module.exports = {
 		}
 		
 	},
+	chart : async (req,res)=>{
+		try {
+			const userData = await userModel.find({});
+			const orderData = await orderModel.countDocuments();
+			const categories = await categoryModel.countDocuments();
+			const totalRevenue = await orderModel.aggregate([
+			  {
+			    $group: {
+			      _id: null,
+			      totalAmount: { $sum: '$totalAmount' }
+			    }
+			  }
+			]);
+			const totalProductsSold = await orderModel.aggregate([
+				{
+				    $match: {
+				        orderDate: { $gte: new Date('2023-01-01'), $lte: new Date('2023-12-31') }
+				    }
+				},
+				{
+				    $unwind: '$items'
+				},
+				{
+				    $group: {
+				        _id: { $month: '$orderDate' },
+				        totalProducts: { $sum: '$items.quantity' } 
+				    }
+				}
+			      ]);
+			      
+			
+			const monthlyEarnings = await orderModel.aggregate([
+			  {
+			    $match: {
+			      orderDate: { $gte: new Date('2023-01-01'), $lte: new Date('2023-12-31') }
+			    }
+			  },
+			  {
+			    $group: {
+			      _id: { $month: '$orderDate' },
+			      totalEarnings: { $sum: '$totalAmount' }
+			    }
+			  }
+			]);
+			const monthlyOrdersCount = await orderModel.aggregate([
+				{
+				    $match: {
+				        orderDate: { $gte: new Date('2023-01-01'), $lte: new Date('2023-12-31') }
+				    }
+				},
+				{
+				    $group: {
+				        _id: { $month: '$orderDate' },
+				        totalOrders: { $addToSet: '$orderId' }
+				    }
+				},
+				{
+				    $project: {
+				        _id: 1,
+				        orderCount: { $size: '$totalOrders' }
+				    }
+				}
+			      ]);
+	console.log(monthlyOrdersCount)
+
+		      
+			console.log(totalRevenue);
+			console.log(totalProductsSold);
+			console.log(monthlyEarnings);
+		      
+			const monthlyRevenue = Array.from({ length: 12 }, () => 0);
+        const monthlyProductsSold = Array.from({ length: 12 }, () => 0);
+        const monthlyOrders = Array.from({ length: 12 }, () => 0);
+const categoryOrders = []
+        monthlyEarnings.forEach((item) => {
+            monthlyRevenue[item._id - 1] = item.totalEarnings;
+        });
+
+        totalProductsSold.forEach((item) => {
+            monthlyProductsSold[item._id - 1] = item.totalProducts;
+        });
+
+        monthlyOrdersCount.forEach((item) => {
+            monthlyOrders[item._id - 1] = item.orderCount;
+        });
+    
+        const categorySales = await orderModel.aggregate([
+	{
+	  $unwind: "$items" 
+	},
+	{
+	  $lookup: {
+	    from: "products",
+	    localField: "items.productId",
+	    foreignField: "_id",
+	    as: "productDetails"
+	  }
+	},
+	{
+	  $unwind: "$productDetails"
+	},
+	{
+	  $lookup: {
+	    from: "categories",
+	    localField: "productDetails.category",
+	    foreignField: "_id",
+	    as: "categoryDetails"
+	  }
+	},
+	{
+	  $unwind: "$categoryDetails"
+	},
+	{
+	  $group: {
+	    _id: "$categoryDetails.categoryName",
+	    totalProductsSold: { $sum: "$items.quantity" }
+	  }
+	},
+	{
+	  $project: {
+	    categoryName: "$_id",
+	    totalProductsSold: 1,
+	    _id: 0
+	  }
+	}
+        ]);
+        console.log(categorySales)
+      
+        
+
+        const chartData = {
+            monthlyRevenue,
+            monthlyProductsSold,
+            monthlyOrders,
+	  categorySales
+        };
+        res.json({ chartData });
+		        } catch (error) {
+			console.log(error);
+			res.status(500).json({ error: 'Internal server error' }); // Handle error response
+		        }
+	},
 	adminHome: async (req, res) => {
 		try {
 		  const userData = await userModel.find({});
 		  const orderData = await orderModel.countDocuments();
+		  const orders = await orderModel.find({}).sort({orderDate : -1})
 		  const categories = await categoryModel.countDocuments();
 		  const totalRevenue = await orderModel.aggregate([
 		    {
@@ -60,6 +203,7 @@ module.exports = {
 		    monthlyEarnings,
 		    orderData,
 		    categories,
+		    orders
 		 
 		  });
 		} catch (error) {
@@ -174,102 +318,6 @@ module.exports = {
 			res.redirect("/admin/createPass");
 		}
 	},
-	chart : async (req,res)=>{
-		try {
-			const userData = await userModel.find({});
-			const orderData = await orderModel.countDocuments();
-			const categories = await categoryModel.countDocuments();
-			const totalRevenue = await orderModel.aggregate([
-			  {
-			    $group: {
-			      _id: null,
-			      totalAmount: { $sum: '$totalAmount' }
-			    }
-			  }
-			]);
-			const totalProductsSold = await orderModel.aggregate([
-				{
-				    $match: {
-				        orderDate: { $gte: new Date('2023-01-01'), $lte: new Date('2023-12-31') }
-				    }
-				},
-				{
-				    $unwind: '$items'
-				},
-				{
-				    $group: {
-				        _id: { $month: '$orderDate' },
-				        totalProducts: { $sum: '$items.quantity' } 
-				    }
-				}
-			      ]);
-			      
-			
-			const monthlyEarnings = await orderModel.aggregate([
-			  {
-			    $match: {
-			      orderDate: { $gte: new Date('2023-01-01'), $lte: new Date('2023-12-31') }
-			    }
-			  },
-			  {
-			    $group: {
-			      _id: { $month: '$orderDate' },
-			      totalEarnings: { $sum: '$totalAmount' }
-			    }
-			  }
-			]);
-			const monthlyOrdersCount = await orderModel.aggregate([
-				{
-				    $match: {
-				        orderDate: { $gte: new Date('2023-01-01'), $lte: new Date('2023-12-31') }
-				    }
-				},
-				{
-				    $group: {
-				        _id: { $month: '$orderDate' },
-				        totalOrders: { $addToSet: '$orderId' }
-				    }
-				},
-				{
-				    $project: {
-				        _id: 1,
-				        orderCount: { $size: '$totalOrders' }
-				    }
-				}
-			      ]);
-	console.log(monthlyOrdersCount)
 
-		      
-			console.log(totalRevenue);
-			console.log(totalProductsSold);
-			console.log(monthlyEarnings);
-		      
-			const monthlyRevenue = Array.from({ length: 12 }, () => 0);
-        const monthlyProductsSold = Array.from({ length: 12 }, () => 0);
-        const monthlyOrders = Array.from({ length: 12 }, () => 0);
-
-        monthlyEarnings.forEach((item) => {
-            monthlyRevenue[item._id - 1] = item.totalEarnings;
-        });
-
-        totalProductsSold.forEach((item) => {
-            monthlyProductsSold[item._id - 1] = item.totalProducts;
-        });
-
-        monthlyOrdersCount.forEach((item) => {
-            monthlyOrders[item._id - 1] = item.orderCount;
-        });
-
-        const chartData = {
-            monthlyRevenue,
-            monthlyProductsSold,
-            monthlyOrders
-        };
-        res.json({ chartData });
-		        } catch (error) {
-			console.log(error);
-			res.status(500).json({ error: 'Internal server error' }); // Handle error response
-		        }
-	}
 	
 };
