@@ -14,7 +14,7 @@ const controllerProducts = require('../../controllers/admin/productController');
 const adminOrderController = require('../../controllers/admin/adminOrderController')
 const productModel = require("../../models/productModel");
 const imageController = require('../../controllers/imageController')
-
+const dashboardController = require('../../controllers/admin/adminDashboardController')
 // admin
 router.get("/", controller.getAdminLogin);
 router.post("/postLogin", controller.postAdminLogin);
@@ -35,7 +35,9 @@ router.post("/searchUser", controllerUserManage.searchUser);
 router.get("/searchView", controllerUserManage.searchView);
 router.post("/sortUser", controllerUserManage.sortUser);
 router.get("/sortUserView", controllerUserManage.sortUserView);
-
+router.get('/salesReport',dashboardController.salesReport)
+router.post('/getReport',dashboardController.getReport)
+router.get('/getReportResults',dashboardController.getReportResults)
 // product and category management
 router.get("/createCategory", controllerCategory.createCategory);
 router.post("/submitCategory", controllerCategory.submitCategory);

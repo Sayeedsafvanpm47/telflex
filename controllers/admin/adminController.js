@@ -162,7 +162,15 @@ const categoryOrders = []
 		try {
 		  const userData = await userModel.find({});
 		  const orderData = await orderModel.countDocuments();
-		  const orders = await orderModel.find({}).sort({orderDate : -1})
+		  
+		let currentPage = req.query.page ? parseInt(req.query.page) : 1
+		       let numberOfDocs = 10
+		    const totalPages = Math.ceil(orderData/numberOfDocs)
+
+		    const orders = await orderModel.find({}).sort({orderDate : -1}).skip((currentPage - 1) * numberOfDocs)
+                .limit(numberOfDocs)
+
+		  console.log(orders)
 		  const categories = await categoryModel.countDocuments();
 		  const totalRevenue = await orderModel.aggregate([
 		    {
@@ -194,6 +202,8 @@ const categoryOrders = []
 		      }
 		    }
 		  ]);
+
+
 	        
 		
 	        
@@ -203,7 +213,10 @@ const categoryOrders = []
 		    monthlyEarnings,
 		    orderData,
 		    categories,
-		    orders
+		    orders,
+		    productCount: orderData,
+                    totalPages,
+                    currentPage,
 		 
 		  });
 		} catch (error) {
@@ -318,6 +331,7 @@ const categoryOrders = []
 			res.redirect("/admin/createPass");
 		}
 	},
+	
 
 	
 };
