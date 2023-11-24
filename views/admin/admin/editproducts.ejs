@@ -47,9 +47,9 @@
                                             <label for="product_category" class="form-label">Product Category</label>
                                             <select class="form-control" id="product_category" value="<%= categories.categoryName %>" name="category">
                                               
-                                                <% categories.filter(category => category.published === true).forEach(category => { %>
-                                                    <option value="<%= category.categoryName %>"><%= category.categoryName %></option>
-                                                <% }); %>
+                                              <% categories.filter(category => category.published === true).forEach(category => { %>
+                                                <option value="<%= category._id %>"><%= category.categoryName %></option>
+                                              <% }); %>
                                                
                                         
                                             </select>
@@ -151,7 +151,7 @@
                                     <div class="d-grid">
                                         <label for="file-upload" class="custom-file-upload">
                                             <img src="/admin/imgs/theme/upload.svg" alt="Upload Image">
-                                        <input type="file" name="images" class="form-control" accept="image/*" multiple>
+                                        <input type="file" id="input-images" name="images" class="form-control" accept="image/*" multiple>
                                     </div>
                                 
                                     <div class="d-grid">
@@ -161,12 +161,40 @@
                                 </form>
                             </div>
                         </div> <!-- card end// -->
-                    
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <div class="preview-images" style="width: 200px; height: 200px;"></div>
+                          </div>
+                        </div>
                     </div>
                 
                     
         </main>
         <%- include('partials/script') %>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        let imagesPreview = function(input, placeToInsertImagePreview) {
+          if (input.files) {
+            let filesAmount = input.files.length;
+            for (i = 0; i < filesAmount; i++) {
+              let reader = new FileReader();
+              reader.onload = function(event) {
+                $($.parseHTML("<img>"))
+                  .attr("src", event.target.result)
+                  .appendTo(placeToInsertImagePreview);
+              };
+              reader.readAsDataURL(input.files[i]);
+            }
+          }
+        };
+        $("#input-images").on("change", function() {
+          imagesPreview(this, "div.preview-images");
+        });
+      });
+    </script>
+
 
 <script src="/scripts/hideerror.js"></script>
      

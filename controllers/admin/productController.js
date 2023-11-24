@@ -121,12 +121,13 @@ if(!productname || !productdiscount || !features || !model ||  !description || !
 	
 
 }else {
+	const processedImages = req.processedImages || [];
 			let result = await productModel.findById(_id);
 			console.log(result);
 			if (req.files.length !== 0) {
 				
         for (let i = 0; i<req.files.length;i++) { 
-          result.images[result.images.length] = req.files[i].path
+          result.images[result.images.length] = processedImages
         }
     
 

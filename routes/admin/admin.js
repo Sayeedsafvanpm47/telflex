@@ -53,7 +53,7 @@ router.get('/searchProductsView',controllerProducts.searchProductsView)
 router.post('/searchProducts',controllerProducts.searchProducts)
 router.get('/editProductsView',controllerProducts.editProductsView)
 router.get('/deleteImage',controllerProducts.deleteImage)
-// router.post('/editProducts',upload.array('images'),controllerProducts.editProducts)
+router.post('/editProducts',imageController.upload.array('images'),imageController.processImage,controllerProducts.editProducts)
 router.get('/toggleListProducts',controllerProducts.toggleList)
 router.get('/deleteProducts',controllerProducts.deleteProducts)
 
