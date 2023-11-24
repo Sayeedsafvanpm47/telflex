@@ -186,6 +186,7 @@ placeOrder: async (req, res) => {
 
                 ordered.push({
                     productId: product.product_id,
+                    productName : product.productName,
                     quantity: product.quantity,
                     size: product.size,
                     price: product.price,
@@ -199,6 +200,7 @@ placeOrder: async (req, res) => {
 
             
             }
+            console.log(ordered)
         } else {
             console.log('Error occurred');
         }

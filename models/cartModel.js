@@ -12,6 +12,8 @@ let cartSchema = new mongoose.Schema({
       ref: 'products',
       required: true
     },
+    productName : String
+    ,
     quantity: {
       type: Number,
       required: true,
@@ -26,7 +28,7 @@ let cartSchema = new mongoose.Schema({
       required: true
     },
     mrp: {
-      type: String,
+      type: Number,
       required: true
     },
    

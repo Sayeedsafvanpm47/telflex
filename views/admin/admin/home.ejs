@@ -329,7 +329,7 @@
                                             <i class="material-icons md-payment text-muted mr-5"></i> <%= orders[i].paymentMethod  %>
                                         </td>
                                         <td>
-                                            <a href="#" class="btn btn-xs"> View details</a>
+                                            <a href="/admin/viewOrderDetails?orderId=<%= orders[i].orderId  %>" class="btn btn-xs"> View details</a>
                                         </td>
                                     </tr>
                                     <% } %>

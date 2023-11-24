@@ -12,6 +12,9 @@ let orderSchema = new mongoose.Schema({
 				type: mongoose.Schema.Types.ObjectId,
 				ref : "products"
 			},
+			productName : {
+				type:String
+			},
 			quantity: {
 				type: Number,
 				required: true,
@@ -26,7 +29,7 @@ let orderSchema = new mongoose.Schema({
 				required: true
 			},
 			mrp: {
-				type: String,
+				type: Number,
 				required: true
 			},
 			status: {

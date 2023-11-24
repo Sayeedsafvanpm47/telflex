@@ -12,7 +12,7 @@ module.exports = {
                             
                         }else{
                        
-                      const { _id, size, price, mrp, quantity } = req.body;
+                      const { _id, size, price, mrp, quantity, productname } = req.body;
 
                       
           
@@ -23,6 +23,7 @@ module.exports = {
                      
                           existingCart.products.push({
                               product_id: _id,
+                              productName : productname,
                               quantity: quantity,
                               price: price,
                               size: size,

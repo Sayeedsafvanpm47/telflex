@@ -43,7 +43,33 @@ href=
 "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"> 
 </script> 
 
+<style>
+    @media print {
+    .hide-on-print {
+        display: none !important;
+    }
+}
+/* Add borders to the table */
+.bordered-table {
+    border: 1px solid #dee2e6;
+}
 
+/* Style table header */
+.bordered-table thead th {
+    border-bottom: 2px solid #dee2e6;
+}
+
+/* Style table rows */
+.bordered-table tbody tr td {
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Style the "No reports yet" message */
+.bordered-table tbody tr td.text-center {
+    padding-top: 10px;
+}
+
+</style>
 
 
 </head>

@@ -10,12 +10,17 @@
           <div class="d-flex justify-content-center">
                     <a href=""><img style="width: 300px; height: 200px;" src="/user/imgs/theme/logo.png" alt="logo"></a>
           </div>
+          <div class="d-block text-center">
+          <h1><%= reportType  %></h1>
+          <p><%= from  %> - <%= to  %></p>
+        </div>
           <div class="container">
-                    <div class="row">
+                    <div class="row hide-on-print">
+                      
                               
-                        <div class="col-md-2">
-                            <span>From:</span>
-                            <div class="datepicker date input-group p-0 shadow-sm" style="width: 150px;">
+                        <div class="col-md-3">
+                            <span>From: <%= from  %></span>
+                            <div class="datepicker date input-group p-0 shadow-sm" style="width: 300px;">
                                 <input id="fromDate" type="text" placeholder="Choose a date" class="form-control py-4 px-4" />
                                 <div class="input-group-append">
                                     <span class="input-group-text px-4">
@@ -24,14 +29,14 @@
                                 </div>
                             </div>
                             <div class="container">
-                                <p id="showFromDate">From :</p>
+                                <p id="showFromDate">From : <%= from  %></p>
                                 <input id="inputFrom" type="text" value="" hidden>
                             </div>
                         </div>
                 
-                        <div class="col-md-6">
-                            <span>To:</span>
-                            <div class="datepicker date input-group p-0 shadow-sm" style="width: 150px;">
+                        <div class="col-md-3 ml-60">
+                            <span>To: <%= to %></span>
+                            <div class="datepicker date input-group p-0 shadow-sm" style="width: 300px;">
                                 <input id="toDate" type="text" placeholder="Choose a date" class="form-control py-4 px-4" />
                                 <div class="input-group-append">
                                     <span class="input-group-text px-4">
@@ -44,10 +49,21 @@
                                 <input id="inputTo" type="text" value="" hidden>
                             </div>
                         </div>
+                        <div>
+                        <select style="width: 300px;" class="custom-select" name="typeOfReport" id="typeOfReport" onchange="setDateRange()">
+                            <option value="daily">Get Daily Report</option>
+                            <option value="weekly">Get Weekly Report</option>
+                            <option value="monthly">Get Monthly Report</option>
+                            <option value="yearly">Get Yearly Report</option>
+                        </select>
+                    </div>
+                        
            
                   
                     </div>
-                    <button style="width: 100px;" id="goButton" onclick="getReport()" type="submit" class="btn btn-primary">Go</button>
+                    <div class="hide-on-print mt-20">
+                    <button  style="width: 300px;" id="goButton" onclick="getReport()" type="submit" class="btn btn-primary ">Go</button>
+                </div>
                 </div>
                
                 <script>
@@ -63,6 +79,8 @@
                         $("#inputFrom").text(`${from}`);
                         $("#showToDate").text(`${to}`);
                         $("#inputTo").text(`${to}`);
+                        $('#fromToDate').text(`${from}`)
+                        $('#toFromDate').text(`${to}`)
                     });
                 </script>
                 
@@ -91,97 +109,74 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
-                            <table class="table shopping-summery text-center clean">
-                                <thead>
-                                    <tr class="main-heading">
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Revenue</th>
-                                        <th scope="col">Order</th>
-                                        <th scope="col">Average order Value</th>
-                                    
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                        <% if(report && report.length > 0){ %>
-                                        <% for(let i=0; i<report.length; i++) { %>
-                                        <tr>
-                                    <td><%= report[i].orderDate%></td>
-                                    </tr>
-                                           <% }  } %>
-                                </tbody>
-                                
-                                
-                            </table>
+                            
                             <div class=" p-md-4 p-30 border-radius cart-totals">
                               <div class="heading_s1 mb-3">
-                                  <h4>Bill Totals</h4>
+                                  <h4>Order Overview</h4>
                               </div>
                            
                               
                                   <table class="table">
                                       <tbody>
+                                        <% if(productsRevenue&& productsRevenue.length > 0){ %>
                                           <tr>
-                                              <td class="cart_total_label">Bill Subtotal</td>
-                                              <td>Free</td>
+                                              <td class="cart_total_label">Date</td>
+                                              <td>  <%= from  %> - <%= to  %> </td>
 
                                           </tr>
                                           <tr>
-                                              <td class="cart_total_label">Shipping </td>
-                                              <td class="cart_total_amount"> <i class="ti-gift mr-5"></i> Free Shipping</td>
+                                              <td class="cart_total_label">Revenue </td>
+                                              <td><%= revenue[0].totalEarnings  %></td>
                                           </tr>
-                                          <tr>
-                                              <td class="cart_total_label">Total</td>
-                                              <td>free</td>
 
-                                              <input type="number" name="totalamountcheckout" value="" id="totalinputfield" hidden>
+                                          <tr>
+                                            <td class="cart_total_label">Order </td>
+                                            <td><%= revenue[0].totalOrders  %></td>
+                                        </tr>
+
+
+
+                                          <tr>
+                                              <td class="cart_total_label">Average Order Value</td>
+                                              <td><%= parseInt(revenue[0].totalEarnings / revenue[0].totalOrders) %></td>
+
+                                             
                                           </tr>
+                                          <% } %>
                                       </tbody>
                                   </table>
                               </div>
                         </div>
 
                         <div class="table-responsive">
-                              <table class="table shopping-summery text-center clean">
-                                  <thead>
-                                      <tr class="main-heading">
-                                          <th scope="col">Product</th>
-                                          <th scope="col">Quantity sold</th>
-                                          <th scope="col">Total Amount</th>
-                                        
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      
-                                             
-                                  </tbody>
-                                  
-                                  
-                              </table>
-                              <div class=" p-md-4 p-30 border-radius cart-totals">
-                                        <div class="heading_s1 mb-3">
-                                            <h4>Bill Totals</h4>
-                                        </div>
-                                     
-                                        
-                                            <table class="table">
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="cart_total_label">Bill Subtotal</td>
-    
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="cart_total_label">Shipping</td>
-                                                        <td class="cart_total_amount"> <i class="ti-gift mr-5"></i> Free Shipping</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="cart_total_label">Total</td>
-    
-                                                        <input type="number" name="totalamountcheckout" value="" id="totalinputfield" hidden>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                          </div>
+                            <table class="table shopping-summery text-center clean bordered-table">
+                                <thead>
+                                    <tr class="main-heading">
+                                        <th scope="col">Product Id</th>
+                                        <th scope="col">Product Name</th>
+                                        <th scope="col">Quantity sold</th>
+                                        <th scope="col">Total Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if(productsRevenue && productsRevenue.length > 0){ %>
+                                        <% for(let i=0; i<productsRevenue.length; i++){ %>
+                                            <tr>
+                                                <td><%= productsRevenue[i]._id  %></td>
+                                                <td><%= productsRevenue[i].productName  %></td>
+                                                <td><%= productsRevenue[i].totalQuantity  %></td>
+                                                <td><%= productsRevenue[i].totalRevenue %></td>
+                                            </tr>
+                                        <% } %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="4" class="text-center">No reports yet</td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                        
                       
 
 
@@ -196,30 +191,36 @@
                             <div class="col-lg-12 col-md-12">
                                 <div class="border p-md-4 p-30 border-radius cart-totals">
                                     <div class="heading_s1 mb-3">
-                                        <h4>Bill Totals</h4>
+                                        <h4>Profit Details</h4>
                                     </div>
                                  
                                     
                                         <table class="table">
                                             <tbody>
+                                                <% if(profit && profit.length>0){%>
                                                 <tr>
-                                                    <td class="cart_total_label">Bill Subtotal</td>
+                                                    <td class="cart_total_label">Total Revenue</td>
+                                                    <td><%= profit[0].totalRevenue  %></td>
 
                                                 </tr>
                                                 <tr>
-                                                    <td class="cart_total_label">Shipping</td>
-                                                    <td class="cart_total_amount"> <i class="ti-gift mr-5"></i> Free Shipping</td>
+                                                    <td class="cart_total_label">Total Cost </td>
+                                                    <td><%= profit[0].totalCost  %></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="cart_total_label">Total</td>
+                                                    <td class="cart_total_label">Gross Profit</td>
+                                                    <td><%= profit[0].totalProfit  %></td>
 
                                                     <input type="number" name="totalamountcheckout" value="" id="totalinputfield" hidden>
                                                 </tr>
+                                                <% }else{ %>
+                                                    <p>No details available</p>
+                                                    <% } %>
                                             </tbody>
                                         </table>
                                     </div>
                                    <div class="row">
-                                        <div class="col-2">
+                                        <div class="col-2 hide-on-print">
                                     <input type="button" id="printbtn" onclick="window.print()" style="background-color: rgb(6, 75, 12); color: white; border: none; padding: 10px 20px; cursor: pointer;" value="Print Invoice">
                               </div>
                                    
@@ -254,57 +255,137 @@
         </div>
     </div>
     <script>
-
-    
-
-
-    </script>
+        async function setDateRange() {
+            const selectedReport = $("#typeOfReport").val();
+            const today = new Date();
+            let fromDate, toDate;
+          
+        
+            const padZero = (num) => (num < 10 ? `0${num}` : num);
+        
+            if (selectedReport === "daily") {
+                fromDate = `${padZero(today.getDate())}/${padZero(today.getMonth() + 1)}/${today.getFullYear()}`;
+                toDate = `${padZero(today.getDate()) + 1}/${padZero(today.getMonth() + 1)}/${today.getFullYear()}`;
+             
+            } else if (selectedReport === "weekly") {
+                // Calculate the start and end of the week
+                const startOfWeek = new Date(today);
+                const endOfWeek = new Date(today);
+                const dayOfWeek = today.getDay(); // Sunday is 0, Monday is 1, etc.
+                const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); // Adjust for Sunday
+        
+                startOfWeek.setDate(diff);
+                endOfWeek.setDate(diff + 6);
+        
+                fromDate = `${padZero(startOfWeek.getDate())}/${padZero(startOfWeek.getMonth() + 1)}/${startOfWeek.getFullYear()}`;
+                toDate = `${padZero(endOfWeek.getDate() + 1)}/${padZero(endOfWeek.getMonth() + 1)}/${endOfWeek.getFullYear()}`;
+             
+            } else if (selectedReport === "monthly") {
+                // Calculate the start and end of the month
+                const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+                const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        
+                fromDate = `${padZero(startOfMonth.getDate())}/${padZero(startOfMonth.getMonth() + 1)}/${startOfMonth.getFullYear()}`;
+                toDate = `${padZero(endOfMonth.getDate())}/${padZero(endOfMonth.getMonth() + 1)}/${endOfMonth.getFullYear()}`;
+              
+            } else if (selectedReport === "yearly") {
+                // Calculate the start and end of the year
+                fromDate = `01/01/${today.getFullYear()}`;
+                toDate = `31/12/${today.getFullYear()}`;
+               
+            }
+        
+            // Set the values in the input fields or update elements as needed
+            $("#fromDate").val(fromDate);
+            $("#toDate").val(toDate);
+        
+            // Update other elements if needed
+            $("#showFromDate").text(fromDate);
+            $("#showToDate").text(toDate);
+            $("#inputFrom").val(fromDate);
+            $("#inputTo").val(toDate);
+            
+          
+            
+        }
+        
+   
+        setDateRange();
+        </script>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
    <script>
-     async function getReport() {
-       try {
-         const fromDate = document.getElementById('showFromDate').innerHTML;
-         const toDate = document.getElementById('showToDate').innerHTML;
-   
-         const requestBody = {
-           fromDate,
-           toDate
-         };
-   
-         const response = await fetch('/admin/getReport', {
-           method: 'POST',
-           headers: {
-             'Content-Type': 'application/json'
-           },
-           body: JSON.stringify(requestBody)
-         });
-   
-         if (!response.ok) {
-           throw new Error('Failed to fetch data');
-         }
-       
-         const data = await response.json();
+ 
+    function setDefaultReportType() {
+        const typeOfReport = localStorage.getItem('selectedReport');
+        const typeOfReportElement = document.getElementById('typeOfReport');
     
-          window.location.href = '/admin/getReportResults'
-         
-   
-       } catch (error) {
+        if (typeOfReport) {
+            typeOfReportElement.value = typeOfReport;
+        } else {
+           
+            localStorage.setItem('selectedReport', typeOfReportElement.value);
+        }
+    
+    
+        typeOfReportElement.addEventListener('change', function() {
+            localStorage.setItem('selectedReport', this.value);
+        });
+    }
+    
+    // Call the function to set default value and store selected value
+    setDefaultReportType();
+    </script>
+   <script>
 
-         console.error('Error:', error);
-   
-       
-         if (error.message === 'Failed to fetch data') {
-           Swal.fire({
-             icon: 'error',
-             title: 'Invalid Date Range',
-             text: 'From date cannot be greater than to date',
-             showConfirmButton: true
-           });
-         }
-       }
-     }
-   </script>
+
+
+
+    async function getReport() {
+        try {
+            const fromDate = document.getElementById('showFromDate').innerHTML;
+            const toDate = document.getElementById('showToDate').innerHTML;
+    
+            const requestBody = {
+                fromDate,
+                toDate
+            };
+    
+            const response = await fetch('/admin/getReport', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+    
+            const data = await response.json();
+    
+            // Redirect to getReportResults and update the report type
+            window.location.assign('/admin/getReportResults');
+            const typeOfReport = document.getElementById('typeOfReport').value;
+        
+        localStorage.setItem('selectedReport', typeOfReport);
+    
+        } catch (error) {
+            console.error('Error:', error);
+    
+            if (error.message === 'Failed to fetch data') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Date Range',
+                    text: 'From date cannot be greater than to date',
+                    showConfirmButton: true
+                });
+            }
+        }
+    }
+    </script>
+
+
         
 
     <!-- Vendor JS-->
