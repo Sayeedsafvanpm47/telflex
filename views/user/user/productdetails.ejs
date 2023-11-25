@@ -54,7 +54,11 @@
                                        <h4 class="title-detail"><%= products.shortDescription%></h2>
                                         <div class="product-detail-rating">
                                             <div class="pro-details-brand">
-                                                <input class="title-detail" name="category" value="<%= products.category%>" hidden>   <span> Category: <a href="/user/sortCategory?categoryName=<%=products.category%>"><%= products.category  %></a></span>
+                                                <% if (products.category &&  products.category.categoryName) { %>
+                                                    <a href="shop-grid-right.html"><%= products.category.categoryName %></a>
+                                                <% } else { %>
+                                                    Category Not Available <!-- Display a message if category data is not present -->
+                                                <% } %>
                                             </div>
                                             <div class="product-rate-cover text-end">
                                                 <div class="product-rate d-inline-block">

@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const { isEmailValid, isPasswordValid, isNamesValid, isPhoneValid, isCpassValid } = require("../../utils/validators/signUpValidator");
 const otpGenerator = require("../../utils/otpGenerator");
 const sendOtp = require("../../utils/generateAndSendOtp");
+const mongoose = require('mongoose')
 
 
 module.exports = {
@@ -411,12 +412,25 @@ module.exports = {
 		try {
 			const userId = req.session.userId;
 			const users = await userModel.findById(userId);
-			const orders = await orderModel.find({ userId }).sort({orderDate:-1})
+			const product = await productModel.find({})
+			const orders = await orderModel.find({ userId }).sort({orderDate:-1}).populate({
+				
+				path: 'items.productId',
+            model: 'products',
+            select: 'images productName size productDiscount',
+			})
+
+	
+	     
+	
+	        
+	        
+			console.log(`Tjis is orders :  ${orders}`)
+			console.log(orders)
 		  
 			res.render('user/user/account', { users, orders });
 		  
-			console.log(users);
-			console.log(orders);
+			
 		      } catch (error) {
 			console.error('Error fetching user account details:', error);
 			// Handle the error, perhaps by rendering an error page

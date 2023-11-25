@@ -188,7 +188,7 @@ module.exports = {
                   productdetail : async (req,res)=>{
                     const _id = req.query._id
                     const category = await categoryModel.find({})
-                    const products = await productModel.findById(_id)
+                    const products = await productModel.findById(_id).populate({path:'category',model:'categories',select:'_id categoryName published'})
                     const related = products.category
                    
                     const relatedProducts = await productModel.find({category:related})

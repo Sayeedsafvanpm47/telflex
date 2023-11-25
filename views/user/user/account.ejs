@@ -226,6 +226,9 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Order</th>
+                                                                        <th>Product Details</th>
+
+                                                                      
                                                                         <th>Date</th>
                                                                         <th>Status</th>
                                                                    
@@ -235,30 +238,42 @@
                                                                 <tbody>
                                                                     <% for (let i = 0; i < orders.length; i++) { %>
                                                                         <% if (orders[i].items.length > 0) { %>
-                                                                            <% let activeFound = false; %>
-                                                                            <% let cancelledFound = false; %>
-                                                                            <% for (let j = 0; j < orders[i].items.length; j++) { %>
-                                                                                <% if (orders[i].items[j].status === 'Active' && !activeFound) { %>
+                                                                           
+                                                                            
+                                                                                
                                                                                     <tr>
                                                                                         <td><%= orders[i].orderId %></td>
+                                                                                        <td>
+                                                                                        <% for(j=0;j<orders[i].items.length; j++){ %>
+                                                                                          
+                                                                                       <p><li style="margin-left: 20px;"> <%= orders[i].items[j].productId.productName  %>  <span> : <%= orders[i].items[j].quantity %></span></li></p> 
+                                                                                      
+                                                                                      
+                                                                                            <% } %>
+                                                                                        </td>
+                                                                                    
                                                                                         
-                                                                                        <td><%= orders[i].orderDate  %></td>
-                                                                                        <td><%= orders[i].orderStatus %></td>
+                                                                                        <td><%= ((orders[i].orderDate).toString()).slice(0,16)  %></td>
+                                                                                        <% let allItemsCancelled = true; %>
+                                                                                        <% for (let k = 0; k < orders[i].items.length; k++) { %>
+                                                                                            <% if (orders[i].items[k].status !== 'Cancelled') { %>
+                                                                                                <% allItemsCancelled = false; %>
+                                                                                                <% break; %>
+                                                                                            <% } %>
+                                                                                        <% } %>
+                                                                                        
+                                                                                        <td>
+                                                                                            <% if (allItemsCancelled) { %>
+                                                                                                Cancelled
+                                                                                            <% } else { %>
+                                                                                                <%= orders[i].orderStatus %>
+                                                                                            <% } %>
+                                                                                        </td>
+                                                                                        
                                                                                       
                                                                                         <td><a href="/user/viewOrderDetails?orderId=<%= orders[i].orderId%>" class="btn-small d-block">View</a></td>
                                                                                     </tr>
-                                                                                    <% activeFound = true; %>
-                                                                                <% } else if (orders[i].items[j].status === 'Cancelled' && !cancelledFound) { %>
-                                                                                    <tr>
-                                                                                        <td><%= orders[i].orderId %></td>
-                                                                                        <td>March 45, 2020</td>
-                                                                                        <td><%= orders[i].orderStatus  %></td>
-                                                                                      
-                                                                                        <td><a href="/user/viewOrderDetails?orderId=<%= orders[i].orderId%>" class="btn-small d-block">View</a></td>
-                                                                                    </tr>
-                                                                                    <% cancelledFound = true; %>
-                                                                                <% } %>
-                                                                            <% } %>
+                                                                                  
                                                                         <% } %>
                                                                     <% } %>
                                                                 </tbody>
