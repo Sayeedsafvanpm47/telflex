@@ -589,24 +589,64 @@ res.redirect('/user/account');
 	
 		    const orderItem = await orderModel.findOne({ 'items._id': _id });
 		    const canceledItem = orderItem.items.find(item => item._id.toString() === _id);
-		    const canceledItemPrice = canceledItem.price;
+		   
+	
+		 
+		
+	      
+		
+	      const updatedOrder = await orderModel.updateOne(
+		{ 'items._id': _id },
+		{
+		  $set: {
+		    'items.$.status': 'Requested for cancellation',
+		    'orderStatus': 'Modified'
+		  },
+		
+		},
+		{ arrayFilters: [{ 'elem._id': _id }] }
+	        );
+
+		    
+
+		
+		    
+	      
+		    res.status(200).json({ message: 'Order item cancelled successfully' });
+		} catch (error) {
+		    console.error(error);
+		    res.status(500).json({ error: 'Internal server error' });
+		}
+	      },
+	      returnOrder: async (req, res) => {
+		try {
+		    const _id = req.query._id;
+		    console.log(_id);
+	      
+	
+		    const orderItem = await orderModel.findOne({ 'items._id': _id });
+		    const canceledItem = orderItem.items.find(item => item._id.toString() === _id);
+		 const refundPrice = canceledItem.price
 	      const proId = canceledItem.productId
 	      console.log(proId)
 	      const prosize = canceledItem.size
 	      const proquantity = canceledItem.quantity
 		 
-		    const updatedTotal = orderItem.totalAmount - canceledItemPrice;
-	      
+		    
 		
-		    const updatedOrder = await orderModel.updateOne(
-		        { 'items._id': _id },
-		        {
-			  $set: { 'items.$.status': 'Cancelled', 'orderStatus': 'Modified' }
-			  
-		        },
-		        { arrayFilters: [{ 'elem._id': _id }] }
-		    );
-
+	      const updatedOrder = await orderModel.updateOne(
+		{ 'items._id': _id },
+		{
+		  $set: {
+		    'items.$.status': 'Requested for return',
+		    'orderStatus': 'Modified'
+		  },
+		  $inc: {
+		    'refundAmount': refundPrice 
+		  }
+		},
+		{ arrayFilters: [{ 'elem._id': _id }] }
+	        );
 		    
 
 		   
@@ -628,7 +668,7 @@ res.redirect('/user/account');
 		    
 		    
 	      
-		    res.status(200).json({ message: 'Order item cancelled successfully', updatedTotal });
+		    res.status(200).json({ message: 'Order item cancelled successfully' });
 		} catch (error) {
 		    console.error(error);
 		    res.status(500).json({ error: 'Internal server error' });

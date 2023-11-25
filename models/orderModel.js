@@ -45,7 +45,7 @@ let orderSchema = new mongoose.Schema({
 	orderStatus : {
 
 		type: String,
-		enum: ["Placed", "Shipped", "Delivered" , "Cancelled", "Returned"],
+		
 		default: "Placed"
 
 	},
@@ -61,7 +61,7 @@ let orderSchema = new mongoose.Schema({
 	},
 	paymentStatus: {
 		type: String,
-		enum: ["Pending", "Paid", "Failed"],
+		
 		default: "Pending"
 	},
 	totalAmount: {
@@ -74,9 +74,9 @@ let orderSchema = new mongoose.Schema({
 	address : {
 		type : Object
 	},
-	adminCancel : {
-		type : String,
-		
+	refundAmount : {
+		type : Number,
+		default:0
 	}
          
 });

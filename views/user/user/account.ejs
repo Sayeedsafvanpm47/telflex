@@ -196,7 +196,7 @@
                                             <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>Account details</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="page-login-register.html"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
+                                            <a class="nav-link" href="/user/logout"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -244,11 +244,13 @@
                                                                                     <tr>
                                                                                         <td><%= orders[i].orderId %></td>
                                                                                         <td>
-                                                                                        <% for(j=0;j<orders[i].items.length; j++){ %>
-                                                                                          
-                                                                                       <p><li style="margin-left: 20px;"> <%= orders[i].items[j].productId.productName  %>  <span> : <%= orders[i].items[j].quantity %></span></li></p> 
-                                                                                      
-                                                                                      
+                                                                                            <% for (let j = 0; j < orders[i].items.length; j++) { %>
+                                                                                                <li style="margin-left: 20px;">
+                                                                                                    <p style="font-size: 15px;">Name : <%= orders[i].items[j].productName  %></p> 
+                                                                                                    <p style="font-size: 15px;">Quantity : <%= orders[i].items[j].quantity  %></span>
+                                                                                                    <p style="font-size: 12px;">Order Status : <%= orders[i].items[j].status  %></p>
+                                                                                                </li>
+                                                                                                <hr>
                                                                                             <% } %>
                                                                                         </td>
                                                                                     

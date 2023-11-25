@@ -88,13 +88,32 @@
                                                                 <span class="status" id="status"><%= item.status  %></span>
                                                                 
                                                             </td>
-                                                            
+                                                            <% if(item.status !== 'Cancelled' && item.status !== 'Returned' && item.status !== 'Requested for cancellation'){ %>
+                                                            <% if(item.status === 'Delivered') {%>
+                                                                <td class="cancel" data-title="Cancel">
+                                                                    <button class="btn btn-danger" style="background-color: rgba(166, 4, 4, 0.712)" onclick="returnOrder('<%= item._id %>')">Return</button>
+                                                                </td>
+
+                                                               
+                                                                <% }else{ %>
                                                             <td class="cancel" data-title="Cancel">
                                                                 <button class="btn btn-danger" onclick="cancelOrder('<%= item._id %>')">Cancel</button>
                                                             </td>
-                                                            <!-- <td class="cancel" data-title="Cancel">
-                                                                <button class="btn btn-danger" onclick="handleOrder('return', '<%= item._id %>')">Return</button>
-                                                            </td> -->
+                                                            <% } %>
+                                                            <% } else { %>
+
+                                                                <% if(item.status === 'Requested for cancellation') {%>
+
+                                                               <td>Item requested for cancellation.</td>
+                                                               <%} else if(item.status === 'Cancelled'){ %>
+                                                                <td>Item cancelled</td>
+                                                                <% } else if(item.status === 'Returned') { %>
+                                                                    <td>Item Returned</td>
+                                                                    <% } %>
+                                                                    <% } %>
+
+                                                              
+                                                       
                                                             
                                                         </tr>
                                                
@@ -126,9 +145,9 @@
                                     <div>
                             <% orders.forEach(order => { 
                              order.items.forEach(item => { 
-                                  if (item.status !== 'Cancelled') {
+                                 
                                     totalAmount += item.price * item.quantity;
-                                  }
+                                
                                 });
                              }); %>
                         </div>
@@ -269,15 +288,16 @@
 </script>
 
 
-<!-- <script>
+
+<script>
     function returnOrder(_id) {
     
         Swal.fire({
             icon: 'warning',
             title: 'Are you sure?',
-            text: 'Do you want to return this order?',
+            text: 'Do you want to return this product?',
             showCancelButton: true,
-            confirmButtonText: 'Yes, request for return!',
+            confirmButtonText: 'Yes, confirm!',
             cancelButtonText: 'No, keep it'
         }).then((result) => {
             if (result.isConfirmed) {
@@ -295,8 +315,8 @@
                  
                     Swal.fire({
                         icon: 'success',
-                        title: 'Requested for returning',
-                        text: 'Your request has been submitted!',
+                        title: 'Request for return submitted',
+                        text: 'Your order will soon be collected by the team, hang in there, Cheers!',
                     });
                     console.log(data); 
                     window.location.href = 'account'
@@ -306,18 +326,18 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'Something went wrong! Unable to return the order.',
+                        text: 'Something went wrong! Unable to cancel the order.',
                         footer: `<p>${error.message}</p>`,
                     });
                     console.log(error);
                 });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
              
-                Swal.fire('Cancelled', 'Your order is safe :)');
+                Swal.fire('Cancelled', 'Your order is safe :)', 'info');
             }
         });
     }
-</script> -->
+</script>
 
 
 

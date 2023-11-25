@@ -35,6 +35,7 @@ router.post('/updateAddress',controller.updateAddress)
 router.get('/viewOrderDetails',controller.viewOrderDetails)
 router.post('/updateCart',cartController.updateCart)
 router.get('/cancelOrder',controller.cancelOrder)
+router.get('/returnOrder',controller.returnOrder)
 router.get('/cancelledOrders',controller.cancelledOrders)
 
 router.get('/',productController.productGridView)

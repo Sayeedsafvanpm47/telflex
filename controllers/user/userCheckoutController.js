@@ -243,6 +243,7 @@ placeOrder: async (req, res) => {
         // cart.products = [];
         // cart.total = 0;
         // await cart.save();
+        
 
         return res.status(200).json({ order: razorpayOrder });
        }  
@@ -260,6 +261,9 @@ placeOrder: async (req, res) => {
             address: address,
             orderDate : new Date()
         });
+        if(payment_option ==='Paypal'){
+            order.paymentStatus = 'Paid'
+        }
         if(cart.total<=0){
             res.redirect('/user/checkoutpage')
         }

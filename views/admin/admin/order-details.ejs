@@ -14,7 +14,7 @@
                
                     <div class="container">
                         <% if(orders && orders.length>0 ){ %>
-                      
+                      <% let totalAmount = 0 %>
          <% for(let i = 0; i < orders.length; i++) { %>
                         <div style="margin-top: -70px;" class="row">
                               <div class="col-lg-3 col-sm-6">
@@ -56,6 +56,8 @@
                                         <th scope="col">Price</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Subtotal</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Action</th>
                                      
                                     </tr>
                                 </thead>
@@ -64,46 +66,57 @@
                                         <% orders.forEach(order => { %>
                                             <% if (order.items && order.items.length > 0) { %>
                                                 <% order.items.forEach(item => { %>
-                                                    <% if (item.status !== 'Cancelled') { %>
-                                                        <!-- Display items with item.status !== 'Cancelled' -->
+                                                 
+                                                        
                                                         <tr>
                                                             <input type="text" value="<%= item.productId %>" id="" hidden>
                                                             <td class="image product-thumbnail">
-                                                                <img height="100px" width="100px" src="/<%= item.productId.images[0] %>" alt="#">
+                                                                <img  src="/<%= item.productId.images[0] %>" alt="#">
                                                             </td>
                                                             <td class="product-des product-name">
                                                                 <h5 class="product-name">
                                                                     <a href="shop-product-right.html"><%= item.productId.productName %></a>
                                                                 </h5>
-                                                                <p class="font-xs"><%= item.size %><br> <%= item.productId.shortDescription  %></p>
+                                                                <p class="font-xs"><%= item.size  %><br> <%= item.productId.shortDescription  %></p>
                                                             </td>
                                                             <td class="price" data-title="Price"><span><%= item.price %></span></td>
-                                                            <td class="quantity" data-title="Quantity"><span><%= item.quantity %></span></td>
+                                                            <td class="quantity" data-title="Quantity"><span><%= item.quantity %></span>
+                                                           
+                                                            </td>
                                                             <td class="text-right" data-title="Cart">
                                                                 <span class="calctotal" id="calcprice"><%= item.price * item.quantity %></span>
                                                             </td>
+                                                            <td class="text-right" data-title="Status">
+                                                                <span class="status" id="status"><%= item.status %></span>
+                                                                
+                                                            </td>
+                                                            <td>
+                                                            <form id="formSubmit" method="post" action="/admin/updateOrderStatus?_id=<%= item._id%>">
+                                                                <div class="col-lg-2 col-6 col-md-3">
+                                                                   <input type="text" name="orderId" value="<%= orders[i]._id%>" hidden>
+                                                                   <% if(item.status !== 'Cancelled' && item.status !== 'Returned') { %>
+                                                                    <select style="width: 100px;" name="orderStatus" onchange="this.form.submit()" class="form-select">
+                                                                        <option value=""><%= orders[i].orderStatus %></option>
+                                                                        <option>Placed</option>
+                                                                        <option>Shipped</option>
+                                                                        <option>Delivered</option>
+                                                                        <option>Cancelled</option>
+                                                                        <option>Returned</option>
+                                                                    </select>
+                                                                <% } else { %>
+                                                                    <% if(item.status === 'Cancelled'){ %>
+                                                                        <p>Item Cancelled</p>
+                                                                        <% } else { %>
+                                                                            <p>Item Returned</p>
+                                                                            <% } %>
+                                                                <% } %>
+                                                                </div>
+                                                            </form>
+                                                        </td>
+                                                       
                                                             
                                                         </tr>
-                                                    <% } else { %>
-                                                        <!-- Display items with item.status === 'Cancelled' without the cancel button -->
-                                                        <tr>
-                                                            <td class="image product-thumbnail">
-                                                                <img src="/<%= item.productId.images[0] %>" alt="#">
-                                                            </td>
-                                                            <td class="product-des product-name">
-                                                                <h5 class="product-name">
-                                                                    <a href="shop-product-right.html"><%= item.productId.productName %></a>
-                                                                </h5>
-                                                                <p class="font-xs"><%= item.size %><br> <%= item.productId.shortDescription  %></p>
-                                                            </td>
-                                                            <td class="price" data-title="Price"><span><%= item.price %></span></td>
-                                                            <td class="quantity" data-title="Quantity"><span><%= item.quantity %></span></td>
-                                                            <td class="text-right" data-title="Cart">
-                                                                <span class="calctotal" id="calcprice"><%= item.price * item.quantity %></span>
-                                                            </td>
-                                                            <!-- No cancel button for items with status 'Cancelled' -->
-                                                        </tr>
-                                                    <% } %>
+                                               
                                                 <% }) %>
                                             <% } %>
                                         <% }) %>
@@ -113,7 +126,7 @@
                                 
                             </table>
                         </div>
-                    
+                      
 
 
                        
@@ -129,15 +142,22 @@
                                     <div class="heading_s1 mb-3">
                                         <h4>Bill Totals</h4>
                                     </div>
+                                    <div>
+                            <% orders.forEach(order => { 
+                             order.items.forEach(item => { 
+                                 
+                                    totalAmount += item.price * item.quantity;
+                                
+                                });
+                             }); %>
+                        </div>
                                     
-                                    <div class="table-responsive">
-
                                         <table class="table">
                                             <tbody>
                                                 <tr>
                                                     <td class="cart_total_label">Bill Subtotal</td>
-                                              
-                                                    <td class="cart_total_amount"><span id="showtotal" class="font-lg fw-900 text-brand"></span><%= orders[i].totalAmount %></td>
+                                                <input type="number" value="<%= totalAmount %>" name="totalAmount" hidden>
+                                                    <td class="cart_total_amount"><span id="showtotal" class="font-lg fw-900 text-brand"></span><%= totalAmount %></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="cart_total_label">Shipping</td>
@@ -145,22 +165,20 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="cart_total_label">Total</td>
-                                                    <td class="cart_total_amount"><span id="showtotalamount" class="font-lg fw-900 text-brand"></span><%= orders[i].totalAmount  %></td>
+                                                    <td class="cart_total_amount"><span id="showtotalamount" class="font-lg fw-900 text-brand"></span><%= totalAmount  %></td>
                                                     <input type="number" name="totalamountcheckout" value="" id="totalinputfield" hidden>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                
                                     </div>
                                    <div class="row">
                                         <div class="col-2">
                                     <input type="button" id="printbtn" onclick="window.print()" style="background-color: rgb(6, 75, 12); color: white; border: none; padding: 10px 20px; cursor: pointer;" value="Print Invoice">
                               </div>
-                           
                                    
                                    
                                  
-                             
+                                
                                
                                 </div>
                             </div>
@@ -247,6 +265,58 @@
                         icon: 'success',
                         title: 'Order Cancelled',
                         text: 'Your order has been cancelled successfully!',
+                    });
+                    console.log(data); 
+                    window.location.href = 'account'
+                })
+                .catch((error) => {
+                   
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong! Unable to cancel the order.',
+                        footer: `<p>${error.message}</p>`,
+                    });
+                    console.log(error);
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+             
+                Swal.fire('Cancelled', 'Your order is safe :)', 'info');
+            }
+        });
+    }
+</script>
+
+
+
+<script>
+    function returnOrder(_id) {
+    
+        Swal.fire({
+            icon: 'warning',
+            title: 'Are you sure?',
+            text: 'Do you want to return this product?',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, confirm!',
+            cancelButtonText: 'No, keep it'
+        }).then((result) => {
+            if (result.isConfirmed) {
+               
+                fetch(`/user/returnOrder?_id=${_id}`, {
+                    method: 'GET',
+                })
+                .then((res) => {
+                    if (!res.ok) {
+                        throw new Error('response was not okay');
+                    }
+                    return res.json();
+                })
+                .then((data) => {
+                 
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Request for return submitted',
+                        text: 'Your order will soon be collected by the team, hang in there, Cheers!',
                     });
                     console.log(data); 
                     window.location.href = 'account'

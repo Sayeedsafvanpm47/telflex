@@ -89,7 +89,7 @@
                         </article>
                     </div>
                     <div class="row">
-                        <div class="col-lg-5">
+                        <!-- <div class="col-lg-5">
                             <div class="card mb-4">
                                 <article class="card-body">
                                     <h5 class="card-title">New Members</h5>
@@ -133,9 +133,9 @@
                                     </div>
                                 </article>
                             </div>
-                        </div>
-                        <div class="col-lg-7">
-                            <div class="card mb-4">
+                        </div> -->
+                        <!-- <div class="col-lg-7"> -->
+                            <!-- <div class="card mb-4">
                                 <article class="card-body">
                                     <h5 class="card-title">Recent activities</h5>
                                     <ul class="verti-timeline list-unstyled font-sm">
@@ -217,7 +217,7 @@
                                     </ul>
                                 </article>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div id="chartContent2" style="display: none;" class="col-xl-4 col-lg-12">
@@ -227,7 +227,7 @@
                             <canvas id="myChart2" height="217"></canvas>
                         </article>
                     </div>
-                    <div class="card mb-4">
+                    <!-- <div class="card mb-4">
                         <article class="card-body">
                             <h5 class="card-title">Marketing Chanel</h5>
                             <span class="text-muted font-xs">Facebook</span>
@@ -251,10 +251,10 @@
                                 <div class="progress-bar" role="progressbar" style="width: 80%"> 80%</div>
                             </div>
                         </article>
-                    </div>
+                    </div> -->
                 </div>
             </div>
-            <div class="card mb-4">
+            <!-- <div class="card mb-4">
                 <header class="card-header">
                     <h4 class="card-title">Latest orders</h4>
                     <div class="row align-items-center">
@@ -288,7 +288,7 @@
                                     <option>Refund</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </header>
                 <div class="card-body">
@@ -315,15 +315,20 @@
                                         <td><a href="#" class="fw-bold"><%= orders[i].orderId  %></a> </td>
                                         <td><%= orders[i].address.name  %></td>
                                         <td>
-                                           <%= orders[i].orderDate  %>
+                                           <%= ((orders[i].orderDate).toString()).slice(0,16)  %>
                                         </td>
                                         <td>
                                            <%= orders[i].totalAmount  %>
                                         </td>
                                         <td>
                                             <% if(orders[i].paymentStatus === 'Pending') {%>
-                                            <span class="badge badge-pill badge-soft-warning">Pending</span>
-                                            <% } %>
+                                            <span class="badge badge-pill badge-soft-warning" style="color: black;">Pending</span>
+                                            <% } else if(orders[i].paymentStatus === 'Failed') { %>
+                                                <span class="badge badge-pill badge-soft-danger" style="color: black;">Failed</span>
+                                              
+                                            <% }else { %>
+                                                <span class="badge badge-pill badge-soft-success" style="color: black;">Paid</span>
+                                                <% } %>
                                         </td>
                                         <td>
                                             <i class="material-icons md-payment text-muted mr-5"></i> <%= orders[i].paymentMethod  %>

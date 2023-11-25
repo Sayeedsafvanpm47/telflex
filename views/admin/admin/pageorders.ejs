@@ -29,38 +29,39 @@
                             <thead>
                                 <tr>
                                     <th>Order ID</th>
+                                    
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
+                                    <th scope="col"> Order Date</th>
+                                    <th scope="col">Product Info</td>
                                     <th scope="col">Total</th>
-                                    <th scope="col">Change Status</th>
+                                  
                                     <th scope="col">Status</th>
                                     <!-- <th scope="col">Date</th> -->
                                     <th scope="col" class="text-end"> Action </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody style="font-size: 15px;">
                                 <% if (orders && orders.length) { %>
                                     <% for (let i = 0; i < orders.length; i++) { %>
                                         <tr>
                                             <td><%= orders[i].orderId %></td>
                                             <td><b><%= orders[i].address.name %></b></td> 
                                             <td><%= orders[i].userId.email %></td>
-                                            <td><%= orders[i].totalAmount %></td>
+                                            <td><%= ((orders[i].orderDate).toString()).slice(0,16)  %></td>
                                             <td>
-                                                <form id="formSubmit" method="post" action="/admin/updateOrderStatus?orderId=<%= orders[i].orderId%>">
-                                                    <div class="col-lg-2 col-6 col-md-3">
-                                    
-                                                        <select style="width: 100px;" name="orderStatus" onchange="this.form.submit()" class="form-select">
-                                                           <option value=""><%= orders[i].orderStatus %></option>
-                                                            <option>Placed</option>
-                                                            <option>Shipped</option>
-                                                            <option>Delivered</option>
-                                                            <option>Cancelled</option>
-                                                            <option>Returned</option>
-                                                        </select>
-                                                    </div>
-                                                </form>
+                                                <% for (let j = 0; j < orders[i].items.length; j++) { %>
+                                                    <li style="margin-left: 20px;">
+                                                        <p style="font-size: 15px;">Name : <%= orders[i].items[j].productName  %></p> 
+                                                        <p style="font-size: 15px;">Quantity : <%= orders[i].items[j].quantity  %></span>
+                                                        <p style="font-size: 12px;">Order Status : <%= orders[i].items[j].status  %></p>
+                                                    </li>
+                                                    <hr>
+                                                <% } %>
                                             </td>
+                                          
+                                            <td><%= orders[i].totalAmount %></td>
+                                            
                                             <td><span class="badge rounded-pill alert-warning"><%= orders[i].orderStatus %></span></td>
                                             <!-- <td><%= orders[i].orderDate %></td> -->
                                             <td class="text-end">
