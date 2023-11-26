@@ -25,7 +25,7 @@ router.post("/updatePass", controller.updatePass);
 router.post("/resendOtp", controller.resendOtp);
 router.get('/home',controller.adminHome)
 router.get('/chart',controller.chart)
-
+router.get('/logout',controller.logout)
 // customer management
 router.get("/viewCustomers", controllerUserManage.viewCustomers);
 // router.get("/editCustomers", controllerUserManage.editCustomers);
@@ -60,6 +60,7 @@ router.get('/deleteProducts',controllerProducts.deleteProducts)
 router.get('/orderDetails',adminOrderController.orderDetails)
 router.get('/viewOrderDetails',adminOrderController.viewOrderDetails)
 router.post('/updateOrderStatus',adminOrderController.updateOrderStatus)
+router.post('/orderSearchResults',adminOrderController.orderSearchResults)
 router.get('/error',(req,res)=>{
           res.render('admin/admin/error')
 })

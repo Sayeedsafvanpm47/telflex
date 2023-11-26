@@ -164,7 +164,7 @@ placeOrder: async (req, res) => {
     let total = 0;
 
     const { selectedAddressDetails, payment_option } = req.body;
-
+console.log(payment_option)
 
     try {
         const cart = await cartModel.findOne({ userId: userId }).populate({
@@ -261,7 +261,7 @@ placeOrder: async (req, res) => {
             address: address,
             orderDate : new Date()
         });
-        if(payment_option ==='Paypal'){
+        if(payment_option ==='razorpay'){
             order.paymentStatus = 'Paid'
         }
         if(cart.total<=0){

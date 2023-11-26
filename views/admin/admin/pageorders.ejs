@@ -17,9 +17,16 @@
             <div class="card mb-4">
                 <header class="card-header">
                     <div class="row gx-3">
-                        <div class="col-lg-4 col-md-6 me-auto">
-                            <input type="text" placeholder="Search..." class="form-control">
-                        </div>
+                        <form action="/admin/orderSearchResults" method="post">
+                            <div class="col-lg-4 col-md-6 me-auto">
+                              <input type="text" name="searchTerm" placeholder="Search..." class="form-control">
+                            </div>
+                            <div class="col-lg-4 col-md-6 me-auto mt-30">
+                              <button type="submit" hidden>Search</button>
+                            </div>
+                          </form>
+                          
+                   
                        
                     </div>
                 </header> <!-- card-header end// -->
@@ -33,6 +40,7 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
                                     <th scope="col"> Order Date</th>
+                                    <th scope="col">Modified Date</th>
                                     <th scope="col">Product Info</td>
                                     <th scope="col">Total</th>
                                   
@@ -49,6 +57,11 @@
                                             <td><b><%= orders[i].address.name %></b></td> 
                                             <td><%= orders[i].userId.email %></td>
                                             <td><%= ((orders[i].orderDate).toString()).slice(0,16)  %></td>
+                                            <% if(orders[i].modifiedAt){ %>
+                                                <td><%= ((orders[i].modifiedAt).toString()).slice(0,16)  %></td>
+                                                <% } else {%>
+                                                    <td>No data available yet</td>
+                                                    <% } %>
                                             <td>
                                                 <% for (let j = 0; j < orders[i].items.length; j++) { %>
                                                     <li style="margin-left: 20px;">
@@ -78,13 +91,13 @@
             </div> <!-- card end// -->
             <div class="pagination-area mt-15 mb-50">
                 <nav aria-label="Page navigation example">
+                    
                     <ul class="pagination justify-content-start">
-                        <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                        <li class="page-item"><a class="page-link" href="#">02</a></li>
-                        <li class="page-item"><a class="page-link" href="#">03</a></li>
-                        <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">16</a></li>
-                        <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
+                        <% for(let i=1; i<=totalPages; i++) { %>
+                            <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                <a class="page-link" href="/admin/orderDetails?page=<%= i %>"><%= i %></a>
+                            </li>
+                        <% } %>
                     </ul>
                 </nav>
             </div>

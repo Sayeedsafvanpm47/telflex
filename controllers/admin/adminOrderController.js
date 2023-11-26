@@ -5,15 +5,47 @@ const { USER } = require('../../utils/constants/schemaName');
 module.exports = {
           orderDetails : async (req,res)=>{
                     try {
+                        let currentPage = req.query.page ? parseInt(req.query.page) : 1
+                        let numberOfDocs = 8
+                        let totalOrderCount = await orderModel.countDocuments()
+                        const totalPages = Math.ceil(totalOrderCount/numberOfDocs)
+                    if(req.session.search)
+                    {
+                       
+                        const searchTerm = req.session.searchTerm
+                        const searchRegex = new RegExp(searchTerm, 'i');
+
+const orders = await orderModel
+  .find({ 'address.name': searchRegex }) 
+  .populate({
+    path: 'userId',
+    model: USER,
+    select: 'email'
+  })
+  .sort({ 'orderDate': -1 })
+  .skip((currentPage - 1) * numberOfDocs)
+  .limit(numberOfDocs);
+  delete req.session.search
+  res.render('admin/admin/pageorders',{orders,totalOrderCount,totalPages,currentPage})  
+
+ 
+
+                    }else{
+
+                        
                      const orders = await orderModel.find({}).populate({
                               path : 'userId',
                               model : USER,
                     select : 'email'
 
                               
-                     })
+                     }).sort({'orderDate':-1}).skip((currentPage - 1) * numberOfDocs)
+                     .limit(numberOfDocs)
                      console.log(orders[0].address.name);
-                     res.render('admin/admin/pageorders',{orders})  
+
+                    
+                     res.render('admin/admin/pageorders',{orders,totalOrderCount,totalPages,currentPage})  
+                    }
                     } catch (error) {
                               console.log(error)
                     }
@@ -43,39 +75,19 @@ module.exports = {
                 const { orderStatus,orderId } = req.body;
                 console.log(orderStatus);
                 
-
+             const refund = await orderModel.findOne({_id:orderId})
 
 
                 if (orderStatus === 'Cancelled') {
                     const orderItem = await orderModel.updateOne(
                         { 'items._id': _id },
-                        { $set: { 'items.$.status': 'Cancelled' } }
+                        { $set: { 'items.$.status': 'Cancelled'} }
                         
                     );
-                    // let allItemsCancelled = true;
-                
-                    // for (let i = 0; i < orders.length; i++) {
-                    //     for (let j = 0; j < orders[i].items.length; j++) {
-                    //         if (orders[i].items[j].status !== 'Cancelled') {
-                    //             allItemsCancelled = false;
-                    //             break;
-                    //         }
-                    //     }
-                    //     if (!allItemsCancelled) {
-                    //         break;
-                    //     }
-                    // }
-                    // const orderToUpdate = await orderModel.findOne({_id:orderId});
-                    // if (orderToUpdate) {
-                    //     if (allItemsCancelled) {
-                    //         orderToUpdate.orderStatus = 'Cancelled';
-                    //         orderToUpdate.paymentStatus = 'Failed'
-                    //     } 
-                    //     else {
-                    //         orderToUpdate.orderStatus = 'Modified';
-                    //     }
-                    //     await orderToUpdate.save();
-                    // }
+                   
+                    
+
+               
                 
                  
                 
@@ -86,6 +98,7 @@ module.exports = {
                     const canceledItem = orderTarget.items.find(item => item._id.toString() === _id);
                    
                   const proId = canceledItem.productId
+                  const refundamount = canceledItem.price
                   console.log(proId)
                   const prosize = canceledItem.size
                   const proquantity = canceledItem.quantity
@@ -97,7 +110,19 @@ module.exports = {
                       const sizeToUpdate = productFound.size.find(sizeObj => sizeObj.size === prosize);
                       if (sizeToUpdate) {
                     sizeToUpdate.stock += proquantity;
+                    const orderDate = await orderModel.updateOne(
+                        { _id: orderId },
+                        { $set: { modifiedAt: new Date().toISOString() } }
+                      );
+                      if(refund.paymentStatus === 'Paid'){
+                    await orderModel.updateOne({_id:orderId}, {$inc: {
+                        'refundAmount': refundamount 
+                      }})
+                      }
+                      console.log(`Refund Price: ${refundamount}`);
+                      console.log(`Payment Status: ${refund.paymentStatus}`);
                     await productFound.save();
+                  
                    
                     console.log(`Stock updated for product ${proId}, size ${prosize}`);
                       } else {
@@ -111,35 +136,13 @@ module.exports = {
                 }
 
                 else if (orderStatus === 'Returned') {
+                  
                     const orderItem = await orderModel.updateOne(
                         { 'items._id': _id },
                         { $set: { 'items.$.status': 'Returned' } }
                     );
                 
-                    // let allItemsReturned = true;
-                
-                    // for (let i = 0; i < orders.length; i++) {
-                    //     for (let j = 0; j < orders[i].items.length; j++) {
-                    //         if (orders[i].items[j].status !== 'Returned') {
-                    //             allItemsReturned = false;
-                    //             break;
-                    //         }
-                    //     }
-                    //     if (!allItemsReturned) {
-                    //         break;
-                    //     }
-                    // }
-                
-                   
-                    // const orderToUpdate = await orderModel.findById(orderId);
-                    // if (orderToUpdate) {
-                    //     if (allItemsReturned) {
-                    //         orderToUpdate.orderStatus = 'Returned';
-                    //     } else {
-                    //         orderToUpdate.orderStatus = 'Modified';
-                    //     }
-                    //     await orderToUpdate.save();
-                    // }
+              
 
                     const orderTarget = await orderModel.findOne({ 'items._id': _id });
                     const canceledItem = orderTarget.items.find(item => item._id.toString() === _id);
@@ -156,7 +159,13 @@ module.exports = {
                       const sizeToUpdate = productFound.size.find(sizeObj => sizeObj.size === prosize);
                       if (sizeToUpdate) {
                     sizeToUpdate.stock += proquantity;
+                    const orderDate = await orderModel.updateOne(
+                        { _id: orderId },
+                        { $set: { modifiedAt: new Date().toISOString() } }
+                      );
+                      
                     await productFound.save();
+              
                    
                     console.log(`Stock updated for product ${proId}, size ${prosize}`);
                       } else {
@@ -215,94 +224,7 @@ module.exports = {
 
                
         
-                // if (orderStatus === 'Cancelled') {
-                //     const orderItem = await orderModel.updateOne(
-                //         { 'items._id': _id },
-                //         { $set: { 'items.$.status': 'Cancelled' } }
-                //     );
-                //     for(let i=0; i<orders.length; i++)
-                //     {
-                //         for(let j=0; j<orders[i].items.length; j++)
-                //         {
-                //             if(items[j].status === 'Cancelled')
-                //             {
-                //                 orderItem.orderStatus = 'Cancelled'
-                //             }
-                //         }
-                //     }
-                    // await orderModel.updateOne({ orderId: orderId }, {$set:{ adminCancel: 'Cancelled' }});
-        
-                 
-                    // const product = await orderModel.findOne({ orderId: orderId });
-        
-                    // if (product.adminCancel === 'Cancelled' || product.orderStatus === 'Cancelled') {
-                    //     await orderModel.updateOne(
-                    //         { _id: product._id },
-                    //         { $set: { 'items.$[elem].status': 'Cancelled'} },
-                    //         { arrayFilters: [{ 'elem.status': { $ne: 'Cancelled' } }] }
-                    //     );
-                       
-
-                    // }
-                   
-
-                 
-                // }
-                // if(orderStatus ==='Delivered')
-                // {
-                //     const order = await orderModel.findOne({orderId})
-                //     if(!order)
-                //     {
-                //         return res.status(404).send('order not found')
-                //     }
-                //     order.orderStatus = 'Delivered';
-                //     order.paymentStatus = 'Paid'
-                //     for (const item of order.items) {
-                //         item.status = 'Delivered'
-                //     }
-                //     order.save()
-                // }
-      
-                // if (orderStatus === 'Cancelled' || orderStatus === 'Returned') {
-                //     const order = await orderModel.findOne({ orderId });
-                
-                //     if (!order) {
-                //         return res.status(404).send('Order not found');
-                //     }
-                
-                //     for (const item of order.items) {
-                //         const productId = item.productId;
-                //         const size = item.size;
-                //         let quantity = item.quantity;
-                //         console.log(productId)
-                //         console.log(quantity)
-                
-                //         const product = await productModel.findOne({ _id: productId });
-                        
-                //         if (product) {
-                //             const foundSize = product.size.find(prodSize => prodSize.size === size);
-                //           console.log('founSize:' + foundSize)
-                //             if (foundSize) {
-                //                 foundSize.stock += quantity;
-                //                 console.log(foundSize.stock)
-                //                 await product.save();
-                               
-                //             } else {
-                //                 console.log(`Size ${size} not found for product ${productId}`);
-                //             }
-                //         } else {
-                //             console.log(`Product with ID ${productId} not found`);
-                //         }
-                //     }
-               
-                //     await orderModel.updateOne(
-                //         { orderId: orderId },
-                //         {
-                //             orderStatus: orderStatus,
-                //             adminCancel: (orderStatus === 'Cancelled') ? 'Cancelled' : order.adminCancel // Preserve adminCancel status if not cancelled
-                //         }
-                //     );
-                // }
+            
 
                 const order = await orderModel.findOne({ _id: orderId });
 
@@ -346,5 +268,10 @@ module.exports = {
             } catch (error) {
                 console.log(error);
             }
+        },
+        orderSearchResults : async (req,res)=>{
+            req.session.search = true
+            req.session.searchTerm = req.body.searchTerm
+            res.redirect('/admin/orderDetails')
         }
           }                              

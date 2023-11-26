@@ -14,7 +14,7 @@
                           <span class="text">Dashboard</span>
                       </a>
                   </li>
-                  <li class="menu-item has-submenu active">
+                  <li class="menu-item has-submenu">
                       <a class="menu-link" href="/admin/products"> <i class="icon material-icons md-shopping_bag"></i>
                           <span class="text">Products</span>
                       </a>
@@ -75,3 +75,17 @@
               <br>
           </nav>
       </aside>
+      <script>
+        const currentPath = window.location.pathname;
+
+
+const menuLinks = document.querySelectorAll('.menu-link');
+
+
+menuLinks.forEach(link => {
+  if (link.getAttribute('href') === currentPath) {
+
+    link.parentNode.classList.add('active');
+  }
+});
+      </script>

@@ -77,6 +77,9 @@ let orderSchema = new mongoose.Schema({
 	refundAmount : {
 		type : Number,
 		default:0
+	},
+	modifiedAt : {
+		type : Date
 	}
          
 });

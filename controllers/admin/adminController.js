@@ -9,7 +9,12 @@ const { isEmailValid, isPasswordValid } = require("../../utils/validators/signUp
 module.exports = {
 	getAdminLogin: async (req, res) => {
 		try {
+			if(!req.session.admin){
 			await res.render("admin/admin/login");
+			}else
+			{
+				res.redirect('/admin/home')
+			}
 			
 		} catch (error) {
 			res.status(404).send('error occured')
@@ -38,6 +43,8 @@ module.exports = {
 				{
 				    $unwind: '$items'
 				},
+				{ $match: { 'items.status': { $nin: ['Cancelled', 'Returned'] } } },
+
 				{
 				    $group: {
 				        _id: { $month: '$orderDate' },
@@ -54,9 +61,13 @@ module.exports = {
 			    }
 			  },
 			  {
+				$unwind: '$items'
+			      },
+			      { $match: { 'items.status': { $nin: ['Cancelled', 'Returned'] } } },
+			  {
 			    $group: {
 			      _id: { $month: '$orderDate' },
-			      totalEarnings: { $sum: '$totalAmount' }
+			      totalEarnings:{ $sum: { $multiply: ["$items.price", "$items.quantity"] }}
 			    }
 			  }
 			]);
@@ -66,10 +77,15 @@ module.exports = {
 				        orderDate: { $gte: new Date('2023-01-01'), $lte: new Date('2023-12-31') }
 				    }
 				},
+
+				{
+					$unwind: '$items'
+				      },
+				      { $match: { 'items.status': { $nin: ['Cancelled', 'Returned'] } } },
 				{
 				    $group: {
 				        _id: { $month: '$orderDate' },
-				        totalOrders: { $addToSet: '$orderId' }
+				        totalOrders: { $addToSet: '$items._id' }
 				    }
 				},
 				{
@@ -106,6 +122,7 @@ const categoryOrders = []
 	{
 	  $unwind: "$items" 
 	},
+	      { $match: { 'items.status': { $nin: ['Cancelled', 'Returned'] } } },
 	{
 	  $lookup: {
 	    from: "products",
@@ -160,6 +177,7 @@ const categoryOrders = []
 	},
 	adminHome: async (req, res) => {
 		try {
+			if(req.session.admin){
 		  const userData = await userModel.find({});
 		  const orderData = await orderModel.countDocuments();
 		  
@@ -172,23 +190,27 @@ const categoryOrders = []
 
 		  console.log(orders)
 		  const categories = await categoryModel.countDocuments();
-		  const totalRevenue = await orderModel.aggregate([
+		  const totalRevenue = await orderModel.aggregate([ { $unwind: '$items' },    { $match: { 'items.status': { $nin: ['Cancelled', 'Returned'] } } },
 		    {
 		      $group: {
 		        _id: null,
-		        totalAmount: { $sum: '$totalAmount' }
+		        totalAmount: { $sum: { $multiply: ["$items.price", "$items.quantity"] } }
 		      }
 		    }
 		  ]);
 		  const totalProductsSold = await orderModel.aggregate([
-		    { $unwind: '$items' },
-		    {
-		      $group: {
-		        _id: null,
-		        totalProducts: { $sum: 1 }
-		      }
-		    }
-		  ]);
+			{ $unwind: '$items' },
+			{ $match: { 'items.status': { $nin: ['Cancelled', 'Returned'] } } },
+			{
+			  $group: {
+			    _id: null, 
+			    totalProducts: { $sum: '$items.quantity' } 
+			  }
+			}
+		        ]);
+		        
+		  console.log('totalProducts')
+		  console.log(totalProductsSold)
 		  const monthlyEarnings = await orderModel.aggregate([
 		    {
 		      $match: {
@@ -196,9 +218,13 @@ const categoryOrders = []
 		      }
 		    },
 		    {
+			$unwind: '$items'
+		      },
+		      { $match: { 'items.status': { $nin: ['Cancelled', 'Returned'] } } },
+		    {
 		      $group: {
 		        _id: { $month: '$orderDate' },
-		        totalEarnings: { $sum: '$totalAmount' }
+		        totalEarnings: { $sum: { $multiply: ["$items.price", "$items.quantity"] } }
 		      }
 		    }
 		  ]);
@@ -219,6 +245,10 @@ const categoryOrders = []
                     currentPage,
 		 
 		  });
+		}else
+		{
+			res.redirect('/admin/')
+		}
 		} catch (error) {
 		  console.log(error);
 		}
@@ -250,6 +280,7 @@ const categoryOrders = []
 				const passCheck = await bcrypt.compare(password, user.password);
 				if (user.isAdmin === true && passCheck) {
 					console.log(user.isAdmin);
+					req.session.admin = true
 					res.redirect('/admin/home')
 				} else {
 					errors.push("Invalid credentials");
@@ -331,6 +362,17 @@ const categoryOrders = []
 			res.redirect("/admin/createPass");
 		}
 	},
+	logout : async (req,res)=>{
+		try {
+			
+			delete req.session.admin
+			res.redirect('/admin/')
+			
+			
+		} catch (error) {
+			console.log(error)
+		}
+	}
 	
 
 	

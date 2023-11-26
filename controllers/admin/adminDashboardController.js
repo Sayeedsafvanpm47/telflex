@@ -58,10 +58,12 @@ module.exports = {
                         {
                           $unwind: "$items" 
                         },
+                        { $match: { 'items.status': { $nin: ['Cancelled', 'Returned'] } } }
+,
                         {
                           $group: {
                             _id: null,
-                            totalEarnings: { $sum: '$totalAmount' },
+                            totalEarnings: { $sum: { $multiply: ["$items.price", "$items.quantity"] }},
                             totalOrders: { $sum: '$items.quantity' }
                           }
                         }
@@ -100,6 +102,8 @@ module.exports = {
                 }
               },
               { $unwind: "$items" },
+              { $match: { 'items.status': { $nin: ['Cancelled', 'Returned'] } } }
+              ,
               {
                 $group: {
                   _id: "$items.productId",
@@ -123,6 +127,8 @@ module.exports = {
               {
                 $unwind: '$items'
               },
+              { $match: { 'items.status': { $nin: ['Cancelled', 'Returned'] } } }
+,
               {
                 $group: {
                   _id: null,

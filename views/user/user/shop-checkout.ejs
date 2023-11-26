@@ -287,16 +287,16 @@
                                         </div>
                                     </div>
                                     <div class="custome-radio">
-                                        <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios5" value="Paypal" data-payment-method="paypal">
+                                        <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios5" value="razorpay" data-payment-method="razorpay">
 
-                                        <label class="form-check-label" for="exampleRadios5" data-bs-toggle="collapse" data-target="#paypal" aria-controls="paypal">Paypal</label>
-                                        <div class="form-group collapse in" id="paypal">
+                                        <label class="form-check-label" for="exampleRadios5" data-bs-toggle="collapse" data-target="#razorpay" aria-controls="razorpay">Paypal</label>
+                                        <div class="form-group collapse in" id="razorpay">
                                             <p class="text-muted mt-5">Pay via PayPal; you can pay with your credit card if you don't have a PayPal account.</p>
                                         </div>
                                     </div>
                                     <div class="custome-radio">
                                         <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios6" checked="" value="Stripe">
-                                        <label class="form-check-label" for="exampleRadios6" data-bs-toggle="collapse" data-target="#stripe" aria-controls="paypal">Stripe</label>
+                                        <label class="form-check-label" for="exampleRadios6" data-bs-toggle="collapse" data-target="#stripe" aria-controls="razorpay">Stripe</label>
                                       
                                        
                                     </div>
@@ -508,7 +508,7 @@ async function confirmPlaceOrder() {
     }).then(async (result) => {
         if (result.isConfirmed) {
        
-    if (selectedPaymentMethod === 'paypal') {
+    if (selectedPaymentMethod === 'razorpay') {
      
        await initiateRazorpayPayment();
     }else{
