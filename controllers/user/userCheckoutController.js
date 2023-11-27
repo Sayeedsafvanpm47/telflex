@@ -3,6 +3,7 @@ const cartModel = require('../../models/cartModel')
 const orderModel = require('../../models/orderModel')
 const productModel = require('../../models/productModel')
 const { USER } = require('../../utils/constants/schemaName');
+
 require('dotenv').config()
 const Razorpay = require('razorpay');
 const { v4 :uuidv4 } = require('uuid');
@@ -162,6 +163,11 @@ placeOrder: async (req, res) => {
     const userId = req.session.userId;
     const ordered = [];
     let total = 0;
+    const currentDate = new Date();
+    // const returnExpiry = new Date(currentDate.getTime() + (2 * 60 * 1000));
+      
+       const returnExpiry = new Date(currentDate.getTime() + (15 * 24 * 60 * 60 * 1000))
+    console.log((returnExpiry.toISOString()))
 
     const { selectedAddressDetails, payment_option } = req.body;
 console.log(payment_option)
@@ -191,6 +197,7 @@ console.log(payment_option)
                     size: product.size,
                     price: product.price,
                     mrp: product.mrp,
+                    returnExpiry : (returnExpiry).toISOString()
                     
                 });
 
@@ -232,9 +239,8 @@ console.log(payment_option)
         return res.status(200).json({ order: razorpayOrder });
        }  
        
-  
 
-      
+   
       
         const order = new orderModel({
             userId: userId,
@@ -243,7 +249,9 @@ console.log(payment_option)
             paymentMethod: payment_option,
             totalAmount: total,
             address: address,
-            orderDate : new Date()
+            orderDate : new Date(),
+            
+            
         });
         if(payment_option ==='razorpay'){
             order.paymentStatus = 'Paid'

@@ -35,7 +35,12 @@ let orderSchema = new mongoose.Schema({
 			status: {
 				type: String,
 				default: 'Active'
-			}
+			},
+			reason : {
+				type:String,
+				default:null
+			},
+			returnExpiry : Date
 		}
 	],
 	orderId: { 

@@ -7,6 +7,7 @@ const { isEmailValid, isPasswordValid, isNamesValid, isPhoneValid, isCpassValid 
 const otpGenerator = require("../../utils/otpGenerator");
 const sendOtp = require("../../utils/generateAndSendOtp");
 const mongoose = require('mongoose')
+const {checkReturnExpiry} = require('../../helpers/cronJob')
 
 
 module.exports = {
@@ -421,11 +422,13 @@ module.exports = {
 			})
 
 	
-	     
-	
+			await checkReturnExpiry(orders);
+			
+		        
+      
 	        
 	        
-			console.log(`Tjis is orders :  ${orders}`)
+			console.log(`This is orders :  ${orders}`)
 			console.log(orders)
 		  
 			res.render('user/user/account', { users, orders });
@@ -434,7 +437,7 @@ module.exports = {
 		      } catch (error) {
 			console.error('Error fetching user account details:', error);
 			// Handle the error, perhaps by rendering an error page
-			res.render('error', { error });
+			
 		      }
 
 	}
@@ -583,11 +586,14 @@ res.redirect('/user/account');
 	        },
 	        cancelOrder: async (req, res) => {
 		try {
-		    const _id = req.query._id;
+		    const _id = req.body._id;
 		    console.log(_id);
+		    const reason = req.body.reason
+		    console.log(reason)
 	      
 	
 		    const orderItem = await orderModel.findOne({ 'items._id': _id });
+		 
 		    const canceledItem = orderItem.items.find(item => item._id.toString() === _id);
 		   
 	
@@ -600,7 +606,7 @@ res.redirect('/user/account');
 		{
 		  $set: {
 		    'items.$.status': 'Requested for cancellation',
-		    'orderStatus': 'Modified'
+		    'orderStatus': 'Modified','items.$.reason' : reason
 		  },
 		
 		},
@@ -610,8 +616,7 @@ res.redirect('/user/account');
 		    
 
 		
-		    
-	      
+		
 		    res.status(200).json({ message: 'Order item cancelled successfully' });
 		} catch (error) {
 		    console.error(error);
@@ -620,8 +625,11 @@ res.redirect('/user/account');
 	      },
 	      returnOrder: async (req, res) => {
 		try {
-		    const _id = req.query._id;
-		    console.log(_id);
+			const _id = req.body._id;
+			console.log(_id);
+			const reason = req.body.reason
+			console.log(reason)
+		  
 	      
 	
 		    const orderItem = await orderModel.findOne({ 'items._id': _id });
@@ -639,7 +647,7 @@ res.redirect('/user/account');
 		{
 		  $set: {
 		    'items.$.status': 'Requested for return',
-		    'orderStatus': 'Modified'
+		    'orderStatus': 'Modified','items.$.reason' : reason
 		  },
 		  $inc: {
 		    'refundAmount': refundPrice 
