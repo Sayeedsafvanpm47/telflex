@@ -197,9 +197,14 @@ module.exports = {
 
                   },
                   showPrice:async (req,res) =>{
-                   
+                   try {
                     let product =await productModel.findById(req.query.id)
                     res.status(200).json({product})
+                    
+                   } catch (error) {
+                    console.log(error)
+                   }
+              
                   },
                 
                   

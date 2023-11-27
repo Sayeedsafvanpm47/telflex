@@ -226,23 +226,7 @@ console.log(payment_option)
         });
 
       
-        // const order = new orderModel({
-        //     userId: userId,
-        //     orderId: razorpayOrder.id, 
-        //     items: ordered,
-        //     paymentStatus : 'paid',
-        //     paymentMethod: paymentMethod,
-        //     totalAmount: total,
-        //     address: address,
-        //     orderDate: new Date()
-        // });
-
-        // await order.save();
-
-      
-        // cart.products = [];
-        // cart.total = 0;
-        // await cart.save();
+   
         
 
         return res.status(200).json({ order: razorpayOrder });

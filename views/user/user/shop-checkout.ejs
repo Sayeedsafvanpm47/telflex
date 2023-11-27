@@ -518,62 +518,7 @@ async function confirmPlaceOrder() {
     });
 }
 
-// async function initiateRazorpayPayment() {
-//         try {
-//             const selectedAddressDetails = document.getElementById('selectedAddressDetails').value;
 
-//             const response = await fetch('/user/placeOrder', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json'
-//                 },
-//                 body: JSON.stringify({ selectedAddressDetails, payment_option: 'Razorpay' })
-//             });
-
-//             const data = await response.json();
-//             if (data && data.order) {
-//                 const { amount, order_id, currency } = data.order;
-
-//                 const options = {
-//                     key: 'rzp_test_kE5gjv2l8cgs79', // Replace with your Razorpay key
-//                     amount: amount, // Replace with the actual amount
-//                     currency: currency,
-//                     order_id: order_id,
-//                     handler: function (response) {
-                        
-//                         console.log(response);
-//                         if (response.razorpay_payment_id) {
-//                         placeOrder()
-//                     } else {
-//                         console.log('Payment unsuccessful');
-//                         // Handle payment failure
-//                     }
-                     
-//                         window.location.href = 'account';
-//                     },
-
-
-
-//                     prefill: {
-//                         name: 'Your Name',
-//                         email: 'your@email.com',
-//                         contact: '1234567890'
-//                     }
-                   
-//                 };
-
-//                 const rzp = new Razorpay(options);
-//                 rzp.on('payment.error', function (response) {
-                    
-//                     console.log('Payment Error:', response.error.code, response.error.description);
-                  
-//                 });
-//                 rzp.open(); // Open Razorpay payment dialog
-//             }
-//         } catch (error) {
-//             console.error('Error initiating Razorpay payment:', error);
-//         }
-//     }
 
 
 async function initiateRazorpayPayment() {
@@ -608,9 +553,9 @@ async function initiateRazorpayPayment() {
                     window.location.href = 'account';
                 },
                 prefill: {
-                    name: 'Your Name',
-                    email: 'your@email.com',
-                    contact: '1234567890'
+                    name: 'Sayeed Safvan',
+                    email: 'syd@gmail.com',
+                    contact: '7025053170'
                 }
             };
 

@@ -36,7 +36,7 @@ const processImage = async (req, res, next) => {
         
                 const processedPath = outputPath.replace(/\//g, '\\');
                 
-                return processedPath; // Return the processed image path with backslashes
+                return processedPath; 
               })
             );
         

@@ -4,10 +4,22 @@ const mongoose = require('mongoose')
 
 module.exports = {
 	createCategory: async (req, res) => {
+		let errors = req.session.error
 		const category = await categoryModel.find({});
-		 res.render("admin/admin/category", { category:category });
+		if(req.session.errorOccured)
+		{
+			
+			delete req.session.errorOccured
+		 res.render("admin/admin/category", { category:category,errors });
+		}
+		else
+		{
+			res.render("admin/admin/category", { category:category,errors });
+		}
 	},
 	submitCategory: async (req, res) => {
+		let errors = []
+		let category
 		const { categoryname, description } = req.body;
 		const categories = await categoryModel.find({})
 		const categoryNameToCompare = categoryname.toLowerCase().replace(/\s+/g, '');
@@ -15,10 +27,15 @@ module.exports = {
 			return category.categoryName.toLowerCase().replace(/\s+/g, '') === categoryNameToCompare;
 		      });
 		if (categoryname === "" || description === "") {
-			res.send("fill properly");
+			errors.push('Fill in properly')
 		}
 		else if(existingCategoryName){
-			res.send("existing category");
+			errors.push('existing category')
+		}
+		if (errors.length > 0) {
+			req.session.errorOccured = true
+			req.session.error = errors
+			res.redirect('/admin/createCategory')
 		}
 		
 		else {
@@ -35,11 +52,25 @@ module.exports = {
 	// editCategory function
 editCategory: async (req, res) => {
 	try {
+		let errors = []
 		const categoryId = req.query.categoryId
 	  const { categoryname, description } = req.body;
-	  if (categoryname === '' || description === '') {
-	    res.send('Fields shouldn\'t be empty');
-	  } else {
+	  const categories = await categoryModel.find({})
+	  const categoryNameToCompare = categoryname.toLowerCase().replace(/\s+/g, '');
+		const existingCategoryName = categories.find(category => {
+			return category.categoryName.toLowerCase().replace(/\s+/g, '') === categoryNameToCompare;
+		      });
+	  if (categoryname === "" || description === "") {
+		errors.push('Fill in properly')
+	}
+	else if(existingCategoryName){
+		errors.push('existing category')
+	}
+	if (errors.length > 0) {
+		req.session.errorOccured = true
+		req.session.error = errors
+		res.redirect('/admin/createCategory')
+	} else {
 	    const category = await categoryModel.updateOne({ _id: categoryId },{$set : {categoryName : categoryname,description : description, updatedOn : Date.now()}});
 	    if (!category) {
 	      res.send('Category not found');

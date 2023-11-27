@@ -15,6 +15,15 @@
                     <input type="text" placeholder="Search Categories" name="searchTerm" class="form-control bg-white">
                 </div> -->
             </div>
+            <% if (typeof(errors) !== 'undefined' && errors.length > 0) { %>
+                <div id="error-message" style="background-color: rgba(255, 23, 23, 0.215); border-radius: 10px;">
+                    <span>
+                        <% errors.forEach(error => { %>
+                            <p style="color: red;"><%= error %></p>
+                        <% }); %>
+                    </span>
+                </div>
+            <% } %>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -30,7 +39,7 @@
                                     <textarea placeholder="Type here" class="form-control" name="description"><%= category.description %></textarea>
                                 </div>
                                 <div class="d-grid">
-                                    <button class="btn btn-primary">Create category</button>
+                                    <button class="btn btn-primary">Edit category</button>
                                 </div>
                             </form>
                         </div>
