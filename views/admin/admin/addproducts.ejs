@@ -215,6 +215,16 @@
               mrpInput.classList.add("form-control");
               mrpInput.name = `mrp_${i}`;
               mrpInput.id =  `mrpId${i}`
+
+                
+              const prodiscInput = document.createElement("input");
+              prodiscInput.type = "number";
+              prodiscInput.style.width = "50%";
+              prodiscInput.style.marginTop = "10px";
+              prodiscInput.placeholder = "Enter discount";
+              prodiscInput.classList.add("form-control");
+              prodiscInput.name = `prodisc_${i}`;
+              prodiscInput.id =  `prodiscId${i}`
               
            
               const priceInput = document.createElement("input");
@@ -233,14 +243,20 @@
      
               sizeFieldsContainer.appendChild(stockInput);
               sizeFieldsContainer.appendChild(mrpInput);
+              sizeFieldsContainer.appendChild(prodiscInput);
               sizeFieldsContainer.appendChild(priceInput);
 
               const price = document.getElementById(`productpriceId${i}`);
       const mrp = document.getElementById(`mrpId${i}`);
       const discount = document.getElementById(`product_disc`);
       const disc = parseFloat(document.getElementById('product_disc').value);
+      var prodisc = document.getElementById(`prodiscId${i}`)
+      console.log(prodisc)
+      prodisc.value = disc
+prodisc.readOnly = true
 
       mrp.addEventListener("input", function() {
+   
         let mrpValue = parseFloat(this.value);
         let calculatedPrice = mrpValue - (mrpValue * (disc/100));
 

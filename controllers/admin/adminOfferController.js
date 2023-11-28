@@ -15,7 +15,8 @@ module.exports = {
                     '_id' : 1,
                     'images' : 1
                     ,
-                    'shortDescription' : 1
+                    'shortDescription' : 1,
+                    'size.productDiscount' : 1
 
                     }}])
                               
@@ -38,7 +39,7 @@ module.exports = {
                               },
                               {
                                 $set: {
-                                  'productDiscount': newDiscount, 
+                                  'size.$.productDiscount': newDiscount, 
                                   'size.$.productPrice': newPrice 
                                 }
                               }

@@ -25,7 +25,8 @@ module.exports = {
 					productPrice: req.body[`productprice_${i}`],
 					stock: req.body[`stock_${i}`],
 					productid : Date.now()
-          ,mrp : req.body[`mrp_${i}`]
+          ,mrp : req.body[`mrp_${i}`],
+	productDiscount : req.body[`prodisc_${i}`]
 				});
 			}
 			// console.log('uploaded' + req.uploads)
