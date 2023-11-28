@@ -15,6 +15,7 @@ const adminOrderController = require('../../controllers/admin/adminOrderControll
 const productModel = require("../../models/productModel");
 const imageController = require('../../controllers/imageController')
 const dashboardController = require('../../controllers/admin/adminDashboardController')
+const offerController = require('../../controllers/admin/adminOfferController')
 // admin
 router.get("/", controller.getAdminLogin);
 router.post("/postLogin", controller.postAdminLogin);
@@ -61,6 +62,14 @@ router.get('/orderDetails',adminOrderController.orderDetails)
 router.get('/viewOrderDetails',adminOrderController.viewOrderDetails)
 router.post('/updateOrderStatus',adminOrderController.updateOrderStatus)
 router.post('/orderSearchResults',adminOrderController.orderSearchResults)
+
+
+// offers
+router.get('/getProductOffers',offerController.getproductOffer)
+router.post('/productOffer',offerController.productOffer)
+
+
+
 router.get('/error',(req,res)=>{
           res.render('admin/admin/error')
 })

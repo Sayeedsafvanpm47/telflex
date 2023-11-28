@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-form-product-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:31 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>Telflex Dashboard</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/admin/imgs/theme/favicon.svg">
+    <!-- Template CSS -->
+    <link href="/admin/css/main.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/user/css/maind134.css?v=3.4">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" type="text/css" href="/user/css/tableresp.css">
+
+
+
+<link rel="stylesheet"
+href= 
+"https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" /> 
+<link rel="stylesheet" 
+href= 
+"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css" /> 
+<link rel="stylesheet" 
+href= 
+"https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> 
+<script src= 
+"https://code.jquery.com/jquery-3.3.1.slim.min.js"> 
+</script> 
+<script src= 
+"https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"> 
+</script> 
+<script src= 
+"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"> 
+</script> 
+<style>
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  margin-left: 15%;
+  margin-top: 10%;
+  top: 0;
+  width: 90%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
+
+
+
+</head>
+<body>
+    <div class="screen-overlay"></div>
+    <%- include('partials/aside') %>
+    <main class="main-wrap">
+        <%- include('partials/header') %> 
+
+
+<section class="mt-50 mb-50">
+        
+          <div class="container">
+              <div class="row">
+                  <div class="col-12">
+                      <div class="table-responsive">
+                          <table class="table shopping-summery text-center clean">
+                              <thead>
+                                  <tr class="main-heading">
+                                      <th scope="col">Image</th>
+                                      <th scope="col">Name</th>
+                                      <th scope="col">Size</th>
+                                      <th scope="col">MRP</th>
+                                      <th scope="col">Current Offer</th>
+                                      <th scope="col">Price</th>
+                                      <th scope="col">New Offer</th>
+                                      <th scope="col">Action</th>
+                                    
+                                   
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                        <% if (products && products.length > 0) { %>
+                                          <% products.forEach((product,index) => { %>
+                                            <tr>
+                                              <input type="text" value="<%= product._id %>" id="" hidden>
+                                              <td class="image product-thumbnail">
+                                                <img src="/<%= product.images[0] %>" alt="#">
+                                              </td>
+                                              <td class="product-des product-name">
+                                                <h5 class="product-name">
+                                                  <a href="shop-product-right.html"><%= product.productName %></a>
+                                                </h5>
+                                                <p class="font-xs"><%= product.shortDescription %></p>
+                                              </td>
+                                              <td class="price">
+                                                 <span> <%= product.size.size %></span></td>
+                                              <td class="price" data-title="Price">
+                                                <span id="mrp"><%= product.size.mrp %></span>
+                                              </td>
+                                              <input id="mrpinput_<%= index  %>" type="number" value="<%= product.size.mrp %>" hidden>
+                                          
+                                              <input id="discountinput_<%= index  %>" value="<%= product.productDiscount %>" type="number" hidden>
+                                              <td id="currentdiscount_<%= index  %>" class="price" data-title="Price">
+                                                <span><%= product.productDiscount %>%</span>
+                                              </td>
+                                              <td id="newprice_<%= index  %>" class="price" data-title="Price">
+                                                <span><%= product.size.productPrice %></span>
+                                              </td>
+                                              <input value="<%= product.size._id%>" id="variantId_<%= index  %>" hidden>
+                                              <td><input id="discount_<%= index %>" style="width: 100px;" value="<%= product.productDiscount%>"></td>
+                                             
+                                              <td><button id="savebtn" class="btn btn-primary" type="button" onclick="calculatePrice('<%= product._id %>', '<%= index %>'  )">Save</button></td>
+                                        
+
+                                            </tr>
+                                       
+                                          <% }) %>
+                                        <% } %>
+                                      </tbody>
+                                      
+                              
+                              
+                          </table>
+                      </div>
+                    
+
+                      <div id="myModal" class="modal">
+                              <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <p id="modalMessage"></p>
+                              </div>
+                            </div>
+                     
+                      <div class="divider center_icon mt-50 mb-50"></div>
+                  
+                         
+                          </div>
+                      </div>
+                  </div>
+                     
+      
+      </section>
+      <script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Get all discount input fields
+  var discountInputs = document.querySelectorAll("input[id^='discount_']");
+
+  // Loop through each discount input field
+  discountInputs.forEach(function(discountInput) {
+    discountInput.addEventListener("input", function() {
+      var index = this.id.split("_")[1];
+      var discountValue = parseFloat(this.value);
+      var currentdiscount = document.getElementById("currentdiscount_" + index);
+      var newprice = document.getElementById("newprice_" + index);
+      var mrp = parseFloat(document.getElementById("mrpinput_" + index).value);
+   
+      if (discountValue <= 0 || discountValue >= 100) {
+          var modal = document.getElementById("myModal");
+    var modalMessage = document.getElementById("modalMessage");
+    modalMessage.innerHTML = 'Invalid discount. Please enter a value between 1 and 99.';
+    modal.style.display = "block";
+
+
+    // Hide the modal when the user clicks the close button
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+    setTimeout(()=>{
+          location.reload()
+    },2000)
+    savebtn = document.getElementById('savebtn')
+    savebtn.style.visibility = 'hidden'
+
+    // Prevent further execution
+    return;
+   
+  }
+
+      var newDiscount = parseFloat(this.value);
+      currentdiscount.innerHTML = newDiscount + "%";
+      var priceChanged = parseFloat(mrp - (mrp * (newDiscount / 100)));
+      newprice.innerHTML = priceChanged;
+    });
+  });
+});
+
+async function calculatePrice(_id, i) {
+  const newDiscount = parseFloat(document.getElementById('discount_' + i).value);
+  const newPrice = parseFloat(document.getElementById('newprice_' + i).innerHTML);
+const variantId = document.getElementById('variantId_' + i).value
+  const data = {
+    _id: _id,
+    newDiscount: newDiscount,
+    newPrice: newPrice,
+    variantId : variantId
+  };
+
+  try {
+    const response = await fetch('/admin/productOffer', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const responseData = await response.json();
+   
+
+    console.log('Request was successful:', responseData);
+  } catch (error) {
+  
+    console.error('There was a problem with the fetch operation:', error);
+  }
+}
+
+
+        </script>
+
+
+        
+
+      </body>
+
+      </html>

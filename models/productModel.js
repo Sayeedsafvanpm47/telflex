@@ -21,7 +21,13 @@ const sizeRateSchema = new Schema({
 	},
 	productselect : {
 		type : String
+	},
+	productDiscount : {
+		type :Number,
+		default : 0
 	}
+	
+	
         });
 
 
@@ -34,7 +40,8 @@ let productSchema = new mongoose.Schema({
 	productDiscount: {
 		type: Number,
 		default: 0
-	},  category: { 
+	}
+	,  category: { 
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'categories',
 	},
