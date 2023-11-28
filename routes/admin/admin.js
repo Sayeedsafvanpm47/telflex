@@ -67,6 +67,8 @@ router.post('/orderSearchResults',adminOrderController.orderSearchResults)
 // offers
 router.get('/getProductOffers',offerController.getproductOffer)
 router.post('/productOffer',offerController.productOffer)
+router.get('/getCategoryOffer',offerController.getCategoryOffer)
+router.post('/offerCategory',offerController.offerCategory)
 
 
 

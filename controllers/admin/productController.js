@@ -102,7 +102,7 @@ const errors = req.query.errors
 			const {
 				productname,
 			
-				productdiscount,
+				// productdiscount,
 	
 				features,
 		
@@ -113,7 +113,7 @@ const errors = req.query.errors
 				category
 			} = req.body;
 
-if(!productname || !productdiscount || !features || !model ||  !description || !shortdescription || !category)
+if(!productname || !features || !model ||  !description || !shortdescription || !category)
 {
 	
 	res.redirect('/admin/editProductsView?_id='+_id+'&errors=true')
@@ -136,7 +136,7 @@ if(!productname || !productdiscount || !features || !model ||  !description || !
     
     
 			result.productName = productname;
-			(result.productDiscount = productdiscount),
+			// (result.productDiscount = productdiscount),
 				(result.isFeatured = features),
 				(result.model = model),
 				(result.category = category),
@@ -152,12 +152,13 @@ if(!productname || !productdiscount || !features || !model ||  !description || !
             const price = parseFloat(req.body['productprice' + i]);
             const stock = parseFloat(req.body['productstock' + i]);
             const mrp = parseFloat(req.body['productmrp' + i])
-        
+        const productDiscount = parseFloat(req.body['productDiscount' + i])
             if (!isNaN(price) && !isNaN(stock)) {
                 result.size[i].size = size;
                 result.size[i].productPrice = price;
                 result.size[i].stock = stock;
                 result.size[i].mrp = mrp
+	      result.size[i].productDiscount = productDiscount
             } else {
                 console.log('Error: Invalid price or stock value');
             }

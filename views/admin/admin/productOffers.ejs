@@ -141,7 +141,7 @@ href=
                                               <input value="<%= product.size._id%>" id="variantId_<%= index  %>" hidden>
                                               <td><input id="discount_<%= index %>" style="width: 100px;" value="<%= product.size.productDiscount%>"></td>
                                              
-                                              <td><button id="savebtn" class="btn btn-primary" type="button" onclick="calculatePrice('<%= product._id %>', '<%= index %>'  )">Save</button></td>
+                                              <td><button id="savebtn_<%= index  %>" class="btn btn-primary" type="button" onclick="calculatePrice('<%= product._id %>', '<%= index %>'  )">Save</button></td>
                                         
 
                                             </tr>
@@ -201,10 +201,9 @@ document.addEventListener("DOMContentLoaded", function() {
     setTimeout(()=>{
           location.reload()
     },2000)
-    savebtn = document.getElementById('savebtn')
+    savebtn = document.getElementById('savebtn_' + index)
     savebtn.style.visibility = 'hidden'
 
-    // Prevent further execution
     return;
    
   }
@@ -242,8 +241,7 @@ const variantId = document.getElementById('variantId_' + i).value
     }
 
     const responseData = await response.json();
-   
-
+    window.location.assign('/admin/getProductOffers');
     console.log('Request was successful:', responseData);
   } catch (error) {
   

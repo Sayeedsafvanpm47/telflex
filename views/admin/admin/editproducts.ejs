@@ -62,11 +62,13 @@
                                                     <label for="product_name" class="form-label">Size</label>
                                                     <input type="text" class="form-control" id="product_size" name="productsize<%=i%>" value="<%= products.size[i].size %>">
                                                     <label for="product_name" class="form-label">Price</label>
-                                                    <input type="number" class="form-control" id="product_price" name="productprice<%= i %>" value="<%= products.size[i].productPrice %>">
+                                                    <input readonly class="form-control" id="productprice<%= i  %>" name="productprice<%= i %>" value="<%= products.size[i].productPrice %>">
                                                     <label for="product_name" class="form-label">Stock</label>
                                                     <input type="number" class="form-control" id="product_stock" name="productstock<%= i %>" value="<%= products.size[i].stock %>">
                                                     <label for="product_name" class="form-label">Mrp</label>
-                                                    <input type="number" class="form-control" id="product_mrp" name="productmrp<%= i %>" value="<%= products.size[i].mrp %>">
+                                                    <input type="number" class="form-control" id="productmrp<%= i  %>" name="productmrp<%= i %>" value="<%= products.size[i].mrp %>">
+                                                    <label for="product_name" class="form-label">Discount</label>
+                                                    <input type="number" oninput="changePrice('<%= i %>')" class="form-control" id="productDiscount<%= i %>" name="productDiscount<%= i %>" value="<%= products.size[i].productDiscount %>">
                                                 </div>
                                     <% } %>
                                     <% } %>
@@ -75,14 +77,14 @@
                             
                                         
                                     
-                                    <div class="mb-4">
+                                    <!-- <div class="mb-4">
                                         <label for="product_name" class="form-label">Product Discount</label>
                                         <% if (products && products.productDiscount) { %>
                                           <input type="text" value="<%= products.productDiscount %>" class="form-control" id="product_name" name="productdiscount">
                                         <% } else { %>
                                           <input type="text" value="" class="form-control" id="product_name" name="productdiscount">
                                         <% } %>
-                                      </div>
+                                      </div> -->
 
                                       
                                       
@@ -121,8 +123,7 @@
                                           <input type="text" value="" class="form-control" id="product_name" name="shortdescription">
                                         <% } %>
                                       </div>
-                                      
-                                      
+                                   
 
                                
                                 
@@ -198,6 +199,24 @@
 
 <script src="/scripts/hideerror.js"></script>
      
+   
+<script>
+  function changePrice(i) {
+    var productDiscount = parseFloat(document.getElementById(`productDiscount${i}`).value);
+   
+    var mrp = parseFloat(document.getElementById(`productmrp${i}`).value);
+
+    if (!isNaN(productDiscount) && !isNaN(mrp)) {
+      var discountedPrice =  mrp - (mrp * (productDiscount / 100));
+      // Set the calculated discounted price into the price input field
+      document.getElementById(`productprice${i}`).value = parseInt(discountedPrice.toFixed(2))
+    } else {
+      // Handle the case where the input values are invalid or empty
+      alert('Please enter valid numbers for discount and MRP.');
+    }
+  }
+</script>
+
 
         
     </body>

@@ -1,0 +1,113 @@
+<%- include('partials/head') %>
+
+<body>
+    <div class="screen-overlay"></div>
+    <%- include('partials/aside') %>
+    <main class="main-wrap">
+        <%- include('partials/header') %> 
+        <section class="content-main">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Categories </h2>
+                    <p>Add, edit or delete a category</p>
+                </div>
+                <!-- 6 -->
+            </div>
+            <% if (typeof(errors) !== 'undefined' && errors.length > 0) { %>
+                <div id="error-message" style="background-color: rgba(255, 23, 23, 0.215); border-radius: 10px;">
+                    <span>
+                        <% errors.forEach(error => { %>
+                            <p style="color: red;"><%= error %></p>
+                        <% }); %>
+                    </span>
+                </div>
+            <% } %>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                    
+                        <div class="col">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                           
+                                            <th>Category Name</th>
+                                            <th>Description</th>
+                                           <th>Offer</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% category.forEach((item,index) => { %>
+                                            <tr>
+                                              <td><%= item.categoryName %></td>
+                                              <td><%= item.description %></td>
+                                              <td><input type='number' name="categoryDiscount" id="categoryDiscount<%= index  %>"></td>
+                                              <td>
+                                                <% if (item.published === true) { %>
+                                                  <span>Listed</span>
+                                                <% } else { %>
+                                                  <span>Unlisted</span>
+                                                <% } %>
+                                              </td>
+                                              <td>
+                                                  <% if (item.published === true) { %>
+                                                           <button class="btn btn-primary" id="" onclick="categoryDiscount('<%= item._id %>','<%= index %>')">SAVE</button>
+                                                          <% } else { %>
+                                                         <span>You cannot perform any action</span>
+                                                          <% } %>
+                                              </td>
+                                              
+                                            </tr>
+                                          <% }); %>
+                                        </tbody>
+                                           
+                                </table>
+                            </div>
+                        </div> <!-- .col// -->
+                    </div> <!-- .row // -->
+                </div> <!-- card body .// -->
+            </div> <!-- card .// -->
+        </section> <!-- content-main end// -->
+    
+    </main>
+    <%- include('partials/script') %>
+    <script src="/scripts/hideerror.js"></script>
+    <script>
+          async function categoryDiscount(categoryId,i) {
+            try {
+              const discount = document.getElementById(`categoryDiscount${i}`).value;
+              const data = {
+                _id: categoryId,
+                discount: discount
+              };
+        
+              const response = await fetch('/admin/offerCategory', {
+                method: 'POST',
+                headers: {
+                  'Content-type': 'application/json'
+                },
+                body: JSON.stringify(data)
+              });
+        
+              if (!response.ok) {
+                throw new Error('Network response was not ok!');
+              }
+        
+              const responseData = await response.json();
+              console.log(responseData)
+              console.log('Request was successful:', responseData);
+            } catch (error) {
+                    console.error('There was a problem with the fetch operation:', error);
+
+            }
+          }
+        </script>
+        
+</body>
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-categories.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:21 GMT -->
+</html>
