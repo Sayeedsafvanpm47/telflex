@@ -139,7 +139,7 @@ href=
                                                 <span><%= product.size.productPrice %></span>
                                               </td>
                                               <input value="<%= product.size._id%>" id="variantId_<%= index  %>" hidden>
-                                              <td><input id="discount_<%= index %>" style="width: 100px;" value="<%= product.size.productDiscount%>"></td>
+                                              <td><input id="discount_<%= index %>" style="width: 100px;" onkeypress="return onlyNumberKey(event)" value="<%= product.size.productDiscount%>"></td>
                                              
                                               <td><button id="savebtn_<%= index  %>" class="btn btn-primary" type="button" onclick="calculatePrice('<%= product._id %>', '<%= index %>'  )">Save</button></td>
                                         
@@ -173,6 +173,17 @@ href=
       
       </section>
       <script>
+
+function onlyNumberKey(evt) {
+    let ASCIICode = (evt.which) ? evt.which : evt.keyCode;
+    if (ASCIICode >= 48 && ASCIICode <= 57) { // Numbers from 0 to 9
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 document.addEventListener("DOMContentLoaded", function() {
   // Get all discount input fields
   var discountInputs = document.querySelectorAll("input[id^='discount_']");

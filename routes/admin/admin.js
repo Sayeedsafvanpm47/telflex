@@ -69,43 +69,44 @@ router.get('/getProductOffers',offerController.getproductOffer)
 router.post('/productOffer',offerController.productOffer)
 router.get('/getCategoryOffer',offerController.getCategoryOffer)
 router.post('/offerCategory',offerController.offerCategory)
+router.get('/getcouponOffer',offerController.getCouponOffer)
+router.post('/saveCoupon',offerController.saveCoupon)
+router.post('/updateCoupon',offerController.updateCoupon)
 
 
 
-router.get('/error',(req,res)=>{
-          res.render('admin/admin/error')
-})
+// router.get('/error',(req,res)=>{
+//           res.render('admin/admin/error')
+// })
 
-router.get('/login',(req,res)=>{
-          res.render('admin/admin/login')
-})
-router.get('/blank',(req,res)=>{
-          res.render('admin/admin/blank')
-})
+// router.get('/login',(req,res)=>{
+//           res.render('admin/admin/login')
+// })
+// router.get('/blank',(req,res)=>{
+//           res.render('admin/admin/blank')
+// })
 
-router.get('/orders',(req,res)=>{
-          res.render('admin/admin/pageorders')
-})
-router.get('/review',(req,res)=>{
-          res.render('admin/admin/reviews')
-})
-router.get('/seller',(req,res)=>{
-          res.render('admin/admin/sellercard')
-})
-router.get('/settings',(req,res)=>{
-          res.render('admin/admin/settings')
-})
+// router.get('/orders',(req,res)=>{
+//           res.render('admin/admin/pageorders')
+// })
+// router.get('/review',(req,res)=>{
+//           res.render('admin/admin/reviews')
+// })
+// router.get('/seller',(req,res)=>{
+//           res.render('admin/admin/sellercard')
+// })
+// router.get('/settings',(req,res)=>{
+//           res.render('admin/admin/settings')
+// })
 
-router.get('/transaction',(req,res)=>{
-          res.render('admin/admin/transaction')
-})
+// router.get('/transaction',(req,res)=>{
+//           res.render('admin/admin/transaction')
+// })
 
-router.get('/products',(req,res)=>{
-          res.render('admin/admin/products2')
-})
-router.get('/category',(req,res)=>{
-          res.render('admin/admin/category')
-})
+
+// router.get('/category',(req,res)=>{
+//           res.render('admin/admin/category')
+// })
 router.get('/viewSaved',async (req,res)=>{
           const products = await productModel.findOne({})
           res.render('admin/productsShow',{products})

@@ -44,7 +44,7 @@
                                             <tr>
                                               <td><%= item.categoryName %></td>
                                               <td><%= item.description %></td>
-                                              <td><input type='number' name="categoryDiscount" id="categoryDiscount<%= index  %>"></td>
+                                              <td><input type='number' onkeypress="return onlyNumberKey(event)" name="categoryDiscount" id="categoryDiscount<%= index  %>"></td>
                                               <td>
                                                 <% if (item.published === true) { %>
                                                   <span>Listed</span>
@@ -104,6 +104,15 @@
 
             }
           }
+          function onlyNumberKey(evt) {
+    let ASCIICode = (evt.which) ? evt.which : evt.keyCode;
+    if (ASCIICode >= 48 && ASCIICode <= 57) { // Numbers from 0 to 9
+        return true;
+    } else {
+        return false;
+    }
+}
+
         </script>
         
 </body>
