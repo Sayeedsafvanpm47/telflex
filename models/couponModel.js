@@ -39,11 +39,12 @@ let couponSchema = new mongoose.Schema({
     }],
     status: {
         type: String,
-        enum: ['active', 'expired', 'disabled'],
+    
         default: 'active' 
     },
     updatedAt: {
         type: Date,
+        default:Date.now()
         
     },
     createdAt : {

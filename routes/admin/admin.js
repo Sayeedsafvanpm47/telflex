@@ -72,6 +72,7 @@ router.post('/offerCategory',offerController.offerCategory)
 router.get('/getcouponOffer',offerController.getCouponOffer)
 router.post('/saveCoupon',offerController.saveCoupon)
 router.post('/updateCoupon',offerController.updateCoupon)
+router.get('/couponStatus',offerController.couponStatus)
 
 
 

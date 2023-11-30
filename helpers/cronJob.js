@@ -1,8 +1,9 @@
 const cron = require('node-cron')
 const orderModel = require('../models/orderModel')
+const couponModel = require('../models/couponModel')
 const checkReturnExpiry = async (orders) => {
           const currentDate = new Date();
-          const zeroDate = new Date(0); 
+      
           for (const order of orders) {
               for (const item of order.items) {
                   const productName = item.productName;
@@ -31,14 +32,42 @@ const checkReturnExpiry = async (orders) => {
           }
       };
       
-      cron.schedule('* * * * *', async () => {
+  
+      
+
+      const checkCouponExpiry = async (coupons) => {
+        const currentDate = new Date();
+      
+        for (const singleCoupon of coupons) { // Renamed loop variable to 'singleCoupon'
+          const couponCode = singleCoupon.couponCode;
+          const couponExpiry = new Date(singleCoupon.expiringAt);
+      
+          if (couponExpiry > currentDate) {
+            console.log(`The coupon ${couponCode} has an expiry in the future`);
+          } else {
+            console.log(`The coupon ${couponCode} has expiry in the past or present`);
+            try {
+              await couponModel.updateOne(
+                { _id: singleCoupon._id },
+                { $set: { expiringAt: null, status: 'expired' } },
+                { upsert: true }
+              );
+              console.log(`${couponCode} coupon expired, expiry status set to null`);
+            } catch (error) {
+              console.error(`Error updating expiry status for ${couponCode}:`, error);
+            }
+          }
+        }
+      };
+      
+       cron.schedule('* * * * *', async () => {
          
-          const orders = await orderModel.find({}).populate('items.productId');
-          
-          await checkReturnExpiry(orders);
-          console.log('Cron job executed!');
-      });
+        const orders = await orderModel.find({}).populate('items.productId');
+        const coupons = await couponModel.find({})
+        await checkReturnExpiry(orders);
+        await checkReturnExpiry(coupon)
+        console.log('Cron job executed!');
+    });
       
-      
-      module.exports = { checkReturnExpiry };
+      module.exports = { checkReturnExpiry,checkCouponExpiry };
       

@@ -1,6 +1,7 @@
 const productModel = require('../../models/productModel')
 const categoryModel = require('../../models/categoryModel')
 const couponModel = require('../../models/couponModel')
+const {checkCouponExpiry} = require('../../helpers/cronJob')
 
 
 module.exports = {
@@ -96,6 +97,7 @@ module.exports = {
                   getCouponOffer : async (req,res)=>{
                     try {
                       const coupon = await couponModel.find({})
+                      await checkCouponExpiry(coupon)
                       res.render('admin/admin/couponOffers',{coupon})
                     } catch (error) {
                       console.log(error)
@@ -191,21 +193,72 @@ module.exports = {
                   updateCoupon: async (req, res) => {
                     try {
                       const { id, couponname, usage, minimum, discount, dateupdate } = req.body;
-                    
-                      const coupons = await couponModel.findOne({ _id: id });
-                      console.log(coupons.expiringAt)
-                      const checkDate = new Date(dateupdate);
                   
-                      if (checkDate < coupons.expiringAt) {
-                        return res.status(404).json({ message: 'The updated date is before the expiration date. Please select a valid date.' });
-                      } else {
-                        return res.status(200).json({ message: 'Coupon updated successfully' });
+                      const existingCoupon = await couponModel.findOne({ _id: id });
+                      const couponCode = couponname.replace(/\W/g, '').toUpperCase();
+                      if (!existingCoupon) {
+                        return res.status(404).json({ message: 'Coupon not found' });
                       }
+                  
+                      const checkDate = new Date(dateupdate);
+                      const currentDate = new Date()
+                  
+                      if (checkDate < currentDate) {
+                        return res.status(400).json({ message: 'The updated date is before the expiration date. Please select a valid date.' });
+                      } else if (couponname === '' || isNaN(usage) || isNaN(minimum) || isNaN(discount)) {
+                        return res.status(400).json({ message: 'Fill in details properly' });
+                      }
+                      else if(couponCode.length > 12)
+                      {
+                        return res.status(400).json({ message: 'make the code a bit shorter!' });
+                      }
+                  const updateDate = Date.now()
+                      const updatedCoupon = await couponModel.updateOne(
+                        { _id: id },
+                        {
+                          $set: {
+                            couponCode: couponCode,
+                            usageLimit: usage,
+                            minimumPurchase: minimum,
+                            discount: discount,
+                            expiringAt: dateupdate,
+                            updatedAt: updateDate
+                          }
+                        },
+                        { upsert: true }
+                      );
+                  
+                      console.log(updatedCoupon);
+                  
+                      return res.status(200).json({ message: 'Coupon updated successfully' });
                     } catch (error) {
                       console.error(error);
                       return res.status(500).json({ error: 'Internal server error' });
                     }
-                  }
+                  },
+                  couponStatus: async (req, res) => {
+  try {
+    const id = req.query.id;
+    console.log(id);
+const couponStatus = await couponModel.findOne({_id:id})
+    let updateStatus;
+    if (couponStatus.status === 'active') {
+      updateStatus = 'disabled';
+  
+    } else if(couponStatus.status === 'disabled') {
+      updateStatus = 'active';
+    }
+
+    const coupon = await couponModel.updateOne({ _id: id }, { $set: { status: updateStatus } }, { upsert: true });
+
+    return res.status(200).json({ message: 'Coupon status updated successfully', updatedCoupon: coupon });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+                  
                   
                   
                    

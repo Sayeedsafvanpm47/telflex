@@ -127,13 +127,11 @@ href=
                                                 <td><%= coupon[i].minimumPurchase%></td>
                                                 <td><%= coupon[i].status%></td>
                                                 <td><%= ((coupon[i].createdAt).toString()).slice(0,16)%></td>
-                                                <% if(coupon.updatedAt){ %>
+                                                
                                                   <td><%= ((coupon[i].updatedAt).toString()).slice(0,16) %></td>
-                                                  <% }else{ %>
-                                                            <td>no details available</td>
-                                                            <% } %>
+                                                 
                                                             <td><button class="btn btn-primary" id="modalBtn<%= i %>" onclick="openModal('<%= i %>')">Edit</button></td>
-                                                  <td><button class="btn btn-primary">Status</button></td>
+                                                  <td><button class="btn btn-primary" onclick="changeStatus('<%= coupon[i]._id %>')">Status</button></td>
 
 
 
@@ -448,6 +446,37 @@ async function updateCoupon(couponid) {
       });
   }
 }
+
+async function changeStatus(couponId) {
+  try {
+    const id = couponId;
+
+    const response = await fetch(`/admin/couponStatus?id=${id}`, {
+      method: 'GET'
+    });
+
+    if (!response.ok) {
+      const errorMessage = `HTTP error! Status: ${response.status}`;
+      throw new Error(errorMessage);
+    }
+
+    const responseData = await response.json();
+    Swal.fire({
+      icon: 'success',
+      title: 'Successful',
+      text: responseData.message,
+    });
+    setTimeout(()=>{
+      window.location.href = '/admin/getCouponOffer'
+    },1200)
+  
+    console.log(responseData);
+  } catch (error) {
+    console.error('Error:', error.message);
+    
+  }
+}
+
 
    </script>
 </html>
