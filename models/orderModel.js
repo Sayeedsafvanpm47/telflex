@@ -85,6 +85,10 @@ let orderSchema = new mongoose.Schema({
 	},
 	modifiedAt : {
 		type : Date
+	},
+	couponApplied : {
+		
+
 	}
          
 });

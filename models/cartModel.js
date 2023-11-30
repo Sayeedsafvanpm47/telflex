@@ -35,7 +35,18 @@ let cartSchema = new mongoose.Schema({
   }], total : {
     type : Number,
     default : 0
-  }
+  },
+subtotal : {
+  type : Number,
+  default : 0
+}
+  ,
+  couponApplied : {
+    type : String,
+    default : 'null'
+  } ,couponCode : {
+    type : String
+}
 });
 
 module.exports = mongoose.model('Cart', cartSchema);

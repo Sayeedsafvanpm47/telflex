@@ -20,21 +20,7 @@
                             <span><i class="fi-rs-label mr-10"></i><span class="text-muted">Have a coupon?</span> <a href="#coupon" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">Click here to view and enter your code</a></span>
                         </div>
                        
-                        <div class="panel-collapse collapse coupon_form " id="coupon">
-                            <div>
-                                <p>coupon 1</p>
-                            </div>
-                            <div class="panel-body">
-                                <p class="mb-30 font-sm">If you have a coupon code, please apply it below.</p>
-                                <form method="post">
-                                    <div class="form-group">
-                                        <input type="text" placeholder="Enter Coupon Code...">
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="btn  btn-md" name="login">Apply Coupon</button>
-                                    </div>
-                                </form>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -231,7 +217,12 @@
                                             <tr>
                                                 <th>Total</th>
                                                 <td colspan="2" class="product-subtotal">
-                                                    <span id="totalfieldload" class="font-xl text-brand fw-900">$<%= productsTotal %></span>
+                                                    <% if(cart.couponApplied == 'true'){ %>
+                                                        <span class="text-muted" style="font-size: 8px;"><%= cart.couponCode%> coupon applied succesfully</span> <br>
+                                                    <span id="totalfieldload" class="font-xl text-brand fw-900">$<%= cart.total %></span>
+                                                    <% } else { %>
+                                                        <span id="totalfieldload" class="font-xl text-brand fw-900">$<%= cart.total %></span>
+                                                        <% } %>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -628,6 +619,10 @@ async function placeOnlineOrder()
               
 }
     
+
+
+
+
 </script>
 
 

@@ -50,10 +50,12 @@ router.post('/addToCart',cartController.addToCart)
 router.get('/showCart',cartController.showCart)
 router.get('/deleteCart',cartController.deleteCart)
 router.post('/checkOut',cartController.checkOut)
+router.get('/applyCoupon',cartController.applyCoupon)
 
 router.get('/checkoutPage',userCheckoutController.checkOutPage)
 router.post('/checkOutAddress',userCheckoutController.addAddress)
 router.post('/placeOrder',userCheckoutController.placeOrder)
+
 
 router.get('/blog',(req,res)=>{
           res.render('user/user/blog')

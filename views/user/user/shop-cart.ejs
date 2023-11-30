@@ -101,32 +101,7 @@
                         </div>
                        
                         <div class="divider center_icon mt-50 mb-50"></div>
-                        <div class="row mb-50">
-                            
-                                   
-                               
-                                <div class="mb-30 mt-50">
-                                    <div class="heading_s1 mb-3">
-                                        <h4>Apply Coupon</h4>
-                                    </div>
-                                    <div class="total-amount">
-                                        <div class="left">
-                                            <div class="coupon">
-                                                <form action="#" target="_blank">
-                                                    <div class="form-row row justify-content-center">
-                                                        <div class="form-group col-lg-6">
-                                                            <input class="font-medium" name="Coupon" placeholder="Enter Your Coupon">
-                                                        </div>
-                                                        <div class="form-group col-lg-6">
-                                                            <button class="btn  btn-sm"><i class="fi-rs-label mr-10"></i>Apply</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        
                             <div class="col-lg-12 col-md-12">
                                 <div class="border p-md-4 p-30 border-radius cart-totals">
                                     <div class="heading_s1 mb-3">
@@ -142,6 +117,7 @@
                                                     <td class="cart_total_label">Cart Subtotal</td>
                                                 
                                                     <td class="cart_total_amount"><span id="showtotal" class="font-lg fw-900 text-brand"></span></td>
+                                                    <input type="number" name="subtotalamountcheckout" value="" id="subtotalinputfield">
                                                 </tr>
                                                 <tr>
                                                     <td class="cart_total_label">Shipping</td>
@@ -149,7 +125,8 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="cart_total_label">Total</td>
-                                                    <td class="cart_total_amount"><span id="showtotalamount" class="font-lg fw-900 text-brand"></span></td>
+                                                  <input type="" value="" id="appliedCouponName" name="appliedCoupon">
+                                                    <td class="cart_total_amount">  <span style="font-size: 10px;" id="couponAppliedSpan"></span><br><span id="showtotalamount" class="font-lg fw-900 text-brand"></span></td>
                                                     <input type="number" name="totalamountcheckout" value="" id="totalinputfield" hidden>
                                                 </tr>
                                             </tbody>
@@ -165,6 +142,66 @@
                                     </form>
                                 </div>
                             </div>
+
+                            <div class="row mb-50">
+                            
+                                   
+                               
+                                <div class="mb-30 mt-50">
+                                    <div class="row">
+                 
+                                        <div class="col-lg-6">
+                                            <div class="toggle_info">
+                                                <span><i class="fi-rs-label mr-10"></i><span class="text-muted">Have a coupon?</span> <a href="#coupon" onclick="showData()" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">Click here to view and enter your code</a></span>
+                                            </div>
+                                           
+                                            <div class="panel-collapse collapse coupon_form "  id="coupon">
+                                                <div>
+                                                   <div hidden>
+                                                    <input type="" id="totalCheck" value="">
+                                                    <input type="" id="lengthCoupon" value="<%= coupon.length  %>">
+                                                 
+                                                    <% for(i=0;i<coupon.length;i++){ %>
+
+                                                        <input type="" id= "minimumPurchase<%= i %>" value="<%= coupon[i].minimumPurchase%>" >
+                                                        <button id="showBtn<%= i %>" onclick="showDiv('<%= i %>')" >show</button>
+
+
+
+                                                        <% } %>
+
+                                                    </div>
+                                                 <div>
+                                                    <% for(let i=0; i<coupon.length; i++){ %>
+                                                          <% let totalAmountCheck  %>
+                                                     
+                                                        
+                                                   <div id="coupon<%= i  %>" style="background-color: gainsboro; margin-top: 5px; width: 300px; display: none;"><%= coupon[i].couponCode  %> <span style="font-size: 8px;  color: #16020278;"> For purchase above <%= coupon[i].minimumPurchase%>, get <%= coupon[i].discount%>% off!</span></div>
+                                           
+                                            
+                                                     
+                                                    <% } %>
+                                                </div>
+                                              
+                                                <div class="panel-body">
+                                                    <p class="mb-30 font-sm">If you have a coupon code, please apply it below.</p>
+                                                  
+                                                        <div class="form-group">
+                                                            <input oninput="appliedCoupon()" style="text-transform: uppercase;" id="couponinput" type="text" placeholder="Enter Coupon Code...">
+                                                      
+                                                      </div>
+                                                        <div class="form-group">
+                                                            <button onclick="couponApplied()" class="btn  btn-md" name="login">Apply Coupon</button>
+                                                        </div>
+                                                        <div id="result"></div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -330,6 +367,7 @@
 
 
 <script>
+    
     window.onload = function () {
    
       var allSums = document.querySelectorAll('.calctotal');
@@ -343,16 +381,20 @@
       if (!isNaN(sumtotal)) {
         document.getElementById('showtotal').innerHTML =  sumtotal.toFixed(2);
         document.getElementById('showtotalamount').innerHTML =  sumtotal.toFixed(2);
+        document.getElementById('subtotalinputfield').value = sumtotal.toFixed(2)
+        document.getElementById('totalCheck').value = sumtotal.toFixed(2)
+
     
       }
     };
   </script>
 
+
 <script>
     function updateTotalAndSubmit() {
     
         var showTotalAmount = document.getElementById('showtotalamount').innerText;
-
+        
 
         document.getElementById('totalinputfield').value = showTotalAmount;
 
@@ -389,11 +431,14 @@ console.log(sumtotal)
 if (!isNaN(sumtotal)) {
 document.getElementById('showtotal').innerHTML =  sumtotal.toFixed(2);
 document.getElementById('showtotalamount').innerHTML =  sumtotal.toFixed(2);
+document.getElementById('subtotalinputfield').value = sumtotal.toFixed(2)
 
 
 }
 const quantityUpdate = document.getElementById("quantity" + productId).value;
 console.log(quantityUpdate);
+
+
 
     fetch(`/user/updateCart?productId=${productId}`, {
     method: 'POST',
@@ -402,6 +447,8 @@ console.log(quantityUpdate);
     },
     body: JSON.stringify({
         quantity: quantityUpdate,
+      
+        
        
     }),
 })
@@ -412,6 +459,9 @@ console.log(quantityUpdate);
         return response.json();
     })
     .then(data => {
+        setTimeout(()=>{
+            window.location.reload()
+        },1500)
         console.log('Success:', data);
     })
     .catch(error => {
@@ -423,13 +473,114 @@ console.log(quantityUpdate);
 
 }
 
+async function couponApplied() {
+    const couponCode = document.getElementById('couponinput').value;
+    const coupon = couponCode.replace(/\W/g, '').toUpperCase();
+    console.log(coupon);
+
+    try {
+        const response = await fetch(`/user/applyCoupon?coupon=${coupon}`, {
+            method: 'GET'
+        });
+
+        if (!response.ok) {
+            throw new Error(`Server responded with status: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+       
+     
+        const disc = parseFloat(responseData.discount)
+        console.log(disc)
+        const showTotal = document.getElementById('showtotalamount');
+        const couponspan = document.getElementById('couponAppliedSpan')
+        const totalinput = document.getElementById('totalinputfield')
+const totalAmount = parseFloat(showTotal.innerText); 
+console.log(disc)
+console.log(typeof disc)
+console.log(totalAmount)
+console.log(typeof totalAmount)
+
+if (!isNaN(totalAmount)) { 
+    const discountedTotal = totalAmount - (totalAmount * (disc / 100));
+    console.log(discountedTotal)
+    console.log(typeof discountedTotal)
+    showTotal.innerHTML = discountedTotal.toFixed(2);
+    couponspan.innerHTML = `${couponCode} coupon applied succesfully`
+    totalinput.value =  discountedTotal.toFixed(2);
+
+}
+
+        console.log(showTotal)
+
+    } catch (error) {
+        console.error('Error:', error.message);
+        // Additional logging of error stack trace
+        console.error('Error Stack:', error.stack);
+    }
+}
+
+async function appliedCoupon()
+{
+    const coupon = document.getElementById('couponinput').value
+    const formatted = coupon.replace(/\W/g, '').toUpperCase();
+    console.log(formatted)
+    const applied = document.getElementById('appliedCouponName')
+    
+    applied.value = formatted
+    const res = document.getElementById('appliedCouponName').value
+    console.log(res)
+}
+
 
    </script>
 
   
   
   
-  
+    <script>
+                                                    function showDiv(index)
+                                                    {
+                                                       
+                                                        amount = document.getElementById('totalCheck').value
+                                                        divShow = document.getElementById(`coupon${index}`) 
+                                                        checkAmount = document.getElementById(`minimumPurchase${index}`).value
+                                                        if(amount > checkAmount)
+                                                        {
+
+
+                                                            divShow.style.display = 'block'
+
+
+
+                                                        }
+                                                        else{
+                                                            divShow.style.display = 'none'
+                                                        }
+                                                        
+                                                    }   
+
+
+
+                                                  function showData() {
+                                                  
+    var length = document.getElementById('lengthCoupon').value;
+
+    for (let i = 0; i < length; i++) {
+        let button = document.getElementById(`showBtn${i}`);
+        if (button) {
+    
+            console.log(`Button with ID showBtn${i} found`);
+
+            button.click();
+        } else {
+            // Log if the button is not found
+            console.log(`Button with ID showBtn${i} not found`);
+        }
+    }
+}
+
+                                                </script>
       
       
   

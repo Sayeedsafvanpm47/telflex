@@ -1,5 +1,6 @@
 const userModel = require('../../models/userModel')
 const cartModel = require('../../models/cartModel')
+const couponModel = require('../../models/couponModel')
 
 module.exports = {
           addToCart : async (req,res)=>{
@@ -60,8 +61,9 @@ module.exports = {
                       const userId = req.session.userId;
                       const user = await userModel.find({userId : userId})
                       const cart = await cartModel.find({ userId: userId }).populate('products.product_id');
+                      const coupon = await couponModel.find({})
                    console.log(cart)
-                      res.render('user/user/shop-cart', { cart:cart,user });
+                      res.render('user/user/shop-cart', { cart:cart,user,coupon });
                     } catch (error) {
                       console.log(error);
                       res.status(500).send('Internal Server Error');
@@ -95,13 +97,14 @@ module.exports = {
                     const productToUpdate = updatequantity.products.find(product => product._id == productId);
                     if (productToUpdate) {
                         productToUpdate.quantity = quantity;
+                        
                         console.log(`Updated Quantity: ${productToUpdate.quantity}`);
                         updatequantity.save();
                     } else {
                         console.log('Product not found in the cart.');
                     }
                 }
-        
+    
                 res.json({ success: true }); 
             } catch (error) {
                 console.error('Error:', error);
@@ -112,12 +115,32 @@ module.exports = {
         checkOut: async (req, res) => {
           try {
               const userId = req.query.userId;
-              const { totalamountcheckout } = req.body;
-              
+              const { totalamountcheckout,subtotalamountcheckout,appliedCoupon } = req.body;
+            
+           
+             
+             
+           
       
-              const result = await cartModel.findOne({ userId: userId });
-              result.total = totalamountcheckout;
-              result.save();
+              const result = await cartModel.updateOne({ userId: userId },{$set:{total:totalamountcheckout,subtotal:subtotalamountcheckout}},{upsert:true});
+            console.log('subtotal2')
+            
+             const cart = await cartModel.findOne({userId : userId})
+             console.log(cart.subtotal)
+             console.log(cart.total)
+              if(cart.subtotal == cart.total)
+              {
+                console.log('equal')
+                var apply = 'null'
+                var coupon = ''
+              }
+              else
+              {
+                console.log('greater')
+                apply = 'true'
+                 coupon = appliedCoupon
+              }
+              await cartModel.updateOne({userId:userId},{$set:{couponApplied:apply,couponCode:coupon},},{upsert:true})
 
               req.session.checkOut = true
               res.redirect('/user/checkoutpage')
@@ -125,6 +148,29 @@ module.exports = {
               console.log(error);
               res.status(500).json({ success: false, error: 'Internal Server Error' });
           }
-      }
+      },
+      applyCoupon: async (req, res) => {
+        try {
+            
+            const  coupon  = req.query.coupon;
+            console.log(coupon)
+            const couponFound = await couponModel.findOne({ couponCode: coupon });
+            
+           
+    
+            if (!couponFound) {
+                return res.status(404).json({ message: 'Coupon not found' });
+            }
+              console.log(couponFound)
+              console.log(coupon.discount)
+           const discount = couponFound.discount
+           
+            return res.status(200).json({ discount });
+    
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+    }
       
 }

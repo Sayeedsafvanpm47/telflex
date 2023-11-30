@@ -32,7 +32,7 @@ module.exports = {
                                         select: 'images productName size productDiscount',
                                     })
                                    console.log(cart.total)
-                                   const coupon = await couponModel.find({})
+                                 
                               res.render('user/user/shop-checkout',{cart})
                                 }
                                 else
@@ -197,7 +197,9 @@ for (let i = 0; i < ordered.length; i++) {
         console.error('Error placing order:', error);
         res.status(500).json({ message: 'Error placing order' });
     }
-}
+},
+
+
 
 
 }
