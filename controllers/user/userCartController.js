@@ -61,7 +61,33 @@ module.exports = {
                       const userId = req.session.userId;
                       const user = await userModel.find({userId : userId})
                       const cart = await cartModel.find({ userId: userId }).populate('products.product_id');
-                      const coupon = await couponModel.find({})
+                      const coupons = await couponModel.find({})
+                     console.log('coupons')
+                     console.log(coupons)
+                    
+    const coupon = [];
+
+    for (const couponFound of coupons) {
+        let userRedeemed = false;
+     
+        
+        for (const history of couponFound.redemptionHistory) {
+            if (history.userId.toString() === userId) {
+                userRedeemed = true;
+                break;
+            }
+        }
+      
+     const status = couponFound.status === 'active';
+
+    // Add the coupon if the user hasn't redeemed it and it's active
+    if (!userRedeemed && status) {
+        coupon.push(couponFound);
+    }
+   
+ 
+    }
+    console.log(coupon)
                    console.log(cart)
                       res.render('user/user/shop-cart', { cart:cart,user,coupon });
                     } catch (error) {
@@ -151,16 +177,32 @@ module.exports = {
       },
       applyCoupon: async (req, res) => {
         try {
-            
+            const userId = req.session.userId
             const  coupon  = req.query.coupon;
             console.log(coupon)
             const couponFound = await couponModel.findOne({ couponCode: coupon });
+            
             
            
     
             if (!couponFound) {
                 return res.status(404).json({ message: 'Coupon not found' });
             }
+
+            const redemptionHistory = couponFound.redemptionHistory;
+        let userRedeemed = false;
+
+        for (const history of redemptionHistory) {
+            if (history.userId.toString() === userId) {
+                userRedeemed = true;
+                break;
+            }
+        }
+
+        if (userRedeemed) {
+            return res.status(404).json({ message: 'Coupon has already been used' });
+        }
+           
               console.log(couponFound)
               console.log(coupon.discount)
            const discount = couponFound.discount

@@ -148,7 +148,9 @@
                                    
                                
                                 <div class="mb-30 mt-50">
-                                    <div class="row">
+                                    <p style="font-size: 10px;" class="text-muted">Note : You cannot cancel or return an order applied with coupon! <span style="font-size: 8px;">(If the product is damaged, contact us and we will send a technician for the verification)</span></p>
+                                    <div id="applyOther" style="display: none;"> <a href="/user/showCart">Apply another coupon?</a> </div>
+                                    <div class="row"  id="showCouponDiv">
                  
                                         <div class="col-lg-6">
                                             <div class="toggle_info">
@@ -191,7 +193,7 @@
                                                       
                                                       </div>
                                                         <div class="form-group">
-                                                            <button onclick="couponApplied()" class="btn  btn-md" name="login">Apply Coupon</button>
+                                                            <button id="applyBtn" onclick="couponApplied()" class="btn  btn-md" name="login">Apply Coupon</button>
                                                         </div>
                                                         <div id="result"></div>
                                                     
@@ -473,12 +475,23 @@ console.log(quantityUpdate);
 
 }
 
+
 async function couponApplied() {
+    let couponset = false;
+   
     const couponCode = document.getElementById('couponinput').value;
     const coupon = couponCode.replace(/\W/g, '').toUpperCase();
+  
+   
+
+
+
     console.log(coupon);
 
     try {
+    
+
+      
         const response = await fetch(`/user/applyCoupon?coupon=${coupon}`, {
             method: 'GET'
         });
@@ -488,6 +501,7 @@ async function couponApplied() {
         }
 
         const responseData = await response.json();
+       
        
      
         const disc = parseFloat(responseData.discount)
@@ -508,10 +522,20 @@ if (!isNaN(totalAmount)) {
     showTotal.innerHTML = discountedTotal.toFixed(2);
     couponspan.innerHTML = `${couponCode} coupon applied succesfully`
     totalinput.value =  discountedTotal.toFixed(2);
-
+    couponset = true;
+    
+      
+      
 }
 
         console.log(showTotal)
+        if (couponset) {
+        var btn = document.getElementById('showCouponDiv');
+        btn.style.display = 'none';
+        var show = document.getElementById('applyOther')
+        show.style.display = 'block'
+    }
+      
 
     } catch (error) {
         console.error('Error:', error.message);
@@ -520,8 +544,10 @@ if (!isNaN(totalAmount)) {
     }
 }
 
+
+
 async function appliedCoupon()
-{
+{ 
     const coupon = document.getElementById('couponinput').value
     const formatted = coupon.replace(/\W/g, '').toUpperCase();
     console.log(formatted)
@@ -530,6 +556,8 @@ async function appliedCoupon()
     applied.value = formatted
     const res = document.getElementById('appliedCouponName').value
     console.log(res)
+   
+
 }
 
 

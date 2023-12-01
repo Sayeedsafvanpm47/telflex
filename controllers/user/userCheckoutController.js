@@ -85,6 +85,31 @@ console.log(payment_option)
             model: 'products',
             select: 'images productName size productDiscount',
         });
+        console.log(cart)
+        console.log(cart.couponApplied)
+        console.log(cart.couponCode)
+        let couponName
+       let applied
+       if(cart.couponApplied === 'true')
+       {
+        console.log('true')
+        
+         couponName = cart.couponCode
+         applied = true
+         await couponModel.updateOne(
+            { couponCode: couponName },
+            { $push: { redemptionHistory: {userId:userId,redeemedAt:new Date()} } }
+          );
+          console.log(couponName)
+          
+       }
+       else
+       {
+        console.log('false')
+        couponName = null
+        applied = false
+       }
+
       
 
         if (cart && cart.products) {
@@ -142,7 +167,6 @@ console.log(payment_option)
         return res.status(200).json({ order: razorpayOrder });
        }  
        
-
    
       
         const order = new orderModel({
@@ -153,6 +177,9 @@ console.log(payment_option)
             totalAmount: total,
             address: address,
             orderDate : new Date(),
+            couponName : couponName,
+            couponApplied : applied
+
             
             
         });
@@ -190,6 +217,8 @@ for (let i = 0; i < ordered.length; i++) {
 
         cart.products = []
         cart.total = 0
+        cart.couponApplied = 'false'
+        
         await cart.save()
         res.status(200).json({ message: 'Order placed successfully' });
 

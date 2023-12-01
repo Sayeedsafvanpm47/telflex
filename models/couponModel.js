@@ -31,10 +31,7 @@ let couponSchema = new mongoose.Schema({
             type: ObjectId,
             ref: 'USER'
         },
-        orderId: {
-            type: ObjectId,
-            ref: 'Order'
-        },
+       
         redeemedAt: Date
     }],
     status: {

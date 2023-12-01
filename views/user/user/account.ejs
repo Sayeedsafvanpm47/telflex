@@ -300,7 +300,16 @@
                                     <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h5 class="mb-0">Refferal code %> </h5>
+                                                <h5 class="mb-0"> Wallet </h5>
+                                            </div>
+                                            <div class="card-body">
+                                              <p><%= users.wallet  %></p>
+                                                   
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="mb-0">Refferal code </h5>
                                             </div>
                                             <div class="card-body">
                                                 <p style="font-size: 13px;">Share this refferal code with your loved ones and get an instant 100 rupee topup to your wallet per refferal... Hurry up and grab your reward! <br> <span style="color: black;"> <span class="text-muted">Your refferal code :</span>  
@@ -314,6 +323,7 @@
                                                    
                                             </div>
                                         </div>
+                                        <% if(users.reffered == false){ %>
                                         <div class="col">
                                             <div class="toggle_info">
                                                 <span><i class="fi-rs-label mr-10"></i><span class="text-muted">Have a refferal code?</span> <a href="#coupon"  data-bs-toggle="collapse" class="collapsed" aria-expanded="false">Click here to enter your code and claim rewards!</a></span>
@@ -323,7 +333,7 @@
                                                 <div>
                                                   
                                                
-                                              
+                                             
                                                 <div class="panel-body">
                                                     <p class="mb-30 font-sm">If you have a refferal code, please apply it below.</p>
                                                   
@@ -338,6 +348,7 @@
                                                        
                                                     
                                                 </div>
+                                                <% } %>
                                             </div>
                                         </div>
                                     </div>
@@ -714,27 +725,49 @@
       }
     }
   </script>
-   <script>
-    async function applyrefferal()
-    {
-        const refferal = document.getElementById('refferalinput').value 
+  <!-- Include SweetAlert CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    async function applyrefferal() {
+        const refferal = document.getElementById('refferalinput').value;
       
-        console.log(refferal)
-        const response = await fetch(`/user/refferalClaim?refferal=${refferal}`,{
-            method:'GET',
-            
+        console.log(refferal);
+        const response = await fetch(`/user/refferalClaim?refferal=${refferal}`, {
+            method: 'GET',
+        });
 
+        if (!response.ok) {
+            let errorMessage = 'Failed to claim referral. Please try again.';
+            if (response.status === 405) {
+                errorMessage = 'Invalid referral code or user not found';
+            } else if (response.status === 404) {
+                errorMessage = 'Referral code not found';
+            } else {
+                errorMessage = 'Server error';
+            }
 
-        })
-        if(!response.ok)
-        {
-            throw new Error('response not okay')
+            // Display error using SweetAlert
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: errorMessage,
+            });
+            throw new Error('response not okay');
         }
-        const responseData  = await response.json()
-        console.log('success' + responseData)
 
+        const responseData = await response.json();
+        console.log('success' + responseData);
+
+        // Display success message using SweetAlert
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Referral claimed successfully!',
+        });
     }
 </script>
+
 
 </body>
 

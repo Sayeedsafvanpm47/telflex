@@ -754,22 +754,52 @@ res.redirect('/user/account');
 		    console.log(refferal);
 	      
 		    const refferCheck = await userModel.findOne({ _id: userId });
-		    if (!refferCheck || refferCheck.refferalCode === refferal) {
+		    if (!refferCheck || refferCheck.refferalCode == refferal) {
 		        console.log('Referral code is the user\'s code or user not found');
-		        return res.status(400).json({ error: 'Invalid referral code or user not found' });
+		        return res.status(405).json({ error: 'Invalid referral code or user not found' });
 		    }
-	      
+	          
+		
+		      
+
 		    const updateResult = await refferalModel.updateOne(
 		        { refferalCode: refferal },
 		        { $push: { reffereeId: userId } }
 		    );
+		    const refferals = await refferalModel.findOne({refferalCode : refferal})
+		    for(const refferals of 'refferals.reffereeId')
+		    {
+			if(userId == refferals)
+			{
+				console.log('userExists')
+				return res.status(400).json({ error: 'Invalid referral code or user not found' });
+			}
+		    }
+		    const amount = refferals.referralOffer
+		    await userModel.updateOne(
+			{ _id: userId },
+			{
+			  $set: { reffered: true },
+			  $inc: { wallet: amount }
+			},
+			{ upsert: true }
+		        );
+		        
+
+		
+		  const reffererId = refferals.reffererId
+		  console.log(reffererId)
+		       const reffererUpdate = await userModel.updateOne({ _id: reffererId }, { $inc: { wallet: amount } },{new:true, upsert: true });
+		        console.log(reffererUpdate)
+		 
 	      
 		    if (updateResult.nModified === 0) {
 		        console.log('Referral code not found');
-		        return res.status(400).json({ error: 'Referral code not found' });
+		        return res.status(404).json({ error: 'Referral code not found' });
 		    }
+
 	      
-		    res.status(200).json({ message: 'Referral claimed successfully' });
+		    res.status(200).json({ message: 'Referral claimed successfully'});
 		} catch (error) {
 		    console.error(error);
 		    res.status(500).json({ error: 'Server error' });

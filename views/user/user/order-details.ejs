@@ -169,6 +169,7 @@
                                                                 <span class="status" id="status"><%= item.status  %></span>
                                                                 
                                                             </td>
+                                                            <% if(order.couponApplied !== true){ %>
                                                             <% if(item.status !== 'Cancelled' && item.status !== 'Returned' && item.status !== 'Requested for cancellation'){ %>
                                                             <% if(item.status === 'Delivered' ) {%>
                                                                 <% if(item.returnExpiry !== null){ %>
@@ -231,6 +232,9 @@
                                                                     <td>Item Returned</td>
                                                                     <% } %>
                                                                     <% } %>
+                                                                    <% } else { %>
+                                                                        <td>You cannot cancel or return an item redeemed with coupon!</td>
+                                                                        <% } %>
 
                                                               
                                                        
@@ -263,13 +267,13 @@
                                         <h4>Bill Totals</h4>
                                     </div>
                                     <div>
-                            <% orders.forEach(order => { 
-                             order.items.forEach(item => { 
+                            <% orders.forEach(order => {  %>
+                          <%   order.items.forEach(item => {  %>
                                  
-                                    totalAmount += item.price * item.quantity;
+                                  <%  totalAmount += item.price * item.quantity; %>
                                 
-                                });
-                             }); %>
+                            <%    });%>
+                          
                         </div>
                                     
                                         <table class="table">
@@ -285,7 +289,12 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="cart_total_label">Total</td>
-                                                    <td class="cart_total_amount"><span id="showtotalamount" class="font-lg fw-900 text-brand"></span><%= totalAmount  %></td>
+                                                    <td class="cart_total_amount"><span id="showtotalamount" class="font-lg fw-900 text-brand">
+
+                                                        <% if(order.couponApplied === true){ %>
+                                                            <span style="font-size: 8px;"> Coupon : <span style="font-size: 12px; color: black;"> <%=order.couponName%> </span>Applied!</span><br>
+                                                            <% } %>
+                                                    </span><%= order.totalAmount  %></td>
                                                     <input type="number" name="totalamountcheckout" value="" id="totalinputfield" hidden>
                                                 </tr>
                                             </tbody>
@@ -298,7 +307,7 @@
                                    
                                    
                                  
-                                
+                          <%  }); %>
                                
                                 </div>
                             </div>

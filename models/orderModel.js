@@ -87,9 +87,16 @@ let orderSchema = new mongoose.Schema({
 		type : Date
 	},
 	couponApplied : {
+		type : Boolean,
+		
 		
 
-	}
+	},
+	couponName : {
+		type : String,
+	
+	},
+	
          
 });
 
