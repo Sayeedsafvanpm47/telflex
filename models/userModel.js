@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const { v4: uuidv4 } = require('uuid')
 const { USER } = require("../utils/constants/schemaName");
 
 let userSchema = new mongoose.Schema({
@@ -69,7 +69,28 @@ let userSchema = new mongoose.Schema({
 				type : String
 			} 
 		}
-	]
+	],
+	refferalCode : {
+		type: String,
+                    default: () => {
+			const uuid = uuidv4();
+			
+			return uuid.replace(/-/g, '').substring(0, 6);
+		      }
+	},
+	reffered : {
+		type : Boolean,
+		default : false
+
+	},
+	refferalUse : {
+		type : Boolean,
+		default : false
+	},
+	wallet : {
+		type : Number,
+		default : 0
+	}
 });
 
 module.exports = mongoose.model(USER, userSchema);

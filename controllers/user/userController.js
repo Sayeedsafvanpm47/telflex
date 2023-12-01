@@ -1,6 +1,7 @@
 const userModel = require("../../models/userModel");
 const orderModel = require('../../models/orderModel')
 const productModel = require('../../models/productModel')
+const refferalModel = require('../../models/refferalModel')
 const sendOTPByEmail = require("../../utils/sendMail");
 const bcrypt = require("bcrypt");
 const { isEmailValid, isPasswordValid, isNamesValid, isPhoneValid, isCpassValid } = require("../../utils/validators/signUpValidator");
@@ -167,8 +168,15 @@ module.exports = {
 					password: hashedPassword,
 					firstname,
 					lastname,
-					phonenumber
+					phonenumber,
+					
+
 				});
+				
+
+
+				
+				
 				const otp = await otpGenerator.generateOTP();
 
 				console.log(otp);
@@ -215,7 +223,20 @@ module.exports = {
 			user.isVerified = true
 			await user.save();
 			if (req.session.loginOk) {
-				
+
+				const userDetails = await userModel.findOne({email:email})
+				console.log(userDetails)
+				const refferalCode = userDetails.refferalCode
+				console.log(refferalCode)
+				console.log(refferalCode)
+				const _id = userDetails._id
+				const refferal =  new refferalModel({
+					refferalCode : refferalCode,
+					reffererId : _id
+
+
+				})
+				await refferal.save()
 				await res.redirect("/user/shop");
 			}
 			else if (req.session.forgotOk) {
@@ -423,15 +444,19 @@ module.exports = {
 
 	
 			await checkReturnExpiry(orders);
+			const refferal = await userModel.findOne({_id:userId},{refferalCode : 1})
+			console.log(refferal)
+			const code = refferal.refferalCode
+			console.log(code)
 			
 		        
       
 	        
 	        
 			console.log(`This is orders :  ${orders}`)
-			console.log(orders)
+			
 		  
-			res.render('user/user/account', { users, orders });
+			res.render('user/user/account', { users, orders,code });
 		  
 			
 		      } catch (error) {
@@ -696,6 +721,64 @@ res.redirect('/user/account');
 			
 			await res.render('user/user/cancelledOrders',{orders})
 	      },
+	      userWallet : async (req,res)=>{
+		
+
+		try {
+			const id = req.session.userId
+			const user = await orderModel.find({userId:id},{refundAmount:1})
+			let total = 0
+			for(const totalAmount of user)
+			{
+				total += totalAmount.refundAmount
+			}
+			console.log(total)
+			const userWallet = await userModel.updateOne({_id:id},{$set:{wallet:total}},{upsert:true})
+
+
+			
+			
+			
+		      } catch (error) {
+			console.error('Error calculating total refund amount:', error);
+		      }
+		      
+
+
+
+	      },
+	      refferalClaim: async (req, res) => {
+		try {
+		    const { refferal } = req.query;
+		    const userId = req.session.userId;
+		    console.log(refferal);
+	      
+		    const refferCheck = await userModel.findOne({ _id: userId });
+		    if (!refferCheck || refferCheck.refferalCode === refferal) {
+		        console.log('Referral code is the user\'s code or user not found');
+		        return res.status(400).json({ error: 'Invalid referral code or user not found' });
+		    }
+	      
+		    const updateResult = await refferalModel.updateOne(
+		        { refferalCode: refferal },
+		        { $push: { reffereeId: userId } }
+		    );
+	      
+		    if (updateResult.nModified === 0) {
+		        console.log('Referral code not found');
+		        return res.status(400).json({ error: 'Referral code not found' });
+		    }
+	      
+		    res.status(200).json({ message: 'Referral claimed successfully' });
+		} catch (error) {
+		    console.error(error);
+		    res.status(500).json({ error: 'Server error' });
+		}
+	      
+	      
+
+
+	      }
 	
 	      
 	      

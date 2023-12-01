@@ -37,6 +37,9 @@ router.post('/updateCart',cartController.updateCart)
 router.post('/cancelOrder',controller.cancelOrder)
 router.get('/returnOrder',controller.returnOrder)
 router.get('/cancelledOrders',controller.cancelledOrders)
+router.get('/userWallet',controller.userWallet)
+router.get('/refferalClaim',controller.refferalClaim)
+
 
 router.get('/',productController.productGridView)
 router.get('/sortCategory',productController.sortProducts)
@@ -55,6 +58,7 @@ router.get('/applyCoupon',cartController.applyCoupon)
 router.get('/checkoutPage',userCheckoutController.checkOutPage)
 router.post('/checkOutAddress',userCheckoutController.addAddress)
 router.post('/placeOrder',userCheckoutController.placeOrder)
+
 
 
 router.get('/blog',(req,res)=>{

@@ -152,6 +152,13 @@ const orders = await orderModel
                   const prosize = canceledItem.size
                   const proquantity = canceledItem.quantity
 
+                  if(canceledItem.status === 'Returned')
+                  {
+                    refundPrice = canceledItem.price
+                    console.log(refundPrice)
+                    await orderModel.updateOne({_id:orderId},{$inc:{'refundAmount':refundPrice}},{new:true})
+                  }
+
 
                   const productFound = await productModel.findOne({ _id: proId });
 

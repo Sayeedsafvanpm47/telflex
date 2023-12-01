@@ -187,7 +187,7 @@
                                             <a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Orders</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders" role="tab" aria-controls="track-orders" aria-selected="false"><i class="fi-rs-shopping-cart-check mr-10"></i>Track Your Order</a>
+                                            <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders" role="tab" aria-controls="track-orders" aria-selected="false"><i class="fi-rs-shopping-cart-check mr-10"></i>Rewards</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="address-tab" data-bs-toggle="tab" href="#address" role="tab" aria-controls="address" aria-selected="true"><i class="fi-rs-marker mr-10"></i>My Address</a>
@@ -206,12 +206,14 @@
                                     <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h5 class="mb-0">Hello Rosie! </h5>
+                                                <h5 class="mb-0">Hello <%= users.firstname  %> </h5>
                                             </div>
                                             <div class="card-body">
                                                 <p>From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a></p>
                                             </div>
-                                        </div>
+                                            <br>
+                                            </div>
+                                          
                                     </div>
                                     <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
                                         <div class="card">
@@ -298,24 +300,43 @@
                                     <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h5 class="mb-0">Orders tracking</h5>
+                                                <h5 class="mb-0">Refferal code %> </h5>
                                             </div>
-                                            <div class="card-body contact-from-area">
-                                                <p>To track your order please enter your OrderID in the box below and press "Track" button. This was given to you on your receipt and in the confirmation email you should have received.</p>
-                                                <div class="row">
-                                                    <div class="col-lg-8">
-                                                        <form class="contact-form-style mt-30 mb-50" action="#" method="post">
-                                                            <div class="input-style mb-20">
-                                                                <label>Order ID</label>
-                                                                <input name="order-id" placeholder="Found in your order confirmation email" type="text" class="square">
-                                                            </div>
-                                                            <div class="input-style mb-20">
-                                                                <label>Billing email</label>
-                                                                <input name="billing-email" placeholder="Email you used during checkout" type="email" class="square">
-                                                            </div>
-                                                            <button class="submit submit-auto-width" type="submit">Track</button>
-                                                        </form>
-                                                    </div>
+                                            <div class="card-body">
+                                                <p style="font-size: 13px;">Share this refferal code with your loved ones and get an instant 100 rupee topup to your wallet per refferal... Hurry up and grab your reward! <br> <span style="color: black;"> <span class="text-muted">Your refferal code :</span>  
+                                                    
+                                                    <% if(code !== ''){ %>
+                                                    <%=code%>
+                                                    <% } else { %> 
+                                                    info not available
+                                                    <% } %>
+                                                    </span> </p>
+                                                   
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="toggle_info">
+                                                <span><i class="fi-rs-label mr-10"></i><span class="text-muted">Have a refferal code?</span> <a href="#coupon"  data-bs-toggle="collapse" class="collapsed" aria-expanded="false">Click here to enter your code and claim rewards!</a></span>
+                                            </div>
+                                           
+                                            <div class="panel-collapse collapse coupon_form "  id="coupon">
+                                                <div>
+                                                  
+                                               
+                                              
+                                                <div class="panel-body">
+                                                    <p class="mb-30 font-sm">If you have a refferal code, please apply it below.</p>
+                                                  
+                                                        <div class="form-group">
+                                                            <input id="refferalinput" type="text" placeholder="Enter Refferal Code...">
+                                                      
+                                                      </div>
+                                                        <div class="form-group">
+                                                            <button class="btn  btn-md" onclick="applyrefferal()" name="login">Claim Reward</button>
+                                                        </div>
+                                                      
+                                                       
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -693,6 +714,27 @@
       }
     }
   </script>
+   <script>
+    async function applyrefferal()
+    {
+        const refferal = document.getElementById('refferalinput').value 
+      
+        console.log(refferal)
+        const response = await fetch(`/user/refferalClaim?refferal=${refferal}`,{
+            method:'GET',
+            
+
+
+        })
+        if(!response.ok)
+        {
+            throw new Error('response not okay')
+        }
+        const responseData  = await response.json()
+        console.log('success' + responseData)
+
+    }
+</script>
 
 </body>
 
