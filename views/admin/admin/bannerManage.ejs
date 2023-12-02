@@ -38,7 +38,7 @@
             <div class="row">
                 <div class="col-9">
                     <div class="content-header">
-                        <h2 class="content-title">Add New Product</h2>
+                        <h2 class="content-title">Add Banner</h2>
                        
                     </div>
                 </div>
@@ -58,59 +58,56 @@
                                 </div>
                             <% } %>
 
-                            <form action="/admin/saveProducts" method="Post" enctype="multipart/form-data">
-                              <div class="mb-4">
-                                        <label for="product_category" class="form-label">Banner Type</label>
-                                        <select onselect="changeInput()" class="form-control" id="bannertype" name="category">
-                                            <option value="mainbanner">Main Banner</option>
-                                            <option value="subbanner">Sub Banner</option>
-                                            <option value="offerbanner">Offer Banner</option>
-                                            <option value="dealsbanner">Deals Banner</option>
-                                            <option value="eventbanner">Event Banner</option>
-                                           
-                                      
-                                          </select>
-                                          
-                                    </div>
+                            <form action="/admin/addBanner" method="Post" enctype="multipart/form-data">
+                                <div class="mb-4">
+                                    <label for="product_category" class="form-label">Banner Type</label>
+                                    <select onchange="changeInput()" class="form-control" id="bannertype" name="bannertype">
+                                        <option value="mainbanner">Main Banner</option>
+                                        <option value="subbanner">Sub Banner</option>
+                                        <option value="offerbanner">Offer Banner</option>
+                                        <option value="dealsbanner">Deals Banner</option>
+                                        <option value="eventbanner">Event Banner</option>
+                                    </select>
+                                </div>
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Banner title</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="title" name="productname">
+                                    <input type="text" placeholder="Type here" class="form-control" id="title" name="title">
                                 </div>
                                 <div class="mb-4">
                                         <label for="product_name" class="form-label">Banner Phrase</label>
-                                        <input type="text" placeholder="Type here" class="form-control" id="phrase" name="productname">
+                                        <input type="text" placeholder="Type here" class="form-control" id="phrase" name="phrase">
                                     </div>
                                     <div class="mb-4">
                                         <label for="product_name" class="form-label">Banner sub-text</label>
-                                        <input type="text" placeholder="Type here" class="form-control" id="subtext" name="productname">
+                                        <input type="text" placeholder="Type here" class="form-control" id="subtext" name="subtext">
                                     </div>
                                     <div class="mb-4">
-                                        <label for="product_name" class="form-label">Banner end</label>
-                                        <input type="text" placeholder="Type here" class="form-control" id="end" name="productname">
+                                        <label for="product_name" class="form-label">Banner Action</label>
+                                        <input type="text" placeholder="Type here" class="form-control" id="btn" name="action">
                                     </div>
                                     <div id="offer" class="mb-4" style="display: none;">
                                         <label for="product_name" class="form-label">Offer Price</label>
-                                        <input type="text" placeholder="Type here" class="form-control"  name="productname">
+                                        <input type="text" placeholder="Type here" class="form-control"  name="offer">
                                     </div>
                                     <div id="old" class="mb-4" style="display: none;">
                                         <label for="product_name" class="form-label">Old Price</label>
-                                        <input type="text" placeholder="Type here" class="form-control"  name="productname">
+                                        <input type="text" placeholder="Type here" class="form-control"  name="mrp">
                                     </div>
                                   
                                     <div id="start" class="mb-4" style="display: none;">
                                         <label for="product_name" class="form-label">Offer start date</label>
-                                        <input type="text" placeholder="Type here" class="form-control"  name="productname">
+                                        <input type="text" placeholder="Type here" class="form-control"  name="start">
                                     </div>
                                     <div id="end" class="mb-4" style="display: none;">
                                         <label for="product_name" class="form-label">Offer end date</label>
-                                        <input type="text" placeholder="Type here" class="form-control"  name="productname">
+                                        <input type="text" placeholder="Type here" class="form-control"  name="end">
                                     </div>
                                 
                                  
                                   
                                     <div class="mb-4">
                                       <label for="product_name" class="form-label">Product Discount</label>
-                                      <input type="text" placeholder="Type here" class="form-control" id="discount" name="productdiscount">
+                                      <input type="text" placeholder="Type here" class="form-control" id="discount" name="discount">
                                   </div>
                                     
                                    
@@ -118,19 +115,24 @@
                                  
                                   
                                 </div>
-                             
+                                <div class="d-grid">
+                                    <label for="file-upload" class="custom-file-upload">
+                                        <img src="/admin/imgs/theme/upload.svg" alt="Upload Image">
+                                    <input type="file" name="images" class="form-control-file border" accept="image/*" id="input-images" multiple >
+                                </div>
                              
                               
 
               
                                
                                 <div class="d-grid">
-                                    <button class="btn btn-primary">Create Product</button>
+                                    <button type="submit" class="btn btn-primary">Create Product</button>
                                 </div>
                                
                             </form>
                         </div>
                     </div> <!-- card end// -->
+
                  
                     <div class="row">
                         <div class="col-sm-12">
@@ -145,6 +147,31 @@
 <!-- added script -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        let imagesPreview = function(input, placeToInsertImagePreview) {
+          if (input.files) {
+            let filesAmount = input.files.length;
+            for (i = 0; i < filesAmount; i++) {
+              let reader = new FileReader();
+              reader.onload = function(event) {
+                $($.parseHTML("<img>"))
+                  .attr("src", event.target.result)
+                  .appendTo(placeToInsertImagePreview);
+              };
+              reader.readAsDataURL(input.files[i]);
+            }
+          }
+        };
+        $("#input-images").on("change", function() {
+          imagesPreview(this, "div.preview-images");
+        });
+      });
+    </script>
+
+
+
  
 <script>
           function changeInput() {

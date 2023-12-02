@@ -16,6 +16,7 @@ const productModel = require("../../models/productModel");
 const imageController = require('../../controllers/imageController')
 const dashboardController = require('../../controllers/admin/adminDashboardController')
 const offerController = require('../../controllers/admin/adminOfferController')
+const bannerController = require('../../controllers/admin/adminBannerController')
 // admin
 router.get("/", controller.getAdminLogin);
 router.post("/postLogin", controller.postAdminLogin);
@@ -73,6 +74,8 @@ router.get('/getcouponOffer',offerController.getCouponOffer)
 router.post('/saveCoupon',offerController.saveCoupon)
 router.post('/updateCoupon',offerController.updateCoupon)
 router.get('/couponStatus',offerController.couponStatus)
+
+router.post('/addBanner',imageController.upload.array('images'),bannerController.addBanner)
 router.get('/banner',(req,res)=>{
           res.render('admin/admin/bannerManage')
 })
