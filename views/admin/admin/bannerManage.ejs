@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-form-product-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:31 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>Telflex Dashboard</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/admin/imgs/theme/favicon.svg">
+    <!-- Template CSS -->
+    <link href="/admin/css/main.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/user/css/maind134.css?v=3.4">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" type="text/css" href="/user/css/tableresp.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <style>
+      div.preview-images > img {
+        width: 30%;
+      }
+    </style>
+
+</head>
+
+<body>
+    <div class="screen-overlay"></div>
+    <%- include('partials/aside') %>
+    <main class="main-wrap">
+        <%- include('partials/header') %> 
+        <section class="content-main">
+            <div class="row">
+                <div class="col-9">
+                    <div class="content-header">
+                        <h2 class="content-title">Add New Product</h2>
+                       
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Product Info</h4>
+                        </div>
+                        <div class="card-body">
+                            <% if (typeof(errors) !== 'undefined' && errors.length > 0) { %>
+                                <div id="error-message" style="background-color: rgba(255, 23, 23, 0.215); border-radius: 10px;">
+                                    <span>
+                                        <% errors.forEach(error => { %>
+                                            <p style="color: red;"><%= error %></p>
+                                        <% }); %>
+                                    </span>
+                                </div>
+                            <% } %>
+
+                            <form action="/admin/saveProducts" method="Post" enctype="multipart/form-data">
+                              <div class="mb-4">
+                                        <label for="product_category" class="form-label">Banner Type</label>
+                                        <select onselect="changeInput()" class="form-control" id="bannertype" name="category">
+                                            <option value="mainbanner">Main Banner</option>
+                                            <option value="subbanner">Sub Banner</option>
+                                            <option value="offerbanner">Offer Banner</option>
+                                            <option value="dealsbanner">Deals Banner</option>
+                                            <option value="eventbanner">Event Banner</option>
+                                           
+                                      
+                                          </select>
+                                          
+                                    </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Banner title</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="title" name="productname">
+                                </div>
+                                <div class="mb-4">
+                                        <label for="product_name" class="form-label">Banner Phrase</label>
+                                        <input type="text" placeholder="Type here" class="form-control" id="phrase" name="productname">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="product_name" class="form-label">Banner sub-text</label>
+                                        <input type="text" placeholder="Type here" class="form-control" id="subtext" name="productname">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="product_name" class="form-label">Banner end</label>
+                                        <input type="text" placeholder="Type here" class="form-control" id="end" name="productname">
+                                    </div>
+                                    <div id="offer" class="mb-4" style="display: none;">
+                                        <label for="product_name" class="form-label">Offer Price</label>
+                                        <input type="text" placeholder="Type here" class="form-control"  name="productname">
+                                    </div>
+                                    <div id="old" class="mb-4" style="display: none;">
+                                        <label for="product_name" class="form-label">Old Price</label>
+                                        <input type="text" placeholder="Type here" class="form-control"  name="productname">
+                                    </div>
+                                  
+                                    <div id="start" class="mb-4" style="display: none;">
+                                        <label for="product_name" class="form-label">Offer start date</label>
+                                        <input type="text" placeholder="Type here" class="form-control"  name="productname">
+                                    </div>
+                                    <div id="end" class="mb-4" style="display: none;">
+                                        <label for="product_name" class="form-label">Offer end date</label>
+                                        <input type="text" placeholder="Type here" class="form-control"  name="productname">
+                                    </div>
+                                
+                                 
+                                  
+                                    <div class="mb-4">
+                                      <label for="product_name" class="form-label">Product Discount</label>
+                                      <input type="text" placeholder="Type here" class="form-control" id="discount" name="productdiscount">
+                                  </div>
+                                    
+                                   
+
+                                 
+                                  
+                                </div>
+                             
+                             
+                              
+
+              
+                               
+                                <div class="d-grid">
+                                    <button class="btn btn-primary">Create Product</button>
+                                </div>
+                               
+                            </form>
+                        </div>
+                    </div> <!-- card end// -->
+                 
+                    <div class="row">
+                        <div class="col-sm-12">
+                          <div class="preview-images"></div>
+                        </div>
+                      </div>
+
+                </div>
+               
+                   
+    </main>
+<!-- added script -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+ 
+<script>
+          function changeInput() {
+              const offer = document.getElementById('offer');
+              const mrp = document.getElementById('old');
+              const start = document.getElementById('start');
+              const end = document.getElementById('end');
+              const banner = document.getElementById('bannertype').value;
+      
+              if (banner === 'dealsbanner') {
+                  offer.style.display = 'block';
+                  mrp.style.display = 'block';
+                  start.style.display = 'block';
+                  end.style.display = 'block';
+              } else {
+                  offer.style.display = 'none';
+                  mrp.style.display = 'none';
+                  start.style.display = 'none';
+                  end.style.display = 'none';
+              }
+          }
+      </script>
+          
+      
+
+
+
+</body>
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-form-product-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:32 GMT -->
+</html>

@@ -73,7 +73,9 @@ router.get('/getcouponOffer',offerController.getCouponOffer)
 router.post('/saveCoupon',offerController.saveCoupon)
 router.post('/updateCoupon',offerController.updateCoupon)
 router.get('/couponStatus',offerController.couponStatus)
-
+router.get('/banner',(req,res)=>{
+          res.render('admin/admin/bannerManage')
+})
 
 
 // router.get('/error',(req,res)=>{

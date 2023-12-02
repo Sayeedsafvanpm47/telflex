@@ -113,6 +113,17 @@ module.exports = {
 		}
 		
 	},
+	homepage : async (req,res)=>{
+		try {
+			const products = await productModel.find({})
+			
+			res.render('user/user/home',{products})
+		} catch (error) {
+			
+		}
+		
+	}
+	,
 	getSignUp: async (req, res) => {
 		try {
 			if(!req.session.userId){

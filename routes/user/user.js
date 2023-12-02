@@ -44,6 +44,7 @@ router.get('/returnOrder',controller.returnOrder)
 router.get('/cancelledOrders',controller.cancelledOrders)
 router.get('/userWallet',controller.userWallet)
 router.get('/refferalClaim',controller.refferalClaim)
+router.get('/home',controller.homepage)
 
 
 router.get('/',productController.productGridView)
