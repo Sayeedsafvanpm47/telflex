@@ -31,7 +31,7 @@
                               <!-- Dropdown items for logged-in user -->
                               <% if (loggedIn) { %>
                                 <li><a class="dropdown-item" href="/user/account">Profile</a></li>
-                                <li><a class="dropdown-item" href="/wishlist">Wishlist</a></li>
+                                <li><a class="dropdown-item" href="/user/showwishlist">Wishlist</a></li>
                                 <li><a class="dropdown-item" href="/coupons">Coupons</a></li>
                                 <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
                               <% } else { %>
@@ -100,21 +100,23 @@
                           </div>
                           <div class="header-action-2">
                               <div class="header-action-icon-2">
-                                  <a href="shop-wishlist.html">
+                                  <a href="/user/showwishlist">
                                       <img class="svgInject" alt="Evara" src="/user/imgs/theme/icons/icon-heart.svg">
-                                      <span class="pro-count blue">4</span>
+                                      <% if(loggedIn){ %>
+                                      <span class="pro-count blue"><%= wishCount  %></span>
+                                      <% } %>
                                   </a>
                               </div>
                               <div class="header-action-icon-2">
                                 <% if(loggedIn){ %>
                                   <a class="mini-cart-icon" href="/user/showCart">
                                       <img alt="Evara" src="/user/imgs/theme/icons/icon-cart.svg">
-                                      <span class="pro-count blue">2</span>
+                                      <span class="pro-count blue"><%= cartCount  %></span>
                                   </a>
                                   <% }else { %>
                                     <a class="mini-cart-icon" href="/user/shop">
                                         <img alt="Evara" src="/user/imgs/theme/icons/icon-cart.svg">
-                                        <span class="pro-count blue">2</span>
+                                      
                                     </a>
                                     <% } %>
                                  

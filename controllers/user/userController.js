@@ -2,6 +2,8 @@ const userModel = require("../../models/userModel");
 const orderModel = require('../../models/orderModel')
 const productModel = require('../../models/productModel')
 const refferalModel = require('../../models/refferalModel')
+const wishlistModel = require('../../models/wishlist')
+const cartModel  = require('../../models/cartModel')
 const sendOTPByEmail = require("../../utils/sendMail");
 const bcrypt = require("bcrypt");
 const { isEmailValid, isPasswordValid, isNamesValid, isPhoneValid, isCpassValid } = require("../../utils/validators/signUpValidator");
@@ -69,6 +71,9 @@ module.exports = {
 
 
 			req.session.userId = user._id
+
+			
+
 			
 			console.log(req.session.userId)
 		      console.log("Login successful");
@@ -91,7 +96,22 @@ module.exports = {
 	        },
 	        
 	getHome: async (req, res) => {
+		if(req.session.userId)
+		{
+			const wishCount  = await wishlistModel.findOne({userId:req.session.userId})
+			const cartCount = await cartModel.findOne({userId:req.session.userId})
+			const productsincart = (cartCount.products).length
+			const productsinwishlist = (wishCount.products).length
+			console.log(productsinwishlist)
+			req.session.wishcount = productsinwishlist
+			req.session.cartcount = productsincart
 		await res.render("user/index.ejs");
+		}
+		else
+		{
+			await res.render("user/index.ejs");
+		}
+		
 	},
 	getSignUp: async (req, res) => {
 		try {

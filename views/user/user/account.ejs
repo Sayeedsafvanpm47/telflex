@@ -186,14 +186,15 @@
                                         <li class="nav-item">
                                             <a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Orders</a>
                                         </li>
+                                       
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="address-tab" data-bs-toggle="tab" href="#address" role="tab" aria-controls="address" aria-selected="false"><i class="fi-rs-marker mr-10"></i>My Address</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="false"><i class="fi-rs-user mr-10"></i>Account details</a>
+                                        </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders" role="tab" aria-controls="track-orders" aria-selected="false"><i class="fi-rs-shopping-cart-check mr-10"></i>Rewards</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="address-tab" data-bs-toggle="tab" href="#address" role="tab" aria-controls="address" aria-selected="true"><i class="fi-rs-marker mr-10"></i>My Address</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>Account details</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="/user/logout"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
@@ -296,62 +297,12 @@
                                         </div>
                                  
                                     </div>
+                             
+                                   
+                                    
+
                                 
-                                    <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h5 class="mb-0"> Wallet </h5>
-                                            </div>
-                                            <div class="card-body">
-                                              <p><%= users.wallet  %></p>
-                                                   
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h5 class="mb-0">Refferal code </h5>
-                                            </div>
-                                            <div class="card-body">
-                                                <p style="font-size: 13px;">Share this refferal code with your loved ones and get an instant 100 rupee topup to your wallet per refferal... Hurry up and grab your reward! <br> <span style="color: black;"> <span class="text-muted">Your refferal code :</span>  
-                                                    
-                                                    <% if(code !== ''){ %>
-                                                    <%=code%>
-                                                    <% } else { %> 
-                                                    info not available
-                                                    <% } %>
-                                                    </span> </p>
-                                                   
-                                            </div>
-                                        </div>
-                                        <% if(users.reffered == false){ %>
-                                        <div class="col">
-                                            <div class="toggle_info">
-                                                <span><i class="fi-rs-label mr-10"></i><span class="text-muted">Have a refferal code?</span> <a href="#coupon"  data-bs-toggle="collapse" class="collapsed" aria-expanded="false">Click here to enter your code and claim rewards!</a></span>
-                                            </div>
-                                           
-                                            <div class="panel-collapse collapse coupon_form "  id="coupon">
-                                                <div>
-                                                  
-                                               
-                                             
-                                                <div class="panel-body">
-                                                    <p class="mb-30 font-sm">If you have a refferal code, please apply it below.</p>
-                                                  
-                                                        <div class="form-group">
-                                                            <input id="refferalinput" type="text" placeholder="Enter Refferal Code...">
-                                                      
-                                                      </div>
-                                                        <div class="form-group">
-                                                            <button class="btn  btn-md" onclick="applyrefferal()" name="login">Claim Reward</button>
-                                                        </div>
-                                                      
-                                                       
-                                                    
-                                                </div>
-                                                <% } %>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                     <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
                                         <div class="row">
                                             <div class="col-lg-12">
@@ -467,6 +418,8 @@
                                                 </div>
                                             </div>
     <hr>
+       
+    
     <div class="col-lg-12">
         <div class="card">
                                                         <% for(let i=0; i<users.address.length; i++) { %>
@@ -542,6 +495,67 @@
                                             </div>
                                         </div>
                                     </div>
+
+
+
+                                    <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
+                                    
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="mb-0"> Wallet </h5>
+                                            </div>
+                                            <div class="card-body">
+                                              <p><%= users.wallet  %></p>
+                                                   
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="mb-0">Refferal code </h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <p style="font-size: 13px;">Share this refferal code with your loved ones and get an instant 100 rupee topup to your wallet per refferal... Hurry up and grab your reward! <br> <span style="color: black;"> <span class="text-muted">Your refferal code :</span>  
+                                                    
+                                                    <% if(code !== ''){ %>
+                                                    <%=code%>
+                                                    <% } else { %> 
+                                                    info not available
+                                                    <% } %>
+                                                    </span> </p>
+                                                   
+                                            </div>
+                                        </div>
+                                        <% if(users.reffered == false){ %>
+                                        <div>
+                                            <div class="toggle_info">
+                                                <span><i class="fi-rs-label mr-10"></i><span class="text-muted">Have a refferal code?</span> <a href="#coupon"  data-bs-toggle="collapse" class="collapsed" aria-expanded="false">Click here to enter your code and claim rewards!</a></span>
+                                            </div>
+                                           
+                                            <div class="panel-collapse collapse coupon_form"  id="coupon">
+                                                <div>
+                                                  
+                                               
+                                             
+                                                <div class="panel-body">
+                                                    <p class="mb-30 font-sm">If you have a refferal code, please apply it below.</p>
+                                                  
+                                                        <div class="form-group">
+                                                            <input id="refferalinput" type="text" placeholder="Enter Refferal Code...">
+                                                      
+                                                      </div>
+                                                        <div class="form-group">
+                                                            <button class="btn  btn-md" onclick="applyrefferal()" name="login">Claim Reward</button>
+                                                        </div>
+                                                      
+                                                       
+                                                    
+                                                </div>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        </div>
+
                                 </div>
                             </div>
                         </div>

@@ -5,11 +5,16 @@ const controller = require("../../controllers/user/userController");
 const productController = require('../../controllers/user/userProductController')
 const cartController = require('../../controllers/user/userCartController')
 const userCheckoutController = require('../../controllers/user/userCheckoutController')
+const wishListController = require('../../controllers/user/userWishlistController');
+const wishlist = require("../../models/wishlist");
 
 router.use((req, res, next) => {
           res.locals.loggedIn = req.session.userId ? true : false; 
+          res.locals.wishCount = req.session.wishcount 
+          res.locals.cartCount = req.session.cartcount
           next();
         });
+      
 
 router.get("/shop", controller.getLogin);
 router.post("/postLogin", controller.postLogin);
@@ -60,6 +65,12 @@ router.post('/checkOutAddress',userCheckoutController.addAddress)
 router.post('/placeOrder',userCheckoutController.placeOrder)
 
 
+router.get('/showwishlist',wishListController.showWishList)
+router.post('/addToWish',wishListController.addToWish)
+router.get('/deleteWish',wishListController.deleteWish)
+router.get('/addfromwish',wishListController.addFromWish)
+
+
 
 router.get('/blog',(req,res)=>{
           res.render('user/user/blog')
@@ -80,6 +91,9 @@ router.get('/shopgrid',(req,res)=>{
 })
 router.get('/shoplist',(req,res)=>{
           res.render('user/user/shoplist')
+})
+router.get('/wishlist',(req,res)=>{
+  res.render('user/user/shop-wishlist')
 })
 
 
