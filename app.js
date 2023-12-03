@@ -7,6 +7,8 @@ const adminRoute = require("./routes/admin/admin");
 const dbConnect = require("./config/database");
 const upload = require('./controllers/imageController')
 const {sessionMiddleware,setNoCache} = require('./middlewares/sessionMiddleware')
+// const errorMiddleware = require('./middlewares/errorMiddleware')
+const flash = require('connect-flash')
 
 
 
@@ -14,6 +16,8 @@ const {sessionMiddleware,setNoCache} = require('./middlewares/sessionMiddleware'
 app.use(setNoCache);
 
 app.use(sessionMiddleware);
+// app.use(errorMiddleware)
+app.use(flash())
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json())

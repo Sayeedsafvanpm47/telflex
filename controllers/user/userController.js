@@ -3,6 +3,7 @@ const orderModel = require('../../models/orderModel')
 const productModel = require('../../models/productModel')
 const refferalModel = require('../../models/refferalModel')
 const wishlistModel = require('../../models/wishlist')
+const bannerModel = require('../../models/bannerModel')
 const cartModel  = require('../../models/cartModel')
 const sendOTPByEmail = require("../../utils/sendMail");
 const bcrypt = require("bcrypt");
@@ -71,7 +72,7 @@ module.exports = {
 
 
 			req.session.userId = user._id
-
+req.session.user = true
 			
 
 			
@@ -116,8 +117,8 @@ module.exports = {
 	homepage : async (req,res)=>{
 		try {
 			const products = await productModel.find({})
-			
-			res.render('user/user/home',{products})
+			const banners = await bannerModel.find({})
+			res.render('user/user/home',{products,banners})
 		} catch (error) {
 			
 		}

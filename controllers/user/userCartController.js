@@ -47,7 +47,7 @@ module.exports = {
           
                           await newCart.save();
                       }
-          
+       
                       res.redirect('/user/showCart');
                     }
 
@@ -58,6 +58,7 @@ module.exports = {
           } ,
           showCart: async (req, res) => {
                     try {
+                      
                       const userId = req.session.userId;
                       const user = await userModel.find({userId : userId})
                       const cart = await cartModel.find({ userId: userId }).populate('products.product_id');

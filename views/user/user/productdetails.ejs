@@ -83,6 +83,12 @@
                                              
                                              
                                               <input  name="stock" type="text" id="stockView" class="text-brand" value="<%= products.size[0].stock %>" hidden>
+                                              <% for(item of 'products.size'){ %>
+                                                <% if(item.stock <= 0){ %>
+                                                    <br><span>In Stock:</span> <span class="save-price font-md text-danger ml-15">Out of stock</span>
+                                                    <% } %>
+                                                    <% } %>
+
                                              <br><span>In Stock:</span>     <span class="save-price font-md color3 ml-15" id="stockView2"><%= products.size[0].stock %></span>
                                             <input type="text" id="productTarget" value="<%= products.size[0]._id %>" hidden>
                                             </div>

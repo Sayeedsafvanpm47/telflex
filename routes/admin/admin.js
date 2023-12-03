@@ -49,13 +49,25 @@ router.get('/deleteCategory',controllerCategory.deleteCategory)
 router.get('/toggleList',controllerCategory.listToggle)
 
 router.get('/addproducts',controllerProducts.addProductsView)
-router.post('/saveproducts',imageController.upload.array('images'),imageController.processImage,controllerProducts.addProducts)
+// router.post('/saveproducts',imageController.upload.array('images'),imageController.processImage,controllerProducts.addProducts)
+router.post(
+          '/saveproducts',
+          imageController.upload.array('images'),
+          (req, res, next) => {
+        
+            imageController.processImage(req, res, next, 720, 720);
+          },
+          controllerProducts.addProducts
+        );
 router.get('/viewproducts',controllerProducts.viewProducts)
 router.get('/searchProductsView',controllerProducts.searchProductsView)
 router.post('/searchProducts',controllerProducts.searchProducts)
 router.get('/editProductsView',controllerProducts.editProductsView)
 router.get('/deleteImage',controllerProducts.deleteImage)
-router.post('/editProducts',imageController.upload.array('images'),imageController.processImage,controllerProducts.editProducts)
+router.post('/editProducts',imageController.upload.array('images'), (req, res, next) => {
+       
+          imageController.processImage(req, res, next, 720, 720);
+        },controllerProducts.editProducts)
 router.get('/toggleListProducts',controllerProducts.toggleList)
 router.get('/deleteProducts',controllerProducts.deleteProducts)
 
@@ -75,10 +87,12 @@ router.post('/saveCoupon',offerController.saveCoupon)
 router.post('/updateCoupon',offerController.updateCoupon)
 router.get('/couponStatus',offerController.couponStatus)
 
-router.post('/addBanner',imageController.upload.array('images'),bannerController.addBanner)
-router.get('/banner',(req,res)=>{
-          res.render('admin/admin/bannerManage')
-})
+router.post('/addBanner',imageController.upload.array('images'), (req, res, next) => {
+          
+          imageController.processImage(req, res, next, 1200, 200);
+        },bannerController.addBanner)
+router.get('/banner',bannerController.showBanner)
+
 
 
 // router.get('/error',(req,res)=>{

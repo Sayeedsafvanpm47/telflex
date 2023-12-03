@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 const upload = multer({dest:'uploads/'})
 
 
-const processImage = async (req, res, next) => {
+const processImage = async (req, res, next, width, height) => {
           try {
             if (!req.files || req.files.length === 0) {
               throw new Error('No file uploaded');
@@ -29,7 +29,7 @@ const processImage = async (req, res, next) => {
                 const outputPath = `uploads/${randomName}.jpg`;
         
                 await sharp(file.path)
-                  .resize({ width: 720, height: 720 })
+                  .resize({ width, height })
                   .toFormat('jpeg')
                   .jpeg({ quality: 90 })
                   .toFile(outputPath);

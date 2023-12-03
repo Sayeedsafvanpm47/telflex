@@ -11,6 +11,7 @@ const bannerSchema = new mongoose.Schema({
          bannerMrp : Number,
          start : Date,
          end : Date,
+         images : Array
 
 })
 

@@ -7,6 +7,8 @@ const cartController = require('../../controllers/user/userCartController')
 const userCheckoutController = require('../../controllers/user/userCheckoutController')
 const wishListController = require('../../controllers/user/userWishlistController');
 const wishlist = require("../../models/wishlist");
+const authMiddleWare = require('../../middlewares/sessionMiddleware')
+// const { handleValidationError } = require('../../middlewares/errorMiddleware');
 
 router.use((req, res, next) => {
           res.locals.loggedIn = req.session.userId ? true : false; 
@@ -17,7 +19,7 @@ router.use((req, res, next) => {
       
 
 router.get("/shop", controller.getLogin);
-router.post("/postLogin", controller.postLogin);
+router.post("/postLogin",controller.postLogin);
 
 
 router.get("/gethome", controller.getHome);
@@ -31,20 +33,20 @@ router.get("/getForgotPassword", controller.getForgotPassword);
 router.post("/forgotPassword", controller.forgotPassword);
 router.get('/showCreatePass',controller.showCreatePass)
 router.post("/updatePass", controller.updatePass);
-router.get('/account',controller.userAccount)
-router.post('/updateAccount',controller.updateAccount)
-router.post('/addAddress',controller.addAddress)
-router.get('/deleteAddress',controller.deleteAddress)
-router.get('/editAddress',controller.editAddress)
-router.post('/updateAddress',controller.updateAddress)
-router.get('/viewOrderDetails',controller.viewOrderDetails)
-router.post('/updateCart',cartController.updateCart)
-router.post('/cancelOrder',controller.cancelOrder)
-router.get('/returnOrder',controller.returnOrder)
-router.get('/cancelledOrders',controller.cancelledOrders)
-router.get('/userWallet',controller.userWallet)
-router.get('/refferalClaim',controller.refferalClaim)
-router.get('/home',controller.homepage)
+router.get('/account',authMiddleWare.checkSignIn,controller.userAccount)
+router.post('/updateAccount',authMiddleWare.checkSignIn,controller.updateAccount)
+router.post('/addAddress',authMiddleWare.checkSignIn,controller.addAddress)
+router.get('/deleteAddress',authMiddleWare.checkSignIn,controller.deleteAddress)
+router.get('/editAddress',authMiddleWare.checkSignIn,controller.editAddress)
+router.post('/updateAddress',authMiddleWare.checkSignIn,controller.updateAddress)
+router.get('/viewOrderDetails',authMiddleWare.checkSignIn,controller.viewOrderDetails)
+router.post('/updateCart',authMiddleWare.checkSignIn,cartController.updateCart)
+router.post('/cancelOrder',authMiddleWare.checkSignIn,controller.cancelOrder)
+router.get('/returnOrder',authMiddleWare.checkSignIn,controller.returnOrder)
+router.get('/cancelledOrders',authMiddleWare.checkSignIn,controller.cancelledOrders)
+router.get('/userWallet',authMiddleWare.checkSignIn,controller.userWallet)
+router.get('/refferalClaim',authMiddleWare.checkSignIn,controller.refferalClaim)
+router.get('/home',authMiddleWare.checkSignIn,controller.homepage)
 
 
 router.get('/',productController.productGridView)
@@ -55,21 +57,21 @@ router.get('/productdetail',productController.productdetail)
 router.get('/showPrice',productController.showPrice)
 
 
-router.post('/addToCart',cartController.addToCart)
-router.get('/showCart',cartController.showCart)
-router.get('/deleteCart',cartController.deleteCart)
-router.post('/checkOut',cartController.checkOut)
-router.get('/applyCoupon',cartController.applyCoupon)
+router.post('/addToCart',authMiddleWare.checkSignIn,cartController.addToCart)
+router.get('/showCart',authMiddleWare.checkSignIn,authMiddleWare.checkSignIn,cartController.showCart)
+router.get('/deleteCart',authMiddleWare.checkSignIn,cartController.deleteCart)
+router.post('/checkOut',authMiddleWare.checkSignIn,cartController.checkOut)
+router.get('/applyCoupon',authMiddleWare.checkSignIn,cartController.applyCoupon)
 
-router.get('/checkoutPage',userCheckoutController.checkOutPage)
-router.post('/checkOutAddress',userCheckoutController.addAddress)
-router.post('/placeOrder',userCheckoutController.placeOrder)
+router.get('/checkoutPage',authMiddleWare.checkSignIn,userCheckoutController.checkOutPage)
+router.post('/checkOutAddress',authMiddleWare.checkSignIn,userCheckoutController.addAddress)
+router.post('/placeOrder',authMiddleWare.checkSignIn,userCheckoutController.placeOrder)
 
 
-router.get('/showwishlist',wishListController.showWishList)
-router.post('/addToWish',wishListController.addToWish)
-router.get('/deleteWish',wishListController.deleteWish)
-router.get('/addfromwish',wishListController.addFromWish)
+router.get('/showwishlist',authMiddleWare.checkSignIn,wishListController.showWishList)
+router.post('/addToWish',authMiddleWare.checkSignIn,wishListController.addToWish)
+router.get('/deleteWish',authMiddleWare.checkSignIn,wishListController.deleteWish)
+router.get('/addfromwish',authMiddleWare.checkSignIn,wishListController.addFromWish)
 
 
 

@@ -1,5 +1,7 @@
 const productModel = require("../../models/productModel");
 const categoryModel = require("../../models/categoryModel");
+const imageController = require('../../controllers/imageController')
+
 
 
 module.exports = {
@@ -12,10 +14,11 @@ module.exports = {
 			res.status(404).send('erorr');
 		}
 	},
-	addProducts: async (req, res) => {
+	addProducts: async (req, res, next) => {
 		const errors = []
 		const categories = await categoryModel.find({});
 		try {
+			
 			const sizes = [];
 			const processedImages = req.processedImages || [];
 			

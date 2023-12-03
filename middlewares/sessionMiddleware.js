@@ -16,4 +16,16 @@ function setNoCache(req,res,next){
           next()
 }
 
-module.exports = {sessionMiddleware,setNoCache}
+function checkSignIn(req,res,next){
+          if(!req.session.user)
+          {
+res.redirect('/user/shop')
+          }
+          else
+          {
+                    next()
+          }
+}
+
+module.exports = {sessionMiddleware,setNoCache,checkSignIn}
+
