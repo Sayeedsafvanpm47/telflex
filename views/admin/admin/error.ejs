@@ -1,40 +1,58 @@
-<%- include('partials/head') %>
 
-<body>
-    <div class="screen-overlay"></div>
-    <%- include('partials/aside') %>
-    <main class="main-wrap">
-        <%- include('partials/header') %> 
-        <section class="content-main">
-            <div class="row mt-60">
-                <div class="col-sm-12">
-                    <div class="w-50 mx-auto text-center">
-                        <img src="/admin/imgs/theme/404.png" width="350" alt="Page Not Found">
-                        <h3 class="mt-40 mb-15">Oops! Page not found</h3>
-                        <p>It's looking like you may have taken a wrong turn. Don't worry... it happens to the best of us. Here's a little tip that might help you get back on track.</p>
-                        <a href="index.html" class="btn btn-primary mt-4"><i class="material-icons md-keyboard_return"></i> Back to main</a>
+
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--=============== BOXICONS ===============-->
+        <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+
+        <!--=============== CSS ===============-->
+        <link rel="stylesheet" href="assets/css/styles.css">
+
+        <title>Responsive 404 website - Bedimcode</title>
+        <%- include('partials/head') %>
+    </head>
+    <body>
+        <!--==================== HEADER ====================-->
+        <%- include('partials/header') %>
+
+        <!--==================== MAIN ====================-->
+        <main class="main">
+            <!--==================== HOME ====================-->
+            <section class="home">
+                <div class="home__container container">
+                    <div class="home__data">
+                        <span class="home__subtitle">Error 404</span>
+                        <h1 class="home__title">Hey Buddy</h1>
+                        <p class="home__description">
+                            We can't seem to find the page <br> you are looking for.
+                        </p>
+                        <a href="#" class="home__button">
+                            Go Home
+                        </a>
+                    </div>
+
+                    <div class="home__img">
+                        <img src="assets/img/ghost-img.png" alt="">
+                        <div class="home__shadow"></div>
                     </div>
                 </div>
-            </div>
-        </section> <!-- content-main end// -->
-        <footer class="main-footer font-xs">
-            <div class="row pb-30 pt-15">
-                <div class="col-sm-6">
-                    <script>
-                    document.write(new Date().getFullYear())
-                    </script> ©, Evara - HTML Ecommerce Template .
-                </div>
-                <div class="col-sm-6">
-                    <div class="text-sm-end">
-                        All rights reserved
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </main>
-    <%- include('partials/script') %>
-</body>
 
+                <footer class="home__footer">
+                    <span>(554) 987-654</span>
+                    <span>|</span>
+                    <span>info@company.com</span>
+                </footer>
+            </section>
+        </main>
 
-<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-error-404.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:34 GMT -->
+        <!--=============== SCROLLREVEAL ===============-->
+        <script src="assets/js/scrollreveal.min.js"></script>
+
+        <!--=============== MAIN JS ===============-->
+        <script src="assets/js/main.js"></script>
+    </body>
 </html>

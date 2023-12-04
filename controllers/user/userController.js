@@ -27,7 +27,7 @@ module.exports = {
 			res.status(200).send("error occured");
 		}
 	},
-	postLogin: async (req, res) => {
+	postLogin: async (req, res,next) => {
 		try {
 		  const { email, password } = req.body;
 		  const emailValid = isEmailValid(email);
@@ -62,6 +62,8 @@ module.exports = {
 	        
 		  if (errors.length > 0) {
 		    res.render("user/user/login", { errors });
+		// res.status(400).render('user/user/login',{errors})
+		
 		  } else {
 		    const passwordMatch = await bcrypt.compare(password, user.password);
 		    if (passwordMatch) {
@@ -79,7 +81,7 @@ req.session.user = true
 			console.log(req.session.userId)
 		      console.log("Login successful");
 		      if(req.session.cart){
-		      res.redirect("/user/")
+		      res.redirect("/user/showCart")
 		      }
 		      else
 		      {
@@ -88,30 +90,47 @@ req.session.user = true
 		    } else {
 		      console.log("Invalid password");
 		      res.redirect("/user/shop");
+		   
+		      const error = new Error("No user data available");
+		    error.status = 400;
+		    error.isRestCall = true;
+		    throw error;
 		    }
 		  }
 		} catch (err) {
-		  console.error("Error in catch:", err);
-		  res.redirect("/user/shop");
+			console.error("Error in catch:", err);
+		 
+		  next(err)
+		//   res.redirect("/user/shop");
 		}
 	        },
 	        
 	getHome: async (req, res) => {
-		if(req.session.userId)
-		{
-			const wishCount  = await wishlistModel.findOne({userId:req.session.userId})
-			const cartCount = await cartModel.findOne({userId:req.session.userId})
-			const productsincart = (cartCount.products).length
-			const productsinwishlist = (wishCount.products).length
-			console.log(productsinwishlist)
-			req.session.wishcount = productsinwishlist
-			req.session.cartcount = productsincart
-		await res.render("user/index.ejs");
-		}
-		else
-		{
+		try {
+			if(req.session.userId)
+			{
+				const wishCount  = await wishlistModel.findOne({userId:req.session.userId})
+				const cartCount = await cartModel.findOne({userId:req.session.userId})
+				const productsincart = (cartCount.products).length
+				const productsinwishlist = (wishCount.products).length
+				console.log(productsinwishlist)
+				req.session.wishcount = productsinwishlist
+				req.session.cartcount = productsincart
 			await res.render("user/index.ejs");
+			}
+			else
+			{
+				await res.render("user/index.ejs");
+			}
+
+			
+			
+			
+		} catch (error) {
+			console.log(error)
+			
 		}
+		
 		
 	},
 	homepage : async (req,res)=>{
@@ -121,6 +140,7 @@ req.session.user = true
 			res.render('user/user/home',{products,banners})
 		} catch (error) {
 			
+			console.log(error)
 		}
 		
 	}
@@ -840,6 +860,22 @@ res.redirect('/user/account');
 	      
 
 
+	      },
+	      error : async (req,res)=>{
+		try {
+			if(req.session.errorOccured){
+			const error = req.session.error
+			res.render('user/user/error',{error})
+			delete req.session.errorOccured
+			}
+			else
+			{
+				res.redirect('/user/')
+			}
+			
+		} catch (error) {
+			
+		}
 	      }
 	
 	      

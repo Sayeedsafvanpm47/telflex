@@ -166,11 +166,10 @@ module.exports = {
                     res.redirect('/user/')
                   }
                   ,
-                  searchProducts : async (req,res)=>{
+                  searchProducts : async (req,res,next)=>{
 
-                   
-
-
+                   try {
+                    
                     const searchTerm = req.body.searchTerm
                     const products = await productModel.find({
                               productName: { $regex: searchTerm, $options: "i" } 
@@ -178,22 +177,54 @@ module.exports = {
                     }).populate({path:'category',model:'categories',select:'_id categoryName published'})
                     console.log('product found : ' + products)
                  
-                  
+                 if(products.length > 0){
                    
                     req.session.search = true
                     req.session.searchProducts = products
                     res.redirect('/user/')
+                 }else
+                 {
+                  const error = new Error("Unable to fetch the data");
+                        error.status = 400;
+                        error.isRestCall = true;
+                        throw error;
+                  
+                 }
+                    
+                   } catch (error) {
+                    console.log(error)
+                    next(error)
+                   }
+
+
 
                   },
-                  productdetail : async (req,res)=>{
-                    const _id = req.query._id
-                    const category = await categoryModel.find({})
-                    const products = await productModel.findById(_id).populate({path:'category',model:'categories',select:'_id categoryName published'})
-                    const related = products.category
+                  productdetail : async (req,res,next)=>{
+
+                     try {
+                      const _id = req.query._id
+                      const category = await categoryModel.find({})
+                      const products = await productModel.findById(_id).populate({path:'category',model:'categories',select:'_id categoryName published'})
+                      if(products){
+                      const related = products.category
+                     
+                      const relatedProducts = await productModel.find({category:related})
+                      console.log(relatedProducts)
+                      res.render('user/user/productdetails',{products,category,relatedProducts})
+                      }else
+                      {
+                        const error = new Error("Unable to fetch the data");
+                        error.status = 400;
+                        error.isRestCall = true;
+                        throw error;
+                      }
+                     } catch (error) {
+                      console.log('error')
+next(error)
+                      
+                     }
+
                    
-                    const relatedProducts = await productModel.find({category:related})
-                    console.log(relatedProducts)
-                    res.render('user/user/productdetails',{products,category,relatedProducts})
 
                   },
                   showPrice:async (req,res) =>{

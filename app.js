@@ -7,8 +7,10 @@ const adminRoute = require("./routes/admin/admin");
 const dbConnect = require("./config/database");
 const upload = require('./controllers/imageController')
 const {sessionMiddleware,setNoCache} = require('./middlewares/sessionMiddleware')
-// const errorMiddleware = require('./middlewares/errorMiddleware')
+const timeout = require('express-timeout-handler')
+
 const flash = require('connect-flash')
+const error = require('./middlewares/errorMiddleware')
 
 
 
@@ -16,6 +18,7 @@ const flash = require('connect-flash')
 app.use(setNoCache);
 
 app.use(sessionMiddleware);
+
 // app.use(errorMiddleware)
 app.use(flash())
 
@@ -45,7 +48,19 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 app.use('/uploads', express.static('uploads'));     
+app.use(timeout.handler({
+          timeout: 10000, 
+          onTimeout: function(req, res) {
+            res.status(404).redirect('/user/error')
+          }
+        }));
+        app.use((req, res) => {
+          req.session.errorOccured = true
+          
+          res.status(404).redirect('/user/error')
+        });
 
+app.use(error)
 
 
 dbConnect().then(() => {
