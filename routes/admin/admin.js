@@ -86,6 +86,7 @@ router.get('/getcouponOffer',offerController.getCouponOffer)
 router.post('/saveCoupon',offerController.saveCoupon)
 router.post('/updateCoupon',offerController.updateCoupon)
 router.get('/couponStatus',offerController.couponStatus)
+router.get('/showRefferals',offerController.showRefferals)
 
 router.post('/addBanner',imageController.upload.array('images'), (req, res, next) => {
           

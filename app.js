@@ -51,12 +51,13 @@ app.use('/uploads', express.static('uploads'));
 app.use(timeout.handler({
           timeout: 10000, 
           onTimeout: function(req, res) {
+                    req.session.errorOccured = true
             res.status(404).redirect('/user/error')
           }
         }));
         app.use((req, res) => {
           req.session.errorOccured = true
-          
+
           res.status(404).redirect('/user/error')
         });
 

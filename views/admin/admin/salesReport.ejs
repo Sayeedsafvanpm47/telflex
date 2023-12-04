@@ -5,7 +5,7 @@
 
 <body>
   
-        
+        <div class="container d-block justify-content-start " id="container">
                         
           <div class="d-flex justify-content-center">
                     <a href=""><img style="width: 300px; height: 200px;" src="/user/imgs/theme/logo.png" alt="logo"></a>
@@ -14,7 +14,7 @@
           <h1><%= reportType  %></h1>
           <p><%= from  %> - <%= to  %></p>
         </div>
-          <div class="container">
+          <div class="">
                     <div class="row hide-on-print">
                       
                               
@@ -28,8 +28,8 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="container">
-                                <p id="showFromDate">From : <%= from  %></p>
+                            <div class="">
+                                <p id="showFromDate" hidden>From : <%= from  %></p>
                                 <input id="inputFrom" type="text" value="" hidden>
                             </div>
                         </div>
@@ -44,13 +44,13 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="container">
-                                <p id="showToDate">To :</p>
+                            <div class="">
+                                <p id="showToDate" hidden>To :</p>
                                 <input id="inputTo" type="text" value="" hidden>
                             </div>
                         </div>
                         <div>
-                        <select style="width: 300px;" class="custom-select" name="typeOfReport" id="typeOfReport" onchange="setDateRange()">
+                        <select style="width: 300px; margin-top: 10px;" class="custom-select" name="typeOfReport" id="typeOfReport" onchange="setDateRange()">
                             <option value="daily">Get Daily Report</option>
                             <option value="weekly">Get Weekly Report</option>
                             <option value="monthly">Get Monthly Report</option>
@@ -92,7 +92,7 @@
                     
                 
                
-                    <div class="container">
+                    <div class="">
                               
                        
                         <div style="margin-top: -70px;" class="row">
@@ -105,7 +105,7 @@
   
         <section class="mt-50 mb-50">
         
-            <div class="container">
+            <div class="">
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
@@ -116,7 +116,7 @@
                               </div>
                            
                               
-                                  <table class="table">
+                                  <table class="" id="testtable">
                                       <tbody>
                                         <% if(productsRevenue&& productsRevenue.length > 0){ %>
                                           <tr>
@@ -148,7 +148,7 @@
                               </div>
                         </div>
 
-                        <div class="table-responsive">
+                        <div class="table-responsive" id="testtable2">
                             <table class="table shopping-summery text-center clean bordered-table">
                                 <thead>
                                     <tr class="main-heading">
@@ -195,7 +195,7 @@
                                     </div>
                                  
                                     
-                                        <table class="table">
+                                        <table class="table" id="testtable3">
                                             <tbody>
                                                 <% if(profit && profit.length>0){%>
                                                 <tr>
@@ -220,9 +220,13 @@
                                         </table>
                                     </div>
                                    <div class="row">
-                                        <div class="col-2 hide-on-print">
-                                    <input type="button" id="printbtn" onclick="window.print()" style="background-color: rgb(6, 75, 12); color: white; border: none; padding: 10px 20px; cursor: pointer;" value="Print Invoice">
-                              </div>
+                                        <div class="col-2 hide-on-print d-flex">
+                                            <button class="btn btn-primary custom-btn" type="button" style="margin-top: 10px;" id="printButton">Print Invoice</button>
+
+                                            <button class="btn btn-danger custom-btn" style="margin-left: 20px; margin-top: 10px;" onclick="download()">Download Excel</button>
+                                            
+                                            
+                                </div>
                                    
                                    
                                  
@@ -237,6 +241,7 @@
             </form>
         </section>
     </main>
+</div>
    
   
     <!-- Preloader Start -->
@@ -254,6 +259,7 @@
             </div>
         </div>
     </div>
+
     <script>
         async function setDateRange() {
             const selectedReport = $("#typeOfReport").val();
@@ -265,7 +271,7 @@
         
             if (selectedReport === "daily") {
                 fromDate = `${padZero(today.getDate())}/${padZero(today.getMonth() + 1)}/${today.getFullYear()}`;
-                toDate = `${padZero(today.getDate()) + 1}/${padZero(today.getMonth() + 1)}/${today.getFullYear()}`;
+                toDate = `${padZero(today.getDate() + 1) }/${padZero(today.getMonth() + 1)}/${today.getFullYear()}`;
              
             } else if (selectedReport === "weekly") {
                 // Calculate the start and end of the week
@@ -313,27 +319,28 @@
         setDateRange();
         </script>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
    <script>
  
-    function setDefaultReportType() {
-        const typeOfReport = localStorage.getItem('selectedReport');
-        const typeOfReportElement = document.getElementById('typeOfReport');
+    // function setDefaultReportType() {
+    //     const typeOfReport = localStorage.getItem('selectedReport');
+    //     const typeOfReportElement = document.getElementById('typeOfReport');
     
-        if (typeOfReport) {
-            typeOfReportElement.value = typeOfReport;
-        } else {
+    //     if (typeOfReport) {
+    //         typeOfReportElement.value = typeOfReport;
+    //     } else {
            
-            localStorage.setItem('selectedReport', typeOfReportElement.value);
-        }
+    //         localStorage.setItem('selectedReport', typeOfReportElement.value);
+    //     }
     
     
-        typeOfReportElement.addEventListener('change', function() {
-            localStorage.setItem('selectedReport', this.value);
-        });
-    }
+    //     typeOfReportElement.addEventListener('change', function() {
+    //         localStorage.setItem('selectedReport', this.value);
+    //     });
+    // }
     
-    // Call the function to set default value and store selected value
-    setDefaultReportType();
+    // // Call the function to set default value and store selected value
+    // setDefaultReportType();
     </script>
    <script>
 
@@ -366,9 +373,9 @@
     
             // Redirect to getReportResults and update the report type
             window.location.assign('/admin/getReportResults');
-            const typeOfReport = document.getElementById('typeOfReport').value;
+        //     const typeOfReport = document.getElementById('typeOfReport').value;
         
-        localStorage.setItem('selectedReport', typeOfReport);
+        // localStorage.setItem('selectedReport', typeOfReport);
     
         } catch (error) {
             console.error('Error:', error);
@@ -381,6 +388,7 @@
                     showConfirmButton: true
                 });
             }
+            location.reload()
         }
     }
     </script>
@@ -411,8 +419,60 @@
     <script src="/user/js/maind134.js?v=3.4"></script>
     <script src="/user/js/shopd134.js?v=3.4"></script>
 
+<script src="https://unpkg.com/xlsx@0.9.8/dist/xlsx.core.min.js"></script>
+    <script src=" https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js "></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx-style@0.8.13/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.4/xlsx.full.min.js"></script>
+
+<script>
+function download() {
+    
+    var table1 = document.getElementById("testtable");
+    var table2 = document.getElementById('testtable2');
+    var table3 = document.getElementById('testtable3');
+
+    var workbook1 = XLSX.utils.table_to_book(table1);
+    var workbook2 = XLSX.utils.table_to_book(table2);
+    var workbook3 = XLSX.utils.table_to_book(table3);
+
+    var ws1 = workbook1.Sheets["Sheet1"];
+    var ws2 = workbook2.Sheets["Sheet1"];
+    var ws3 = workbook3.Sheets["Sheet1"];
 
 
+
+  
+    var mergedWorkbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(mergedWorkbook, ws1, "Table1");
+    XLSX.utils.book_append_sheet(mergedWorkbook, ws2, "Table2");
+    XLSX.utils.book_append_sheet(mergedWorkbook, ws3, "Table3");
+
+   
+    XLSX.writeFile(mergedWorkbook, "SalesReport.xlsx"); 
+}
+
+
+
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    let printLink = document.getElementById("printButton");
+    let container = document.getElementById("container");
+
+    printLink.addEventListener("click", event => {
+        event.preventDefault();
+        printLink.style.display = "none";
+        window.print();
+    }, false);
+
+    container.addEventListener("click", event => {
+        printLink.style.display = "flex";
+    }, false);
+
+}, false);
+
+</script>
 
 
 

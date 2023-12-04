@@ -107,8 +107,7 @@ req.session.user = true
 	        
 	getHome: async (req, res) => {
 		try {
-			if(req.session.userId)
-			{
+			
 				const wishCount  = await wishlistModel.findOne({userId:req.session.userId})
 				const cartCount = await cartModel.findOne({userId:req.session.userId})
 				const productsincart = (cartCount.products).length
@@ -117,11 +116,10 @@ req.session.user = true
 				req.session.wishcount = productsinwishlist
 				req.session.cartcount = productsincart
 			await res.render("user/index.ejs");
-			}
-			else
-			{
-				await res.render("user/index.ejs");
-			}
+				
+				
+			
+			
 
 			
 			
@@ -135,9 +133,12 @@ req.session.user = true
 	},
 	homepage : async (req,res)=>{
 		try {
-			const products = await productModel.find({})
+			
+				const products = await productModel.find({})
 			const banners = await bannerModel.find({})
 			res.render('user/user/home',{products,banners})
+				
+			
 		} catch (error) {
 			
 			console.log(error)

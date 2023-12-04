@@ -8,8 +8,8 @@
         <section class="content-main">
             <div class="content-header">
                 <div>
-                    <h2 class="content-title card-title">Categories </h2>
-                    <p>Add, edit or delete a category</p>
+                    <h2 class="content-title card-title">Refferals Info </h2>
+                    <p>View users refferal status</p>
                 </div>
                 <!-- 6 -->
             </div>
@@ -32,36 +32,23 @@
                                     <thead>
                                         <tr>
                                            
-                                            <th>Category Name</th>
-                                            <th>Description</th>
-                                           <th>Offer</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th>User Name</th>
+                                            <th>Refferal Code</th>
+                                           <th>Reffered Users</th>
+                                            <th>Amount Recieved</th>
+                                           
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% category.forEach((item,index) => { %>
-                                            <tr>
-                                              <td><%= item.categoryName %></td>
-                                              <td><%= item.description %></td>
-                                              <td><input type='number' onkeypress="return onlyNumberKey(event)" name="categoryDiscount" id="categoryDiscount<%= index  %>"></td>
-                                              <td>
-                                                <% if (item.published === true) { %>
-                                                  <span>Listed</span>
-                                                <% } else { %>
-                                                  <span>Unlisted</span>
-                                                <% } %>
-                                              </td>
-                                              <td>
-                                                  <% if (item.published === true) { %>
-                                                           <button class="btn btn-primary" id="" onclick="categoryDiscount('<%= item._id %>','<%= index %>')">SAVE</button>
-                                                          <% } else { %>
-                                                         <span>You cannot perform any action</span>
-                                                          <% } %>
-                                              </td>
-                                              
-                                            </tr>
-                                          <% }); %>
+                                        <% refferals.forEach(item=>{ %>
+                                                  <tr>
+                                                <td><%= item.reffererId.firstname  %></td> 
+                                                <td><%= item.refferalCode  %></td>
+                                                <td><%= item.reffereeId.length  %></td>
+                                                <td><%= item.reffereeId.length * 100  %></td>
+                                        </tr>
+                                    <%   }) %>
+                                       
                                         </tbody>
                                            
                                 </table>
@@ -105,23 +92,13 @@
             }
           }
           function onlyNumberKey(evt) {
-    let inputValue = evt.target.value;
     let ASCIICode = (evt.which) ? evt.which : evt.keyCode;
-
-  
-    if ((ASCIICode >= 48 && ASCIICode <= 57) || ASCIICode === 8 || ASCIICode === 46 || (ASCIICode >= 37 && ASCIICode <= 40)) {
-
-        if ((inputValue.length === 0 && ASCIICode === 48) || (parseInt(inputValue + String.fromCharCode(ASCIICode)) >= 1 &&
-            parseInt(inputValue + String.fromCharCode(ASCIICode)) <= 99)) {
-            return true;
-        } else {
-            return false;
-        }
+    if (ASCIICode >= 48 && ASCIICode <= 57) { // Numbers from 0 to 9
+        return true;
     } else {
         return false;
     }
 }
-
 
         </script>
         

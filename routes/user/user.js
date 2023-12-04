@@ -49,7 +49,7 @@ router.get('/refferalClaim',authMiddleWare.checkSignIn,controller.refferalClaim)
 router.get('/home',authMiddleWare.checkSignIn,controller.homepage)
 
 
-router.get('/',productController.productGridView)
+router.get('/',authMiddleWare.checkBlock,productController.productGridView)
 router.get('/sortCategory',productController.sortProducts)
 router.post('/sortPrice',productController.sortPrice)
 router.post('/searchProducts',productController.searchProducts)

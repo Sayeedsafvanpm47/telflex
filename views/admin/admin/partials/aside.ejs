@@ -32,7 +32,7 @@
                     <div class="submenu">
                         <a href="/admin/getProductOffers">Product Offers</a>
                         <a href="/admin/getCategoryOffer">Category Offers</a>
-                        <a href="/admin/createCategory">Refferal Offers</a>
+                        <a href="/admin/showRefferals">Refferal Offers</a>
                     
                         <a href="/admin/getcouponOffer">Coupon Offers</a>
                        
@@ -40,17 +40,14 @@
                 </li>
 
                 <li class="menu-item has-submenu">
-                    <a class="menu-link" href="/admin/getProductOffers"> <i class="icon material-icons md-shopping_bag"></i>
+                    <a class="menu-link" href="/admin/banner"> <i class="icon material-icons md-shopping_bag"></i>
                         <span class="text">Banners</span>
                     </a>
                     <div class="submenu">
-                        <a href="/admin/getBanner">Main Banner</a>
+                        <a href="/admin/banner">Main Banner</a>
                         <a href="/admin/getCategoryOffer">Sub banner</a>
                         <a href="/admin/createCategory">Offer Banner</a>
-                        <a href="">Deals Banner</a>
-                        <a href="">Monthly Offers</a>
-                        <a href="">Refferal Offers</a>
-                        <a href="/admin/getcouponOffer">Coupon Offers</a>
+                        
                        
                     </div>
                 </li>
@@ -105,17 +102,29 @@
               <br>
           </nav>
       </aside>
+    
       <script>
-        const currentPath = window.location.pathname;
-
-
-const menuLinks = document.querySelectorAll('.menu-link');
-
-
-menuLinks.forEach(link => {
-  if (link.getAttribute('href') === currentPath) {
-
-    link.parentNode.classList.add('active');
-  }
-});
-      </script>
+        // Get the current URL or pathname
+        let currentURL = window.location.pathname;
+    
+        // Get all the menu links including submenu links
+        const menuLinks = document.querySelectorAll('.menu-link');
+    
+        // Loop through each menu link and check if it matches the current URL
+        menuLinks.forEach(link => {
+            // Get the href of the link
+            let href = link.getAttribute('href');
+    
+            // Check if the current URL starts with the link's href (to handle submenus)
+            if (currentURL.startsWith(href)) {
+                // Add 'active' class to the parent 'li' element or the link itself
+                link.classList.add('active');
+                
+                // For submenu items, ensure the parent submenu is also expanded
+                if (link.closest('.has-submenu')) {
+                    link.closest('.has-submenu').classList.add('active'); // Add 'active' to the parent submenu
+                }
+            }
+        });
+    </script>
+    

@@ -1,7 +1,9 @@
 const productModel = require('../../models/productModel')
 const categoryModel = require('../../models/categoryModel')
 const couponModel = require('../../models/couponModel')
+const refferalModel = require('../../models/refferalModel')
 const {checkCouponExpiry} = require('../../helpers/cronJob')
+const { USER } = require('../../utils/constants/schemaName');
 
 
 module.exports = {
@@ -256,6 +258,22 @@ const couponStatus = await couponModel.findOne({_id:id})
     console.error(error);
     return res.status(500).json({ error: 'Internal server error' });
   }
+},
+showRefferals : async (req,res)=>{
+
+  try {
+    const refferals = await refferalModel.find({}).populate({ path: 'reffererId', model: USER, select: 'firstname' })
+    console.log(refferals)
+
+
+    res.render('admin/admin/refferalOffers',{refferals})
+    
+  } catch (error) {
+console.log(error)
+    res.redirect('/user/error')
+    
+  }
+
 }
 
                   

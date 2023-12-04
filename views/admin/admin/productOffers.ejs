@@ -133,7 +133,7 @@ href=
                                           
                                               <input id="discountinput_<%= index  %>" value="<%= product.productDiscount %>" type="number" hidden>
                                               <td id="currentdiscount_<%= index  %>" class="price" data-title="Price">
-                                                <span><%= product.productDiscount %>%</span>
+                                                <span><%= product.size.productDiscount %>%</span>
                                               </td>
                                               <td id="newprice_<%= index  %>" class="price" data-title="Price">
                                                 <span><%= product.size.productPrice %></span>
@@ -175,9 +175,18 @@ href=
       <script>
 
 function onlyNumberKey(evt) {
+    let inputValue = evt.target.value;
     let ASCIICode = (evt.which) ? evt.which : evt.keyCode;
-    if (ASCIICode >= 48 && ASCIICode <= 57) { // Numbers from 0 to 9
-        return true;
+
+  
+    if ((ASCIICode >= 48 && ASCIICode <= 57) || ASCIICode === 8 || ASCIICode === 46 || (ASCIICode >= 37 && ASCIICode <= 40)) {
+
+        if ((inputValue.length === 0 && ASCIICode === 48) || (parseInt(inputValue + String.fromCharCode(ASCIICode)) >= 1 &&
+            parseInt(inputValue + String.fromCharCode(ASCIICode)) <= 99)) {
+            return true;
+        } else {
+            return false;
+        }
     } else {
         return false;
     }
