@@ -34,7 +34,9 @@
                                            
                                             <th>Category Name</th>
                                             <th>Description</th>
-                                           <th>Offer</th>
+                                            <th>Date</th>
+                                            <th>Discount</th>
+                                          <th>Offer</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -44,6 +46,13 @@
                                             <tr>
                                               <td><%= item.categoryName %></td>
                                               <td><%= item.description %></td>
+                                           <% if(item.offerDate !== undefined && item.offerDate !== null){ %>
+      <td><%= item.offerDate.toString().slice(0,16) %></td>
+    <% } else { %>
+      <td>no info!</td>
+    <% } %>
+                                              <td><%= item.discount  %></td>
+                                           
                                               <td><input type='number' onkeypress="return onlyNumberKey(event)" name="categoryDiscount" id="categoryDiscount<%= index  %>"></td>
                                               <td>
                                                 <% if (item.published === true) { %>
@@ -99,6 +108,7 @@
               const responseData = await response.json();
               console.log(responseData)
               console.log('Request was successful:', responseData);
+              location.reload()
             } catch (error) {
                     console.error('There was a problem with the fetch operation:', error);
 

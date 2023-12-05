@@ -4,18 +4,17 @@ const mongoose = require('mongoose')
 
 module.exports = {
 	createCategory: async (req, res) => {
-		let errors = req.session.error
-		const category = await categoryModel.find({});
-		if(req.session.errorOccured)
-		{
-			
-			delete req.session.errorOccured
-		 res.render("admin/admin/category", { category:category,errors });
+		try {
+			const category = await categoryModel.find({});
+		
+		
+			res.render("admin/admin/category", { category:category });
+		
+		} catch (error) {
+			console.log(error)
 		}
-		else
-		{
-			res.render("admin/admin/category", { category:category,errors });
-		}
+		
+		
 	},
 	submitCategory: async (req, res) => {
 		let errors = []

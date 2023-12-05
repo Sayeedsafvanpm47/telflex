@@ -46,7 +46,7 @@ module.exports = {
             }
 
          
-          
+          if(req.session.user){
 
                 res.render('user/user/shopgrid', {
                     products: searchProducts,
@@ -57,6 +57,19 @@ module.exports = {
                     currentPage,
                
                 });
+              }else
+              {
+                res.render('user/user/shopgrid', {
+                  products: searchProducts,
+                  category,
+                  relatedProducts,
+                  productCount: totalProductsCount,
+                  totalPages,
+                  currentPage,
+             
+              });
+
+              }
           
             }
           catch(error){

@@ -19,37 +19,31 @@ function setNoCache(req,res,next){
 }
 
 async function checkSignIn(req, res, next) {
-          if (!req.session.user) {
-            await res.redirect('/user/shop');
-          }
-                    
-          else {
-           next()
-          }
-        }
-
-        async function checkBlock(req,res,next){
-          try {
-                    if(req.session.user){
-                    const blocked = await userModel.findOne({ _id: req.session.userId });
-          if (blocked.isBlocked) {
-        
-         
-           req.session.blocked = true
-          res.redirect('/user/error')
-          }
-          
-else {
-          next()
-
-        }
+  if (!req.session.user) {
+    await res.redirect('/user/shop');
+  } else {
+    next();
+  }
 }
 
-
-          } catch (error) {
-                    res.redirect('/user/shop')
-          }
-          
+async function checkBlock(req, res, next) {
+  try {
+    if (req.session.user) {
+      const blocked = await userModel.findOne({ _id: req.session.userId });
+      console.log(blocked)
+      console.log(blocked.isBlocked)
+      if (blocked.isBlocked) {
+        req.session.blocked = true;
+  res.redirect('/user/error')
+      } else {
+        next();
+      }
+    } else {
+      res.redirect('/user/shop');
+    }
+  } catch (error) {
+    res.redirect('/user/shop');
+  }
 }
 module.exports = {sessionMiddleware,setNoCache,checkSignIn,checkBlock}
 

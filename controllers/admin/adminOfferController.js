@@ -59,7 +59,7 @@ module.exports = {
                               const category = await categoryModel.find({})
                               res.render('admin/admin/categoryOffers',{category})
                     } catch (error) {
-                              
+                              console.log(error)
                     }
           },
           offerCategory : async (req, res) => {
@@ -67,15 +67,13 @@ module.exports = {
                               const { _id, discount } = req.body;
                               console.log(_id);
                               console.log(discount);
-                            
-                              // Fetch products that match the category
+                           
     const products = await productModel.find({ category: _id });
 
-    // Update each product individually
     for (let i = 0; i < products.length; i++) {
       const product = products[i];
       const updatedSize = product.size.map((item) => {
-        // Update productDiscount for each item in size array
+     
         return {
           ...item,
           productDiscount: discount,
@@ -83,10 +81,10 @@ module.exports = {
         };
       });
 
-      // Update the size array in the product
+  
       product.size = updatedSize;
-
-      // Save the updated product
+     await categoryModel.updateOne({_id:_id},{$set:{discount : discount,offerDate : Date.now()}},{upsert:true})
+    
       await product.save();
     }
                               res.status(200).json({ message: 'Data received' });

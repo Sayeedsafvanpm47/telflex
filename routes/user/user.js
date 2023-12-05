@@ -22,7 +22,7 @@ router.get("/shop", controller.getLogin);
 router.post("/postLogin",controller.postLogin);
 
 router.get('/error',controller.error)
-router.get("/gethome", controller.getHome);
+router.get("/gethome",authMiddleWare.checkBlock,controller.getHome);
 router.get("/getsignup", controller.getSignUp);
 router.post("/signup", controller.postSignUp);
 router.get('/logout',controller.logout)
@@ -33,7 +33,7 @@ router.get("/getForgotPassword", controller.getForgotPassword);
 router.post("/forgotPassword", controller.forgotPassword);
 router.get('/showCreatePass',controller.showCreatePass)
 router.post("/updatePass", controller.updatePass);
-router.get('/account',authMiddleWare.checkSignIn,controller.userAccount)
+router.get('/account',authMiddleWare.checkSignIn,authMiddleWare.checkBlock,controller.userAccount)
 router.post('/updateAccount',authMiddleWare.checkSignIn,controller.updateAccount)
 router.post('/addAddress',authMiddleWare.checkSignIn,controller.addAddress)
 router.get('/deleteAddress',authMiddleWare.checkSignIn,controller.deleteAddress)
@@ -46,10 +46,10 @@ router.get('/returnOrder',authMiddleWare.checkSignIn,controller.returnOrder)
 router.get('/cancelledOrders',authMiddleWare.checkSignIn,controller.cancelledOrders)
 router.get('/userWallet',authMiddleWare.checkSignIn,controller.userWallet)
 router.get('/refferalClaim',authMiddleWare.checkSignIn,controller.refferalClaim)
-router.get('/home',authMiddleWare.checkSignIn,controller.homepage)
+router.get('/home',authMiddleWare.checkSignIn,authMiddleWare.checkBlock,controller.homepage)
 
 
-router.get('/',authMiddleWare.checkBlock,productController.productGridView)
+router.get('/',productController.productGridView)
 router.get('/sortCategory',productController.sortProducts)
 router.post('/sortPrice',productController.sortPrice)
 router.post('/searchProducts',productController.searchProducts)
@@ -57,19 +57,19 @@ router.get('/productdetail',productController.productdetail)
 router.get('/showPrice',productController.showPrice)
 
 
-router.post('/addToCart',authMiddleWare.checkSignIn,cartController.addToCart)
-router.get('/showCart',authMiddleWare.checkSignIn,authMiddleWare.checkSignIn,cartController.showCart)
+router.post('/addToCart',authMiddleWare.checkSignIn,authMiddleWare.checkBlock,cartController.addToCart)
+router.get('/showCart',authMiddleWare.checkSignIn,authMiddleWare.checkBlock,cartController.showCart)
 router.get('/deleteCart',authMiddleWare.checkSignIn,cartController.deleteCart)
 router.post('/checkOut',authMiddleWare.checkSignIn,cartController.checkOut)
 router.get('/applyCoupon',authMiddleWare.checkSignIn,cartController.applyCoupon)
 
-router.get('/checkoutPage',authMiddleWare.checkSignIn,userCheckoutController.checkOutPage)
+router.get('/checkoutPage',authMiddleWare.checkSignIn,authMiddleWare.checkBlock,userCheckoutController.checkOutPage)
 router.post('/checkOutAddress',authMiddleWare.checkSignIn,userCheckoutController.addAddress)
 router.post('/placeOrder',authMiddleWare.checkSignIn,userCheckoutController.placeOrder)
 
 
-router.get('/showwishlist',authMiddleWare.checkSignIn,wishListController.showWishList)
-router.post('/addToWish',authMiddleWare.checkSignIn,wishListController.addToWish)
+router.get('/showwishlist',authMiddleWare.checkSignIn,authMiddleWare.checkBlock,wishListController.showWishList)
+router.post('/addToWish',authMiddleWare.checkSignIn,authMiddleWare.checkBlock,wishListController.addToWish)
 router.get('/deleteWish',authMiddleWare.checkSignIn,wishListController.deleteWish)
 router.get('/addfromwish',authMiddleWare.checkSignIn,wishListController.addFromWish)
 
