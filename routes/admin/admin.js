@@ -7,6 +7,8 @@ router.use(express.urlencoded({extended: true}));
 // const multer = require('multer')
 // const upload = multer({dest:'uploads/'})
 
+const checkImage = require('../../middlewares/checkImageLength')
+
 const controller = require("../../controllers/admin/adminController");
 const controllerUserManage = require("../../controllers/admin/adminUserManage");
 const controllerCategory = require("../../controllers/admin/categoryController");
@@ -88,10 +90,22 @@ router.post('/updateCoupon',offerController.updateCoupon)
 router.get('/couponStatus',offerController.couponStatus)
 router.get('/showRefferals',offerController.showRefferals)
 
-router.post('/addBanner',imageController.upload.array('images'), (req, res, next) => {
+router.post('/dealsBanner',imageController.upload.array('images1'),checkImage.checkDealsBanner, (req, res, next) => {
           
-          imageController.processImage(req, res, next, 1200, 200);
-        },bannerController.addBanner)
+          imageController.processImage(req, res, next, 636, 439);
+        },bannerController.dealsBanner)
+        router.post('/mainBanner',imageController.upload.array('images2'),checkImage.checkMainBanner,(req, res, next) => {
+          
+          imageController.processImage(req, res, next, 731, 470);
+        },bannerController.mainBanner)
+        router.post('/subBanner',imageController.upload.array('images3'),checkImage.checkSubBanner, (req, res, next) => {
+          
+          imageController.processImage(req, res, next, 1296, 295);
+        },bannerController.subBanner)
+        router.post('/offerBanner',imageController.upload.array('images4'),checkImage.checkOfferBanner, (req, res, next) => {
+          
+          imageController.processImage(req, res, next, 416, 177);
+        },bannerController.offerBanner)
 router.get('/banner',bannerController.showBanner)
 
 

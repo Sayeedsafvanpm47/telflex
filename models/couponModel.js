@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 let couponSchema = new mongoose.Schema({
     couponCode: {
         type: String,
-        unique: true, 
+      
         required: true
     },
     discount: {

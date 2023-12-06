@@ -2,14 +2,14 @@ const mongoose = require('mongoose');
 
 const bannerSchema = new mongoose.Schema({
          bannerType : String,
-         bannerTitle : String,
-         bannerPhrase : String,
-         bannerSubText : String,
-         bannerAction : String,
-         bannerDiscount : Number,
-         bannerOffer : Number,
-         bannerMrp : Number,
-         start : Date,
+         bannerTitle : Array,
+         bannerPhrase : Array,
+         bannerSubText : Array,
+         bannerAction : Array,
+         bannerDiscount : Array,
+         bannerOffer : Array,
+         bannerMrp : Array,
+     
          end : Date,
          images : Array
 

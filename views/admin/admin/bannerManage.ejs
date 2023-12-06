@@ -18,14 +18,71 @@
     <!-- Template CSS -->
     <link href="/admin/css/main.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="/user/css/maind134.css?v=3.4">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" type="text/css" href="/user/css/tableresp.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-    <style>
-      div.preview-images > img {
-        width: 30%;
-      }
-    </style>
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet"
+href= 
+"https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" /> 
+<link rel="stylesheet" 
+href= 
+"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css" /> 
+<link rel="stylesheet" 
+href= 
+"https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> 
+<script src= 
+"https://code.jquery.com/jquery-3.3.1.slim.min.js"> 
+</script> 
+<script src= 
+"https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"> 
+</script> 
+<script src= 
+"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"> 
+</script> 
+
+<style>
+          .modal {
+          display: none;
+          position: fixed;
+          z-index: 1;
+         margin-left: 10%;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+          background-color: #fefefe;
+          margin: 15% auto;
+          padding: 20px;
+          border: 1px solid #888;
+          width: 50%;
+        }
+        
+        .close {
+          color: #aaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+          color: black;
+          text-decoration: none;
+          cursor: pointer;
+        }
+</style>
+
+
 
 </head>
 
@@ -41,113 +98,476 @@
                         <h2 class="content-title">Add Banner</h2>
                        
                     </div>
-                </div>
+                                                      
+                    
+                    <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+                       
+                        <% errors.forEach(error => { %>
+                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                        
+                       
+                        <script>
+                     
+      Swal.fire({
+        title: 'Error!',
+        text: '<%= errors.join('<br>') %>', 
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+   
+    
+                        </script>
+                          <% }) %>
+                      <% } %>
+
+                      
+<% if (success) { %>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      Swal.fire({
+        title: 'Upload Successful',
+        html: '<%= success %>',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+    </script>
+  <% } %>
+                      
+                     
+                    
+                      </div>
+                      
+
+    </div>
                 <div class="col-xs-6">
                     <div class="card mb-4">
                         <div class="card-header">
-                            <h4>Product Info</h4>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4>Deals Banner</h4>
+                                </div>
+                                <div class="col-lg-6">
+<h4>Main Banner</h4>
+                                </div>
+                            </div>
+                           
                         </div>
                         <div class="card-body">
-                            <% if (typeof(errors) !== 'undefined' && errors.length > 0) { %>
-                                <div id="error-message" style="background-color: rgba(255, 23, 23, 0.215); border-radius: 10px;">
-                                    <span>
-                                        <% errors.forEach(error => { %>
-                                            <p style="color: red;"><%= error %></p>
-                                        <% }); %>
-                                    </span>
-                                </div>
-                            <% } %>
+                         
 
-                            <form action="/admin/addBanner" method="Post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <% if(deal) { %>
+                                       
+                            <form action="/admin/dealsBanner" method="Post" enctype="multipart/form-data">
+                               
+                                        <div class="">
                                 <div class="mb-4">
                                     <label for="product_category" class="form-label">Banner Type</label>
-                                    <select onchange="changeInput()" class="form-control" id="bannertype" name="bannertype">
-                                        <option value="mainbanner">Main Banner</option>
-                                        <option value="subbanner">Sub Banner</option>
-                                        <option value="offerbanner">Offer Banner</option>
-                                        <option value="dealsbanner">Deals Banner</option>
-                                        <option value="eventbanner">Event Banner</option>
-                                    </select>
+                                    <input type="text" placeholder="Type here" class="form-control" id="bannertype1" value="Deals banner" name="bannertype1" readonly>
+                                    
                                 </div>
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Banner title</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="title" name="title">
+                                    <input type="text" value="<%= deal.bannerTitle[0]  %>" placeholder="Type here" class="form-control" id="title1" name="title1">
                                 </div>
                                 <div class="mb-4">
+                                    <label for="product_name" class="form-label">Banner title 2</label>
+                                    <input type="text" value="<%= deal.bannerTitle[1]  %>" placeholder="Type here" class="form-control" id="title1" name="title12">
+                                </div>
+                                
+                                <div class="mb-4">
                                         <label for="product_name" class="form-label">Banner Phrase</label>
-                                        <input type="text" placeholder="Type here" class="form-control" id="phrase" name="phrase">
+                                        <input type="text" value="<%= deal.bannerPhrase[0] %>" placeholder="Type here" class="form-control" id="phrase1" name="phrase1">
                                     </div>
+
+                                    <div class="mb-4">
+                                        <label for="product_name" class="form-label">Banner Phrase 2</label>
+                                        <input type="text" value="<%= deal.bannerPhrase[1]  %>" placeholder="Type here" class="form-control" id="phrase1" name="phrase12">
+                                    </div>
+                                    
+
                                     <div class="mb-4">
                                         <label for="product_name" class="form-label">Banner sub-text</label>
-                                        <input type="text" placeholder="Type here" class="form-control" id="subtext" name="subtext">
+                                        <input type="text" value="<%= deal.bannerSubText[0] %>" placeholder="Type here" class="form-control" id="subtext1" name="subtext1">
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="product_name" class="form-label">Banner sub-text 2</label>
+                                        <input type="text" value="<%= deal.bannerSubText[1]  %>" placeholder="Type here" class="form-control" id="subtext1" name="subtext12">
                                     </div>
                                     <div class="mb-4">
                                         <label for="product_name" class="form-label">Banner Action</label>
-                                        <input type="text" placeholder="Type here" class="form-control" id="btn" name="action">
+                                        <input type="text" value="<%= deal.bannerAction[0]  %>" placeholder="Type here" class="form-control" id="action1" name="action1">
                                     </div>
-                                    <div id="offer" class="mb-4" style="display: none;">
+                                    <div class="mb-4">
+                                        <label for="product_name" class="form-label">Banner Action 2</label>
+                                        <input type="text" value="<%= deal.bannerAction[1]  %>" placeholder="Type here" class="form-control" id="action1" name="action12">
+                                    </div>
+                                    <div id="offer" class="mb-4" >
                                         <label for="product_name" class="form-label">Offer Price</label>
-                                        <input type="text" placeholder="Type here" class="form-control"  name="offer">
+                                        <input type="text" value="<%= deal.bannerOffer[0]  %>" placeholder="Type here" class="form-control" id="offer1"  name="offer1">
                                     </div>
-                                    <div id="old" class="mb-4" style="display: none;">
+                                    <div id="offer" class="mb-4" >
+                                        <label for="product_name" class="form-label">Offer Price 2</label>
+                                        <input type="text" value="<%= deal.bannerOffer[1]  %>" placeholder="Type here" class="form-control" id="offer1"  name="offer12">
+                                    </div>
+                                    <div id="old" class="mb-4" >
                                         <label for="product_name" class="form-label">Old Price</label>
-                                        <input type="text" placeholder="Type here" class="form-control"  name="mrp">
+                                        <input type="text" value="<%= deal.bannerMrp[0]  %>" placeholder="Type here" class="form-control" id="mrp1"  name="mrp1">
+                                    </div>
+
+                                    <div id="old" class="mb-4" >
+                                        <label for="product_name" class="form-label">Old Price 2</label>
+                                        <input type="text" value="<%= deal.bannerMrp[1]  %>" placeholder="Type here" class="form-control" id="mrp1"  name="mrp12">
                                     </div>
                                   
-                                    <div id="start" class="mb-4" style="display: none;">
-                                        <label for="product_name" class="form-label">Offer start date</label>
-                                        <input type="text" placeholder="Type here" class="form-control"  name="start">
+                                    <label for="product_name" class="form-label">Expiry</label>
+                                    <div class="datepicker date input-group p-0 shadow-sm" style=" height: 45px; width: 130px">
+                                     
+                                        <input id="toDate" value="" style="height: 45px;" type="text" class="form-control py-2 px-2" />
+                                        <span id="showToDate" hidden></span>
+                                        <span class="input-group-append">
+                                            <span class="input-group-text px-2">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </span>
                                     </div>
-                                    <div id="end" class="mb-4" style="display: none;">
-                                        <label for="product_name" class="form-label">Offer end date</label>
-                                        <input type="text" placeholder="Type here" class="form-control"  name="end">
-                                    </div>
+                                    
                                 
                                  
                                   
                                     <div class="mb-4">
                                       <label for="product_name" class="form-label">Product Discount</label>
-                                      <input type="text" placeholder="Type here" class="form-control" id="discount" name="discount">
+                                      <input type="text" value="<%= deal.bannerDiscount[0]  %>" placeholder="Type here" class="form-control" id="discount1" name="discount1">
                                   </div>
-                                    
-                                   
+
+                                  <div class="mb-4">
+                                    <label for="product_name" class="form-label">Product Discount 2</label>
+                                    <input type="text" value="<%= deal.bannerDiscount[1]  %>" placeholder="Type here" class="form-control" id="discount1" name="discount12">
+                                </div>
+                                
+                                 
 
                                  
                                   
+                          
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Upload Image</label>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                          <div class="preview-images"></div>
+                                        </div>
+                                      </div>
+                                      
+                                    <input type="file" name="images1" class="form-control-file border" accept="image/*" id="input-images1" multiple >
                                 </div>
-                                <div class="d-grid">
-                                    <label for="file-upload" class="custom-file-upload">
-                                        <img src="/admin/imgs/theme/upload.svg" alt="Upload Image">
-                                    <input type="file" name="images" class="form-control-file border" accept="image/*" id="input-images" multiple >
-                                </div>
+                            </div>
                              
                               
 
               
                                
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-primary">Create Product</button>
+                                <div class="">
+                                    <button type="submit" class="btn btn-primary">Create Banner</button>
                                 </div>
+                            </div>
                                
                             </form>
-                        </div>
-                    </div> <!-- card end// -->
+                            <% } %>
 
-                 
-                    <div class="row">
-                        <div class="col-sm-12">
-                          <div class="preview-images"></div>
+                               
+                       
+                     
+
+                        <div class="col-lg-6">
+                            <% if(banners) {%>
+
+
+                            <form action="/admin/mainBanner" method="Post" enctype="multipart/form-data">
+                               
+                                <div class="">
+                        <div class="mb-4">
+                            <label for="product_category" class="form-label">Banner Type</label>
+                            <input type="text" placeholder="Type here" class="form-control" id="bannertype2" value="Main Banner" name="bannertype2" readonly>
                         </div>
-                      </div>
+                        <div class="mb-4">
+                            <label for="product_name" class="form-label">Banner title</label>
+                            <input type="text" placeholder="Type here" class="form-control" value="<%= banners.bannerTitle[0]  %>" id="title2" name="title2">
+                        </div>
+                        <div class="mb-4">
+                            <label for="product_name" class="form-label">Banner title 2</label>
+                            <input type="text" placeholder="Type here" value="<%= banners.bannerTitle[1]  %>" class="form-control" id="title2" name="title22">
+                        </div>
+                        <div class="mb-4">
+                            <label for="product_name" class="form-label">Banner title 3</label>
+                            <input type="text" placeholder="Type here" value="<%= banners.bannerTitle[2]  %>" class="form-control" id="title2" name="title23">
+                        </div>                        
+                        <div class="mb-4">
+                                <label for="product_name" class="form-label">Banner Phrase</label>
+                                <input type="text" placeholder="Type here" value="<%= banners.bannerPhrase[0]  %>" class="form-control" id="phrase2" name="phrase2">
+                            </div>
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Banner Phrase 2</label>
+                                <input type="text" placeholder="Type here" value="<%= banners.bannerPhrase[1]  %>" class="form-control" id="phrase2" name="phrase22">
+                            </div>
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Banner Phrase 3</label>
+                                <input type="text" placeholder="Type here" value="<%= banners.bannerPhrase[3]  %>" class="form-control" id="phrase2" name="phrase23">
+                            </div>
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Banner sub-text</label>
+                                <input type="text" placeholder="Type here" value="<%= banners.bannerSubText[0]  %>" class="form-control" id="subtext2" name="subtext2">
+                            </div>
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Banner sub-text 2</label>
+                                <input type="text" placeholder="Type here" value="<%= banners.bannerSubText[1]  %>" class="form-control" id="subtext2" name="subtext22">
+                            </div>
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Banner sub-text 3</label>
+                                <input type="text" placeholder="Type here" value="<%= banners.bannerSubText[2]  %>" class="form-control" id="subtext2" name="subtext23">
+                            </div>
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Banner Action</label>
+                                <input type="text" placeholder="Type here" value="<%= banners.bannerAction[0]  %>" class="form-control" id="btn2" name="action2">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Banner Action 2</label>
+                                <input type="text" placeholder="Type here" value="<%= banners.bannerAction[1]  %>" class="form-control" id="btn2" name="action22">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Banner Action 3</label>
+                                <input type="text" placeholder="Type here" value="<%= banners.bannerAction[2]  %>" class="form-control" id="btn2" name="action23">
+                            </div>
+                           
+                        
+                         
+                          
+                            <% if (banners.images.length > 0) { %>
+                                <% for (let j = 0; j < banners.images.length; j++) { %>
+                                    <span>
+                                        <img style="width: 100px; height: 100px;" src="/<%= banners.images[j] %>" alt="">
+                                    </span>
+                                <% } %>
+                            <% } %>
+                            
+                            
+                           
+
+                         
+                          
+                  
+                        <div class="mb-4">
+                            <label for="product_name" class="form-label">Upload Image</label>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                  <div class="preview-images2"></div>
+                                </div>
+                              </div>
+                              
+                            <input type="file" name="images2" class="form-control-file border" accept="image/*" id="input-images2" multiple >
+                        </div>
+                    </div>
+                     
+                      
+
+      
+                       
+                        <div class="">
+                            <button type="submit" class="btn btn-primary">Create Banner</button>
+                        </div>
+                    </div>
+                       
+                    </form>
+               <% } %>
+
+                        </div>
+                  
+                 
+                   
 
                 </div>
-               
+                <div>
+
+
+                    <!-- second part of form -->
+
+                    
+                    <div class="col-xs-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h4>Sub Banner</h4>
+                                    </div>
+                                    <div class="col-lg-6">
+    <h4>Offer Banner</h4>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <div class="card-body">
+                               
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                <form action="/admin/subBanner" method="Post" enctype="multipart/form-data">
+                                   
+                                            <div class="">
+                                    <div class="mb-4">
+                                        <label for="product_category" class="form-label">Banner Type</label>
+                                        <input type="text" placeholder="Type here" class="form-control" id="title" value="Sub Banner" name="bannertype3" readonly>
+                                        
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="product_name" class="form-label">Banner title</label>
+                                        <input type="text" placeholder="Type here" class="form-control" id="title" name="title3">
+                                    </div>
+                                    <div class="mb-4">
+                                            <label for="product_name" class="form-label">Banner Phrase</label>
+                                            <input type="text" placeholder="Type here" class="form-control" id="phrase" name="phrase3">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="product_name" class="form-label">Banner sub-text</label>
+                                            <input type="text" placeholder="Type here" class="form-control" id="subtext" name="subtext3">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="product_name" class="form-label">Banner Action</label>
+                                            <input type="text" placeholder="Type here" class="form-control" id="btn" name="action3">
+                                        </div>
+                                       
+                                        
+                                     
+    
+                                     
+                                      
+                              
+                                    <div class="mb-4">
+                                        <label for="product_name" class="form-label">Upload Image</label>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                              <div class="preview-images3"></div>
+                                            </div>
+                                          </div>
+                                          
+                                        <input type="file" name="images3" class="form-control-file border" accept="image/*" id="input-images3" multiple >
+                                    </div>
+                                </div>
+                                 
+                                  
+    
+                  
+                                   
+                                    <div class="">
+                                        <button type="submit" class="btn btn-primary">Create Product</button>
+                                    </div>
+                                </div>
+                                   
+                                </form>
+                           
+                         
+    
+                            <div class="col-lg-6">
+    
+
+
+                                <form action="/admin/offerBanner" method="Post" enctype="multipart/form-data">
+                                   
+                                    <div class="">
+                            <div class="mb-4">
+                                <label for="product_category" class="form-label">Banner Type</label>
+                                <input type="text" placeholder="Type here" class="form-control" value="Offer Banner" id="title" name="bannertype4" readonly>
+                            </div>
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Banner title</label>
+                                <input type="text" placeholder="Type here" value="" class="form-control" id="title" name="title4">
+                            </div>
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Banner title 2</label>
+                                <input type="text" placeholder="Type here" class="form-control" id="title" name="title42">
+                            </div>
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Banner title 3</label>
+                                <input type="text" placeholder="Type here" class="form-control" id="title" name="title43">
+                            </div>
+                            <div class="mb-4">
+                                    <label for="product_name" class="form-label">Banner Phrase</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="phrase" name="phrase4">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Banner Phrase 2</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="phrase" name="phrase42">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Banner Phrase 3</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="phrase" name="phrase43">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Banner sub-text</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="subtext" name="subtext4">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Banner sub-text 2</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="subtext" name="subtext42">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Banner sub-text 2</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="subtext" name="subtext43">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Banner Action</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="btn" name="action4">
+                                </div>
+                               
+                                
+                               
+    
+                             
+                              
+                      
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Upload Image</label>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                      <div class="preview-images4"></div>
+                                    </div>
+                                  </div>
+                                  
+                                <input type="file" name="images4" class="form-control-file border" accept="image/*" id="input-images4" multiple >
+                            </div>
+                        </div>
+                         
+                          
+    
+          
+                           
+                            <div class="">
+                                <button type="submit" class="btn btn-primary">Create Product</button>
+                            </div>
+                        </div>
+                           
+                        </form>
+
+                   
+                   
+    
+                            </div>
+                      
+                     
+                   
+    
+                    </div>
+                    <div>
+
                    
     </main>
 <!-- added script -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+ 
     <script>
       $(document).ready(function() {
         let imagesPreview = function(input, placeToInsertImagePreview) {
@@ -164,38 +584,42 @@
             }
           }
         };
-        $("#input-images").on("change", function() {
+        $("#input-images1").on("change", function() {
           imagesPreview(this, "div.preview-images");
         });
+        $("#input-images2").on("change", function() {
+          imagesPreview(this, "div.preview-images2");
+        });
+        $("#input-images3").on("change", function() {
+          imagesPreview(this, "div.preview-images3");
+        });
+        $("#input-images4").on("change", function() {
+          imagesPreview(this, "div.preview-images4");
+        });
       });
+      
     </script>
 
 
-
- 
 <script>
-          function changeInput() {
-              const offer = document.getElementById('offer');
-              const mrp = document.getElementById('old');
-              const start = document.getElementById('start');
-              const end = document.getElementById('end');
-              const banner = document.getElementById('bannertype').value;
-      
-              if (banner === 'dealsbanner') {
-                  offer.style.display = 'block';
-                  mrp.style.display = 'block';
-                  start.style.display = 'block';
-                  end.style.display = 'block';
-              } else {
-                  offer.style.display = 'none';
-                  mrp.style.display = 'none';
-                  start.style.display = 'none';
-                  end.style.display = 'none';
-              }
-          }
-      </script>
-          
-      
+  jQuery(document).ready(function($) {
+    $(".datepicker").datepicker({
+        clearBtn: true,
+        format: 'yyyy-mm-dd',
+        setDate: new Date(),
+        autoclose: true
+    });
+
+    $("#expiry").on("change", function() {
+        let selectedDate = $("#expiry").val();
+        $("#showupdateDate").text(`Selected Date: ${selectedDate}`);
+    });
+});
+
+    </script>
+
+
+     
 
 
 

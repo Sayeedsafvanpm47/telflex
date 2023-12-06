@@ -1,0 +1,35 @@
+ <div class="modal fade custom-modal" id="onloadModal" tabindex="-1" aria-labelledby="onloadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <!-- popup banner 1 -->
+                <div class="modal-body">
+                    <% const ogpath = banners[1].images[0] %>
+                    <% const mod = ogpath.replace(/\\/g, '/') %>
+                    <div class="deal" style="background-image: url('/<%= mod %>');">
+                       
+                        <div class="deal-top" style="color: white;"> <!-- Default color for text on a dark background -->
+                            <h2 class="text-brand" style="color: white; background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));" id="bannerTitle"><%= banners[1].bannerTitle  %></h2>
+                            <h5 id="bannerPhrase" style="color: white; background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));"><%= banners[1].bannerPhrase  %></h5>
+                        </div>
+                        <div class="deal-content">
+                            <h6 class="product-title" style="color: white; background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));"><a href="shop-product-right.html"><%= banners[1].bannerSubText  %></a></h6>
+                            <div class="product-price">
+                                <span style="color: white;" class="new-price"><%= banners[0].bannerOffer  %></span>
+                                <span style="color: white;" class="old-price"><%= banners[0].bannerMrp  %></span>
+                            </div>
+                        </div>
+                        <div class="deal-bottom">
+                            <p>Hurry Up! Offer End In:</p>
+                            <div class="deals-countdown" data-countdown="2025/03/25 00:00:00">
+                                <!-- Countdown elements -->
+                            </div>
+                            <a href="shop-grid-right.html" class="btn hover-up"><%= banners[0].bannerAction  %> <i class="fi-rs-arrow-right"></i></a>
+                        </div>
+                    </div>
+               
+                </div>
+             
+            </div>
+        </div>
+    </div>

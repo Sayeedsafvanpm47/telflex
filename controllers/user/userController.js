@@ -139,8 +139,12 @@ req.session.user = true
 		try {
 			
 				const products = await productModel.find({})
-			const banners = await bannerModel.find({})
-			res.render('user/user/home',{products,banners})
+			const banners = await bannerModel.findOne({bannerType : 'Main Banner'})
+			const subbanner = await bannerModel.findOne({bannerType : 'Sub Banner'})
+
+
+			console.log(banners)
+			res.render('user/user/home',{products,banners,subbanner})
 				
 			
 		} catch (error) {

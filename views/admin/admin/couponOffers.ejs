@@ -123,7 +123,7 @@ href=
                                                 <td><%= coupon[i].discount%></td>
                                                 <td><%= ((coupon[i].issuedAt).toString()).slice(0,16)%></td>
                                                 <td><%= ((coupon[i].expiringAt).toString()).slice(0,16)%></td>
-                                                <td><%= coupon[i].usageLimit %></td>
+                                                <td><%= coupon[i].usageLimit%></td>
                                                 <td><%= coupon[i].minimumPurchase%></td>
                                                 <td><%= coupon[i].status%></td>
                                                 <td><%= ((coupon[i].createdAt).toString()).slice(0,16)%></td>
@@ -142,13 +142,13 @@ href=
                                                               <form id="modalForm<%= i %>">
                                                                       <form id="modalForm">
                                                                                 <label for="name">Coupon Name: </label>
-                                                                                <input type="text" id="couponname" value="<%= coupon[i].couponCode%>" name="name" required><br><br>
-                                                                                <input type="number" id="discount" value="<%= coupon[i].discount%>" name="name" required><br><br>
+                                                                                <input type="text" id="couponname<%= i  %>" value="<%= coupon[i].couponCode%>" name="name" required><br><br>
+                                                                                <input type="number" id="discount<%= i  %>" value="<%= coupon[i].discount%>" name="name" required><br><br>
                                                                                 
                                                                                 <label for="email">Expiry :</label> <br>
                                                                                 <div class="datepicker2 date input-group p-0 shadow-sm" style=" height: 45px; width: 175px">
                                                                                       
-                                                                                          <input id="updateDate" style="height: 45px;" value="<%= coupon[i].expiringAt  %>" type="text" class="form-control py-2 px-2" />
+                                                                                          <input id="updateDate<%= i  %>" style="height: 45px;" value="<%= coupon[i].expiringAt  %>" type="text" class="form-control py-2 px-2" />
                                                                                           <span id="showupdateDate" hidden></span>
                                                                                           <span class="input-group-append">
                                                                                               <span class="input-group-text px-2">
@@ -158,12 +158,12 @@ href=
                                                                                       </div>
                                                                                 
                                                                                 <label for="email">Usage Limit</label>
-                                                                                <input type="number" id="usage" value="<%= coupon[i].usageLimit  %>" name="email" required><br><br>
+                                                                                <input type="number" id="usage<%= i  %>" value="<%= coupon[i].usageLimit  %>" name="email" required><br><br>
                                                                                 <label for="email">Minimum Purchase</label>
-                                                                                <input type="number" id="minimum" value="<%= coupon[i].minimumPurchase  %>" name="email" required><br><br>
+                                                                                <input type="number" id="minimum<%= i  %>" value="<%= coupon[i].minimumPurchase  %>" name="email" required><br><br>
                                                                                 
                                                                                 
-                                                                                <input type="submit" value="Submit" onclick="updateCoupon('<%= coupon[i]._id%>')">
+                                                                                <input type="submit" value="Submit" onclick="updateCoupon('<%= coupon[i]._id%>','<%= i %>')">
                                                                               </form>
                                                               </form>
                                                             </div>
@@ -380,14 +380,15 @@ for (let i = 0; i <= 1; i++) {
 
 
 
-async function updateCoupon(couponid) {
+async function updateCoupon(couponid,i) {
   try {
+    console.log(i)
     const id = couponid;
-    const couponname = document.getElementById('couponname').value;
-    const usage = document.getElementById('usage').value;
-    const minimum = document.getElementById('minimum').value;
-    const discount = document.getElementById('discount').value;
-    const dateupdate = new Date(document.getElementById('updateDate').value);
+    const couponname = document.getElementById(`couponname${i}`).value;
+    const usage = document.getElementById(`usage${i}`).value;
+    const minimum = document.getElementById(`minimum${i}`).value;
+    const discount = document.getElementById(`discount${i}`).value;
+    const dateupdate = new Date(document.getElementById(`updateDate${i}`).value);
 
     // Format the date to ISO string format
     const isoDateString = dateupdate.toISOString();
@@ -436,6 +437,7 @@ async function updateCoupon(couponid) {
      
       const responseData = await response.json();
       console.log('Request was successful:', responseData);
+      location.reload()
     }
   } catch (error) {
     console.log(error);

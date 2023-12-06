@@ -118,7 +118,7 @@ module.exports = {
                       console.log(typeof usage)
                     
               
-                      // Convert expiry date string to ISO format
+                     
                       const expiryParts = expiry.split('/');
                       const expiryDate = new Date(
                           parseInt(expiryParts[2]),
@@ -129,9 +129,8 @@ module.exports = {
                       console.log(issuedDate);
                       console.log(expiryDate);
               
-                      // Get the current date in ISO format
                       const currentDate = new Date()
-                      // console.log(currentDate)
+                  
                       console.log(code)
                       console.log(couponCode)
                       console.log(disc)
@@ -173,9 +172,7 @@ module.exports = {
                         };
                         
 
-                        const coupon = await  couponModel.create(couponData
-
-                        )
+                        const coupon = await  couponModel.create(couponData)
 
                       }
                     
@@ -193,6 +190,12 @@ module.exports = {
                   updateCoupon: async (req, res) => {
                     try {
                       const { id, couponname, usage, minimum, discount, dateupdate } = req.body;
+                      console.log(id)
+                      console.log(couponname)
+                      console.log(usage)
+                      console.log(minimum)
+                      console.log(discount)
+                      console.log(dateupdate)
                   
                       const existingCoupon = await couponModel.findOne({ _id: id });
                       const couponCode = couponname.replace(/\W/g, '').toUpperCase();
@@ -204,12 +207,15 @@ module.exports = {
                       const currentDate = new Date()
                   
                       if (checkDate < currentDate) {
+                        console.log('date part is not okay')
                         return res.status(400).json({ message: 'The updated date is before the expiration date. Please select a valid date.' });
                       } else if (couponname === '' || isNaN(usage) || isNaN(minimum) || isNaN(discount)) {
+                        console.log('something is missing here')
                         return res.status(400).json({ message: 'Fill in details properly' });
                       }
                       else if(couponCode.length > 12)
                       {
+                        console.log('coupon length')
                         return res.status(400).json({ message: 'make the code a bit shorter!' });
                       }
                   const updateDate = Date.now()
@@ -231,6 +237,7 @@ module.exports = {
                       console.log(updatedCoupon);
                   
                       return res.status(200).json({ message: 'Coupon updated successfully' });
+                     
                     } catch (error) {
                       console.error(error);
                       return res.status(500).json({ error: 'Internal server error' });
