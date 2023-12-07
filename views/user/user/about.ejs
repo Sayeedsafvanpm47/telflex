@@ -1,430 +1,505 @@
 ﻿<%- include('partials/head') %>
 
 <body>
-    <%- include('partials/header') %>
-    <div class="mobile-header-active mobile-header-wrapper-style">
-        <div class="mobile-header-wrapper-inner">
-            <div class="mobile-header-top">
-                <div class="mobile-header-logo">
-                    <a href="index.html"><img src="/user/imgs/theme/logo.svg" alt="logo"></a>
-                </div>
-                <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
-                    <button class="close-style search-close">
-                        <i class="icon-top"></i>
-                        <i class="icon-bottom"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="mobile-header-content-area">
-                <div class="mobile-search search-style-3 mobile-header-border">
-                    <form action="#">
-                        <input type="text" placeholder="Search for items…">
-                        <button type="submit"><i class="fi-rs-search"></i></button>
-                    </form>
-                </div>
-                <div class="mobile-menu-wrap mobile-header-border">
-                    <div class="main-categori-wrap mobile-header-border">
-                        <a class="categori-button-active-2" href="#">
-                            <span class="fi-rs-apps"></span> Browse Categories
-                        </a>
-                        <div class="categori-dropdown-wrap categori-dropdown-active-small">
-                            <ul>
-                                <li><a href="shop-grid-right.html"><i class="evara-font-dress"></i>Women's Clothing</a></li>
-                                <li><a href="shop-grid-right.html"><i class="evara-font-tshirt"></i>Men's Clothing</a></li>
-                                <li> <a href="shop-grid-right.html"><i class="evara-font-smartphone"></i> Cellphones</a></li>
-                                <li><a href="shop-grid-right.html"><i class="evara-font-desktop"></i>Computer & Office</a></li>
-                                <li><a href="shop-grid-right.html"><i class="evara-font-cpu"></i>Consumer Electronics</a></li>
-                                <li><a href="shop-grid-right.html"><i class="evara-font-home"></i>Home & Garden</a></li>
-                                <li><a href="shop-grid-right.html"><i class="evara-font-high-heels"></i>Shoes</a></li>
-                                <li><a href="shop-grid-right.html"><i class="evara-font-teddy-bear"></i>Mother & Kids</a></li>
-                                <li><a href="shop-grid-right.html"><i class="evara-font-kite"></i>Outdoor fun</a></li>
-                            </ul>
+    <!-- Modal -->
+   
+
+
+    <!-- Quick view -->
+    <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="detail-gallery">
+                                <span class="zoom-icon"><i class="fi-rs-search"></i></span>
+                                <!-- MAIN SLIDES -->
+                                <div class="product-image-slider">
+                                    <figure class="border-radius-10">
+                                        <img src="/user/imgs/shop/product-16-2.jpg" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="/user/imgs/shop/product-16-1.jpg" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="/user/imgs/shop/product-16-3.jpg" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="/user/imgs/shop/product-16-4.jpg" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="/user/imgs/shop/product-16-5.jpg" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="/user/imgs/shop/product-16-6.jpg" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="/user/imgs/shop/product-16-7.jpg" alt="product image">
+                                    </figure>
+                                </div>
+                                <!-- THUMBNAILS -->
+                                <div class="slider-nav-thumbnails pl-15 pr-15">
+                                    <div><img src="/user/imgs/shop/thumbnail-3.jpg" alt="product image"></div>
+                                    <div><img src="/user/imgs/shop/thumbnail-4.jpg" alt="product image"></div>
+                                    <div><img src="/user/imgs/shop/thumbnail-5.jpg" alt="product image"></div>
+                                    <div><img src="/user/imgs/shop/thumbnail-6.jpg" alt="product image"></div>
+                                    <div><img src="/user/imgs/shop/thumbnail-7.jpg" alt="product image"></div>
+                                    <div><img src="/user/imgs/shop/thumbnail-8.jpg" alt="product image"></div>
+                                    <div><img src="/user/imgs/shop/thumbnail-9.jpg" alt="product image"></div>
+                                </div>
+                            </div>
+                            <!-- End Gallery -->
+                            <div class="social-icons single-share">
+                                <ul class="text-grey-5 d-inline-block">
+                                    <li><strong class="mr-10">Share this:</strong></li>
+                                    <li class="social-facebook"><a href="#"><img src="/user/imgs/theme/icons/icon-facebook.svg" alt=""></a></li>
+                                    <li class="social-twitter"> <a href="#"><img src="/user/imgs/theme/icons/icon-twitter.svg" alt=""></a></li>
+                                    <li class="social-instagram"><a href="#"><img src="/user/imgs/theme/icons/icon-instagram.svg" alt=""></a></li>
+                                    <li class="social-linkedin"><a href="#"><img src="/user/imgs/theme/icons/icon-pinterest.svg" alt=""></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="detail-info">
+                                <h3 class="title-detail mt-30">Colorful Pattern Shirts HD450</h3>
+                                <div class="product-detail-rating">
+                                    <div class="pro-details-brand">
+                                        <span> Brands: <a href="shop-grid-right.html">Bootstrap</a></span>
+                                    </div>
+                                    <div class="product-rate-cover text-end">
+                                        <div class="product-rate d-inline-block">
+                                            <div class="product-rating" style="width:90%">
+                                            </div>
+                                        </div>
+                                        <span class="font-small ml-5 text-muted"> (25 reviews)</span>
+                                    </div>
+                                </div>
+                                <div class="clearfix product-price-cover">
+                                    <div class="product-price primary-color float-left">
+                                        <ins><span class="text-brand">$120.00</span></ins>
+                                        <ins><span class="old-price font-md ml-15">$200.00</span></ins>
+                                        <span class="save-price  font-md color3 ml-15">25% Off</span>
+                                    </div>
+                                </div>
+                                <div class="bt-1 border-color-1 mt-15 mb-15"></div>
+                                <div class="short-desc mb-30">
+                                    <p class="font-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam rem officia, corrupti reiciendis minima nisi modi,!</p>
+                                </div>
+
+                                <div class="attr-detail attr-color mb-15">
+                                    <strong class="mr-10">Color</strong>
+                                    <ul class="list-filter color-filter">
+                                        <li><a href="#" data-color="Red"><span class="product-color-red"></span></a></li>
+                                        <li><a href="#" data-color="Yellow"><span class="product-color-yellow"></span></a></li>
+                                        <li class="active"><a href="#" data-color="White"><span class="product-color-white"></span></a></li>
+                                        <li><a href="#" data-color="Orange"><span class="product-color-orange"></span></a></li>
+                                        <li><a href="#" data-color="Cyan"><span class="product-color-cyan"></span></a></li>
+                                        <li><a href="#" data-color="Green"><span class="product-color-green"></span></a></li>
+                                        <li><a href="#" data-color="Purple"><span class="product-color-purple"></span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="attr-detail attr-size">
+                                    <strong class="mr-10">Size</strong>
+                                    <ul class="list-filter size-filter font-small">
+                                        <li><a href="#">S</a></li>
+                                        <li class="active"><a href="#">M</a></li>
+                                        <li><a href="#">L</a></li>
+                                        <li><a href="#">XL</a></li>
+                                        <li><a href="#">XXL</a></li>
+                                    </ul>
+                                </div>
+                                <div class="bt-1 border-color-1 mt-30 mb-30"></div>
+                                <div class="detail-extralink">
+                                    <div class="detail-qty border radius">
+                                        <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                        <span class="qty-val">1</span>
+                                        <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                    </div>
+                                    <div class="product-extra-link2">
+                                        <button type="submit" class="button button-add-to-cart">Add to cart</button>
+                                        <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
+                                        <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
+                                    </div>
+                                </div>
+                                <ul class="product-meta font-xs color-grey mt-50">
+                                    <li class="mb-5">SKU: <a href="#">FWM15VKT</a></li>
+                                    <li class="mb-5">Tags: <a href="#" rel="tag">Cloth</a>, <a href="#" rel="tag">Women</a>, <a href="#" rel="tag">Dress</a> </li>
+                                    <li>Availability:<span class="in-stock text-success ml-5">8 Items In Stock</span></li>
+                                </ul>
+                            </div>
+                            <!-- Detail Info -->
                         </div>
                     </div>
-                    <!-- mobile menu start -->
-                    <nav>
-                        <ul class="mobile-menu">
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="index.html">Home</a>
-                                <ul class="dropdown">
-                                    <li><a href="index.html">Home 1</a></li>
-                                    <li><a href="index-2.html">Home 2</a></li>
-                                    <li><a href="index-3.html">Home 3</a></li>
-                                    <li><a href="index-4.html">Home 4</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="shop-grid-right.html">shop</a>
-                                <ul class="dropdown">
-                                    <li><a href="shop-grid-right.html">Shop Grid – Right Sidebar</a></li>
-                                    <li><a href="shop-grid-left.html">Shop Grid – Left Sidebar</a></li>
-                                    <li><a href="shop-list-right.html">Shop List – Right Sidebar</a></li>
-                                    <li><a href="shop-list-left.html">Shop List – Left Sidebar</a></li>
-                                    <li><a href="shop-fullwidth.html">Shop - Wide</a></li>
-                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Single Product</a>
-                                        <ul class="dropdown">
-                                            <li><a href="shop-product-right.html">Product – Right Sidebar</a></li>
-                                            <li><a href="shop-product-left.html">Product – Left Sidebar</a></li>
-                                            <li><a href="shop-product-full.html">Product – No sidebar</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="shop-filter.html">Shop – Filter</a></li>
-                                    <li><a href="shop-wishlist.html">Shop – Wishlist</a></li>
-                                    <li><a href="shop-cart.html">Shop – Cart</a></li>
-                                    <li><a href="shop-checkout.html">Shop – Checkout</a></li>
-                                    <li><a href="shop-compare.html">Shop – Compare</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Mega menu</a>
-                                <ul class="dropdown">
-                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Women's Fashion</a>
-                                        <ul class="dropdown">
-                                            <li><a href="shop-product-right.html">Dresses</a></li>
-                                            <li><a href="shop-product-right.html">Blouses & Shirts</a></li>
-                                            <li><a href="shop-product-right.html">Hoodies & Sweatshirts</a></li>
-                                            <li><a href="shop-product-right.html">Women's Sets</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Men's Fashion</a>
-                                        <ul class="dropdown">
-                                            <li><a href="shop-product-right.html">Jackets</a></li>
-                                            <li><a href="shop-product-right.html">Casual Faux Leather</a></li>
-                                            <li><a href="shop-product-right.html">Genuine Leather</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Technology</a>
-                                        <ul class="dropdown">
-                                            <li><a href="shop-product-right.html">Gaming Laptops</a></li>
-                                            <li><a href="shop-product-right.html">Ultraslim Laptops</a></li>
-                                            <li><a href="shop-product-right.html">Tablets</a></li>
-                                            <li><a href="shop-product-right.html">Laptop Accessories</a></li>
-                                            <li><a href="shop-product-right.html">Tablet Accessories</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="blog-category-fullwidth.html">Blog</a>
-                                <ul class="dropdown">
-                                    <li><a href="blog-category-grid.html">Blog Category Grid</a></li>
-                                    <li><a href="blog-category-list.html">Blog Category List</a></li>
-                                    <li><a href="blog-category-big.html">Blog Category Big</a></li>
-                                    <li><a href="blog-category-fullwidth.html">Blog Category Wide</a></li>
-                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Single Product Layout</a>
-                                        <ul class="dropdown">
-                                            <li><a href="blog-post-left.html">Left Sidebar</a></li>
-                                            <li><a href="blog-post-right.html">Right Sidebar</a></li>
-                                            <li><a href="blog-post-fullwidth.html">No Sidebar</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="page-about.html">About Us</a></li>
-                                    <li><a href="page-contact.html">Contact</a></li>
-                                    <li><a href="page-account.html">My Account</a></li>
-                                    <li><a href="page-login-register.html">login/register</a></li>
-                                    <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
-                                    <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
-                                    <li><a href="page-terms.html">Terms of Service</a></li>
-                                    <li><a href="page-404.html">404 Page</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Language</a>
-                                <ul class="dropdown">
-                                    <li><a href="#">English</a></li>
-                                    <li><a href="#">French</a></li>
-                                    <li><a href="#">German</a></li>
-                                    <li><a href="#">Spanish</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                    <!-- mobile menu end -->
                 </div>
-                <div class="mobile-header-info-wrap mobile-header-border">
-                    <div class="single-mobile-header-info mt-30">
-                        <a  href="page-contact.html"> Our location </a>
-                    </div>
-                    <div class="single-mobile-header-info">
-                        <a href="page-login-register.html">Log In / Sign Up </a>
-                    </div>
-                    <div class="single-mobile-header-info">
-                        <a href="#">(+01) - 2345 - 6789 </a>
-                    </div>
-                </div>
-                <div class="mobile-social-icon">
-                    <h5 class="mb-15 text-grey-4">Follow Us</h5>
-                    <a href="#"><img src="/user/imgs/theme/icons/icon-facebook.svg" alt=""></a>
-                    <a href="#"><img src="/user/imgs/theme/icons/icon-twitter.svg" alt=""></a>
-                    <a href="#"><img src="/user/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-                    <a href="#"><img src="/user/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-                    <a href="#"><img src="/user/imgs/theme/icons/icon-youtube.svg" alt=""></a>
-                </div>
-            </div>
+        </div>
         </div>
     </div>
-    <main class="main single-page">
-        <div class="page-header breadcrumb-wrap">
+
+    <%- include('partials/header') %>
+
+    <main class="main">
+        <!-- banner 2 (loop the banners) -->
+      
+        <section class="home-slider position-relative pt-50">
+          
+            <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
+                <% if(banners){ %>
+                <% for(let i=0; i<banners.images.length; i++){ %>
+                <div class="single-hero-slider single-animation-wrap">
+                    <div class="container">
+                      
+                        <div class="row align-items-center slider-animated-1">
+                        
+                            <div class="col-lg-5 col-md-6">
+                             
+                                <div class="hero-slider-content-2">
+                                    <h4 class="animated"></h4>
+                                  
+                                   
+                                   
+                                   
+                                    <h1 class="animated fw-900 text-brand">Get To Know Us More</h1>
+                                
+                                   
+                                    <p class="animated">explore our history, ceo, factories, shops, manufacturing process..</p>
+                                 
+                                   
+                                   
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-7 col-md-6">
+                               
+
+                                <div class="single-slider-img single-slider-img-1">
+                                  
+                                    <img class="animated slider-1-1" src="/<%= banners.images[i] %>" alt="">
+
+                                 
+                                </div>
+                            </div>
+                        
+                        </div>
+                      
+                    </div>
+                </div>
+                
+                <% } %>
+                <% } %>
+            </div>
+           
+            <div class="slider-arrow hero-slider-1-arrow"></div>
+          
+        </section>
+     
+        <section class="product-tabs section-padding position-relative wow fadeIn animated">
+            <div class="bg-square"></div>
             <div class="container">
-                <div class="breadcrumb">
-                    <a href="index.html" rel="nofollow">Home</a>
-                    <span></span> Pages
-                    <span></span> About us
+                <div class="tab-header">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="nav-tab-one" data-bs-toggle="tab" data-bs-target="#tab-one" type="button" role="tab" aria-controls="tab-one" aria-selected="true">Featured</button>
+                        </li>
+                        
+                       
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="nav-tab-three" data-bs-toggle="tab" data-bs-target="#tab-three" type="button" role="tab" aria-controls="tab-three" aria-selected="false">New added</button>
+                        </li>
+                    </ul>
+                    <a href="#" class="view-more d-none d-md-flex">View More<i class="fi-rs-angle-double-small-right"></i></a>
+                </div>
+                <!--End nav-tabs-->
+                <div class="tab-content wow fadeIn animated" id="myTabContent">
+                    <div class="tab-pane fade show active" id="tab-one" role="tabpanel" aria-labelledby="tab-one">
+                        <div class="row product-grid-4">
+                            <!-- featured -->
+                            <div class="col-lg-3 col-md-4 col-12 col-sm-6">
+                                <div class="product-cart-wrap mb-30">
+                                    <div class="product-img-action-wrap">
+                                        <div class="product-img product-img-zoom">
+                                            <a href="shop-product-right.html">
+                                                <img class="default-img" src="/user/imgs/shop/product-1-1.jpg" alt="">
+                                                <img class="hover-img" src="/user/imgs/shop/product-1-2.jpg" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product-action-1">
+                                            <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a>
+                                            <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
+                                            <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
+                                        </div>
+                                        <div class="product-badges product-badges-position product-badges-mrg">
+                                            <span class="hot">Hot</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-content-wrap">
+                                        <div class="product-category">
+                                            <a href="shop-grid-right.html">Clothing</a>
+                                        </div>
+                                        <h2><a href="shop-product-right.html">Colorful Pattern Shirts</a></h2>
+                                        <div class="rating-result" title="90%">
+                                            <span>
+                                                <span>90%</span>
+                                            </span>
+                                        </div>
+                                        <div class="product-price">
+                                            <span>$238.85 </span>
+                                            <span class="old-price">$245.8</span>
+                                        </div>
+                                        <div class="product-action-1 show">
+                                            <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                           
+                        </div>
+                        <!--End product-grid-4-->
+                    </div>
+                 
+                    <!--En tab two (Popular)-->
+                   
+                    <div class="tab-pane fade" id="tab-three" role="tabpanel" aria-labelledby="tab-three">
+                        
+                        <div class="row product-grid-4">
+                      
+                            <div class="col-lg-3 col-md-4 col-12 col-sm-6">
+                                <div class="product-cart-wrap mb-30">
+                                    <div class="product-img-action-wrap">
+                                        <div class="product-img product-img-zoom">
+                                            <a href="shop-product-right.html">
+                                                <img class="default-img" src="" alt="">
+                                                <img class="hover-img" src="" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product-action-1">
+                                            <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a>
+                                            <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
+                                            <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
+                                        </div>
+                                        <div class="product-badges product-badges-position product-badges-mrg">
+                                            <span class="hot">Hot</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-content-wrap">
+                                        <div class="product-category">
+                                            <a href="shop-grid-right.html"></a>
+                                        </div>
+                                        <h2><a href="shop-product-right.html"></a></h2>
+                                        <div class="rating-result" title="90%">
+                                            <span>
+                                                <span></span>
+                                            </span>
+                                        </div>
+                                        <div class="product-price">
+                                            <span></span>
+                                            <span class="old-price"></span>
+                                        </div>
+                                        <div class="product-action-1 show">
+                                            <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                      
+                        </div>
+                        <!--End product-grid-4-->
+                      
+                    </div>
+                
+                    <!--En tab three (New added)-->
+                </div>
+                <!--End tab-content-->
+            </div>
+        </section>
+        <section class="home-slider" style="margin-left: -6rem;">
+            <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
+              
+            <div class="single-hero-slider single-animation-wrap">
+                <div class="container">
+                  
+                    <div class="row  slider-animated-1">
+                    
+                        
+                       
+                        <div class="col-lg-7 col-md-6">
+                            
+                               
+
+                            <div class="single-slider-img single-slider-img-1">
+                              
+                                <img class="animated slider-1-1" src="" alt="">
+                               
+
+                             
+                            </div>
+                         
+                        </div>
+                     
+                        <div class="col-lg-5 col-md-6">
+                             
+                            <div class="hero-slider-content-2">
+                              <h1>
+                                About Us
+                              </h1>
+                              <p>We are telflex, since 2001, sidaisidanisndaindi</p>
+                               
+                            </div>
+                        </div>
+                    
+
+                    
+                    </div>
+                  
                 </div>
             </div>
-        </div>
-        <section class="section-padding">
-            <div class="container pt-25">
+        
+            </div>
+            
+        </section>
+
+        <section class="mb-50 mt-10">
+            <div class="container">
                 <div class="row">
-                    <div class="col-lg-6 align-self-center mb-lg-0 mb-4">
-                        <h6 class="mt-0 mb-15 text-uppercase font-sm text-brand wow fadeIn animated">Our Company</h6>
-                        <h1 class="font-heading mb-40">
-                            We are Building The Destination For Getting Things Done
-                        </h1>
-                        <p>Tempus ultricies augue luctus et ut suscipit. Morbi arcu, ultrices purus dolor erat bibendum sapien metus.</p>
-                        <p>Tempus ultricies augue luctus et ut suscipit. Morbi arcu, ultrices purus dolor erat bibendum sapien metus. Sit mi, pharetra, morbi arcu id. Pellentesque dapibus nibh augue senectus. </p>
-                    </div>
-                    <div class="col-lg-6">
-                        <img src="/user/imgs/page/about-1.png" alt="">
+                    <div class="col-12">
+                  
+                        <div class="banner-bg wow fadeIn animated" style="background-color: rgba(36, 106, 171, 0.621);">
+                            <div class=" row banner-content">
+                                <div class="col">
+                                <h1 class="text-white-4 display mb-15"></h1>
+                                <p></p>
+                                <br>
+                                <span></span>
+                                <p></p>
+                                
+                                <h2 class="fw-600">Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to 40%</h2>
+                            </div>
+                            <div class="col">
+                                <img src="" alt="">
+                            </div>
+                            </div>
+                        </div>
+                       
                     </div>
                 </div>
             </div>
         </section>
-        <section id="team" class="pt-25 wow fadeIn animated">
+       <hr>
+
+        <!-- banner part 3 (single banner) -->
+        <section class="banner-2 section-padding pb-0">
             <div class="container">
-                <div class="row mb-50 align-items-center">
-                    <div class="col-md-6">
-                        <h6 class="mt-0 mb-15 text-uppercase font-sm text-brand wow fadeIn animated">Our Team</h6>
-                        <h2 class="mb-15 wow fadeIn animated">Top team of experts</h2>
-                        <p class="text-grey-3 wow fadeIn animated">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione optio perferendis sequi mollitia quis autem ea cupiditate possimus!</p>
+               
+                <div class="banner-img banner-big wow fadeIn animated f-none">
+                    <img src="" alt="">
+                    <div class="banner-text d-md-block d-none" style="background-color: rgba(255, 255, 255, 0.573);">
+                        <h4 class="mb-15 mt-40 text-brand"></h4>
+                        <h1 class="fw-600 mb-20"></h1>
+                        <h6 class="mb-15 mt-40 text-brand"></h>
+                        <div>
+                        <a href="shop-grid-right.html" class="btn"> <i class="fi-rs-arrow-right"></i></a>
                     </div>
-                    <div class="col-md-6 text-md-end mt-30">
-                        <a class="btn btn-outline btn-lg btn-brand-outline font-weight-bold text-brand text-hover-white border-radius-5 btn-shadow-brand hover-up">All Members</a>
-                    </div>
-                </div>
-                <div class="position-relative">
-                    <div class="row wow fadeIn animated">
-                        <div class="col-lg-3 col-md-6">
-                            <div class="blog-card border-radius-10 overflow-hidden text-center">
-                                <img src="/user/imgs/page/avatar-1.jpg" alt="" class="border-radius-10 mb-30 hover-up">
-                                <h4 class="fw-500 mb-0">Patric Adams</h4>
-                                <p class="fw-400 text-brand mb-10">CEO & Co-Founder</p>
-                                <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0 animated">
-                                    <a href="#"><img src="/user/imgs/theme/icons/icon-facebook.svg" alt=""></a>
-                                    <a href="#"><img src="/user/imgs/theme/icons/icon-twitter.svg" alt=""></a>
-                                    <a href="#"><img src="/user/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-                                    <a href="#"><img src="/user/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                        <!--col-->
-                        <div class="col-lg-3 col-md-6">
-                            <div class="blog-card border-radius-10 overflow-hidden text-center">
-                                <img src="/user/imgs/page/avatar-2.jpg" alt="" class="border-radius-10 mb-30 hover-up">
-                                <h4 class="fw-500 mb-0">Dilan Specter</h4>
-                                <p class="fw-400 text-brand mb-10">Head Engineer</p>
-                                <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0 animated">
-                                    <a href="#"><img src="/user/imgs/theme/icons/icon-facebook.svg" alt=""></a>
-                                    <a href="#"><img src="/user/imgs/theme/icons/icon-twitter.svg" alt=""></a>
-                                    <a href="#"><img src="/user/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-                                    <a href="#"><img src="/user/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                        <!--col-->
-                        <div class="col-lg-3 col-md-6">
-                            <div class="blog-card border-radius-10 overflow-hidden text-center">
-                                <img src="/user/imgs/page/avatar-3.jpg" alt="" class="border-radius-10 mb-30 hover-up">
-                                <h4 class="fw-500 mb-0">Tomas Baker</h4>
-                                <p class="fw-400 text-brand mb-10">Senior Planner</p>
-                                <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0 animated">
-                                    <a href="#"><img src="/user/imgs/theme/icons/icon-facebook.svg" alt=""></a>
-                                    <a href="#"><img src="/user/imgs/theme/icons/icon-twitter.svg" alt=""></a>
-                                    <a href="#"><img src="/user/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-                                    <a href="#"><img src="/user/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                        <!--col-->
-                        <div class="col-lg-3 col-md-6">
-                            <div class="blog-card border-radius-10 overflow-hidden text-center">
-                                <img src="/user/imgs/page/avatar-4.jpg" alt="" class="border-radius-10 mb-30 hover-up">
-                                <h4 class="fw-500 mb-0">Norton Mendos</h4>
-                                <p class="fw-400 text-brand mb-10">Project Manager</p>
-                                <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0 animated">
-                                    <a href="#"><img src="/user/imgs/theme/icons/icon-facebook.svg" alt=""></a>
-                                    <a href="#"><img src="/user/imgs/theme/icons/icon-twitter.svg" alt=""></a>
-                                    <a href="#"><img src="/user/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-                                    <a href="#"><img src="/user/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                        <!--col-->
                     </div>
                 </div>
             </div>
+            </div>
         </section>
-        <section id="work" class="mt-40 pt-50 pb-50 section-border">
+     
+        <section class="banners mb-15">
             <div class="container">
-                <div class="row mb-50">
-                    <div class="col-lg-12 col-md-12 text-center">
-                        <h6 class="mt-0 mb-5 text-uppercase  text-brand font-sm wow fadeIn animated">Evara Coporation</h6>
-                        <h2 class="mb-15 text-grey-1 wow fadeIn animated">Our main branches<br> around the world</h2>
-                        <p class="w-50 m-auto text-grey-3 wow fadeIn animated">At vero eos et accusamus et iusto odio dignissimos ducimus quiblanditiis praesentium. ebitis nesciunt voluptatum dicta reprehenderit accusamus</p>
-                    </div>
-                </div>
                 <div class="row">
-                    <div class="col-md-4 text-center mb-md-0 mb-4">
-                        <img class="btn-shadow-brand hover-up border-radius-10 bg-brand-muted wow fadeIn animated" src="/user/imgs/page/company-1.jpg" alt="">
-                        <h4 class="mt-30 mb-15 wow fadeIn animated">New York, USA</h4>
-                        <p class="text-grey-3 wow fadeIn animated">27 Division St, New York<br>NY 10002, USA</p>
-                    </div>
-                    <div class="col-md-4 text-center mb-md-0 mb-4">
-                        <img class="btn-shadow-brand hover-up border-radius-10 bg-brand-muted wow fadeIn animated" src="/user/imgs/page/company-2.jpg" alt="">
-                        <h4 class="mt-30 mb-15 wow fadeIn animated">Paris, France</h4>
-                        <p class="text-grey-3 wow fadeIn animated">22 Rue des Carmes<br> 75005 Paris</p>
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <img class="btn-shadow-brand hover-up border-radius-10 bg-brand-muted wow fadeIn animated" src="/user/imgs/page/company-3.jpg" alt="">
-                        <h4 class="mt-30 mb-15 wow fadeIn animated">Jakarta, Indonesia</h4>
-                        <p class="text-grey-3 wow fadeIn animated">2476 Raya Yogyakarta,<br>89090 Indonesia</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section id="testimonials" class="section-padding">
-            <div class="container pt-25">
-                <div class="row mb-50">
-                    <div class="col-lg-12 col-md-12 text-center">
-                        <h6 class="mt-0 mb-10 text-uppercase  text-brand font-sm wow fadeIn animated">some facts</h6>
-                        <h2 class="mb-15 text-grey-1 wow fadeIn animated">Take a look what<br> our clients say about us</h2>
-                        <p class="w-50 m-auto text-grey-3 wow fadeIn animated">At vero eos et accusamus et iusto odio dignissimos ducimus quiblanditiis praesentium. ebitis nesciunt voluptatum dicta reprehenderit accusamus</p>
-                    </div>
-                </div>
-                <div class="row align-items-center">
-                    <div class="col-md-6 col-lg-4">
-                        <div class="hero-card box-shadow-outer-6 wow fadeIn animated mb-30 hover-up d-flex">
-                            <div class="hero-card-icon icon-left-2 hover-up ">
-                                <img class="btn-shadow-brand hover-up border-radius-5 bg-brand-muted" src="/user/imgs/page/avatar-1.jpg" alt="">
-                            </div>
-                            <div class="pl-30">
-                                <h5 class="mb-5 fw-500">
-                                    J. Bezos
-                                </h5>
-                                <p class="font-sm text-grey-5">Adobe Jsc</p>
-                                <p class="text-grey-3">"Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis nesciunt voluptatum dicta reprehenderit accusamus voluptatibus voluptas."</p>
+                   
+                    <div class="col-lg-4 col-md-6">
+                        <!-- banner 5 -->
+                        
+                        <div class="banner-img wow fadeIn animated">
+                            <img src="" alt="">
+                            <div class="banner-text">
+                                <span></span>
+                                <h4>Save 20% on %> on <br>Woman Bag</h4>
+                                <a href="shop-grid-right.html"> <i class="fi-rs-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="hero-card box-shadow-outer-6 wow fadeIn animated mb-30 hover-up d-flex">
-                            <div class="hero-card-icon icon-left-2 hover-up ">
-                                <img class="btn-shadow-brand hover-up border-radius-5 bg-brand-muted" src="/user/imgs/page/avatar-3.jpg" alt="">
-                            </div>
-                            <div class="pl-30">
-                                <h5 class="mb-5 fw-500">
-                                    B.Gates
-                                </h5>
-                                <p class="font-sm text-grey-5">Adobe Jsc</p>
-                                <p class="text-grey-3">"Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis nesciunt voluptatum dicta reprehenderit accusamus voluptatibus voluptas."</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="hero-card box-shadow-outer-6 wow fadeIn animated mb-30 hover-up d-flex">
-                            <div class="hero-card-icon icon-left-2 hover-up ">
-                                <img class="btn-shadow-brand hover-up border-radius-5 bg-brand-muted" src="/user/imgs/page/avatar-2.jpg" alt="">
-                            </div>
-                            <div class="pl-30">
-                                <h5 class="mb-5 fw-500">
-                                    B. Meyers
-                                </h5>
-                                <p class="font-sm text-grey-5">Adobe Jsc</p>
-                                <p class="text-grey-3">"Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis nesciunt voluptatum dicta reprehenderit accusamus voluptatibus voluptas."</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="hero-card box-shadow-outer-6 wow fadeIn animated mb-30 hover-up d-flex">
-                            <div class="hero-card-icon icon-left-2 hover-up ">
-                                <img class="btn-shadow-brand hover-up border-radius-5 bg-brand-muted" src="/user/imgs/page/avatar-4.jpg" alt="">
-                            </div>
-                            <div class="pl-30">
-                                <h5 class="mb-5 fw-500">
-                                    J. Bezos
-                                </h5>
-                                <p class="font-sm text-grey-5">Adobe Jsc</p>
-                                <p class="text-grey-3">"Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis nesciunt voluptatum dicta reprehenderit accusamus voluptatibus voluptas."</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="hero-card box-shadow-outer-6 wow fadeIn animated mb-30 hover-up d-flex">
-                            <div class="hero-card-icon icon-left-2 hover-up ">
-                                <img class="btn-shadow-brand hover-up border-radius-5 bg-brand-muted" src="/user/imgs/page/avatar-5.jpg" alt="">
-                            </div>
-                            <div class="pl-30">
-                                <h5 class="mb-5 fw-500">
-                                    B.Gates
-                                </h5>
-                                <p class="font-sm text-grey-5">Adobe Jsc</p>
-                                <p class="text-grey-3">"Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis nesciunt voluptatum dicta reprehenderit accusamus voluptatibus voluptas."</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="hero-card box-shadow-outer-6 wow fadeIn animated mb-30 hover-up d-flex">
-                            <div class="hero-card-icon icon-left-2 hover-up ">
-                                <img class="btn-shadow-brand hover-up border-radius-5 bg-brand-muted" src="/user/imgs/page/avatar-1.jpg" alt="">
-                            </div>
-                            <div class="pl-30">
-                                <h5 class="mb-5 fw-500">
-                                    B. Meyers
-                                </h5>
-                                <p class="font-sm text-grey-5">Adobe Jsc</p>
-                                <p class="text-grey-3">"Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis nesciunt voluptatum dicta reprehenderit accusamus voluptatibus voluptas."</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-30">
-                    <div class="col-12 text-center">
-                        <p class="wow fadeIn animated">
-                            <a class="btn btn-brand text-white btn-shadow-brand hover-up btn-lg">View More</a>
-                        </p>
-                    </div>
+
+                
+                  
                 </div>
             </div>
         </section>
         <section class="section-padding">
-            <div class="container pb-25">
-                <h3 class="section-title mb-20 wow fadeIn animated text-center"><span>Featured</span> Clients</h3>
-                <div class="carausel-6-columns-cover position-relative wow fadeIn animated">
-                    <div class="carausel-6-columns text-center" id="carausel-6-columns-3">
-                        <div class="brand-logo">
-                            <img class="img-grey-hover" src="/user/imgs/banner/brand-1.png" alt="">
-                        </div>
-                        <div class="brand-logo">
-                            <img class="img-grey-hover" src="/user/imgs/banner/brand-2.png" alt="">
-                        </div>
-                        <div class="brand-logo">
-                            <img class="img-grey-hover" src="/user/imgs/banner/brand-3.png" alt="">
-                        </div>
-                        <div class="brand-logo">
-                            <img class="img-grey-hover" src="/user/imgs/banner/brand-4.png" alt="">
-                        </div>
-                        <div class="brand-logo">
-                            <img class="img-grey-hover" src="/user/imgs/banner/brand-5.png" alt="">
-                        </div>
-                        <div class="brand-logo">
-                            <img class="img-grey-hover" src="/user/imgs/banner/brand-6.png" alt="">
-                        </div>
-                        <div class="brand-logo">
-                            <img class="img-grey-hover" src="/user/imgs/banner/brand-3.png" alt="">
-                        </div>
+            <div class="container wow fadeIn animated">
+                <!-- banner 6 -->
+             
+                <h3 class="section-title mb-20"><span>New</span> Arrivals</h3>
+                <div class="carausel-6-columns-cover position-relative">
+                    <div class="slider-arrow slider-arrow-2 carausel-6-columns-arrow" id="carausel-6-columns-2-arrows"></div>
+                    <div class="carausel-6-columns carausel-arrow-center" id="carausel-6-columns-2">
+                      
+                        <div class="product-cart-wrap small hover-up">
+                            <div class="product-img-action-wrap">
+                                <div class="product-img product-img-zoom">
+                                    <a href="shop-product-right.html">
+                                        <img class="default-img" src="" alt="">
+                                        <img class="hover-img" src="" alt="">
+                                    </a>
+                                </div>
+                                <div class="product-action-1">
+                                    <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal">
+<i class="fi-rs-eye"></i></a>
+                                    <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html" tabindex="0"><i class="fi-rs-heart"></i></a>
+                                    <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html" tabindex="0"><i class="fi-rs-shuffle"></i></a>
+                                </div>
+                                <div class="product-badges product-badges-position product-badges-mrg">
+                                    <span class="hot">Hot</span>
+                                </div>
+                            </div>
+                           
+                        <!--End product-cart-wrap-2-->
                     </div>
+               
                 </div>
             </div>
+         
+            </div>
+
         </section>
+        <hr>
+        <section class="deals section-padding" style="background-color: white;">
+            <div class="container" >
+               
+                    <input type="text" id="expirydate" value="" hidden>
+                    <div class="row deal wow fadeIn animated mb-md-4 mb-sm-4 d-flex" style="background-color: white;">
+                        <div class="col" style="background-color: white;">
+                            <div class="deal-top">
+                                <h2 class="text-brand"></h2>
+                                <h5></h5>
+                            </div>
+                            <div class="deal-content">
+                                <h6 class="product-title"><a href="shop-product-right.html"></a></h6>
+                                <div class="product-price"><span class="new-price"></span></div>
+                            </div>
+                            <div class="deal-bottom">
+                                <p>Hurry Up! Offer End In:</p>
+                                <div id="datacountdown1" class="deals-countdown" data-countdown=""></div>
+                                <a href="shop-grid-right.html" class="btn hover-up">Shop Now <i class="fi-rs-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <img src="" alt="">
+                        </div>
+                    </div>
+                
+            </div>
+        </section>
+        
+     
+      
+      
+    
     </main>
     <footer class="main">
         <section class="newsletter p-30 text-white wow fadeIn animated">
@@ -542,7 +617,7 @@
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
                 <div class="text-center">
-                    <h5 class="mb-5">Now Loading</h5>
+                    <h5 class="mb-10">Now Loading</h5>
                     <div class="loader">
                         <div class="bar bar1"></div>
                         <div class="bar bar2"></div>
@@ -572,10 +647,27 @@
     <script src="/user/js/plugins/scrollup.js"></script>
     <script src="/user/js/plugins/jquery.vticker-min.js"></script>
     <script src="/user/js/plugins/jquery.theia.sticky.js"></script>
+    <script src="/user/js/plugins/jquery.elevatezoom.js"></script>
     <!-- Template  JS -->
     <script src="/user/js/maind134.js?v=3.4"></script>
+    <script src="/user/js/shopd134.js?v=3.4"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Include jQuery Countdown plugin -->
+
+    
+    
+
+   
+
+ 
+    
+
+
 </body>
 
 
-<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/page-about.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:46 GMT -->
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:09:48 GMT -->
 </html>

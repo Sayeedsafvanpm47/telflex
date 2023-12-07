@@ -40,6 +40,8 @@ module.exports = {
                                         res.redirect('/admin/banner')
                                        
                               }
+                              else
+                              {
                               const banner = new bannerModel({
                                         bannerType : bannertype1,
                                         bannerTitle : [title1],
@@ -58,6 +60,7 @@ module.exports = {
                               req.session.bannerAlert = true
                            
                                         res.redirect('/admin/banner')
+                            }
                     } catch (error) {
                               console.log(error)
                               
@@ -152,7 +155,8 @@ else{
                            
                                         res.redirect('/admin/banner')
                               }
-
+else
+{
                               const banner = new bannerModel({
                                         bannerType : bannertype3,
                                         bannerTitle : title3,
@@ -166,6 +170,7 @@ else{
                               req.session.bannerAlert = true
                            
                               res.redirect('/admin/banner')
+                            }
                              
                     } catch (error) {
                               console.log(error)
@@ -190,8 +195,25 @@ else{
                     console.log(action4)
                    
                     try {
+                        const processedImages = req.processedImages || [];
+                        const existingBanner = await bannerModel.findOne({bannerType : bannertype4})
+if(existingBanner){
 
-                              const processedImages = req.processedImages || [];
+    existingBanner.bannerType = bannertype4,
+    existingBanner.bannerTitle =  [title4,title42,title43],
+    existingBanner.bannerPhrase = [phrase4,phrase42,phrase43],
+    existingBanner.bannerSubText = [subtext4,subtext42,subtext43],
+     existingBanner.bannerAction = action4,
+
+     existingBanner.images = processedImages
+
+await existingBanner.save()
+req.session.bannerAlert = true
+
+res.redirect('/admin/banner')
+
+}else{
+                             
 
                               const banner = new bannerModel({
                                         bannerType : bannertype4,
@@ -205,6 +227,7 @@ else{
                               req.session.bannerAlert = true
                            
                              res.redirect('/admin/banner')
+                            }
                     } catch (error) {
                               console.log(error)
                               
@@ -217,6 +240,105 @@ else{
 
                   
           },
+          festivalBanner : async (req,res)=>{
+
+            const { bannertype5 , title5,phrase5,subtext5, action5} = req.body
+
+            
+           
+            try {
+                const processedImages = req.processedImages || [];
+                const existingBanner = await bannerModel.findOne({bannerType : bannertype5})
+if(existingBanner){
+
+existingBanner.bannerType = bannertype5,
+existingBanner.bannerTitle =  [title5],
+existingBanner.bannerPhrase = [phrase5],
+existingBanner.bannerSubText = [subtext5],
+existingBanner.bannerAction = action5
+
+existingBanner.images = processedImages
+
+await existingBanner.save()
+req.session.bannerAlert = true
+
+res.redirect('/admin/banner')
+
+}else{
+                     
+
+                      const banner = new bannerModel({
+                                bannerType : bannertype5,
+                                bannerTitle : [title5],
+                                bannerPhrase : [phrase5],
+                                bannerSubText : [subtext5],
+                                bannerAction : [action5],
+                                images : processedImages
+                      })
+                      await banner.save()
+                      req.session.bannerAlert = true
+                   
+                     res.redirect('/admin/banner')
+                    }
+            } catch (error) {
+                      console.log(error)
+                      
+            }
+
+
+            
+
+
+
+          
+  }
+          ,
+          aboutBanner : async (req,res)=>{
+
+            const { bannertype6} = req.body
+
+           
+            try {
+                const processedImages = req.processedImages || [];
+                const existingBanner = await bannerModel.findOne({bannerType : bannertype6})
+if(existingBanner){
+
+existingBanner.bannerType = bannertype6,
+
+
+existingBanner.images = processedImages
+
+await existingBanner.save()
+req.session.bannerAlert = true
+
+res.redirect('/admin/banner')
+
+}else{
+                     
+
+                      const banner = new bannerModel({
+                                bannerType : bannertype6,
+                              
+                                images : processedImages
+                      })
+                      await banner.save()
+                      req.session.bannerAlert = true
+                   
+                     res.redirect('/admin/banner')
+                    }
+            } catch (error) {
+                      console.log(error)
+                      
+            }
+
+
+            
+
+
+
+          
+  }
+          ,
           showBanner : async (req,res)=>{
                     try {
 
@@ -227,27 +349,31 @@ else{
                               const deal = await bannerModel.findOne({bannerType : 'Deals banner'}) || ''
                               console.log(deal)
                               console.log(deal.length)
-                              const offer = await bannerModel.findOne({bannerType:'Offer Banner'})
-                              if(req.session.bannerError)
+                              const offer = await bannerModel.findOne({bannerType:'Offer Banner'}) || ''
+                              const sub = await bannerModel.findOne({bannerType : 'Sub Banner'}) || ''
+                              const fest = await bannerModel.findOne({bannerType : 'Festival Banner'}) || ''
+                              const about = await bannerModel.findOne({bannerType : 'About Banner'}) || ''
+                            if(req.session.bannerError)
                               {
                                         const errors = req.session.errorMessageBanner
                                         console.log(errors)
                                        delete req.session.bannerError 
-                              res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer})
+                              res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer,sub,fest,about})
                               }
                               else if(req.session.bannerAlert)
                               {
                                         success = 'Banner Upload Succesfull'
-                                        res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer}) 
+                                        delete req.session.bannerAlert
+                                        res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer,sub,fest,about}) 
                               }
                               else
                               {
                                         
-                                        res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer}) 
+                                        res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer,sub,fest,about}) 
                               }
 
                     } catch (error) {
-                              
+                              console.log(error)
                     }
           }
 }

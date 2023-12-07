@@ -141,8 +141,11 @@ req.session.user = true
 				const products = await productModel.find({})
 			const banners = await bannerModel.findOne({bannerType : 'Main Banner'})
 			const subbanner = await bannerModel.findOne({bannerType : 'Sub Banner'})
-			const popular = await productModel.find({})
 			const deals = await bannerModel.findOne({bannerType : 'Deals banner'})
+			const offer = await bannerModel.findOne({bannerType : 'Offer Banner'})
+			const fest = await bannerModel.findOne({bannerType : 'Festival Banner'}) || ''
+			const about = await bannerModel.findOne({bannerType : 'About Banner'})
+			
 			const newproducts = await productModel.find({}).populate({
 				path:'category',
 				model : 'categories',
@@ -158,7 +161,7 @@ req.session.user = true
 
 
 			console.log(banners)
-			res.render('user/user/home',{products,banners,subbanner,newproducts,newarrivals,deals})
+			res.render('user/user/home',{products,banners,subbanner,newproducts,newarrivals,deals,offer,fest,about})
 				
 			
 		} catch (error) {
@@ -166,6 +169,15 @@ req.session.user = true
 			console.log(error)
 		}
 		
+	},
+	getAbout : async (req,res)=>{
+		try {
+const banners = await bannerModel.findOne({bannerType:'About Banner'})
+			res.render('user/user/about',{banners})
+			
+		} catch (error) {
+			console.log(error)
+		}
 	}
 	,
 	getSignUp: async (req, res) => {

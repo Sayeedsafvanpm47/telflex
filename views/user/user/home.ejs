@@ -319,27 +319,31 @@
                 <!--End tab-content-->
             </div>
         </section>
-        <section class="home-slider" style="margin-left: -18rem;">
+        <section class="home-slider" style="margin-left: -6rem;">
             <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
-                <% for(let i=0; i<2;i++){  %>
+                <% if(about !== ''){%>
+                    <% for(let i=0; i<about.images.length; i++){ %>
             <div class="single-hero-slider single-animation-wrap">
                 <div class="container">
                   
                     <div class="row  slider-animated-1">
                     
                         
-                        
+                       
                         <div class="col-lg-7 col-md-6">
-                           
+                            
+                               
 
                             <div class="single-slider-img single-slider-img-1">
                               
-                                <img class="animated slider-1-1" src="/admin/imgs/adminlogin.jpg" alt="">
-                                <img class="animated slider-1-1" src="/admin/imgs/adminlogin.jpg" alt="">
+                                <img class="animated slider-1-1" src="/<%= about.images[i]  %>" alt="">
+                               
 
                              
                             </div>
+                         
                         </div>
+                     
                         <div class="col-lg-5 col-md-6">
                              
                             <div class="hero-slider-content-2">
@@ -351,14 +355,46 @@
                             </div>
                         </div>
                     
+
+                    
                     </div>
                   
                 </div>
             </div>
             <% } %>
+            <% } %>
             </div>
             
         </section>
+
+        <section class="mb-50 mt-10">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                    <% if(fest !== '') { %>
+                        <div class="banner-bg wow fadeIn animated" style="background-color: rgba(36, 106, 171, 0.621);">
+                            <div class=" row banner-content">
+                                <div class="col">
+                                <h1 class="text-white-4 display mb-15"><%= fest.bannerTitle[0] %></h1>
+                                <p><%= fest.bannerPhrase[0]  %></p>
+                                <br>
+                                <span><%= fest.bannerSubText[0]  %></span>
+                                <p><%= fest.bannerAction[0]  %></p>
+                                
+                                <h2 class="fw-600">Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to 40%</h2>
+                            </div>
+                            <div class="col">
+                                <img src="/<%= fest.images[0]  %>" alt="">
+                            </div>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </section>
+       <hr>
+
         <!-- banner part 3 (single banner) -->
         <section class="banner-2 section-padding pb-0">
             <div class="container">
@@ -381,38 +417,25 @@
         <section class="banners mb-15">
             <div class="container">
                 <div class="row">
+                    <% if(offer !== '') {%>
+                      <% for(let i=0; i< offer.images.length; i++){ %>
                     <div class="col-lg-4 col-md-6">
                         <!-- banner 5 -->
+                        
                         <div class="banner-img wow fadeIn animated">
-                            <img src="/user/imgs/banner/banner-1.png" alt="">
+                            <img src="/<%= offer.images[i] %>" alt="">
                             <div class="banner-text">
-                                <span>Smart Offer</span>
-                                <h4>Save 20% on <br>Woman Bag</h4>
-                                <a href="shop-grid-right.html">Shop Now <i class="fi-rs-arrow-right"></i></a>
+                                <span><%= offer.bannerTitle[i]  %></span>
+                                <h4>Save 20% on %> on <br>Woman Bag</h4>
+                                <a href="shop-grid-right.html"><%= offer.bannerAction[0] %> <i class="fi-rs-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="banner-img wow fadeIn animated">
-                            <img src="/user/imgs/banner/banner-2.png" alt="">
-                            <div class="banner-text">
-                                <span>Sale off</span>
-                                <h4>Great Summer <br>Collection</h4>
-                                <a href="shop-grid-right.html">Shop Now <i class="fi-rs-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
+
+                    <% } %>
+                   
+                    <% } %>
                   
-                    <div class="col-lg-4 d-md-none d-lg-flex">
-                        <div class="banner-img wow fadeIn animated  mb-sm-0">
-                            <img src="/user/imgs/banner/banner-3.png" alt="">
-                            <div class="banner-text">
-                                <span>New Arrivals</span>
-                                <h4>Shop Today’s <br>Deals & Offers</h4>
-                                <a href="shop-grid-right.html">Shop Now <i class="fi-rs-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -481,24 +504,10 @@
                 <% } %>
             </div>
         </section>
-        <hr>
+        
      
       
-        <section class="mb-50">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="banner-bg wow fadeIn animated" style="background-image: url('/user/imgs/banner/banner-8.jpg')">
-                            <div class="banner-content">
-                                <h5 class="text-grey-4 mb-15">Shop Today’s Deals</h5>
-                                <h2 class="fw-600">Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to 40%</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-       
+      
     
     </main>
     <footer class="main">

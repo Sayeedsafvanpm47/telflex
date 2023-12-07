@@ -90,18 +90,35 @@ router.post('/updateCoupon',offerController.updateCoupon)
 router.get('/couponStatus',offerController.couponStatus)
 router.get('/showRefferals',offerController.showRefferals)
 
+// deals banner
 router.post('/dealsBanner',imageController.upload.array('images1'),checkImage.checkDealsBanner, (req, res, next) => {
           
           imageController.processImage(req, res, next, 636, 439);
         },bannerController.dealsBanner)
+// festival banner
+        router.post('/festivalBanner',imageController.upload.array('images5'),checkImage.checkDealsBanner, (req, res, next) => {
+          
+          imageController.processImage(req, res, next, 636, 439);
+        },bannerController.festivalBanner)
+// main banner
         router.post('/mainBanner',imageController.upload.array('images2'),checkImage.checkMainBanner,(req, res, next) => {
           
           imageController.processImage(req, res, next, 731, 470);
-        },bannerController.mainBanner)
+        },bannerController.mainBanner),
+// about banner
+
+        router.post('/aboutBanner',imageController.upload.array('images6'),checkImage.checkMainBanner,(req, res, next) => {
+          
+          imageController.processImage(req, res, next, 731, 470);
+        },bannerController.aboutBanner),
+// sub banner
+
         router.post('/subBanner',imageController.upload.array('images3'),checkImage.checkSubBanner, (req, res, next) => {
           
           imageController.processImage(req, res, next, 1296, 295);
         },bannerController.subBanner)
+
+// offer banner 
         router.post('/offerBanner',imageController.upload.array('images4'),checkImage.checkOfferBanner, (req, res, next) => {
           
           imageController.processImage(req, res, next, 416, 177);
@@ -110,38 +127,7 @@ router.get('/banner',bannerController.showBanner)
 
 
 
-// router.get('/error',(req,res)=>{
-//           res.render('admin/admin/error')
-// })
 
-// router.get('/login',(req,res)=>{
-//           res.render('admin/admin/login')
-// })
-// router.get('/blank',(req,res)=>{
-//           res.render('admin/admin/blank')
-// })
-
-// router.get('/orders',(req,res)=>{
-//           res.render('admin/admin/pageorders')
-// })
-// router.get('/review',(req,res)=>{
-//           res.render('admin/admin/reviews')
-// })
-// router.get('/seller',(req,res)=>{
-//           res.render('admin/admin/sellercard')
-// })
-// router.get('/settings',(req,res)=>{
-//           res.render('admin/admin/settings')
-// })
-
-// router.get('/transaction',(req,res)=>{
-//           res.render('admin/admin/transaction')
-// })
-
-
-// router.get('/category',(req,res)=>{
-//           res.render('admin/admin/category')
-// })
 router.get('/viewSaved',async (req,res)=>{
           const products = await productModel.findOne({})
           res.render('admin/productsShow',{products})

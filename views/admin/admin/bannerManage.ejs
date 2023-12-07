@@ -156,7 +156,7 @@ href=
                          
 
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col">
                                     <% if(deal !=='') { %>
                                        
                             <form action="/admin/dealsBanner" method="Post" enctype="multipart/form-data">
@@ -199,7 +199,7 @@ href=
                                     <label for="product_name" class="form-label">Expiry</label>
                                     <div class="datepicker date input-group p-0 shadow-sm" style=" height: 45px; width: 130px">
                                      
-                                        <input id="toDate" value="" style="height: 45px;" name="end1" type="text" class="form-control py-2 px-2" />
+                                        <input id="toDate" value="<%= deal.end  %>" style="height: 45px;" name="end1" type="text" class="form-control py-2 px-2" />
                                         <span id="showToDate" hidden></span>
                                         <span class="input-group-append">
                                             <span class="input-group-text px-2">
@@ -217,7 +217,13 @@ href=
                                   </div>
 
                                   
-                                
+                                  <% if (deal.images.length > 0) { %>
+                                    <% for (let j = 0; j < deal.images.length; j++) { %>
+                                        <span>
+                                            <img style="width: 100px; height: 100px;" src="/<%= deal.images[j] %>" alt="">
+                                        </span>
+                                    <% } %>
+                                <% } %>
                                  
 
                                  
@@ -240,7 +246,7 @@ href=
               
                                
                                 <div class="">
-                                    <button type="submit" class="btn btn-primary">Create Banner</button>
+                                    <button type="submit" class="btn btn-primary">Update Banner</button>
                                 </div>
                             </div>
                                
@@ -306,7 +312,8 @@ href=
 
                               
                             
-                             
+                           
+                            
 
                              
                               
@@ -340,7 +347,7 @@ href=
                        
                      
 
-                        <div class="col-lg-6">
+                        <div class="col">
                             <% if(banners) {%>
 
 
@@ -459,10 +466,10 @@ href=
                         <div class="card mb-4">
                             <div class="card-header">
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col">
                                         <h4>Sub Banner</h4>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col">
     <h4>Offer Banner</h4>
                                     </div>
                                 </div>
@@ -471,7 +478,8 @@ href=
                             <div class="card-body">
                                
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col">
+                                        <% if(sub !== '') {%>
                                 <form action="/admin/subBanner" method="Post" enctype="multipart/form-data">
                                    
                                             <div class="">
@@ -482,19 +490,19 @@ href=
                                     </div>
                                     <div class="mb-4">
                                         <label for="product_name" class="form-label">Banner title</label>
-                                        <input type="text" placeholder="Type here" class="form-control" id="title" name="title3">
+                                        <input type="text" value="<%= sub.bannerTitle[0]  %>" placeholder="Type here" class="form-control" id="title" name="title3">
                                     </div>
                                     <div class="mb-4">
                                             <label for="product_name" class="form-label">Banner Phrase</label>
-                                            <input type="text" placeholder="Type here" class="form-control" id="phrase" name="phrase3">
+                                            <input type="text" value = '<%= sub.bannerPhrase[0]  %>'  placeholder="Type here" class="form-control" id="phrase" name="phrase3">
                                         </div>
                                         <div class="mb-4">
                                             <label for="product_name" class="form-label">Banner sub-text</label>
-                                            <input type="text" placeholder="Type here" class="form-control" id="subtext" name="subtext3">
+                                            <input type="text" value="<%= sub.bannerSubText[0]  %> " placeholder="Type here" class="form-control" id="subtext" name="subtext3">
                                         </div>
                                         <div class="mb-4">
                                             <label for="product_name" class="form-label">Banner Action</label>
-                                            <input type="text" placeholder="Type here" class="form-control" id="btn" name="action3">
+                                            <input type="text" value="<%= sub.bannerAction[0]  %>" placeholder="Type here" class="form-control" id="btn" name="action3">
                                         </div>
                                        
                                         
@@ -514,6 +522,8 @@ href=
                                         <input type="file" name="images3" class="form-control-file border" accept="image/*" id="input-images3" multiple >
                                     </div>
                                 </div>
+                              
+
                                  
                                   
     
@@ -525,13 +535,14 @@ href=
                                 </div>
                                    
                                 </form>
+                                <% } %>
                            
                          
     
-                            <div class="col-lg-6">
+                            <div class="col">
     
 
-
+<% if(offer !== '') {%>
                                 <form action="/admin/offerBanner" method="Post" enctype="multipart/form-data">
                                    
                                     <div class="">
@@ -541,47 +552,53 @@ href=
                             </div>
                             <div class="mb-4">
                                 <label for="product_name" class="form-label">Banner title</label>
-                                <input type="text" placeholder="Type here" value="" class="form-control" id="title" name="title4">
+                                <input type="text" placeholder="Type here" value="<%= offer.bannerTitle[0]  %>" class="form-control" id="title" name="title4">
                             </div>
                             <div class="mb-4">
                                 <label for="product_name" class="form-label">Banner title 2</label>
-                                <input type="text" placeholder="Type here" class="form-control" id="title" name="title42">
+                                <input type="text" placeholder="Type here" value="<%= offer.bannerTitle[1]  %>" class="form-control" id=bannerTtitle" name=bannerTtitle42">
                             </div>
                             <div class="mb-4">
-                                <label for="product_name" class="form-label">Banner title 3</label>
-                                <input type="text" placeholder="Type here" class="form-control" id="title" name="title43">
+                                <label for="product_name" class="form-label">BannerbannerTtitle 3</label>
+                                <input type="text" placeholder="Type here" value="<%= offer.bannerTitle[2]  %>" class="form-control" id="title" name="title43">
                             </div>
                             <div class="mb-4">
                                     <label for="product_name" class="form-label">Banner Phrase</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="phrase" name="phrase4">
+                                    <input type="text" placeholder="Type here" value="<%= offer.bannerPhrase[0]  %>" class="form-control" id="phrase" name="phrase4">
                                 </div>
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Banner Phrase 2</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="phrase" name="phrase42">
+                                    <input type="text" placeholder="Type here" value="<%= offer.bannerPhrase[1]  %>" class="form-control" id="phrase" name="phrase42">
                                 </div>
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Banner Phrase 3</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="phrase" name="phrase43">
+                                    <input type="text" placeholder="Type here" value="<%= offer.bannerPhrase[2]  %>" class="form-control" id="phrase" name="phrase43">
                                 </div>
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Banner sub-text</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="subtext" name="subtext4">
+                                    <input type="text" placeholder="Type here" value="<%= offer.bannerSubText[0]  %>" class="form-control" id="subtext" name="subtext4">
                                 </div>
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Banner sub-text 2</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="subtext" name="subtext42">
+                                    <input type="text" placeholder="Type here" value="<%= offer.bannerSubText[1]%>" class="form-control" id="subtext" name="subtext42">
                                 </div>
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Banner sub-text 2</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="subtext" name="subtext43">
+                                    <input type="text" placeholder="Type here" value="<%= offer.bannerSubText[2]  %>" class="form-control" id="subtext" name="subtext43">
                                 </div>
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Banner Action</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="btn" name="action4">
+                                    <input type="text" value="<%= offer.bannerAction  %>" placeholder="Type here" class="form-control" id="btn" name="action4">
                                 </div>
                                
                                 
-                               
+                                <% if (offer.images.length > 0) { %>
+                                    <% for (let j = 0; j < offer.images.length; j++) { %>
+                                        <span>
+                                            <img style="width: 100px; height: 100px;" src="/<%= offer.images[j] %>" alt="">
+                                        </span>
+                                    <% } %>
+                                <% } %>
     
                              
                               
@@ -606,8 +623,9 @@ href=
                                 <button type="submit" class="btn btn-primary">Create Product</button>
                             </div>
                         </div>
-                           
+                         
                         </form>
+                        <% } %>
 
                    
                    
@@ -618,7 +636,149 @@ href=
                    
     
                     </div>
-                    <div>
+
+
+                    <div class="col-xs-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col">
+                                        <h4>Festival Banner</h4>
+                                    </div>
+                                    <div class="col">
+    <h4>About Banner</h4>
+                                    </div>
+                                </div>
+                               
+                            </div>
+
+                    <div class="card-body">
+                               
+                        <div class="row">
+                            <div class="col">
+                                <% if(fest !== '') {%>
+                        <form action="/admin/festivalBanner" method="Post" enctype="multipart/form-data">
+                           
+                                    <div class="">
+                            <div class="mb-4">
+                                <label for="product_category" class="form-label">Banner Type</label>
+                                <input type="text" placeholder="Type here" class="form-control" id="title" value="Festival Banner" name="bannertype5" readonly>
+                                
+                            </div>
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Banner title</label>
+                                <input type="text" value="<%= fest.bannerTitle[0]  %>" placeholder="Type here" class="form-control" id="title" name="title5">
+                            </div>
+                            <div class="mb-4">
+                                    <label for="product_name" class="form-label">Banner Phrase</label>
+                                    <input type="text" value = '<%= fest.bannerPhrase[0]  %>'  placeholder="Type here" class="form-control" id="phrase" name="phrase5">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Banner sub-text</label>
+                                    <input type="text" value="<%= fest.bannerSubText[0]  %> " placeholder="Type here" class="form-control" id="subtext" name="subtext5">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Banner Action</label>
+                                    <input type="text" value="<%= fest.bannerAction[0]  %>" placeholder="Type here" class="form-control" id="btn" name="action5">
+                                </div>
+                               
+                                <% if (fest.images.length > 0) { %>
+                                    <% for (let j = 0; j < fest.images.length; j++) { %>
+                                        <span>
+                                            <img style="width: 100px; height: 100px;" src="/<%= fest.images[j] %>" alt="">
+                                        </span>
+                                    <% } %>
+                                <% } %>
+                                
+                             
+
+                             
+                              
+                      
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Upload Image</label>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                      <div class="preview-images5"></div>
+                                    </div>
+                                  </div>
+                                  
+                                <input type="file" name="images5" class="form-control-file border" accept="image/*" id="input-images5" multiple >
+                            </div>
+                        </div>
+                      
+
+                         
+                          
+
+          
+                           
+                            <div class="">
+                                <button type="submit" class="btn btn-primary">Create Product</button>
+                            </div>
+                        </form>
+                        </div>
+                           
+                       
+                        <% } %>
+                 
+                 
+
+                    <div class="col">
+
+                            <form action="/admin/aboutBanner" method="Post" enctype="multipart/form-data">
+                               
+                                   <input type="text" value="About Banner" hidden name="bannertype6">
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Upload Image</label>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                          <div class="preview-images6"></div>
+                                        </div>
+                                      </div>
+                                      <% if(about !== ''){ %>
+                                      <% if (about && about.images.length > 0) { %>
+                                        <% for (let j = 0; j < about.images.length; j++) { %>
+                                            <span>
+                                                <img style="width: 100px; height: 100px;" src="/<%= about.images[j] %>" alt="">
+                                            </span>
+                                        <% } %>
+                                    <% } %>
+                                    <% } %>
+
+                                    <input type="file" name="images6" class="form-control-file border" accept="image/*" id="input-images6" multiple >
+                                </div>
+                           
+                          
+    
+                             
+                              
+    
+              
+                               
+                                <div class="">
+                                    <button type="submit" class="btn btn-primary">Update Banner</button>
+                                </div>
+                          
+                               
+                            </form>
+                            </div>
+                            
+                           
+
+
+
+           
+           
+
+                    </div>
+              
+             
+           
+
+            </div>
+
+                    
 
                    
     </main>
@@ -655,6 +815,12 @@ href=
         });
         $("#input-images4").on("change", function() {
           imagesPreview(this, "div.preview-images4");
+        });
+        $("#input-images5").on("change", function() {
+          imagesPreview(this, "div.preview-images5");
+        });
+        $("#input-images6").on("change", function() {
+          imagesPreview(this, "div.preview-images6");
         });
       });
       

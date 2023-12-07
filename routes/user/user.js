@@ -47,7 +47,7 @@ router.get('/cancelledOrders',authMiddleWare.checkSignIn,controller.cancelledOrd
 router.get('/userWallet',authMiddleWare.checkSignIn,controller.userWallet)
 router.get('/refferalClaim',authMiddleWare.checkSignIn,controller.refferalClaim)
 router.get('/home',controller.homepage)
-
+router.get('/about',controller.getAbout)
 
 router.get('/',productController.productGridView)
 router.get('/sortCategory',productController.sortProducts)
