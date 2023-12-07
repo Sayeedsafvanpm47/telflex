@@ -25,7 +25,8 @@ const sizeRateSchema = new Schema({
 	productDiscount : {
 		type :Number,
 		default : 0
-	}
+	},
+	
 	
 	
         });
@@ -56,10 +57,7 @@ let productSchema = new mongoose.Schema({
 		type: String
 	},
 	
-	isFeatured: {
-		type: String
-	},
-
+	
 	images:{
 		type : Array
 	},
@@ -82,6 +80,14 @@ let productSchema = new mongoose.Schema({
 	isListed : {
 		type : Boolean,
 		default : true
+	},
+	featured : {
+		type : String,
+		default : 'No'
+	},
+	itemSold : {
+		type : Number,
+		default : 0
 	}
 });
 

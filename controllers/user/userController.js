@@ -141,10 +141,24 @@ req.session.user = true
 				const products = await productModel.find({})
 			const banners = await bannerModel.findOne({bannerType : 'Main Banner'})
 			const subbanner = await bannerModel.findOne({bannerType : 'Sub Banner'})
+			const popular = await productModel.find({})
+			const deals = await bannerModel.findOne({bannerType : 'Deals banner'})
+			const newproducts = await productModel.find({}).populate({
+				path:'category',
+				model : 'categories',
+				select:'categoryName'
+			}).sort({CreatedOn:-1}).limit(4)
+
+			const newarrivals = await productModel.find({}).populate({
+				path:'category',
+				model : 'categories',
+				select:'categoryName'
+			}).sort({CreatedOn:-1}).limit(12)
+// console.log(newproducts)
 
 
 			console.log(banners)
-			res.render('user/user/home',{products,banners,subbanner})
+			res.render('user/user/home',{products,banners,subbanner,newproducts,newarrivals,deals})
 				
 			
 		} catch (error) {
