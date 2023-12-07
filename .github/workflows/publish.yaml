@@ -21,4 +21,4 @@ jobs:
           cd telflex
           git fetch
           git reset --hard origin/master
-          sudo docker-compose up --build -d '
+          sudo docker compose up --build -d '
