@@ -17,9 +17,8 @@ jobs:
           echo "${{ secrets.AWS_PRIVATE_KEY }}" > ~/secret.pem
           chmod 600 ~/secret.pem
           ssh -o StrictHostKeyChecking=no -i "~/secret.pem" ${{ secrets.AWS_USERNAME }}@${{ secrets.AWS_HOST }} '
-          docker-compose down 
+          sudo docker compose down 
           cd telflex
           git fetch
           git reset --hard origin/master
-          docker-compose up --build -d
-          exit '
+          sudo docker-compose up --build -d '
