@@ -31,12 +31,12 @@ const checkMainBanner = (req, res, next) => {
                   }
                 
                  
-                  if (req.files.length > 2) { 
-                    errors.push('you can only upload 2 images')
+                  if (req.files.length > 1) { 
+                    errors.push('you can only upload 1 image')
                   
                   }
-                  if (req.files.length < 2) { 
-                    errors.push('you have to upload 2 images')
+                  if (req.files.length < 1) { 
+                    errors.push('you have to upload 1 image')
                   }
                   if(errors.length>0)
                   {

@@ -3,7 +3,7 @@ const bannerModel = require('../../models/bannerModel')
 module.exports = {
           dealsBanner : async (req,res)=>{
 
-                    const { bannertype1 , title1,title12,phrase12, phrase1, subtext1,subtext12, action1,action12, offer1, offer12,mrp1, mrp12, end1, discount1 , discount12} = req.body
+                    const { bannertype1 , title1, phrase1, subtext1,action1,offer1,mrp1,  end1, discount1 } = req.body
 
                     console.log(bannertype1)
                     console.log(title1)
@@ -24,15 +24,15 @@ module.exports = {
                               if(existingBanner)
                               {
                                         existingBanner.bannerType = bannertype1,
-                                        existingBanner.bannerTitle = [title1,title12],
-                                        existingBanner.bannerPhrase = [phrase1,phrase12],
-                                        existingBanner.bannerSubText = [subtext1,subtext12],
-                                        existingBanner.bannerAction = [action1,action12],
-                                        existingBanner.bannerOffer = [offer1,offer12],
-                                        existingBanner.bannerMrp = [mrp1,mrp12],
+                                        existingBanner.bannerTitle = [title1],
+                                        existingBanner.bannerPhrase = [phrase1],
+                                        existingBanner.bannerSubText = [subtext1],
+                                        existingBanner.bannerAction = [action1],
+                                        existingBanner.bannerOffer = [offer1],
+                                        existingBanner.bannerMrp = [mrp1],
                                       
                                         existingBanner.end = expiry,
-                                        existingBanner.bannerDiscount = [discount1,discount12],
+                                        existingBanner.bannerDiscount = [discount1],
                                         existingBanner.images = processedImages
                                         await existingBanner.save()
                                         req.session.bannerAlert = true
@@ -42,15 +42,15 @@ module.exports = {
                               }
                               const banner = new bannerModel({
                                         bannerType : bannertype1,
-                                        bannerTitle : [title1,title12],
-                                        bannerPhrase : [phrase1,phrase12],
-                                        bannerSubText : [subtext1,subtext12],
-                                        bannerAction : [action1,action12],
-                                        bannerOffer : [offer1,offer12],
-                                        bannerMrp : [mrp1,mrp12],
+                                        bannerTitle : [title1],
+                                        bannerPhrase : [phrase1],
+                                        bannerSubText : [subtext1],
+                                        bannerAction : [action1],
+                                        bannerOffer : [offer1],
+                                        bannerMrp : [mrp1],
                                    
                                         end : expiry,
-                                        bannerDiscount : [discount1,discount12],
+                                        bannerDiscount : [discount1],
                                         images : processedImages
                               })
                               
@@ -224,7 +224,7 @@ else{
                              let success
                               const banners = await bannerModel.findOne({bannerType : 'Main Banner'})
 			const subbanner = await bannerModel.findOne({bannerType : 'Sub Banner'})
-                              const deal = await bannerModel.findOne({bannerType : 'Deals banner'})
+                              const deal = await bannerModel.findOne({bannerType : 'Deals banner'}) || ''
                               console.log(deal)
                               console.log(deal.length)
                               const offer = await bannerModel.findOne({bannerType:'Offer Banner'})

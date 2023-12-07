@@ -157,7 +157,7 @@ href=
 
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <% if(deal) { %>
+                                    <% if(deal !=='') { %>
                                        
                             <form action="/admin/dealsBanner" method="Post" enctype="multipart/form-data">
                                
@@ -171,20 +171,14 @@ href=
                                     <label for="product_name" class="form-label">Banner title</label>
                                     <input type="text" value="<%= deal.bannerTitle[0]  %>" placeholder="Type here" class="form-control" id="title1" name="title1">
                                 </div>
-                                <div class="mb-4">
-                                    <label for="product_name" class="form-label">Banner title 2</label>
-                                    <input type="text" value="<%= deal.bannerTitle[1]  %>" placeholder="Type here" class="form-control" id="title1" name="title12">
-                                </div>
+                               
                                 
                                 <div class="mb-4">
                                         <label for="product_name" class="form-label">Banner Phrase</label>
                                         <input type="text" value="<%= deal.bannerPhrase[0] %>" placeholder="Type here" class="form-control" id="phrase1" name="phrase1">
                                     </div>
 
-                                    <div class="mb-4">
-                                        <label for="product_name" class="form-label">Banner Phrase 2</label>
-                                        <input type="text" value="<%= deal.bannerPhrase[1]  %>" placeholder="Type here" class="form-control" id="phrase1" name="phrase12">
-                                    </div>
+                                  
                                     
 
                                     <div class="mb-4">
@@ -192,35 +186,15 @@ href=
                                         <input type="text" value="<%= deal.bannerSubText[0] %>" placeholder="Type here" class="form-control" id="subtext1" name="subtext1">
                                     </div>
 
-                                    <div class="mb-4">
-                                        <label for="product_name" class="form-label">Banner sub-text 2</label>
-                                        <input type="text" value="<%= deal.bannerSubText[1]  %>" placeholder="Type here" class="form-control" id="subtext1" name="subtext12">
-                                    </div>
+                                    
                                     <div class="mb-4">
                                         <label for="product_name" class="form-label">Banner Action</label>
                                         <input type="text" value="<%= deal.bannerAction[0]  %>" placeholder="Type here" class="form-control" id="action1" name="action1">
                                     </div>
-                                    <div class="mb-4">
-                                        <label for="product_name" class="form-label">Banner Action 2</label>
-                                        <input type="text" value="<%= deal.bannerAction[1]  %>" placeholder="Type here" class="form-control" id="action1" name="action12">
-                                    </div>
-                                    <div id="offer" class="mb-4" >
-                                        <label for="product_name" class="form-label">Offer Price</label>
-                                        <input type="text" value="<%= deal.bannerOffer[0]  %>" placeholder="Type here" class="form-control" id="offer1"  name="offer1">
-                                    </div>
-                                    <div id="offer" class="mb-4" >
-                                        <label for="product_name" class="form-label">Offer Price 2</label>
-                                        <input type="text" value="<%= deal.bannerOffer[1]  %>" placeholder="Type here" class="form-control" id="offer1"  name="offer12">
-                                    </div>
-                                    <div id="old" class="mb-4" >
-                                        <label for="product_name" class="form-label">Old Price</label>
-                                        <input type="text" value="<%= deal.bannerMrp[0]  %>" placeholder="Type here" class="form-control" id="mrp1"  name="mrp1">
-                                    </div>
+                                 
+                                  
 
-                                    <div id="old" class="mb-4" >
-                                        <label for="product_name" class="form-label">Old Price 2</label>
-                                        <input type="text" value="<%= deal.bannerMrp[1]  %>" placeholder="Type here" class="form-control" id="mrp1"  name="mrp12">
-                                    </div>
+                                   
                                   
                                     <label for="product_name" class="form-label">Expiry</label>
                                     <div class="datepicker date input-group p-0 shadow-sm" style=" height: 45px; width: 130px">
@@ -242,10 +216,7 @@ href=
                                       <input type="text" value="<%= deal.bannerDiscount[0]  %>" placeholder="Type here" class="form-control" id="discount1" name="discount1">
                                   </div>
 
-                                  <div class="mb-4">
-                                    <label for="product_name" class="form-label">Product Discount 2</label>
-                                    <input type="text" value="<%= deal.bannerDiscount[1]  %>" placeholder="Type here" class="form-control" id="discount1" name="discount12">
-                                </div>
+                                  
                                 
                                  
 
@@ -274,7 +245,96 @@ href=
                             </div>
                                
                             </form>
-                            <% } %>
+                            <% } else { %>
+
+                                <form action="/admin/dealsBanner" method="Post" enctype="multipart/form-data">
+                               
+                                    <div class="">
+                            <div class="mb-4">
+                                <label for="product_category" class="form-label">Banner Type</label>
+                                <input type="text" placeholder="Type here" class="form-control" id="bannertype1" value="Deals banner" name="bannertype1" readonly>
+                                
+                            </div>
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Banner title</label>
+                                <input type="text"  placeholder="Type here" class="form-control" id="title1" name="title1">
+                            </div>
+                           
+                            
+                            <div class="mb-4">
+                                    <label for="product_name" class="form-label">Banner Phrase</label>
+                                    <input type="text"  placeholder="Type here" class="form-control" id="phrase1" name="phrase1">
+                                </div>
+
+                              
+                                
+
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Banner sub-text</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="subtext1" name="subtext1">
+                                </div>
+
+                                
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Banner Action</label>
+                                    <input type="text"  placeholder="Type here" class="form-control" id="action1" name="action1">
+                                </div>
+                             
+                              
+
+                               
+                              
+                                <label for="product_name" class="form-label">Expiry</label>
+                                <div class="datepicker date input-group p-0 shadow-sm" style=" height: 45px; width: 130px">
+                                 
+                                    <input id="toDate" value="" style="height: 45px;" name="end1" type="text" class="form-control py-2 px-2" />
+                                    <span id="showToDate" hidden></span>
+                                    <span class="input-group-append">
+                                        <span class="input-group-text px-2">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                                
+                            
+                             
+                              
+                                <div class="mb-4">
+                                  <label for="product_name" class="form-label">Product Discount</label>
+                                  <input type="text"  placeholder="Type here" class="form-control" id="discount1" name="discount1">
+                              </div>
+
+                              
+                            
+                             
+
+                             
+                              
+                      
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Upload Image</label>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                      <div class="preview-images"></div>
+                                    </div>
+                                  </div>
+                                  
+                                <input type="file" name="images1" class="form-control-file border" accept="image/*" id="input-images1" multiple >
+                            </div>
+                        </div>
+                         
+                          
+
+          
+                           
+                            <div class="">
+                                <button type="submit" class="btn btn-primary">Create Banner</button>
+                            </div>
+                        </div>
+                           
+                        </form>
+
+                        <% } %>
 
                                
                        
