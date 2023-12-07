@@ -1,0 +1,12 @@
+version: '3'
+services:
+  telflex:
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    container_name: telflex
+    ports:
+      - 8080:8080
+    restart: on-failure
+    env_file:
+      - .env
