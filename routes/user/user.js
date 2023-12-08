@@ -48,6 +48,8 @@ router.get('/userWallet',authMiddleWare.checkSignIn,controller.userWallet)
 router.get('/refferalClaim',authMiddleWare.checkSignIn,controller.refferalClaim)
 router.get('/home',controller.homepage)
 router.get('/about',controller.getAbout)
+router.get('/dealer',controller.getDealers)
+router.get('/contact',controller.getContact)
 
 router.get('/',productController.productGridView)
 router.get('/sortCategory',productController.sortProducts)
@@ -107,6 +109,7 @@ router.get('/regtemp',(req,res)=>{
 router.get('/razorpay',(req,res)=>{
   res.render('user/user/razorpay')
 })
+
 
 
 module.exports = router;

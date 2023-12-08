@@ -191,7 +191,7 @@
                 <% } %>
             </div>
            
-            <div class="slider-arrow hero-slider-1-arrow"></div>
+          
           
         </section>
      
@@ -319,7 +319,8 @@
                 <!--End tab-content-->
             </div>
         </section>
-        <section class="home-slider" style="margin-left: -6rem;">
+        <section class="home-slider">
+            <div class="container">
             <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
                 <% if(about !== ''){%>
                     <% for(let i=0; i<about.images.length; i++){ %>
@@ -347,11 +348,17 @@
                         <div class="col-lg-5 col-md-6">
                              
                             <div class="hero-slider-content-2">
-                              <h1>
-                                About Us
-                              </h1>
-                              <p>We are telflex, since 2001, sidaisidanisndaindi</p>
-                               
+                             
+                              <h1 class="fs-2">We are <span class="fs-1" style="color: rgba(22, 85, 181, 0.896);">TELFLEX</span>  </h1> 
+                               <p>
+                                Founded by Mr Nizar KK, Telflex started as a cotton mattress 
+                                and pillows production company and later transitioned to 
+                                large scale manufacturing of Mattresses of all kinds.
+                                <br>
+                                We have been actively supplying our products all over 
+                                Kerala over the years. We craft the high quality mattresses 
+                                a very reasonable pricing. We also provide a variety of furnitures as per the customer requirement.
+                               </p>
                             </div>
                         </div>
                     
@@ -364,7 +371,7 @@
             <% } %>
             <% } %>
             </div>
-            
+        </div>
         </section>
 
         <section class="mb-50 mt-10">
@@ -381,7 +388,7 @@
                                 <span><%= fest.bannerSubText[0]  %></span>
                                 <p><%= fest.bannerAction[0]  %></p>
                                 
-                                <h2 class="fw-600">Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to 40%</h2>
+                                <h2 class="fw-600">Happy <span class="text-brand"><%= fest.bannerTitle[0]%></span>. Big Sale Up to 40%</h2>
                             </div>
                             <div class="col">
                                 <img src="/<%= fest.images[0]  %>" alt="">
@@ -406,7 +413,7 @@
                         <h1 class="fw-600 mb-20"><%= subbanner.bannerPhrase[0]  %></h1>
                         <h6 class="mb-15 mt-40 text-brand"><%= subbanner.bannerSubText[0]  %></h>
                         <div>
-                        <a href="shop-grid-right.html" class="btn"><%= subbanner.bannerAction[0]  %> <i class="fi-rs-arrow-right"></i></a>
+                        <a href="/user/contact" class="btn"><%= subbanner.bannerAction[0]  %> <i class="fi-rs-arrow-right"></i></a>
                     </div>
                     </div>
                 </div>
@@ -424,7 +431,7 @@
                         
                         <div class="banner-img wow fadeIn animated">
                             <img src="/<%= offer.images[i] %>" alt="">
-                            <div class="banner-text">
+                            <div class="banner-text" style="background-color: rgba(255, 255, 255, 0.573);" >
                                 <span><%= offer.bannerTitle[i]  %></span>
                                 <h4>Save 20% on %> on <br>Woman Bag</h4>
                                 <a href="shop-grid-right.html"><%= offer.bannerAction[0] %> <i class="fi-rs-arrow-right"></i></a>

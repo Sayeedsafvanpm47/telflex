@@ -180,6 +180,24 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 		}
 	}
 	,
+	getDealers : async (req,res)=>{
+		try {
+			const banners = await bannerModel.findOne({bannerType : 'Dealer Banner'})
+			res.render('user/user/dealer',{banners})
+		} catch (error) {
+			
+		}
+	}
+	,
+	getContact : async (req,res)=>{
+		try {
+			const banners = await bannerModel.findOne({bannerType:'Contact Banner'})
+			res.render('user/user/contact',{banners})
+		} catch (error) {
+			console.log(error)
+		}
+	}
+	,
 	getSignUp: async (req, res) => {
 		try {
 			if(!req.session.userId){

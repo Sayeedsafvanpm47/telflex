@@ -143,7 +143,7 @@
         <!-- banner 2 (loop the banners) -->
       
         <section class="home-slider position-relative">
-          
+          <div class="container">
             <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
                 <% if(banners){ %>
                 <% for(let i=0; i<banners.images.length; i++){ %>
@@ -163,10 +163,10 @@
 
                                     <img  class="animated slider-1-1" src="/<%= banners.images[i] %>" alt="">
 
-                                    <h1 class="image-content animated fw-900 text-brand">Get To Know Us More</h1>
+                                    <h1 style="color: black;" class="image-content animated fw-900">Get To Know Us More</h1>
                                 
                                    
-                                    <p class="image-content2 animated">explore our history, ceo, factories, shops, manufacturing process..</p>
+                                    <p class="image-content2 animated" style="background-color: rgba(255, 255, 255, 0.585);"  >explore our history, ceo, factories, shops, manufacturing process..</p>
 
                                      
                                   
@@ -185,8 +185,8 @@
                 <% } %>
             </div>
            
-            <div class="slider-arrow hero-slider-1-arrow"></div>
-          
+        
+        </div>
         </section>
      
      

@@ -128,13 +128,13 @@ router.post('/mainAboutBanner',imageController.upload.array('images7'),checkImag
           
   imageController.processImage(req, res, next, 1536, 500);
 },bannerController.mainAboutBanner),
-router.post('/aboutBanner',imageController.upload.array('images8'),checkImage.checkMainBanner,(req, res, next) => {
+router.post('/dealerBanner',imageController.upload.array('images8'),checkImage.checkMainBanner,(req, res, next) => {
           
   imageController.processImage(req, res, next, 1536, 500);
 },bannerController.dealerBanner),
-router.post('/aboutBanner',imageController.upload.array('images9'),checkImage.checkMainBanner,(req, res, next) => {
+router.post('/contactBanner',imageController.upload.array('images9'),checkImage.checkMainBanner,(req, res, next) => {
           
-  imageController.processImage(req, res, next, 1536, 500);
+  imageController.processImage(req, res, next, 1536, 600);
 },bannerController.contactBanner),
 
 
