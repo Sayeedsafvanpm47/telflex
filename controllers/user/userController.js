@@ -172,7 +172,7 @@ req.session.user = true
 	},
 	getAbout : async (req,res)=>{
 		try {
-const banners = await bannerModel.findOne({bannerType:'About Banner'})
+const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 			res.render('user/user/about',{banners})
 			
 		} catch (error) {

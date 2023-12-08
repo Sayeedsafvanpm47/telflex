@@ -638,7 +638,6 @@ href=
                     </div>
 
 
-                    <div class="col-xs-6">
                         <div class="card mb-4">
                             <div class="card-header">
                                 <div class="row">
@@ -771,12 +770,154 @@ href=
            
            
 
-                    </div>
               
              
            
 
             </div>
+          
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">
+                            <h4>Main About Banner</h4>
+                        </div>
+                        <div class="col">
+<h4>Dealer Banner</h4>
+                        </div>
+                    </div>
+                   
+                </div>
+
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col">
+
+                    <form action="/admin/mainAboutBanner" method="Post" enctype="multipart/form-data">
+                       
+                           <input type="text" value="Main About Banner" hidden name="bannertype7">
+                        <div class="mb-4">
+                            <label for="product_name" class="form-label">Upload Image</label>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                  <div class="preview-images7"></div>
+                                </div>
+                              </div>
+                              <% if(mainabout !== ''){ %>
+                              <% if (mainabout && mainabout.images.length > 0) { %>
+                                <% for (let j = 0; j < mainabout.images.length; j++) { %>
+                                    <span>
+                                        <img style="width: 100px; height: 100px;" src="/<%= mainabout.images[j] %>" alt="">
+                                    </span>
+                                <% } %>
+                            <% } %>
+                            <% } %>
+
+                            <input type="file" name="images7" class="form-control-file border" accept="image/*" id="input-images7" multiple >
+                        </div>
+                   
+                  
+
+                     
+                      
+
+      
+                       
+                        <div class="">
+                            <button type="submit" class="btn btn-primary">Update Banner</button>
+                        </div>
+                  
+                       
+                    </form>
+                    </div>  <div class="col">
+
+                        <form action="/admin/dealerBanner" method="Post" enctype="multipart/form-data">
+                           
+                               <input type="text" value="Dealer Banner" hidden name="bannertype8">
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Upload Image</label>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                      <div class="preview-images8"></div>
+                                    </div>
+                                  </div>
+                                  <% if(dealer !== ''){ %>
+                                  <% if (dealer && dealer.images.length > 0) { %>
+                                    <% for (let j = 0; j < dealer.images.length; j++) { %>
+                                        <span>
+                                            <img style="width: 100px; height: 100px;" src="/<%= dealer.images[j] %>" alt="">
+                                        </span>
+                                    <% } %>
+                                <% } %>
+                                <% } %>
+
+                                <input type="file" name="images8" class="form-control-file border" accept="image/*" id="input-images8" multiple >
+                            </div>
+                       
+                      
+
+                         
+                          
+
+          
+                           
+                            <div class="">
+                                <button type="submit" class="btn btn-primary">Update Banner</button>
+                            </div>
+                      
+                           
+                        </form>
+                        </div>
+            </div>
+            
+                </div>
+
+                <div class="card-header">
+                  
+                            <h4>Contact Us</h4>
+                        </div>
+                        <div class="card-body">
+                            <form action="/admin/ContactBanner" method="Post" enctype="multipart/form-data">
+                           
+                                <input type="text" value="Contact Banner" hidden name="bannertype9">
+                             <div class="mb-4">
+                                 <label for="product_name" class="form-label">Upload Image</label>
+                                 <div class="row">
+                                     <div class="col-sm-12">
+                                       <div class="preview-images9"></div>
+                                     </div>
+                                   </div>
+                                   <% if(contact !== ''){ %>
+                                   <% if (contact && contact.images.length > 0) { %>
+                                     <% for (let j = 0; j < contact.images.length; j++) { %>
+                                         <span>
+                                             <img style="width: 100px; height: 100px;" src="/<%= contact.images[j] %>" alt="">
+                                         </span>
+                                     <% } %>
+                                 <% } %>
+                                 <% } %>
+ 
+                                 <input type="file" name="images9" class="form-control-file border" accept="image/*" id="input-images9" multiple >
+                             </div>
+                        
+                       
+ 
+                          
+                           
+ 
+           
+                            
+                             <div class="">
+                                 <button type="submit" class="btn btn-primary">Update Banner</button>
+                             </div>
+                       
+                            
+                         </form>
+
+
+                            </div>
+
+           
 
                     
 
@@ -821,6 +962,15 @@ href=
         });
         $("#input-images6").on("change", function() {
           imagesPreview(this, "div.preview-images6");
+        });
+        $("#input-image7").on("change", function() {
+          imagesPreview(this, "div.preview-images7");
+        });
+        $("#input-images8").on("change", function() {
+          imagesPreview(this, "div.preview-images8");
+        });
+        $("#input-images9").on("change", function() {
+          imagesPreview(this, "div.preview-images9");
         });
       });
       

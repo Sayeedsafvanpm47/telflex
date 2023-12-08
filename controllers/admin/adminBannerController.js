@@ -337,7 +337,142 @@ res.redirect('/admin/banner')
 
 
           
-  }
+  },
+  mainAboutBanner : async (req,res)=>{
+
+        const { bannertype7} = req.body
+
+       
+        try {
+            const processedImages = req.processedImages || [];
+            const existingBanner = await bannerModel.findOne({bannerType : bannertype7})
+if(existingBanner){
+
+existingBanner.bannerType = bannertype7,
+
+
+existingBanner.images = processedImages
+
+await existingBanner.save()
+req.session.bannerAlert = true
+
+res.redirect('/admin/banner')
+
+}else{
+                 
+
+                  const banner = new bannerModel({
+                            bannerType : bannertype7,
+                          
+                            images : processedImages
+                  })
+                  await banner.save()
+                  req.session.bannerAlert = true
+               
+                 res.redirect('/admin/banner')
+                }
+        } catch (error) {
+                  console.log(error)
+                  
+        }
+
+
+        
+
+
+
+      
+},
+dealerBanner : async (req,res)=>{
+
+        const { bannertype8} = req.body
+
+       
+        try {
+            const processedImages = req.processedImages || [];
+            const existingBanner = await bannerModel.findOne({bannerType : bannertype8})
+if(existingBanner){
+
+existingBanner.bannerType = bannertype8,
+
+
+existingBanner.images = processedImages
+
+await existingBanner.save()
+req.session.bannerAlert = true
+
+res.redirect('/admin/banner')
+
+}else{
+                 
+
+                  const banner = new bannerModel({
+                            bannerType : bannertype8,
+                          
+                            images : processedImages
+                  })
+                  await banner.save()
+                  req.session.bannerAlert = true
+               
+                 res.redirect('/admin/banner')
+                }
+        } catch (error) {
+                  console.log(error)
+                  
+        }
+
+
+        
+
+
+
+      
+},
+contactBanner : async (req,res)=>{
+
+        const { bannertype9} = req.body
+
+       
+        try {
+            const processedImages = req.processedImages || [];
+            const existingBanner = await bannerModel.findOne({bannerType : bannertype9})
+if(existingBanner){
+
+existingBanner.bannerType = bannertype9,
+
+
+existingBanner.images = processedImages
+
+await existingBanner.save()
+req.session.bannerAlert = true
+
+res.redirect('/admin/banner')
+
+}else{
+                 
+
+                  const banner = new bannerModel({
+                            bannerType : bannertype9,
+                          
+                            images : processedImages
+                  })
+                  await banner.save()
+                  req.session.bannerAlert = true
+               
+                 res.redirect('/admin/banner')
+                }
+        } catch (error) {
+                  console.log(error)
+                  
+        }
+
+
+        
+
+
+
+      
+}
           ,
           showBanner : async (req,res)=>{
                     try {
@@ -353,23 +488,28 @@ res.redirect('/admin/banner')
                               const sub = await bannerModel.findOne({bannerType : 'Sub Banner'}) || ''
                               const fest = await bannerModel.findOne({bannerType : 'Festival Banner'}) || ''
                               const about = await bannerModel.findOne({bannerType : 'About Banner'}) || ''
+                              const mainabout = await bannerModel.findOne({bannerType : 'Main About Banner'}) || ''
+                              const dealer = await bannerModel.findOne({bannerType : 'Dealer Banner'}) || ''
+                              const contact = await bannerModel.findOne({bannerType : 'Contact Banner'}) || ''
+                        
+
                             if(req.session.bannerError)
                               {
                                         const errors = req.session.errorMessageBanner
                                         console.log(errors)
                                        delete req.session.bannerError 
-                              res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer,sub,fest,about})
+                              res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer,sub,fest,about,mainabout,dealer,contact})
                               }
                               else if(req.session.bannerAlert)
                               {
                                         success = 'Banner Upload Succesfull'
                                         delete req.session.bannerAlert
-                                        res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer,sub,fest,about}) 
+                                        res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer,sub,fest,about,mainabout,dealer,contact}) 
                               }
                               else
                               {
                                         
-                                        res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer,sub,fest,about}) 
+                                        res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer,sub,fest,about,mainabout,dealer,contact}) 
                               }
 
                     } catch (error) {

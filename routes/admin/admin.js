@@ -123,7 +123,19 @@ router.post('/dealsBanner',imageController.upload.array('images1'),checkImage.ch
           
           imageController.processImage(req, res, next, 416, 177);
         },bannerController.offerBanner)
-router.get('/banner',bannerController.showBanner)
+router.get('/banner',bannerController.showBanner),
+router.post('/mainAboutBanner',imageController.upload.array('images7'),checkImage.checkMainBanner,(req, res, next) => {
+          
+  imageController.processImage(req, res, next, 1536, 500);
+},bannerController.mainAboutBanner),
+router.post('/aboutBanner',imageController.upload.array('images8'),checkImage.checkMainBanner,(req, res, next) => {
+          
+  imageController.processImage(req, res, next, 1536, 500);
+},bannerController.dealerBanner),
+router.post('/aboutBanner',imageController.upload.array('images9'),checkImage.checkMainBanner,(req, res, next) => {
+          
+  imageController.processImage(req, res, next, 1536, 500);
+},bannerController.contactBanner),
 
 
 

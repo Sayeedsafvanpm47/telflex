@@ -142,41 +142,36 @@
     <main class="main">
         <!-- banner 2 (loop the banners) -->
       
-        <section class="home-slider position-relative pt-50">
+        <section class="home-slider position-relative">
           
             <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
                 <% if(banners){ %>
                 <% for(let i=0; i<banners.images.length; i++){ %>
                 <div class="single-hero-slider single-animation-wrap">
-                    <div class="container">
+                    <div>
                       
                         <div class="row align-items-center slider-animated-1">
                         
-                            <div class="col-lg-5 col-md-6">
-                             
-                                <div class="hero-slider-content-2">
-                                    <h4 class="animated"></h4>
-                                  
-                                   
-                                   
-                                   
-                                    <h1 class="animated fw-900 text-brand">Get To Know Us More</h1>
-                                
-                                   
-                                    <p class="animated">explore our history, ceo, factories, shops, manufacturing process..</p>
-                                 
-                                   
-                                   
-                                </div>
-                            </div>
+                           
                             
-                            <div class="col-lg-7 col-md-6">
+                            <div class="col">
                                
 
-                                <div class="single-slider-img single-slider-img-1">
+                                <div  class="single-slider-img single-slider-img-1">
                                   
-                                    <img class="animated slider-1-1" src="/<%= banners.images[i] %>" alt="">
+                                   
 
+                                    <img  class="animated slider-1-1" src="/<%= banners.images[i] %>" alt="">
+
+                                    <h1 class="image-content animated fw-900 text-brand">Get To Know Us More</h1>
+                                
+                                   
+                                    <p class="image-content2 animated">explore our history, ceo, factories, shops, manufacturing process..</p>
+
+                                     
+                                  
+                                    
+                                 
                                  
                                 </div>
                             </div>
@@ -194,309 +189,102 @@
           
         </section>
      
-        <section class="product-tabs section-padding position-relative wow fadeIn animated">
-            <div class="bg-square"></div>
-            <div class="container">
-                <div class="tab-header">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="nav-tab-one" data-bs-toggle="tab" data-bs-target="#tab-one" type="button" role="tab" aria-controls="tab-one" aria-selected="true">Featured</button>
-                        </li>
-                        
-                       
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="nav-tab-three" data-bs-toggle="tab" data-bs-target="#tab-three" type="button" role="tab" aria-controls="tab-three" aria-selected="false">New added</button>
-                        </li>
-                    </ul>
-                    <a href="#" class="view-more d-none d-md-flex">View More<i class="fi-rs-angle-double-small-right"></i></a>
-                </div>
-                <!--End nav-tabs-->
-                <div class="tab-content wow fadeIn animated" id="myTabContent">
-                    <div class="tab-pane fade show active" id="tab-one" role="tabpanel" aria-labelledby="tab-one">
-                        <div class="row product-grid-4">
-                            <!-- featured -->
-                            <div class="col-lg-3 col-md-4 col-12 col-sm-6">
-                                <div class="product-cart-wrap mb-30">
-                                    <div class="product-img-action-wrap">
-                                        <div class="product-img product-img-zoom">
-                                            <a href="shop-product-right.html">
-                                                <img class="default-img" src="/user/imgs/shop/product-1-1.jpg" alt="">
-                                                <img class="hover-img" src="/user/imgs/shop/product-1-2.jpg" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="product-action-1">
-                                            <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a>
-                                            <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
-                                            <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
-                                        </div>
-                                        <div class="product-badges product-badges-position product-badges-mrg">
-                                            <span class="hot">Hot</span>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-category">
-                                            <a href="shop-grid-right.html">Clothing</a>
-                                        </div>
-                                        <h2><a href="shop-product-right.html">Colorful Pattern Shirts</a></h2>
-                                        <div class="rating-result" title="90%">
-                                            <span>
-                                                <span>90%</span>
-                                            </span>
-                                        </div>
-                                        <div class="product-price">
-                                            <span>$238.85 </span>
-                                            <span class="old-price">$245.8</span>
-                                        </div>
-                                        <div class="product-action-1 show">
-                                            <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                           
-                           
-                        </div>
-                        <!--End product-grid-4-->
-                    </div>
-                 
-                    <!--En tab two (Popular)-->
-                   
-                    <div class="tab-pane fade" id="tab-three" role="tabpanel" aria-labelledby="tab-three">
-                        
-                        <div class="row product-grid-4">
-                      
-                            <div class="col-lg-3 col-md-4 col-12 col-sm-6">
-                                <div class="product-cart-wrap mb-30">
-                                    <div class="product-img-action-wrap">
-                                        <div class="product-img product-img-zoom">
-                                            <a href="shop-product-right.html">
-                                                <img class="default-img" src="" alt="">
-                                                <img class="hover-img" src="" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="product-action-1">
-                                            <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a>
-                                            <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
-                                            <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
-                                        </div>
-                                        <div class="product-badges product-badges-position product-badges-mrg">
-                                            <span class="hot">Hot</span>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-category">
-                                            <a href="shop-grid-right.html"></a>
-                                        </div>
-                                        <h2><a href="shop-product-right.html"></a></h2>
-                                        <div class="rating-result" title="90%">
-                                            <span>
-                                                <span></span>
-                                            </span>
-                                        </div>
-                                        <div class="product-price">
-                                            <span></span>
-                                            <span class="old-price"></span>
-                                        </div>
-                                        <div class="product-action-1 show">
-                                            <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                      
-                        </div>
-                        <!--End product-grid-4-->
-                      
-                    </div>
-                
-                    <!--En tab three (New added)-->
-                </div>
-                <!--End tab-content-->
-            </div>
-        </section>
-        <section class="home-slider" style="margin-left: -6rem;">
-            <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
-              
-            <div class="single-hero-slider single-animation-wrap">
-                <div class="container">
-                  
-                    <div class="row  slider-animated-1">
-                    
-                        
-                       
-                        <div class="col-lg-7 col-md-6">
-                            
-                               
+     
 
-                            <div class="single-slider-img single-slider-img-1">
-                              
-                                <img class="animated slider-1-1" src="" alt="">
-                               
+        <section>
+            <div class="container pt-30">
+            <div class="row">
 
+                <div class="col">
                              
-                            </div>
-                         
-                        </div>
-                     
-                        <div class="col-lg-5 col-md-6">
-                             
-                            <div class="hero-slider-content-2">
-                              <h1>
-                                About Us
-                              </h1>
-                              <p>We are telflex, since 2001, sidaisidanisndaindi</p>
-                               
-                            </div>
-                        </div>
-                    
-
-                    
+                    <div class="hero-slider-content-2">
+                    <img src="/img/hero-bg-2.jpg" alt="">
+                       
                     </div>
-                  
                 </div>
+
+                <div class="col">
+                             
+                    <div class="hero-slider-content-2">
+                      <h1>
+                       CEO & Founder
+                      </h1>
+                      <p>Meet Mr Nizar KK, the CEO and Founder of Telflex Mattress. Mr Nizar has an experience of over 25 years in this mattress manufacturing field. 
+                        His venture of mattress production in his home town has helped in providing many people from his place with jobs in Telflex.
+                        Mr Nizar is a person who doesn’t compromise on the quality of the products from Telflex. He aims on leveraging the company’s brand value by providing the high quality products which aims on pleasing the customers.
+                        
+                        </p>
+                       
+                    </div>
+                </div>
+
             </div>
-        
-            </div>
-            
+           
+        </div>
         </section>
 
         <section class="mb-50 mt-10">
             <div class="container">
+                <h1 class="display-1"><span style="color: red;">Why</span> Choose Telflex ?</h1>
                 <div class="row">
-                    <div class="col-12">
-                  
-                        <div class="banner-bg wow fadeIn animated" style="background-color: rgba(36, 106, 171, 0.621);">
-                            <div class=" row banner-content">
-                                <div class="col">
-                                <h1 class="text-white-4 display mb-15"></h1>
-                                <p></p>
-                                <br>
-                                <span></span>
-                                <p></p>
-                                
-                                <h2 class="fw-600">Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to 40%</h2>
-                            </div>
-                            <div class="col">
-                                <img src="" alt="">
-                            </div>
-                            </div>
-                        </div>
-                       
+               
+                  <div class="col">
+                   
+                    <p style="color: orange; font-size: 20px; line-height: 40px;"> <i class="fa-solid fa-truck-fast"></i>   Free and fast delivery all over Kerala. Delivery will be done on precise date.</p>
+
+                  </div>
+                  <div class="col">
+<p style="color: orange; font-size: 20px; line-height: 40px;"><i class="fa-solid fa-money-bill"></i>  Fast and reliable refund policy. Customer can return the purchased item within a span of 10 days.</p>
+                  </div>
+                  <div class="col">
+                    <p style="color: orange; font-size: 20px; line-height: 40px;"><i class="fa-solid fa-award"></i>  All products comes with a warranty period. So you can buy and use without worrying about the product’s life.</p>
+                  </div>
+                </div>
+          
+          
+                <div class="row mt-20">
+                    <div class="col">
+<p style="color: orange; font-size: 20px; line-height: 40px;"><i class="fa-solid fa-sliders"></i>  Customer can provide query for customization, manager will collect details and furnish accordingly
+
+
+</p>
+                    </div>
+                    <div class="col">
+                        <p style="color: orange; font-size: 20px; line-height: 40px;"><i class="fa-solid fa-hand-holding-dollar"></i>  Best value for money products. You can get guarenteed high quality products at a very affordable price range.
+
+
+                        </p>
+                    </div>
+                    <div class="col">
+                        <p style="color: orange; font-size: 20px; line-height: 40px;"><i class="fa-solid fa-face-laugh-beam"></i>  100% customer satisfaction guaranteed. Every customers we had keeps on purchasing from us as we provide the best quality at a very affordable price.
+
+
+                        </p>
                     </div>
                 </div>
-            </div>
+           </div>
         </section>
        <hr>
 
         <!-- banner part 3 (single banner) -->
-        <section class="banner-2 section-padding pb-0">
-            <div class="container">
-               
-                <div class="banner-img banner-big wow fadeIn animated f-none">
-                    <img src="" alt="">
-                    <div class="banner-text d-md-block d-none" style="background-color: rgba(255, 255, 255, 0.573);">
-                        <h4 class="mb-15 mt-40 text-brand"></h4>
-                        <h1 class="fw-600 mb-20"></h1>
-                        <h6 class="mb-15 mt-40 text-brand"></h>
-                        <div>
-                        <a href="shop-grid-right.html" class="btn"> <i class="fi-rs-arrow-right"></i></a>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </section>
+   
      
-        <section class="banners mb-15">
-            <div class="container">
-                <div class="row">
-                   
-                    <div class="col-lg-4 col-md-6">
-                        <!-- banner 5 -->
-                        
-                        <div class="banner-img wow fadeIn animated">
-                            <img src="" alt="">
-                            <div class="banner-text">
-                                <span></span>
-                                <h4>Save 20% on %> on <br>Woman Bag</h4>
-                                <a href="shop-grid-right.html"> <i class="fi-rs-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                
-                  
-                </div>
-            </div>
-        </section>
-        <section class="section-padding">
-            <div class="container wow fadeIn animated">
-                <!-- banner 6 -->
-             
-                <h3 class="section-title mb-20"><span>New</span> Arrivals</h3>
-                <div class="carausel-6-columns-cover position-relative">
-                    <div class="slider-arrow slider-arrow-2 carausel-6-columns-arrow" id="carausel-6-columns-2-arrows"></div>
-                    <div class="carausel-6-columns carausel-arrow-center" id="carausel-6-columns-2">
-                      
-                        <div class="product-cart-wrap small hover-up">
-                            <div class="product-img-action-wrap">
-                                <div class="product-img product-img-zoom">
-                                    <a href="shop-product-right.html">
-                                        <img class="default-img" src="" alt="">
-                                        <img class="hover-img" src="" alt="">
-                                    </a>
-                                </div>
-                                <div class="product-action-1">
-                                    <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal">
-<i class="fi-rs-eye"></i></a>
-                                    <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html" tabindex="0"><i class="fi-rs-heart"></i></a>
-                                    <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html" tabindex="0"><i class="fi-rs-shuffle"></i></a>
-                                </div>
-                                <div class="product-badges product-badges-position product-badges-mrg">
-                                    <span class="hot">Hot</span>
-                                </div>
-                            </div>
-                           
-                        <!--End product-cart-wrap-2-->
-                    </div>
-               
-                </div>
-            </div>
-         
-            </div>
-
-        </section>
-        <hr>
-        <section class="deals section-padding" style="background-color: white;">
-            <div class="container" >
-               
-                    <input type="text" id="expirydate" value="" hidden>
-                    <div class="row deal wow fadeIn animated mb-md-4 mb-sm-4 d-flex" style="background-color: white;">
-                        <div class="col" style="background-color: white;">
-                            <div class="deal-top">
-                                <h2 class="text-brand"></h2>
-                                <h5></h5>
-                            </div>
-                            <div class="deal-content">
-                                <h6 class="product-title"><a href="shop-product-right.html"></a></h6>
-                                <div class="product-price"><span class="new-price"></span></div>
-                            </div>
-                            <div class="deal-bottom">
-                                <p>Hurry Up! Offer End In:</p>
-                                <div id="datacountdown1" class="deals-countdown" data-countdown=""></div>
-                                <a href="shop-grid-right.html" class="btn hover-up">Shop Now <i class="fi-rs-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <img src="" alt="">
-                        </div>
-                    </div>
-                
-            </div>
-        </section>
+     
+      
         
-     
+    <section>
+        <div class="container">
+            <h1 class="display-2"> <span style="color: red;">Manufacturing</span> Samples</h1>
+        </div>
+       
+    </section>
+        
+     <section>
+        <div class="container">
+            <h1 class="display-2"> <span style="color: red;"> Factory </span> & Retails</h1>
+
+        </div>
+       </section>
       
       
     
