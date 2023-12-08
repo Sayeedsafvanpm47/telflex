@@ -119,28 +119,37 @@ module.exports = {
 
               
 
-
-                    const { sortingLogic } = req.body;
+                     
+                    const { sortingLogic,category } = req.body;
                   
-                  
-                 
+                  console.log(category)
+             
                     
                   
                     let products;
                     if(sortingLogic === 'noprice'){
+                    
                               products = await productModel.find({}).populate({path:'category',model:'categories',select:'_id categoryName published'})
                               console.log('product found : ' + products)
+                     
                     }         
                   
                     else if (sortingLogic === 'price1') {
+                      
                               let minprice = +0
                               let maxprice = +5000
-                      products = await productModel.find({
-                        
-
-                        'size.0.productPrice': { $gte: minprice, $lte: maxprice }
-                      }).populate({path:'category',model:'categories',select:'_id categoryName published'})
-                      console.log('product found : ' + products)
+                              if (category && category !== '') {
+                                products = await productModel.find({
+                                    category: category,
+                                    'size.0.productPrice': { $gte: minprice, $lte: maxprice }
+                                }).populate({ path: 'category', model: 'categories', select: '_id categoryName published' });
+                                console.log('Products found: ', products);
+                            } else {
+                                products = await productModel.find({
+                                    'size.0.productPrice': { $gte: minprice, $lte: maxprice }
+                                }).populate({ path: 'category', model: 'categories', select: '_id categoryName published' });
+                                console.log('Products found: ', products);
+                            }
                      
                     } else if (sortingLogic === 'price2') {
                      
@@ -212,6 +221,9 @@ module.exports = {
 
 
                   },
+   
+      
+
                   productdetail : async (req,res,next)=>{
 
                      try {

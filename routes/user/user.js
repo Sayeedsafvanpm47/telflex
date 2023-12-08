@@ -51,7 +51,10 @@ router.get('/about',controller.getAbout)
 router.get('/dealer',controller.getDealers)
 router.get('/contact',controller.getContact)
 
+
 router.get('/',productController.productGridView)
+
+
 router.get('/sortCategory',productController.sortProducts)
 router.post('/sortPrice',productController.sortPrice)
 router.post('/searchProducts',productController.searchProducts)

@@ -185,6 +185,17 @@
                                         <option value="price3">20001-40000</option>
                                         <option value="price4">40000 above</option>
                                       </select>
+
+                                      <select name="categoryselected">
+                                        <option value="">Select a Category</option>
+                                        <% category.forEach(categoryItem => { %>
+                                        <option value="<%= categoryItem._id %>"><%= categoryItem.categoryName  %></option>
+                                        <% }) %>
+                                       
+                                      </select>
+
+
+
                                       <button type="submit">Sort</button> 
                                     </form>
                                   </div>
