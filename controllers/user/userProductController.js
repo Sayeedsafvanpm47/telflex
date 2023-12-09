@@ -3,16 +3,39 @@ const productModel = require('../../models/productModel')
 const categoryModel = require('../../models/categoryModel')
 
 module.exports = {
-          productGridView : async (req, res) => {
+
+  pagination: async (req, res) => {
+    try {
+      delete req.session.sortbymenu
+      let pagination = req.query.pagination;
+      console.log(pagination);
+      req.session.paginate = true;
+      req.session.pagination = pagination;
+res.redirect('/user/')
+    } catch (error) {
+      res.status(500).json({ error: 'An error occurred' });
+    }
+  },
+         productGridView : async (req, res) => {
             try{
             let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
-            let numberOfDocs = 2;
+            let numberOfDocs
+            if(req.session.paginate)
+            {
+numberOfDocs = req.session.pagination
+
+            }
+            else
+            {
+             numberOfDocs = 2;
+            }
             const category = await categoryModel.find({})
             console.log(category)
             const totalProductsCount = await productModel.countDocuments({isListed:true});
             const totalPages = Math.ceil(totalProductsCount / numberOfDocs); 
       
         
+            let nopage
             const relatedProducts = ''; 
         
            
@@ -23,23 +46,35 @@ module.exports = {
            
         
               searchProducts = req.session.searchProducts
+           nopage = true
              delete req.session.search
         
             }
 
            else if(req.session.sort){
               searchProducts = req.session.sortedProducts
-              delete req.session.sort
+               nopage = true
+               delete req.session.sort
+             
+             
              
            }
            else if(req.session.sortPrice){
             searchProducts = req.session.priceSort
+             nopage = true
             delete req.session.sortPrice
         
            }
+           else if(req.session.sortbymenu)
+           {
+            searchProducts = req.session.sortBy
+           
+           
+         
+           }
             
             else {
-              
+               nopage = false
               searchProducts = await productModel.find({isListed : true})
                 .skip((currentPage - 1) * numberOfDocs)
                 .limit(numberOfDocs).populate({path:'category',model:'categories',select:'_id categoryName published'})
@@ -47,6 +82,7 @@ module.exports = {
 
          
           if(req.session.user){
+           
 
                 res.render('user/user/shopgrid', {
                     products: searchProducts,
@@ -55,10 +91,12 @@ module.exports = {
                     productCount: totalProductsCount,
                     totalPages,
                     currentPage,
+                    nopage
                
                 });
               }else
               {
+               
                 res.render('user/user/shopgrid', {
                   products: searchProducts,
                   category,
@@ -66,10 +104,14 @@ module.exports = {
                   productCount: totalProductsCount,
                   totalPages,
                   currentPage,
+                  nopage
              
               });
 
               }
+              delete req.session.sortBy
+              delete req.session.paginate
+             
           
             }
           catch(error){
@@ -78,13 +120,53 @@ module.exports = {
         }
         
       ,
-        
-         
+      sortBy: async (req, res) => {
+        try {
+          const sort = req.query.sort;
+          console.log(sort);
+
+          let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
+          let numberOfDocs = 5
+     
+           
+          
+      
+          let products;
+      
+          if (sort === 'low') {
+            products = await productModel.find({}).sort({ 'size.0.productPrice': 1 }).skip((currentPage - 1) * numberOfDocs)
+            .limit(numberOfDocs).populate({path:'category',model:'categories',select:'_id categoryName published'});
+          } else if (sort === 'high') {
+            products = await productModel.find({}).sort({ 'size.0.productPrice': -1 }).skip((currentPage - 1) * numberOfDocs)
+            .limit(numberOfDocs).populate({path:'category',model:'categories',select:'_id categoryName published'});
+          } else if (sort === 'new') {
+            products = await productModel.find({}).sort({ 'createdOn': -1 }).skip((currentPage - 1) * numberOfDocs)
+            .limit(numberOfDocs).populate({path:'category',model:'categories',select:'_id categoryName published'});
+          } else if (sort === 'old') {
+            products = await productModel.find({}).sort({ 'createdOn': 1 }).skip((currentPage - 1) * numberOfDocs)
+            .limit(numberOfDocs).populate({path:'category',model:'categories',select:'_id categoryName published'});
+          } else {
+          
+            return res.redirect('/user/error');
+          }
+      
+          req.session.sortbymenu = true;
+          req.session.sortBy = products;
+          return res.redirect('/user/');
+        } catch (error) {
+          console.log(error);
+          // Handle the error appropriately, possibly redirecting to an error page
+          return res.redirect('/user/error');
+        }
+      }
+      
+         ,
           sortProducts: async (req, res) => {
                     try {
                     
         
                       const categoryId = req.query.categoryId
+                      
                     
                   
                
@@ -120,9 +202,9 @@ module.exports = {
               
 
                      
-                    const { sortingLogic,category } = req.body;
+                    const { sortingLogic } = req.body;
                   
-                  console.log(category)
+                 
              
                     
                   
@@ -138,18 +220,12 @@ module.exports = {
                       
                               let minprice = +0
                               let maxprice = +5000
-                              if (category && category !== '') {
-                                products = await productModel.find({
-                                    category: category,
-                                    'size.0.productPrice': { $gte: minprice, $lte: maxprice }
-                                }).populate({ path: 'category', model: 'categories', select: '_id categoryName published' });
-                                console.log('Products found: ', products);
-                            } else {
+                             
                                 products = await productModel.find({
                                     'size.0.productPrice': { $gte: minprice, $lte: maxprice }
                                 }).populate({ path: 'category', model: 'categories', select: '_id categoryName published' });
                                 console.log('Products found: ', products);
-                            }
+                            
                      
                     } else if (sortingLogic === 'price2') {
                      
@@ -193,6 +269,10 @@ module.exports = {
                    try {
                     
                     const searchTerm = req.body.searchTerm
+                    if(searchTerm == ''){
+                      res.redirect('/user/')
+                    }else
+                    {
                     const products = await productModel.find({
                               productName: { $regex: searchTerm, $options: "i" } 
                              
@@ -213,6 +293,7 @@ module.exports = {
                   
                  }
                     
+                }
                    } catch (error) {
                     console.log(error)
                     next(error)

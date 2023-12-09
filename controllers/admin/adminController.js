@@ -362,6 +362,14 @@ const categoryOrders = []
 			res.redirect("/admin/createPass");
 		}
 	},
+	reviews : async (req,res)=>{
+		try {
+			res.render('admin/admin/reviews')
+		} catch (error) {
+			console.log(error)
+		}
+	}
+	,
 	logout : async (req,res)=>{
 		try {
 			

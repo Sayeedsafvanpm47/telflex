@@ -29,7 +29,12 @@ router.post("/updatePass", controller.updatePass);
 router.post("/resendOtp", controller.resendOtp);
 router.get('/home',controller.adminHome)
 router.get('/chart',controller.chart)
+router.get('/reviews',controller.reviews)
 router.get('/logout',controller.logout)
+router.get('/sellers',(req,res)=>{
+  res.render('admin/admin/sellerslist')
+})
+
 // customer management
 router.get("/viewCustomers", controllerUserManage.viewCustomers);
 // router.get("/editCustomers", controllerUserManage.editCustomers);

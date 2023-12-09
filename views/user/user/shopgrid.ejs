@@ -23,40 +23,88 @@
                                 <div class="sort-by-cover mr-10">
                                     <div class="sort-by-product-wrap">
                                         <div class="sort-by">
-                                            <span><i class="fi-rs-apps"></i>Show:</span>
+                                            <span onclick="showSelect()"><i  class="fi-rs-apps"></i>Show:
+                                            
+                                           
+                                            </span>
+                                            <span  style="display: none;" id="paginationspan">
+                                                <select onchange="paginate()" name="pagination" id="paginationnumber" >
+                                                    <option   value=""></option>
+                                                    <option value="2">2</option>
+                                                    <option value="5">5</option>
+                                                    <option value="10">10</option>
+                                                    <option value="15">15</option>
+                                                    <option value="20">20</option>
+                                                    <option value="25">25</option>
+                                                  </select>
+                                            </span>
+                                           
                                         </div>
-                                        <div class="sort-by-dropdown-wrap">
-                                            <span> 50 <i class="fi-rs-angle-small-down"></i></span>
-                                        </div>
+
+                                       
+                                       
                                     </div>
-                                    <div class="sort-by-dropdown">
-                                        <ul>
-                                            <li><a class="active" href="#">50</a></li>
-                                            <li><a href="#">100</a></li>
-                                            <li><a href="#">150</a></li>
-                                            <li><a href="#">200</a></li>
-                                            <li><a href="#">All</a></li>
-                                        </ul>
-                                    </div>
+                                    <div>
+                                       
+                                      </div>
+                                   
+
+
+                                     
                                 </div>
+                               
+<script>
+     let clicked = false;
+    function showSelect()
+    {
+        const select = document.getElementById('paginationspan');
+
+if (!clicked) {
+  select.style.display = 'block'; 
+} else {
+  select.style.display = 'none'; 
+}
+
+clicked = !clicked; 
+    }
+
+    function showSelect2()
+    {
+        const select = document.getElementById('sortspan');
+
+if (!clicked) {
+  select.style.display = 'block'; 
+} else {
+  select.style.display = 'none'; 
+}
+
+clicked = !clicked; 
+    }
+
+</script>
+
                                 <div class="sort-by-cover">
                                     <div class="sort-by-product-wrap">
                                         <div class="sort-by">
-                                            <span><i class="fi-rs-apps-sort"></i>Sort by:</span>
+                                            <span onclick="showSelect2()"><i class="fi-rs-apps-sort"></i>Sort by:</span>
+                                           
+         
+        
+                                            </span>
+                                            <span  style="display: none;" id="sortspan">
+                                                <select onchange="sortBy()" name="pagination" id="sortBy" >
+                                                    <option   value="">View</option>
+                                                    <option value="low">Price : Low To High</option>
+                                                    <option value="high">Price : High To Low</option>
+                                                    <option value="new">Newest First</option>
+                                                    <option value="old">Oldest First</option>
+                                                  </select>
+                                            </span>
+                                           
                                         </div>
-                                        <div class="sort-by-dropdown-wrap">
-                                            <span> Featured <i class="fi-rs-angle-small-down"></i></span>
-                                        </div>
+                                        
                                     </div>
-                                    <div class="sort-by-dropdown">
-                                        <ul>
-                                            <li><a class="active" href="#">Featured</a></li>
-                                            <li><a href="#">Price: Low to High</a></li>
-                                            <li><a href="#">Price: High to Low</a></li>
-                                            <li><a href="#">Release Date</a></li>
-                                            <li><a href="#">Avg. Rating</a></li>
-                                        </ul>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -140,10 +188,13 @@
                         <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-start">
+                                   
+                                    <% if(nopage == false ){ %>
                                     <% for(let i=1; i<=totalPages; i++) { %>
                                         <li class="page-item <%= currentPage === i ? 'active' : '' %>">
                                             <a class="page-link" href="/user?page=<%= i %>"><%= i %></a>
                                         </li>
+                                    <% } %>
                                     <% } %>
                                 </ul>
                             </nav>
@@ -186,50 +237,18 @@
                                         <option value="price4">40000 above</option>
                                       </select>
 
-                                      <select name="categoryselected">
-                                        <option value="">Select a Category</option>
-                                        <% category.forEach(categoryItem => { %>
-                                        <option value="<%= categoryItem._id %>"><%= categoryItem.categoryName  %></option>
-                                        <% }) %>
-                                       
-                                      </select>
+                                      
 
 
 
-                                      <button type="submit">Sort</button> 
+                                      <button type="submit" class="btn btn-sm btn-default"><i class="fi-rs-filter mr-5"></i> Fillter</button>
                                     </form>
                                   </div>
                                   
                                 </div>
                             </div>
-                            <div class="list-group">
-                                <div class="list-group-item mb-10 mt-10">
-                                    <label class="fw-900">Color</label>
-                                    <div class="custome-checkbox">
-                                       
-                                        <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="">
-                                        <label class="form-check-label" for="exampleCheckbox1"><span>Dark</span></label>
-                                        <br>
-                                        <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="">
-                                        <label class="form-check-label" for="exampleCheckbox1"><span>Light</span></label>
-                                        <br>
-                                       
-                                       
-                                    </div>
-                                    <label class="fw-900 mt-15">Item Condition</label>
-                                    <div class="custome-checkbox">
-                                        <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox11" value="">
-                                        <label class="form-check-label" for="exampleCheckbox11"><span>New (1506)</span></label>
-                                        <br>
-                                        <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox21" value="">
-                                        <label class="form-check-label" for="exampleCheckbox21"><span>Refurbished (27)</span></label>
-                                        <br>
-                                        <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox31" value="">
-                                        <label class="form-check-label" for="exampleCheckbox31"><span>Used (45)</span></label>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="shop-grid-right.html" class="btn btn-sm btn-default"><i class="fi-rs-filter mr-5"></i> Fillter</a>
+                          
+     
                         </div>
                         <!-- Product sidebar Widget -->
                        
@@ -394,6 +413,59 @@
     <!-- Template  JS -->
     <script src="/user/js/maind134.js?v=3.4"></script>
     <script src="/user/js/shopd134.js?v=3.4"></script>
+
+    <script>
+        async function paginate() {
+          const pagination = parseInt(document.getElementById('paginationnumber').value);
+          try {
+            const response = await fetch(`/user/paginate?pagination=${pagination}`, {
+              method: 'GET'
+            });
+      
+            if (!response.ok) {
+              throw new Error('Error occurred');
+            }
+      location.reload()
+            const responseData = await response.json();
+           console.log('response ok')
+         
+            console.log(responseData);
+           
+          } catch (error) {
+            // Handle error appropriately
+            console.error(error.message);
+          }
+        }
+      </script>
+
+
+
+
+
+                           
+
+
+<script>
+async function sortBy()
+ {
+     const sort = document.getElementById('sortBy').value
+
+     const response = await fetch(`/user/sortBy?sort=${sort}`,{
+         method : 'GET'
+     })
+     if(!response.ok)
+     {
+         throw new Error('response not ok')
+
+     }
+     location.reload()
+     console.log('response success')
+     const responseData = await response.json()
+     console.log(responseData)
+
+
+ }
+</script>
 
 </body>
 

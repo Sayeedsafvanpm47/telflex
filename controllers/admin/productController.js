@@ -230,20 +230,42 @@ if(!productname || !features || !model ||  !description || !shortdescription || 
 		try {
 		  const categories = await categoryModel.find({});
 		  const selectedCategory = req.query.category;
+		  let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
+		  let numberOfDocs = 2
+		  const totalProductsCount = await productModel.countDocuments();
+		  const totalPages = Math.ceil(totalProductsCount / numberOfDocs); 
+		  let search = false
+		  let nopage
+
+		  
+		  
+
+
+
 		  let products;
-	        
+	        if(!req.session.searchAdmin){
 		  if (selectedCategory) {
-		    products = await productModel.find({ category: selectedCategory });
+		    products = await productModel.find({ category: selectedCategory })
+		     nopage = false
 		  } else {
-		    products = await productModel.find({});
+		    products = await productModel.find({}).skip((currentPage - 1) * numberOfDocs)
+		    .limit(numberOfDocs);
+		    nopage = true
 		
 		
 		
 		
 		  }
+		}
+		else
+		{
+res.redirect('/admin/searchProductsView')
+		}
 	        
 		  // Render your view with the filtered products.
-		  res.render("admin/admin/viewProducts", { products, categories, selectedCategory });
+		  res.render("admin/admin/viewProducts", { products, categories, selectedCategory,productCount: totalProductsCount,
+			totalPages,
+			currentPage,search,nopage });
 		} catch (error) {
 		  console.error(error);
 		  res.send("Error");
@@ -252,10 +274,14 @@ if(!productname || !features || !model ||  !description || !shortdescription || 
 	        
 	searchProducts: async (req, res) => {
 		try {
+			let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
+			let numberOfDocs = 2
 			const { searchTerm } = req.body;
-			const products = await productModel.find({ productName: { $regex: searchTerm, $options: "i" } });
-			req.session.searchResults = products;
-			res.redirect("/admin/searchProductsView");
+			req.session.searchTerm = searchTerm
+			
+			
+			res.redirect(`/admin/searchProductsView`);
+
 		} catch (error) {
 			console.error("Error:", error);
 			res.status(500).send("Internal Server Error");
@@ -263,9 +289,25 @@ if(!productname || !features || !model ||  !description || !shortdescription || 
 	},
 	searchProductsView: async (req, res) => {
 		try {
+			const searchTerm = req.session.searchTerm
+			
+			let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
+			let numberOfDocs = 2
+			const totalProductsCount = await productModel.countDocuments({ productName: { $regex: searchTerm, $options: "i" } })
+			const totalPages = Math.ceil(totalProductsCount / numberOfDocs); 
 			const categories = await categoryModel.find({});
-			const products = req.session.searchResults || [];
-			res.render("admin/admin/viewproducts", { products, categories });
+			let nopage = true
+			
+			const products = await productModel.find({ productName: { $regex: searchTerm, $options: "i" } }).skip((currentPage - 1) * numberOfDocs)
+			.limit(numberOfDocs);
+			
+			req.session.searchAdmin = false
+			let search = true
+
+			res.render("admin/admin/viewproducts", { products, categories,productCount: totalProductsCount,
+				totalPages,
+				currentPage,search,nopage });
+				
 		} catch (err) {
 			console.log(err);
 		}

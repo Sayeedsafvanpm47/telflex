@@ -33,7 +33,7 @@
                 </div>
                   </form>
                   
-                  <div style="overflow-x: auto;">
+                  <!-- <div style="overflow-x: auto;">
                     <table class="table table-striped table-bordered mt-20" 
                     width="100%">
                               <thead>
@@ -82,9 +82,77 @@
                                         </tbody>
                            
                               </table>
-                              </div>
+                              </div> -->
            
         </section> <!-- content-main end// -->
+
+        <section>
+          <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Seller</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Registered</th>
+                            <th class="text-end"> Action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      
+                      <%user.forEach((item) => { %>
+                        <tr>
+                          
+                            <td width="40%">
+                                <a href="#" class="itemside">
+                                    <div class="left">
+                                      
+                                    </div>
+                                    <div class="info pl-3">
+                                        <h6 class="mb-0 title"><%= item.email  %></h6>
+                                        <small class="text-muted"><%= item.firstname  %> <%= item.lastname %></small>
+                                    </div>
+                                </a>
+                            </td>
+                            <td><%= item.phonenumber  %></td>
+                            <td><span class="badge rounded-pill alert-success"> <% if (item.isBlocked === true) { %>
+                              <p>Blocked</p>
+                            <% } else { %>
+                              <p>Active</p>
+                            <% } %></span></td>
+                            <td><span class="badge rounded-pill alert-success"> <% if (item.isAdmin === true) { %>
+                              <p>Admin</p>
+                            <% } else { %>
+                              <p>Not an admin</p>
+                            <% } %></span></td>
+                            <td>
+                              <a href="/admin/blockUser?email=<%= item.email%>"><i class="fa-solid fa-trash text-danger"></i></a>
+                          </td>
+                            
+                        </tr>
+                        <% }) %>
+                        
+                      
+                    </tbody>
+                </table> <!-- table-responsive.// -->
+            </div>
+        </div> 
+
+        <div class="pagination-area mt-15 mb-50">
+          <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-start">
+                  <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                  <li class="page-item"><a class="page-link" href="#">02</a></li>
+                  <li class="page-item"><a class="page-link" href="#">03</a></li>
+                  <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                  <li class="page-item"><a class="page-link" href="#">16</a></li>
+                  <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
+              </ul>
+          </nav>
+      </div>
+
+        </section>
 
     </main>
     <%- include('partials/script') %>

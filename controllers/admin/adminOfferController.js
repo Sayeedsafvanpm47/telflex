@@ -9,6 +9,11 @@ const { USER } = require('../../utils/constants/schemaName');
 module.exports = {
           getproductOffer : async (req,res)=>{
                     try {
+                      let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
+                      let numberOfDocs = 2
+                      const totalProductsCount = await productModel.countDocuments();
+                      const totalPages = Math.ceil(totalProductsCount / numberOfDocs); 
+                                
                               // const products = await productModel.find({})
                               const products = await productModel.aggregate([{$unwind:'$size'},{$project:{'size.size' : 1,
                     'size.productPrice' :1,
@@ -23,10 +28,13 @@ module.exports = {
                     'shortDescription' : 1,
                     'size.productDiscount' : 1
 
-                    }}])
-                              
+                    }}]).skip((currentPage - 1) * numberOfDocs)
+                    .limit(numberOfDocs)
+                  
                              
-                              res.render('admin/admin/productOffers',{products})
+                              res.render('admin/admin/productOffers',{products,productCount: totalProductsCount,
+                                totalPages,
+                                currentPage})
                     } catch (error) {
                               console.log(error)
                     }

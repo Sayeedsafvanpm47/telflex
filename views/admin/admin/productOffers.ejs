@@ -154,6 +154,20 @@ href=
                               
                           </table>
                       </div>
+                      <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-start">
+                               
+                              
+                                <% for(let i=1; i<=totalPages; i++) { %>
+                                    <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                        <a class="page-link" href="/admin/getproductOffers?page=<%= i %>"><%= i %></a>
+                                    </li>
+                                <% } %>
+                           
+                            </ul>
+                        </nav>
+                    </div>
                     
 
                       <div id="myModal" class="modal">

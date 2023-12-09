@@ -103,11 +103,13 @@ editCategory: async (req, res) => {
 		try {
 		  const categoryId = req.query.categoryId;
 		  const category = await categoryModel.deleteOne({_id:categoryId});
+		  await productModel.deleteMany({category:categoryId})
 		  if (!category) {
 		 
 		    res.send('Category not found');
 		  } else {
 		    res.redirect('/admin/createCategory');
+
 		  }
 		} catch (err) {
 		  console.log(err);

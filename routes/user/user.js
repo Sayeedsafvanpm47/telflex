@@ -53,7 +53,8 @@ router.get('/contact',controller.getContact)
 
 
 router.get('/',productController.productGridView)
-
+router.get('/paginate',productController.pagination)
+router.get('/sortBy',productController.sortBy)
 
 router.get('/sortCategory',productController.sortProducts)
 router.post('/sortPrice',productController.sortPrice)
