@@ -76,6 +76,7 @@ router.post('/placeOrder',authMiddleWare.checkSignIn,userCheckoutController.plac
 
 router.get('/showwishlist',authMiddleWare.checkSignIn,authMiddleWare.checkBlock,wishListController.showWishList)
 router.post('/addToWish',authMiddleWare.checkSignIn,authMiddleWare.checkBlock,wishListController.addToWish)
+
 router.get('/deleteWish',authMiddleWare.checkSignIn,wishListController.deleteWish)
 router.get('/addfromwish',authMiddleWare.checkSignIn,wishListController.addFromWish)
 

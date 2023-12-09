@@ -34,20 +34,20 @@ module.exports = {
 			}
 			// console.log('uploaded' + req.uploads)
 			console.log('processed' + req.processImages)
-			const { productname, productdiscount,  model, features, description, shortdescription, category } =
+			const { productname, productdiscount,  model, featured,features, description, shortdescription, category ,tags} =
 				req.body;
 
 			if (
-				(!productname || !category || !sizes ||
+				(!productname || !sizes ||
 				
 					!productdiscount ||
 		
-					
+					!featured ||
 					!model ||
 					!features ||
 					!description ||
 					!shortdescription ||
-					!category ||req.files.length === 0)
+					!category || !tags ||req.files.length === 0)
 			) {
 				errors.push('fields must be properly filled')
 				res.render("admin/admin/addproducts", { errors , categories});
@@ -58,11 +58,14 @@ else{
 			const products = await new productModel({
 				productName: productname,
 				productDiscount: productdiscount,
-				isFeatured : features,
+				
 
 				
 				model: model,
 				category: category,
+				tags : tags,
+				featured : featured,
+				features : features,
 
 				description: description,
 				shortDescription: shortdescription,
@@ -106,7 +109,8 @@ const errors = req.query.errors
 				productname,
 			
 				// productdiscount,
-	
+				featured,
+	tags,
 				features,
 		
 				model,
@@ -116,7 +120,7 @@ const errors = req.query.errors
 				category
 			} = req.body;
 
-if(!productname || !features || !model ||  !description || !shortdescription || !category)
+if(!productname || !features || !featured || !tags || !model ||  !description || !shortdescription || !category)
 {
 	
 	res.redirect('/admin/editProductsView?_id='+_id+'&errors=true')
@@ -140,7 +144,9 @@ if(!productname || !features || !model ||  !description || !shortdescription || 
     
 			result.productName = productname;
 			// (result.productDiscount = productdiscount),
-				(result.isFeatured = features),
+				(result.features = features),
+				(result.featured = featured),
+				(result.tags = tags),
 				(result.model = model),
 				(result.category = category),
 				(result.description = description),

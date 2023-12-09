@@ -86,16 +86,38 @@
                                         <% } %>
                                       </div> -->
 
-                                      
-                                      
                                       <div class="mb-4">
-                                        <label for="product_name" class="form-label">Features</label>
-                                        <% if (products && products.isFeatured) { %>
-                                          <input type="text" value="<%= products.isFeatured %>" class="form-control" id="product_name" name="features">
+                                        <label for="product_name" class="form-label">Tag</label>
+                                        <% if (products && products.featured) { %>
+                                          <input type="text" value="<%= products.tags %>" placeholder="Type here" class="form-control" id="tag" name="tags" >
+                                         
                                         <% } else { %>
-                                          <input type="text" value="" class="form-control" id="product_name" name="features">
+                                          <input type="text"  placeholder="Type here" class="form-control" id="tag" name="tags" >
                                         <% } %>
+                                        
+                                    </div>
+                                      <div class="mb-4">
+                                          <label for="product_name" class="form-label">Features</label>
+                                          <% if (products && products.features) { %>
+                                            <input type="text" value="<%= products.features %>" placeholder="Type here" class="form-control" id="tag" name="features" >
+                                           
+                                          <% } else { %>
+                                            <input type="text"  placeholder="Type here" class="form-control" id="tag" name="features" >
+                                          <% } %>
                                       </div>
+                                      <div class="mb-4">
+                                        <label for="product_name" class="form-label">Feature the product?</label>
+                                        <% if (products && products.featured) { %>
+                                          <input type="text" value="<%= products.featured %>" placeholder="Type here" class="form-control" id="tag" name="featured" >
+                                         
+                                        <% } else { %>
+                                          <input type="text"  placeholder="Type here" class="form-control" id="tag" name="featured" >
+                                        <% } %>
+                                    </div>
+
+                                      
+                                      
+                                      
                                       
                                       <div class="mb-4">
                                         <label for="product_name" class="form-label">Product Model</label>

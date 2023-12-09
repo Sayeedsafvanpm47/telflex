@@ -1,9 +1,23 @@
 const userModel = require("../../models/userModel");
 module.exports = {
 	viewCustomers: async (req, res) => {
+
+		let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
+		let numberOfDocs = 10
+		let search = false
+		
+		
+	
+		const userCount = await userModel.countDocuments();
+		const totalPages = Math.ceil(userCount / numberOfDocs); 
 		const { email } = req.body;
-		const user = await userModel.find({});
-		res.render("admin/admin/sellercard", { user });
+		const user = await userModel.find({}).skip((currentPage - 1) * numberOfDocs)
+		.limit(numberOfDocs);
+		res.render("admin/admin/sellercard", { user ,userCount,
+			totalPages,
+			currentPage,
+			search
+			 });
 	},
 	// editCustomers: async (req, res) => {
 	// 	try {
@@ -69,10 +83,9 @@ module.exports = {
 	searchUser: async (req, res) => {
 		try {
 			const { searchTerm } = req.body;
-			const user = await userModel.find({
-				$or: [{ firstname: { $regex: searchTerm, $options: "i" } }, { email: { $regex: searchTerm, $options: "i" } }]
-			});
-			req.session.searchResults = user;
+			req.session.searchTerm = searchTerm
+			
+			
 			res.redirect("/admin/searchView");
 		} catch (error) {
 			console.error("Error:", error);
@@ -81,31 +94,63 @@ module.exports = {
 	},
 	searchView: async (req, res) => {
 		try {
-			const user = req.session.searchResults || [];
-			res.render("admin/admin/sellercard", { user });
+			let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
+		let numberOfDocs = 10
+		
+		
+		
+	
+		const userCount =  await userModel.find({
+			$or: [{ firstname: { $regex: req.session.searchTerm, $options: "i" } }, { email: { $regex: req.session.searchTerm, $options: "i" } }]
+		}).countDocuments()
+		const totalPages = Math.ceil(userCount / numberOfDocs); 
+		const user = await userModel.find({
+			$or: [{ firstname: { $regex: req.session.searchTerm, $options: "i" } }, { email: { $regex: req.session.searchTerm, $options: "i" } }]
+		}).skip((currentPage - 1) * numberOfDocs)
+		.limit(numberOfDocs)
+		
+let search = true
+			
+			res.render("admin/admin/sellercard", { user,userCount,
+				totalPages,
+				currentPage,search });
 		} catch (err) {
 			console.log(err);
 		}
 	},
 	sortUser: async (req, res) => {
 		const { sortingLogic } = req.body;
-		let user;
-		if (sortingLogic === "alphaplus") {
-			user = await userModel.find({}).sort({ firstname: 1 }).exec();
-		} else if (sortingLogic === "alphaminus") {
-			user = await userModel.find({}).sort({ firstname: -1 }).exec();
-		}
-		if (sortingLogic === "admin") {
-			user = await userModel.find({ isAdmin: "true" }).exec();
-		}
-		if (sortingLogic === "blocked") {
-			user = await userModel.find({ isBlocked: "true" }).exec();
-		}
-		req.session.isSort = user;
+		req.session.sortingLogic = sortingLogic
+		
 		res.redirect("/admin/sortUserView");
 	},
 	sortUserView: async (req, res) => {
-		const user = req.session.isSort || [];
-		res.render("admin/admin/sellercard", { user });
+		let sortingLogic = req.session.sortingLogic
+		let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
+		let numberOfDocs = 10
+		let user
+		let search
+		let userCount
+		if (sortingLogic === "alphaplus") {
+			userCount = await userModel.find({}).sort({ firstname: 1 }).countDocuments()
+			user = await userModel.find({}).sort({ firstname: 1 }).skip((currentPage - 1) * numberOfDocs).limit(numberOfDocs)
+		} else if (sortingLogic === "alphaminus") {
+			userCount = await  userModel.find({}).sort({ firstname: -1 }).countDocuments()
+			user = await userModel.find({}).sort({ firstname: -1 }).skip((currentPage - 1) * numberOfDocs).limit(numberOfDocs)
+		}
+		if (sortingLogic === "admin") {
+			userCount = await  userModel.find({ isAdmin: "true" }).countDocuments()
+			user = await userModel.find({ isAdmin: "true" }).skip((currentPage - 1) * numberOfDocs).limit(numberOfDocs)
+		}
+		if (sortingLogic === "blocked") {
+			userCount = await userModel.find({ isBlocked: "true" }).countDocuments()
+			user = await userModel.find({ isBlocked: "true" }).skip((currentPage - 1) * numberOfDocs).limit(numberOfDocs)
+		}
+		const totalPages = Math.ceil(userCount / numberOfDocs); 
+		
+		
+		res.render("admin/admin/sellercard", { user,userCount,
+			totalPages,
+			currentPage,search  });
 	}
 };

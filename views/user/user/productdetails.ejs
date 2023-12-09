@@ -83,16 +83,26 @@
                                              
                                              
                                               <input  name="stock" type="text" id="stockView" class="text-brand" value="<%= products.size[0].stock %>" hidden>
-                                              <% for(item of 'products.size'){ %>
-                                                <% if(item.stock <= 0){ %>
-                                                    <br><span>In Stock:</span> <span class="save-price font-md text-danger ml-15">Out of stock</span>
-                                                    <% } %>
-                                                    <% } %>
-
-                                             <br><span>In Stock:</span>     <span class="save-price font-md color3 ml-15" id="stockView2"><%= products.size[0].stock %></span>
-                                            <input type="text" id="productTarget" value="<%= products.size[0]._id %>" hidden>
-                                            </div>
                                               
+                                                <% for (const size of products.size) { %>
+                                                  <% if (size.stock === 0) { %>
+                                                    <br>
+                                                    <span>Stock:</span>
+                                                    <span  class="save-price font-md text-danger ">Out of stock</span>
+                                                  <% } else { %>
+                                             
+
+                                             <br><span>Stock:</span>     <span class="save-price font-md color3 ml-15" id="stockView2"><%= products.size[0].stock %></span>
+                                          
+                                            <input type="text" id="productTarget" value="<%= products.size[0]._id %>" hidden>
+                                            <% break %>
+                                           <% } %>
+                                   
+                                      
+                                            
+                                            <% } %>
+                                        </div>
+                                            <input type=""  name="" id="stockView3" value="<%= products.size[0].stock  %>">
                                         </div>
                                         <div class="bt-1 border-color-1 mt-15 mb-15"></div>
                                         <div class="short-desc mb-30">
@@ -127,32 +137,58 @@
                                           
                                           </div>
                                         <div class="bt-1 border-color-1 mt-30 mb-30"></div>
-                                        <div class="detail-extralink">
+                                        <div class="detail-extralink d-flex">
                                           
-                                                <input type="number" name="quantity" id="quantity" value="1" min="1" hidden>
-                                                <button style="height: 30px; width: 30px; border-radius: 100px; background-color: rgba(230, 233, 230, 0);"  type="button" onclick="decrease()"><i class="fa-solid fa-minus"></i></button>
+                                                <input type="number" name="quantity" id="quantity" value="0" min="1" hidden>
+                                                <button id="dec_btn" style="height: 30px;  width: 30px; border-radius: 100px; background-color: rgba(230, 233, 230, 0);"  type="button" onclick="decrease()"><i class="fa-solid fa-minus"></i></button>
                                                
-                                                <span id="quantityvalue">1</span>
-                                                <button style="height: 30px; width: 30px; border-radius: 100px; background-color: rgb(13, 14, 13);"  type="button" onclick="increase()"><i class="fa-solid fa-plus text-white"></i></button>
-                                              
+                                                <span id="quantityvalue"></span>
+                                                <button  style="height: 30px; width: 30px; border-radius: 100px;  background-color: rgb(13, 14, 13);"  type="button" id="inc_btn" onclick="increase()"><i class="fa-solid fa-plus text-white"></i></button>
+                                              </div>
                                                 <script>
-                                                    function increase(){
-                                                        event.preventDefault()
-                                                        var target = document.getElementById('quantity')
-                                                        target.value = parseInt(target.value)+1
-                                                        var quantityValue = document.getElementById('quantityvalue')
-                                                        quantityValue.innerHTML = target.value
-                                                    }
+                                    function increase() {
+    event.preventDefault();
+    var target = document.getElementById('quantity');
+    target.value = parseInt(target.value) + 1;
+    var quantityValue = document.getElementById('quantityvalue');
+    quantityValue.innerHTML = target.value;
+let stockView = document.getElementById('stockView2')
+    let checkStock = document.getElementById('stockView3');
+    let dec_btn = document.getElementById('dec_btn')
+    checkStock.value = parseInt(checkStock.value) - 1;
 
-                                                    function decrease(){
-                                                        event.preventDefault()
-                                                        var target = document.getElementById('quantity')
-                                                        if (parseInt(target.value) > 1) {
-                                                        target.value = parseInt(target.value)-1
-                                                        }
-                                                        var quantityValue = document.getElementById('quantityvalue')
-                                                        quantityValue.innerHTML = target.value
-                                                    }
+    let inc_btn = document.getElementById('inc_btn');
+    let stock = parseInt(checkStock.value) > 0;
+    if (stock) {
+        inc_btn.style.display = 'block';
+    } else {
+        inc_btn.style.display = 'none';
+
+        dec_btn.style.display = 'none'
+        stockView2.innerHTML = 'Sorry, We ran out of stock! :('
+        quantityValue.innerHTML = 'Congrats, be the one to purchase the last item : )'
+    
+
+    }
+}
+
+function decrease() {
+    event.preventDefault();
+    var target = document.getElementById('quantity');
+    if (parseInt(target.value) > 1) {
+        target.value = parseInt(target.value) - 1;
+        var quantityValue = document.getElementById('quantityvalue');
+        quantityValue.innerHTML = target.value;
+
+        let checkStock = document.getElementById('stockView3');
+        checkStock.value = parseInt(checkStock.value) + 1;
+        
+
+        let dec_btn = document.getElementById('dec_btn');
+       
+    }
+}
+
                                                 </script>
                                          
                                             <div class="product-extra-link2">
@@ -639,6 +675,7 @@
   const discountInp = document.getElementById('discountinp')
   const discountSpan = document.getElementById('discountspan')
   const productTarget = document.getElementById('productTarget')
+  const hiddenStock = document.getElementById('stockView3')
 
   var sizeVal;
 
@@ -651,6 +688,7 @@
                 price.value = res.product.size[sizeIndex].productPrice
                 mrp.value = res.product.size[sizeIndex].mrp
                 stock.value = res.product.size[sizeIndex].stock
+                hiddenStock.value = res.product.size[sizeIndex].stock
                 size.value = res.product.size[sizeIndex].size
 size2.innerText = res.product.size[sizeIndex].size
 price2.innerText = res.product.size[sizeIndex].productPrice

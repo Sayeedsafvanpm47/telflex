@@ -47,12 +47,12 @@ let productSchema = new mongoose.Schema({
 		ref: 'categories',
 	},
 		
+	tags : {
+		type : String
+	}
 	
 	
-	
-	cloth: {
-		type: String
-	},
+	,
 	model: {
 		type: String
 	},
@@ -85,9 +85,8 @@ let productSchema = new mongoose.Schema({
 		type : String,
 		default : 'No'
 	},
-	itemSold : {
-		type : Number,
-		default : 0
+	features : {
+		type : String
 	}
 });
 
