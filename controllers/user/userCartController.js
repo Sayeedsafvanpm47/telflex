@@ -13,7 +13,7 @@ module.exports = {
                             
                         }else{
                        
-                      const { _id, size, price, mrp, quantity, productname } = req.body;
+                      const { _id, size, price, mrp, quantity, productname,stock,laststock } = req.body;
 
                       
           
@@ -21,18 +21,35 @@ module.exports = {
                       const existingCart = await cartModel.findOne({ userId: userId });
           
                       if (existingCart) {
-                     
-                          existingCart.products.push({
-                              product_id: _id,
-                              productName : productname,
-                              quantity: quantity,
-                              price: price,
-                              size: size,
-                              mrp: mrp
-                          });
-          
-                          await existingCart.save();
-                      } else {
+                        const existingProductIndex = existingCart.products.findIndex(product => product.product_id.toString() == _id);
+                        if (existingProductIndex !== -1) {
+                            // Product already exists in the cart
+                            if (existingCart.products[existingProductIndex].lastStock !== 0) {
+                                existingCart.products[existingProductIndex].quantity += +quantity;
+                            } else {
+                                res.redirect('/user/shop');
+                                return; // Exit the function early if lastStock is 0
+                            }
+                        } else {
+                            // Product doesn't exist in the cart, add it
+                            if (laststock !== 0) {
+                                existingCart.products.push({
+                                    product_id: _id,
+                                    productName: productname,
+                                    quantity: quantity,
+                                    price: price,
+                                    size: size,
+                                    mrp: mrp,
+                                    stock: stock,
+                                    lastStock: laststock
+                                });
+                            } else {
+                                res.redirect('/user/shop');
+                                return; // Exit the function early if lastStock is 0
+                            }
+                        }
+                        await existingCart.save();
+                     } else {
                         
                           const newCart = new cartModel({
                               userId: userId,
@@ -41,9 +58,13 @@ module.exports = {
                                   quantity: quantity,
                                   price: price,
                                   size: size,
-                                  mrp: mrp
-                              }]
+                                  mrp: mrp,
+                                  stock : stock,
+                                  lastStock : laststock
+                              }],
+                            
                           });
+                          
           
                           await newCart.save();
                       }

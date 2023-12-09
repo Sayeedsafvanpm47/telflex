@@ -53,26 +53,39 @@
                                                 <input name="quantity" type="number" id="quantity<%= cart[j].products[i]._id %>" min="1" value="<%= cart[j].products[i].quantity %>" onchange="calc('<%= cart[j].products[i]._id %>')" hidden>
                                               
                                          
-                                                <button  style="height: 30px; width: 30px; border-radius: 100px; background-color: rgba(13, 14, 13, 0);"  onclick="decrease('<%= cart[j].products[i]._id %>')"><i class="fa-solid fa-minus"></i></button>
+                                                <button id="dec_btn<%= i  %>" style="height: 30px; width: 30px; border-radius: 100px; background-color: rgba(13, 14, 13, 0);"  onclick="decrease('<%= cart[j].products[i]._id %>','<%= i %>')"><i class="fa-solid fa-minus"></i></button>
+                                             
                                                 <span id="newQuantity<%= cart[j].products[i]._id %>"><%= cart[j].products[i].quantity %></span>
-                                                <button style="height: 30px; width: 30px; border-radius: 100px; background-color: rgb(13, 14, 13);" onclick="increase('<%= cart[j].products[i]._id %>')"><i class="fa-solid fa-plus text-white"></i></button>
+                                               
+                                                    <span class="text-muted fs-" id="stockAlert<%= i  %>"></span>
+                                                <button id="inc_btn<%= i %>" style="height: 30px; width: 30px; border-radius: 100px; background-color: rgb(13, 14, 13);" onclick="increase('<%= cart[j].products[i]._id %>','<%= i %>')"><i class="fa-solid fa-plus text-white"></i></button>
 
                                                <script>
-                                                    function increase(productId) {
+
+                                                
+                                                    function increase(productId,i) {
                                                         var target = document.getElementById('quantity' + productId);
                                                         var newQuantity = document.getElementById('newQuantity' + productId)
                                                         target.value = parseInt(target.value) + 1;
+                                                        let checkStock = parseInt(document.getElementById(`laststock${i}`).value)
+                                                        if(checkStock <=0 )
+                                                        {
+                                                            target.value -= 1
+                                                            document.getElementById(`inc_btn${i}`).style.display = 'none'
+                                                            document.getElementById(`stockAlert${i}`).innerHTML = 'Sorry, Stock out'
+                                                        }
                                                        
                                                         calc(productId); 
                                                         
                                                         newQuantity.innerHTML = target.value
                                                     }
                                                 
-                                                    function decrease(productId) {
+                                                    function decrease(productId,i) {
                                                         var target = document.getElementById('quantity' + productId);
                                                         if (parseInt(target.value) > 1) {
                                                             target.value = parseInt(target.value) - 1;
                                                             var newQuantity = document.getElementById('newQuantity' + productId)
+                                                            let checkStock = document.getElementById(`laststock${i}`)
                                                         newQuantity.innerHTML = target.value
                                                             calc(productId); 
                                                         }
@@ -90,6 +103,7 @@
 <td class="text-right" data-title="Cart">
     <input type="number" id="mul<%= cart[j].products[i]._id %>" value="<%= cart[j].products[i].price %>" hidden>
     <span class="calctotal" id="calcprice<%= cart[j].products[i]._id %>"><%= (cart[j].products[i].price) * (cart[j].products[i].quantity)%> </span>
+    <input type="number" value="<%= cart[j].products[i].lastStock  %>" id="laststock<%= i %>" >
   </td>
                                               <td class="action" data-title="Remove"><a href="/user/deleteCart?productId=<%= cart[j].products[i]._id %>" class="text-muted"><i class="fi-rs-trash"></i></a></td>
                                             </tr>
@@ -99,7 +113,7 @@
                                   </tbody>
                             </table>
                         </div>
-                       
+                 
                         <div class="divider center_icon mt-50 mb-50"></div>
                         
                             <div class="col-lg-12 col-md-12">
@@ -378,7 +392,14 @@
       allSums.forEach(function (element) {
         sumtotal += parseFloat(element.innerText);
       });
-  
+      let checkStock = parseInt(document.getElementById(`laststock${i}`).value)
+                                                        if(checkStock <= 0)
+                                                        {
+
+                                                            document.getElementById(`inc_btn${i}`).style.display = 'none'
+                                                          
+
+                                                        }
 
       if (!isNaN(sumtotal)) {
         document.getElementById('showtotal').innerHTML =  sumtotal.toFixed(2);
@@ -437,7 +458,9 @@ document.getElementById('subtotalinputfield').value = sumtotal.toFixed(2)
 
 
 }
-const quantityUpdate = document.getElementById("quantity" + productId).value;
+let quantityUpdate
+
+ quantityUpdate = document.getElementById("quantity" + productId).value;
 console.log(quantityUpdate);
 
 
