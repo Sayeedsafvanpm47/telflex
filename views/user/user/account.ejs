@@ -199,6 +199,7 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="/user/logout"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
                                         </li>
+                                        
                                     </ul>
                                 </div>
                             </div>
@@ -212,10 +213,139 @@
                                             <div class="card-body">
                                                 <p>From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a></p>
                                             </div>
+
+
                                             <br>
+                                            </div>
+                                            <br>
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    Rate Your Orders
+                                                </div>
+
+                                                    <div class="card-body">
+                                                        <table  class="table">
+                                                        <thead>
+                                                           <td>
+                                                            Product Detail
+                                                           </td>
+                                                           <td>
+                                                          
+                                                            Give your feedback
+                                                           </td>
+                                                           <td>
+
+                                                          
+                                                            Rate this product
+
+                                                           </td>
+
+                                                        </thead>
+
+                                                     <% if(delivered != '' ){ %>
+                                                       <tbody>
+                                                            <% delivered.forEach((item,index) => { %>
+                                                                <tr>
+                                                            <td>
+
+                                                                <%= item.productName  %>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" value="" id="review<%= index  %>">
+                                                            </td>
+                                                            <td>
+                                                                <% if(rated !== ''){ %>
+                                                                    <div class="rating" id="star<%= index %>">
+                                                                        <% for (let i = 1; i <= 5; i++) { %>
+                                                                            <% if (i <= rating) { %>
+                                                                              
+                                                                                <span class="star" style="color: gold;" data-value="<%= i %>">&#9733;</span>
+                                                                            <% } else { %>
+                                                                              
+                                                                                <span class="star" style="color: gray;" onclick="rate('<%= i %>', '<%= index %>')" data-value="<%= i %>">&#9733;</span>
+                                                                            <% } %>
+                                                                        <% } %>
+                                                                    </div>
+                                                                    
+                                                                 
+                                                                    
+
+                                                                  </div>
+                                                                  <% } else { %>
+                                                                    <div class="rating" id="star<%= index  %>">
+                                                                        <span class="star" onclick="rate(1,'<%= index %>')" id="star1" data-value="1">&#9733;</span>
+                                                                        <span class="star" onclick="rate(2,'<%= index %>')" id="star2" data-value="2">&#9733;</span>
+                                                                        <span class="star" onclick="rate(3,'<%= index %>')" id="star3" data-value="3">&#9733;</span>
+                                                                        <span class="star" onclick="rate(4,'<%= index %>')" id="star4" data-value="4">&#9733;</span>
+                                                                        <span class="star" onclick="rate(5,'<%= index %>')" id="star5" data-value="5">&#9733;</span>
+                                                                      </div>
+                                                                      <% } %>
+                                                                  
+                                                            </td>
+                                                           <td>
+                                                           
+                                                            <input type="text" value="<%= (item.productId && item.productId._id) ? item.productId._id.toString() : '' %>" name="" id="productid<%= index %>">
+
+
+                                                            
+                                                         
+                                                                                                         </td> 
+                                                          
+                                                        </tr>
+                                                        
+                                                            <% }) %>
+                                                        </tbody>
+                                                        </table>
+                                                        
+                                                        <% } %>
+                                                    </div>
+                                               
                                             </div>
                                           
                                     </div>
+                                    <script>
+async function rate(a, i) {
+   
+    let stars = document.querySelectorAll(`#star${i} .star`);
+    let review = document.getElementById(`review${i}`).value
+    let productid = document.getElementById(`productid${i}`).value
+    let rating = a
+    stars.forEach((star, index) => {
+        if (index < a) {
+            star.style.color = 'gold';
+        } else {
+            star.style.color = 'gray'; 
+        }
+    });
+if(review == '')
+{
+    Swal.fire({
+            title: 'Oops!',
+            text: 'Please write a review!',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        });
+}else {
+   
+    const response = await fetch(`/user/rateProduct?rating=${rating}&review=${review}&productid=${productid}`, {
+        method: 'GET',
+       
+    })
+   if(!response.ok)
+   {
+    throw new Error('response not ok')
+   }
+   const responseData = await response.json()
+   console.log('response success')
+}
+    
+}
+
+
+
+
+
+                                    </script>
                                     <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
                                         <div class="card">
                                             <div class="card-header">

@@ -1,0 +1,15 @@
+/* Basic styling for stars */
+.rating {
+          font-size: 24px;
+        }
+        
+        .star {
+          cursor: pointer;
+          color: gray;
+        }
+        
+        .star:hover,
+        .star.active {
+          color: gold;
+        }
+        

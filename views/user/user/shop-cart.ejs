@@ -210,7 +210,7 @@
                                                           <% let totalAmountCheck  %>
                                                      
                                                         
-                                                   <div id="coupon<%= i  %>" style="background-color: gainsboro; margin-top: 5px; width: 300px; display: none;"><%= coupon[i].couponCode  %> <span style="font-size: 8px;  color: #16020278;"> For purchase above <%= coupon[i].minimumPurchase%>, get <%= coupon[i].discount%>% off!</span></div>
+                                                   <div id="coupon<%= i  %>" style="background-color: gainsboro; margin-top: 5px; width: 300px; display: none;"><span id="couponcodehide<%= i  %>"><%= coupon[i].couponCode  %> </span><span style="font-size: 8px;  color: #16020278;"> For purchase above <%= coupon[i].minimumPurchase%>, get <%= coupon[i].discount%>% off!</span></div>
                                            
                                             
                                                      
@@ -609,26 +609,26 @@ async function appliedCoupon()
   
   
     <script>
-                                                    function showDiv(index)
-                                                    {
-                                                       
-                                                        amount = document.getElementById('totalCheck').value
-                                                        divShow = document.getElementById(`coupon${index}`) 
-                                                        checkAmount = document.getElementById(`minimumPurchase${index}`).value
-                                                        if(amount > checkAmount)
-                                                        {
+                                                  function showDiv(index) {
+    amount = document.getElementById('totalCheck').value;
+    divShow = document.getElementById(`coupon${index}`);
+    couponcode = document.getElementById(`couponcodehide${index}`);
+    checkAmount = document.getElementById(`minimumPurchase${index}`).value;
 
+    if (amount > checkAmount) {
+        divShow.style.display = 'block';
+    } else {
+        divShow.style.display = 'block';
+        let currentCode = couponcode.innerHTML;
+        if (currentCode.length >= 4) {
+            let newCode = currentCode.substring(0, 1) + '##########' ;
+            couponcode.innerHTML = newCode;
+        }
+    }
+}
 
-                                                            divShow.style.display = 'block'
-
-
-
-                                                        }
-                                                        else{
-                                                            divShow.style.display = 'none'
-                                                        }
-                                                        
-                                                    }   
+                                                    
+                                                    
 
 
 

@@ -535,11 +535,29 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 			await res.render('user/user/createPass',{errors,email})
 		}
 	},
+	rateProduct : async (req,res)=>{
+		try {
+			const {rating,review,productid} = req.query
+			console.log(rating)
+			console.log(productid)
+			console.log(review)
+			const product = await productModel.findOne({_id:productid})
+			product.rated = 'true'
+			product.rating = rating
+			product.review = review
+			await product.save()
+			console.log(product)
+		} catch (error) {
+			
+		}
+	}
+	,
 	userAccount : async (req,res)=>{
 		try {
 			const userId = req.session.userId;
 			const users = await userModel.findById(userId);
 			const product = await productModel.find({})
+			let rated = ''
 			const orders = await orderModel.find({ userId }).sort({orderDate:-1}).populate({
 				
 				path: 'items.productId',
@@ -553,6 +571,17 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 			console.log(refferal)
 			const code = refferal.refferalCode
 			console.log(code)
+			let delivered = []
+			for (let i = 0; i < orders.length; i++) {
+				for (let j = 0; j < orders[i].items.length; j++) {
+				  if (orders[i].items[j].status === 'Delivered') {
+				    delivered.push(orders[i].items[j]);
+				  }
+				}
+			        }
+
+			        console.log('this is delivered:');
+console.log(delivered);
 			
 		        
       
@@ -561,7 +590,7 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 			console.log(`This is orders :  ${orders}`)
 			
 		  
-			res.render('user/user/account', { users, orders,code });
+			res.render('user/user/account', { users, orders,code,delivered,rated }) || ''
 		  
 			
 		      } catch (error) {

@@ -90,6 +90,18 @@ let productSchema = new mongoose.Schema({
 	},
 	features : {
 		type : String
+	},
+	rating : {
+
+		type : String
+
+	},
+	rated : {
+		type : Boolean,
+		default : false
+	},
+	review : {
+		type : String
 	}
 });
 
