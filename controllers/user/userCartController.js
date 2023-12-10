@@ -68,7 +68,8 @@ module.exports = {
                                     size: size,
                                     mrp: mrp,
                                     stock: stock,
-                                    lastStock: laststock
+                                    lastStock: laststock,
+                                   
                                 });
                             }
                             else {
@@ -156,13 +157,36 @@ module.exports = {
                   },
           deleteCart : async (req,res)=>{
                     try {
-                              productId = req.query.productId
-                           
+                           const {productId,singleid,productmainid} = req.query
+
+                           console.log(singleid)
+                           console.log(productmainid)
                               if(productId)
                               {
                                         await cartModel.updateOne({ 'products._id': productId }, { $pull: { products: { _id: productId } } });
                                         res.redirect('/user/showCart');
                               }
+                              if(singleid && productmainid)
+                              {
+
+                                const productfind = await productModel.findOne({_id:productmainid})
+                                const lastStock = productfind.size.find(item => item._id.toString() == singleid)
+                                if(lastStock)
+                                {
+                                    lastStock.lastStock = lastStock.stock
+                                    await productfind.save()
+                                }
+                                else
+                                {
+                                    console.log('couldnt find laststock')
+                                }
+
+                              }
+                              else
+                              {
+                                console.log('couldnt find singleid and productmainid')
+                              }
+
 
                     } catch (error) {
                               console.log(error)
@@ -170,17 +194,20 @@ module.exports = {
           },
           updateCart: async (req, res) => {
             const productId = req.query.productId;
-            const { quantity,lastStock,productsingleid,productsizefind} = req.body;
+            const { quantity,lastStock,productsingleid,productmainid} = req.body;
             console.log(quantity);
             console.log(productId);
-            console.log(productsizefind)
+           
             console.log(productsingleid)
+            console.log(productmainid)
         
             try {
                 const updatequantity = await cartModel.findOne(
                     { 'products._id': productId } 
                 );
 
+
+                
                
                 if (updatequantity) {
                     const productToUpdate = updatequantity.products.find(product => product._id == productId);
@@ -199,6 +226,30 @@ module.exports = {
                     }
                 }
     
+
+                const products = await productModel.findOne({ _id: productmainid });
+
+if (products) {
+    const lastStockUpdate = products.size.find(item => item._id.toString() == productsingleid);
+    
+    if (lastStockUpdate) {
+        lastStockUpdate.lastStock = lastStock;
+        if(lastStock <= 0)
+        {
+            lastStockUpdate.lastStock = 0
+        }
+        console.log('New last stock updated');
+        await products.save(); 
+    } else {
+        console.log('lastStockUpdate not found');
+       
+    }
+} else {
+    console.log('Product not found');
+   
+}
+
+
                 res.json({ success: true }); 
             } catch (error) {
                 console.error('Error:', error);

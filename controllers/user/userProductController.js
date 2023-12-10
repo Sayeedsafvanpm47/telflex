@@ -311,6 +311,13 @@ numberOfDocs = req.session.pagination
                       const _id = req.query._id
                       const category = await categoryModel.find({})
                       let errors;
+                      let userlogged
+                      if(req.session.user == true)
+                      {
+                        userlogged = true
+                      }
+
+                     
                       
                       const products = await productModel.findById(_id).populate({path:'category',model:'categories',select:'_id categoryName published'})
                       const related = products.category
@@ -324,19 +331,19 @@ numberOfDocs = req.session.pagination
                       if(!req.session.addToCartError){
                       if(products){
                      
-                      res.render('user/user/productdetails',{products,category,relatedProducts,errors})
+                      res.render('user/user/productdetails',{products,category,relatedProducts,errors,userlogged})
                       }
                       else
                       {
                        errors = 'Unable to fetch the data!'
-                       res.render('user/user/productdetails',{products,category,relatedProducts,errors})
+                       res.render('user/user/productdetails',{products,category,relatedProducts,errors,userlogged})
                       }
                     }else
                     {
                       const errors = 'Failed To add Item to Cart'
                       
                       delete req.session.addToCartError
-                      res.render('user/user/productdetails', { products, category, relatedProducts, errors });
+                      res.render('user/user/productdetails', { products, category, relatedProducts, errors ,userlogged});
                       
 
                     }

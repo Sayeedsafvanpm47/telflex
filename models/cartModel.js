@@ -38,7 +38,8 @@ let cartSchema = new mongoose.Schema({
     },
     single_id : {
       type : mongoose.Schema.Types.ObjectId,
-    }
+    },
+ 
    
   }], total : {
     type : Number,

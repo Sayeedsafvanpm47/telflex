@@ -113,11 +113,17 @@
 <td class="text-right" data-title="Cart">
     <input type="number" id="mul<%= cart[j].products[i]._id %>" value="<%= cart[j].products[i].price %>" hidden>
     <span class="calctotal" id="calcprice<%= cart[j].products[i]._id %>"><%= (cart[j].products[i].price) * (cart[j].products[i].quantity)%> </span>
-    <input type="text" id="productsingleid<%= i  %>" name="productsingleid" value="<%= cart[j].products[i]._id  %>">
+    <input type="text" id="productsingleid<%= i  %>" name="productsingleid" value="<%= cart[j].products[i].single_id  %>">
     <input type="" id="productsizefind<%= i  %>" name="productsize" value="<%= cart[j].products[i].size  %>">
     <input type="number" value="<%= cart[j].products[i].lastStock  %>" id="laststock<%= i %>" >
+    <input type="text" value="<%= cart[j].products[i].product_id._id  %>" id="productmainid<%= i  %>" >
+
   </td>
-                                              <td class="action" data-title="Remove"><a href="/user/deleteCart?productId=<%= cart[j].products[i]._id %>" class="text-muted"><i class="fi-rs-trash"></i></a></td>
+  <td class="action" data-title="Remove">
+    <a href="/user/deleteCart?productId=<%= cart[j].products[i]._id %>&productmainid=<%= cart[j].products[i].product_id._id %>&singleid=<%= cart[j].products[i].single_id %>" class="text-muted">
+        <i class="fi-rs-trash"></i>
+    </a>
+</td>
                                             </tr>
                                           <% } %>
                                         
@@ -474,6 +480,7 @@ let quantityUpdate
 let lastStock = document.getElementById('laststock' + i).value
 let productsingleid = document.getElementById(`productsingleid${i}`).value
 let productsizefind = document.getElementById(`productsizefind${i}`).value
+let productmainid = document.getElementById(`productmainid${i}`).value
 
  quantityUpdate = document.getElementById("quantity" + productId).value;
 console.log(quantityUpdate);
@@ -489,7 +496,8 @@ console.log(quantityUpdate);
         quantity: quantityUpdate,
         lastStock : lastStock,
         productsingleid : productsingleid,
-        productsizefind : productsizefind
+        productsizefind : productsizefind,
+        productmainid : productmainid
       
         
        

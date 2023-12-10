@@ -24,6 +24,9 @@
         {
             document.getElementById('inc_btn').style.display = 'none'
             document.getElementById('dec_btn').style.display = 'none'
+           let stock =  document.getElementById('stockView2')
+           stock.innerHTML = 'Cant add more, Please check your cart!'
+           stock.style.color = 'red'
         }
        }
     </script>
@@ -110,7 +113,7 @@
                                          
                                               &nbsp;  <input name="discount" id="discountinp" class="title-detail" value="<%= products.size[0].productDiscount%>" hidden>   <span class="text-muted fs-4"  id="discountspan"><%= products.size[0].productDiscount  %>% off</span></ins>
                                              
-                                             
+                                          
                                               <input  name="stock" type="text" id="stockView" class="text-brand" value="<%= products.size[0].stock %>" hidden>
                                               
                                                 <% for (const size of products.size) { %>
@@ -120,9 +123,12 @@
                                                     <span  class="save-price font-md text-danger ">Out of stock</span>
                                                   <% } else { %>
                                              
+                                                    <% if(!userlogged){ %>
 
-                                             <br><span>Stock:</span>     <span class="save-price font-md color3 ml-15" id="stockView2"><%= products.size[0].stock %></span>
-                                          
+                                             <br><span>Stock:</span>     <span class="save-price font-md color3 ml-15" id=""><%= products.size[0].stock %></span>
+                                          <% }else{ %>
+                                            <br><span>Stock:</span>     <span class="save-price font-md color3 ml-15" id="stockView2"><%= products.size[0].stock %></span>
+                                            <% } %>
                                             <input type="text" id="productTarget" name="productTarget" value="<%= products.size[0]._id %>" hidden>
                                             <% break %>
                                            <% } %>
@@ -186,6 +192,7 @@ let stockView = document.getElementById('stockView2')
     let checkStock = document.getElementById('stockView3');
     let dec_btn = document.getElementById('dec_btn')
     checkStock.value = parseInt(checkStock.value) - 1;
+    document.getElementById('stockView2').innerHTML = checkStock.value
 
     let inc_btn = document.getElementById('inc_btn');
     let stock = parseInt(checkStock.value) > 0;
@@ -212,6 +219,7 @@ function decrease() {
 
         let checkStock = document.getElementById('stockView3');
         checkStock.value = parseInt(checkStock.value) + 1;
+        document.getElementById('stockView2').innerHTML = checkStock.value
         
 
         let dec_btn = document.getElementById('dec_btn');
@@ -234,11 +242,7 @@ function decrease() {
                                             
                                         </form>
                                         </div>
-                                        <ul class="product-meta font-xs color-grey mt-50">
-                                            <li class="mb-5">SKU: <a href="#">FWM15VKT</a></li>
-                                            <li class="mb-5">Tags: <a href="#" rel="tag">Mattress</a>, <a href="#" rel="tag">Furniture</a>, <a href="#" rel="tag">Pillows</a> </li>
                                         
-                                        </ul>
                                     </div>
                                     <!-- Detail Info -->
                                 </div>
