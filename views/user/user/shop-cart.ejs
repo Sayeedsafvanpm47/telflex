@@ -410,14 +410,7 @@
       allSums.forEach(function (element) {
         sumtotal += parseFloat(element.innerText);
       });
-      let checkStock = parseInt(document.getElementById(`laststock${i}`).value)
-                                                        if(checkStock <= 0)
-                                                        {
-
-                                                            document.getElementById(`inc_btn${i}`).style.display = 'none'
-                                                          
-
-                                                        }
+ 
 
       if (!isNaN(sumtotal)) {
         document.getElementById('showtotal').innerHTML =  sumtotal.toFixed(2);
