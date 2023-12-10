@@ -214,6 +214,17 @@
               stockInput.placeholder = "Enter Stock";
               stockInput.classList.add("form-control");
               stockInput.name = `stock_${i}`;
+              stockInput.id = `stock_${i}`
+
+              const lastStockInput = document.createElement("input");
+              lastStockInput.type = "number";
+              lastStockInput.style.width = "50%";
+              lastStockInput.style.marginTop = "10px";
+              lastStockInput.placeholder = "Last Stock";
+              lastStockInput.classList.add("form-control");
+              lastStockInput.name = `laststock_${i}`;
+              lastStockInput.id = `laststock_${i}`
+              lastStockInput.style.visibility = 'hidden'
               
               const mrpInput = document.createElement("input");
               mrpInput.type = "number";
@@ -253,8 +264,20 @@
               sizeFieldsContainer.appendChild(mrpInput);
               sizeFieldsContainer.appendChild(prodiscInput);
               sizeFieldsContainer.appendChild(priceInput);
+              sizeFieldsContainer.appendChild(lastStockInput)
+
+
+
+              let realStock = document.getElementById(`stock_${i}`)
+  let lastStock = document.getElementById(`laststock_${i}`)
+
+realStock.addEventListener("input", function() {
+   
+   lastStock.value = parseInt(realStock.value)
+ });
 
               const price = document.getElementById(`productpriceId${i}`);
+              
       const mrp = document.getElementById(`mrpId${i}`);
       const discount = document.getElementById(`product_disc`);
       const disc = parseFloat(document.getElementById('product_disc').value);
@@ -287,7 +310,11 @@ mrp.value = ''
     
   });
 });
+
+
  
+
+
           
         </script>
 

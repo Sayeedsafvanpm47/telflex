@@ -27,6 +27,7 @@ module.exports = {
 					size: req.body[`size_${i}`],
 					productPrice: req.body[`productprice_${i}`],
 					stock: req.body[`stock_${i}`],
+					lastStock : req.body[`stock_${i}`],
 					productid : Date.now()
           ,mrp : req.body[`mrp_${i}`],
 	productDiscount : req.body[`prodisc_${i}`]
@@ -166,6 +167,7 @@ if(!productname || !features || !featured || !tags || !model ||  !description ||
                 result.size[i].size = size;
                 result.size[i].productPrice = price;
                 result.size[i].stock = stock;
+	      result.size[i].lastStock = stock
                 result.size[i].mrp = mrp
 	      result.size[i].productDiscount = productDiscount
             } else {

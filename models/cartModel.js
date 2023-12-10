@@ -35,6 +35,9 @@ let cartSchema = new mongoose.Schema({
       type : Number
     },lastStock : {
       type : Number
+    },
+    single_id : {
+      type : mongoose.Schema.Types.ObjectId,
     }
    
   }], total : {
@@ -52,6 +55,7 @@ subtotal : {
   } ,couponCode : {
     type : String
 },
+
 
 });
 

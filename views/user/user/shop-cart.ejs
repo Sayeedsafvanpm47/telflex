@@ -57,8 +57,8 @@
                                              
                                                 <span id="newQuantity<%= cart[j].products[i]._id %>"><%= cart[j].products[i].quantity %></span>
                                                
-                                                    <span class="text-muted fs-" id="stockAlert<%= i  %>"></span>
                                                 <button id="inc_btn<%= i %>" style="height: 30px; width: 30px; border-radius: 100px; background-color: rgb(13, 14, 13);" onclick="increase('<%= cart[j].products[i]._id %>','<%= i %>')"><i class="fa-solid fa-plus text-white"></i></button>
+<br>                                                    <span class="text-muted fs-" id="stockAlert<%= i  %>"></span>
 
                                                <script>
 
@@ -67,7 +67,16 @@
                                                         var target = document.getElementById('quantity' + productId);
                                                         var newQuantity = document.getElementById('newQuantity' + productId)
                                                         target.value = parseInt(target.value) + 1;
+                                                        let stockChange = document.getElementById(`laststock${i}`)
+
                                                         let checkStock = parseInt(document.getElementById(`laststock${i}`).value)
+                                                        stockChange.value = parseInt(checkStock) - 1
+                                                        if(stockChange <=0)
+                                                        {
+                                                            
+                                                            document.getElementById(`inc_btn${i}`).style.display = 'none'
+                                                            document.getElementById(`stockAlert${i}`).innerHTML = 'Sorry, Stock out'
+                                                        }
                                                         if(checkStock <=0 )
                                                         {
                                                             target.value -= 1
@@ -75,7 +84,7 @@
                                                             document.getElementById(`stockAlert${i}`).innerHTML = 'Sorry, Stock out'
                                                         }
                                                        
-                                                        calc(productId); 
+                                                        calc(productId,i); 
                                                         
                                                         newQuantity.innerHTML = target.value
                                                     }
@@ -86,8 +95,9 @@
                                                             target.value = parseInt(target.value) - 1;
                                                             var newQuantity = document.getElementById('newQuantity' + productId)
                                                             let checkStock = document.getElementById(`laststock${i}`)
+                                                            checkStock.value = parseInt(checkStock.value) + 1
                                                         newQuantity.innerHTML = target.value
-                                                            calc(productId); 
+                                                            calc(productId,i); 
                                                         }
                                                     }
                                                 </script>
@@ -103,6 +113,8 @@
 <td class="text-right" data-title="Cart">
     <input type="number" id="mul<%= cart[j].products[i]._id %>" value="<%= cart[j].products[i].price %>" hidden>
     <span class="calctotal" id="calcprice<%= cart[j].products[i]._id %>"><%= (cart[j].products[i].price) * (cart[j].products[i].quantity)%> </span>
+    <input type="text" id="productsingleid<%= i  %>" name="productsingleid" value="<%= cart[j].products[i]._id  %>">
+    <input type="" id="productsizefind<%= i  %>" name="productsize" value="<%= cart[j].products[i].size  %>">
     <input type="number" value="<%= cart[j].products[i].lastStock  %>" id="laststock<%= i %>" >
   </td>
                                               <td class="action" data-title="Remove"><a href="/user/deleteCart?productId=<%= cart[j].products[i]._id %>" class="text-muted"><i class="fi-rs-trash"></i></a></td>
@@ -429,7 +441,7 @@
 
 
 <script>
-    function calc(productId) {
+    function calc(productId,i) {
 var mul = document.getElementById("mul" + productId).value;
 var quantity = document.getElementById("quantity" + productId).value;
 
@@ -459,6 +471,9 @@ document.getElementById('subtotalinputfield').value = sumtotal.toFixed(2)
 
 }
 let quantityUpdate
+let lastStock = document.getElementById('laststock' + i).value
+let productsingleid = document.getElementById(`productsingleid${i}`).value
+let productsizefind = document.getElementById(`productsizefind${i}`).value
 
  quantityUpdate = document.getElementById("quantity" + productId).value;
 console.log(quantityUpdate);
@@ -472,6 +487,9 @@ console.log(quantityUpdate);
     },
     body: JSON.stringify({
         quantity: quantityUpdate,
+        lastStock : lastStock,
+        productsingleid : productsingleid,
+        productsizefind : productsizefind
       
         
        

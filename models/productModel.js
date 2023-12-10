@@ -26,6 +26,9 @@ const sizeRateSchema = new Schema({
 		type :Number,
 		default : 0
 	},
+	lastStock : {
+		type : Number
+	}
 	
 	
 	

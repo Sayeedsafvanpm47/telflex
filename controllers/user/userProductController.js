@@ -310,20 +310,36 @@ numberOfDocs = req.session.pagination
                      try {
                       const _id = req.query._id
                       const category = await categoryModel.find({})
+                      let errors;
+                      
                       const products = await productModel.findById(_id).populate({path:'category',model:'categories',select:'_id categoryName published'})
-                      if(products){
                       const related = products.category
+
+                    //   const lastStock = await cartModel.findOne({userId:req.session.userId}) || 50
+                    //  let productStock = lastStock.products.find( stock => stock.product_id.toString() == _id)
                      
                       const relatedProducts = await productModel.find({category:related})
                       console.log(relatedProducts)
-                      res.render('user/user/productdetails',{products,category,relatedProducts})
-                      }else
-                      {
-                        const error = new Error("Unable to fetch the data");
-                        error.status = 400;
-                        error.isRestCall = true;
-                        throw error;
+                    
+                      if(!req.session.addToCartError){
+                      if(products){
+                     
+                      res.render('user/user/productdetails',{products,category,relatedProducts,errors})
                       }
+                      else
+                      {
+                       errors = 'Unable to fetch the data!'
+                       res.render('user/user/productdetails',{products,category,relatedProducts,errors})
+                      }
+                    }else
+                    {
+                      const errors = 'Failed To add Item to Cart'
+                      
+                      delete req.session.addToCartError
+                      res.render('user/user/productdetails', { products, category, relatedProducts, errors });
+                      
+
+                    }
                      } catch (error) {
                       console.log('error')
 next(error)

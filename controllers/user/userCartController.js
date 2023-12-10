@@ -1,11 +1,14 @@
 const userModel = require('../../models/userModel')
 const cartModel = require('../../models/cartModel')
 const couponModel = require('../../models/couponModel')
+const productModel = require('../../models/productModel')
 
 module.exports = {
           addToCart : async (req,res)=>{
-                    try {
+                    try { 
+                        const { _id, size, price, mrp, quantity, productname,stock,laststock,productTarget } = req.body;
                         const userId = req.session.userId;
+                        console.log('productTarget' + productTarget)
                         if(!req.session.userId){
                             req.session.cart = true
                             res.redirect('/user/shop')
@@ -13,28 +16,52 @@ module.exports = {
                             
                         }else{
                        
-                      const { _id, size, price, mrp, quantity, productname,stock,laststock } = req.body;
+                     
 
+                            const productFinding = await productModel.findOne({ _id: _id });
+
+                            if (productFinding) {
+                                const sizeIndex = productFinding.size.findIndex(size => size._id.toString() === productTarget);
+                            
+                                if (sizeIndex !== -1) {
+                                    productFinding.size[sizeIndex].lastStock = laststock;
+                            
+                                    await productFinding.save(); 
+                            
+                                    console.log('lastStock updated');
+                                } else {
+                                    console.log('Size not found');
+                                   
+                                }
+                            } else {
+                                console.log('Product not found');
+                              
+                            }
+                    
+                      
                       
           
-                   
+                  
                       const existingCart = await cartModel.findOne({ userId: userId });
           
                       if (existingCart) {
-                        const existingProductIndex = existingCart.products.findIndex(product => product.product_id.toString() == _id);
+                        const existingProductIndex = existingCart.products.findIndex(product => product.single_id.toString() == productTarget);
                         if (existingProductIndex !== -1) {
                             // Product already exists in the cart
                             if (existingCart.products[existingProductIndex].lastStock !== 0) {
                                 existingCart.products[existingProductIndex].quantity += +quantity;
                             } else {
-                                res.redirect('/user/shop');
-                                return; // Exit the function early if lastStock is 0
+
+                                req.session.addToCartError = true
+                                res.redirect(`/user/productdetail?_id=${_id}`);
+                                return;
                             }
                         } else {
-                            // Product doesn't exist in the cart, add it
+                           
                             if (laststock !== 0) {
                                 existingCart.products.push({
                                     product_id: _id,
+                                    single_id : productTarget,
                                     productName: productname,
                                     quantity: quantity,
                                     price: price,
@@ -43,18 +70,27 @@ module.exports = {
                                     stock: stock,
                                     lastStock: laststock
                                 });
-                            } else {
+                            }
+                            else {
                                 res.redirect('/user/shop');
                                 return; // Exit the function early if lastStock is 0
                             }
-                        }
+                        } 
+                        
+
+                                
+                           
+                        
+                        
                         await existingCart.save();
+                        
                      } else {
                         
                           const newCart = new cartModel({
                               userId: userId,
                               products: [{
                                   product_id: _id,
+                                  single_id : productTarget,
                                   quantity: quantity,
                                   price: price,
                                   size: size,
@@ -70,10 +106,11 @@ module.exports = {
                       }
        
                       res.redirect('/user/showCart');
+                    
+
+                
                     }
-
-
-                    } catch (error) {
+                 } catch (error) {
                               console.log(error)
                     }
           } ,
@@ -133,18 +170,27 @@ module.exports = {
           },
           updateCart: async (req, res) => {
             const productId = req.query.productId;
-            const { quantity } = req.body;
+            const { quantity,lastStock,productsingleid,productsizefind} = req.body;
             console.log(quantity);
             console.log(productId);
+            console.log(productsizefind)
+            console.log(productsingleid)
         
             try {
                 const updatequantity = await cartModel.findOne(
                     { 'products._id': productId } 
                 );
+
+               
                 if (updatequantity) {
                     const productToUpdate = updatequantity.products.find(product => product._id == productId);
                     if (productToUpdate) {
                         productToUpdate.quantity = quantity;
+                        productToUpdate.lastStock = lastStock
+                        if(lastStock <0)
+                        {
+                            productToUpdate.lastStock = 0
+                        }
                         
                         console.log(`Updated Quantity: ${productToUpdate.quantity}`);
                         updatequantity.save();

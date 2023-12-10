@@ -1,6 +1,37 @@
 ﻿<%- include('partials/head') %>
 
-<body>
+<body onload="checkStock()">
+
+    
+    <% if (typeof errors !== '' && errors) { %>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            Swal.fire({
+                title: 'Error!',
+                text: '<%= errors %>', 
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    <% } %>
+      
+
+    <script>
+       function checkStock()
+       {
+        const stock = document.getElementById('stockView3')
+        if(stock.value <=0)
+        {
+            document.getElementById('inc_btn').style.display = 'none'
+            document.getElementById('dec_btn').style.display = 'none'
+        }
+       }
+    </script>
+
+      
+     
+
+
     <!-- Quick view -->
     <%- include('partials/header') %>
         <section class="mt-50 mb-50">
@@ -28,9 +59,7 @@
                                    
                                            
                                         </div>
-                                        <script>
-                                            $('.zoo-item').ZooMove();
-                                         </script> 
+                                      
                                         <!-- THUMBNAILS -->
                                         <div class="slider-nav-thumbnails pl-15 pr-15">
                                              <% if (products && products.images && products.images.length > 0) { %>
@@ -94,7 +123,7 @@
 
                                              <br><span>Stock:</span>     <span class="save-price font-md color3 ml-15" id="stockView2"><%= products.size[0].stock %></span>
                                           
-                                            <input type="text" id="productTarget" value="<%= products.size[0]._id %>" hidden>
+                                            <input type="text" id="productTarget" name="productTarget" value="<%= products.size[0]._id %>" hidden>
                                             <% break %>
                                            <% } %>
                                    
@@ -102,7 +131,8 @@
                                             
                                             <% } %>
                                         </div>
-                                            <input type=""  name="laststock" id="stockView3" value="<%= products.size[0].stock  %>">
+                                            <input type="number" min="0"  name="laststock" id="stockView3" value="<%= products.size[0].lastStock  %>">
+                                       
                                         </div>
                                         <div class="bt-1 border-color-1 mt-15 mb-15"></div>
                                         <div class="short-desc mb-30">
@@ -189,9 +219,14 @@ function decrease() {
     }
 }
 
+
+
                                                 </script>
+
+                                                <input type="text" value="" id="productsingle">
                                          
                                             <div class="product-extra-link2">
+                                               
                                                 <button type="submit" class="button button-add-to-cart">Add to cart</button>
                                                 <a aria-label="Add To Wishlist" class="action-btn hover-up" onclick="addToWish()" ><i class="fi-rs-heart"></i></a>
                                                
@@ -676,6 +711,8 @@ function decrease() {
   const discountSpan = document.getElementById('discountspan')
   const productTarget = document.getElementById('productTarget')
   const hiddenStock = document.getElementById('stockView3')
+ 
+ 
 
   var sizeVal;
 
@@ -688,7 +725,7 @@ function decrease() {
                 price.value = res.product.size[sizeIndex].productPrice
                 mrp.value = res.product.size[sizeIndex].mrp
                 stock.value = res.product.size[sizeIndex].stock
-                hiddenStock.value = res.product.size[sizeIndex].stock
+                hiddenStock.value = res.product.size[sizeIndex].lastStock
                 size.value = res.product.size[sizeIndex].size
 size2.innerText = res.product.size[sizeIndex].size
 price2.innerText = res.product.size[sizeIndex].productPrice
@@ -697,6 +734,8 @@ price2.innerText = res.product.size[sizeIndex].productPrice
                 discountInp.value = res.product.size[sizeIndex].productDiscount
                 discountSpan.innerHTML = res.product.size[sizeIndex].productDiscount + '% Off'
                 productTarget.value = res.product.size[sizeIndex]._id
+              
+               
                
 
                 
@@ -718,7 +757,13 @@ price2.innerText = res.product.size[sizeIndex].productPrice
         //     mrp.innerHTML = products.size[sizeIndex].mrp;
         //     stock.innerHTML = products.size[sizeIndex].stock;
         //   }
+
+
+
         }
+
+
+
       </script>
 
 </body>
