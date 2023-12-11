@@ -240,38 +240,55 @@
 
                                                            </td>
 
+                                                           <td>Your rating</td>
+
                                                         </thead>
 
                                                      <% if(delivered != '' ){ %>
                                                        <tbody>
+                                                        
                                                             <% delivered.forEach((item,index) => { %>
-                                                                <tr>
+                                                                <% if(!item.ratedBefore ){ %>
+                                                                <tr id="tr<%= index  %>">
                                                             <td>
-
-                                                                <%= item.productName  %>
+                                                                <span>Name :<%= item.productName  %></span>
+                                                                <br>
+<span> <img style="height: 50px; width: 50px;" src="/<%= item.productId.images[0]  %>" alt="">
+</span>
+                                                              
+                                                              
                                                             </td>
+                                                            <td hidden>  <input id="orderIdTarget<%= index  %>" type="" value="<%= item._id  %>" hidden></td>
+                                                          
                                                             <td>
+                                                                <% if(item.rated && item.rated === true && item.review){ %>
+                                                                <input type="text" value="<%= item.review  %>" id="review<%= index  %>">
+                                                                <% }else{ %>
                                                                 <input type="text" value="" id="review<%= index  %>">
+                                                                <% } %>
                                                             </td>
-                                                            <td>
-                                                                <% if(rated !== ''){ %>
+                                                        
+
+                                                                <% if (item.rated && item.rated == true && item.rating) { %>
+                                                                    <td>
                                                                     <div class="rating" id="star<%= index %>">
                                                                         <% for (let i = 1; i <= 5; i++) { %>
-                                                                            <% if (i <= rating) { %>
-                                                                              
+                                                                            <% if (i <= parseInt(item.rating)) { %>
                                                                                 <span class="star" style="color: gold;" data-value="<%= i %>">&#9733;</span>
                                                                             <% } else { %>
-                                                                              
-                                                                                <span class="star" style="color: gray;" onclick="rate('<%= i %>', '<%= index %>')" data-value="<%= i %>">&#9733;</span>
+                                                                                <span class="star" style="color: gray;" onclick="" data-value="<%= i %>">&#9733;</span>
                                                                             <% } %>
                                                                         <% } %>
                                                                     </div>
-                                                                    
+                                                                </td>
+                                                                <% } else { %>
+
+                                                              
+                                                                    <td>
                                                                  
                                                                     
 
-                                                                  </div>
-                                                                  <% } else { %>
+                                                                
                                                                     <div class="rating" id="star<%= index  %>">
                                                                         <span class="star" onclick="rate(1,'<%= index %>')" id="star1" data-value="1">&#9733;</span>
                                                                         <span class="star" onclick="rate(2,'<%= index %>')" id="star2" data-value="2">&#9733;</span>
@@ -279,23 +296,30 @@
                                                                         <span class="star" onclick="rate(4,'<%= index %>')" id="star4" data-value="4">&#9733;</span>
                                                                         <span class="star" onclick="rate(5,'<%= index %>')" id="star5" data-value="5">&#9733;</span>
                                                                       </div>
-                                                                      <% } %>
+                                                                   <% } %>
+                                                                </td>
+                                                                      
                                                                   
-                                                            </td>
+                                                            
                                                            <td>
+                                                            <%= item.rating  %>/5
                                                            
-                                                            <input type="text" value="<%= (item.productId && item.productId._id) ? item.productId._id.toString() : '' %>" name="" id="productid<%= index %>">
+                                                            <input hidden type="text" value="<%= (item.productId && item.productId._id) ? item.productId._id.toString() : '' %>" name="" id="productid<%= index %>">
 
 
                                                             
                                                          
                                                                                                          </td> 
+                                                                                                       
                                                           
                                                         </tr>
+                                                        <% } %>
                                                         
                                                             <% }) %>
                                                         </tbody>
                                                         </table>
+
+                                                     
                                                         
                                                         <% } %>
                                                     </div>
@@ -309,6 +333,7 @@ async function rate(a, i) {
     let stars = document.querySelectorAll(`#star${i} .star`);
     let review = document.getElementById(`review${i}`).value
     let productid = document.getElementById(`productid${i}`).value
+    let orderId = document.getElementById(`orderIdTarget${i}`).value
     let rating = a
     stars.forEach((star, index) => {
         if (index < a) {
@@ -327,13 +352,19 @@ if(review == '')
         });
 }else {
    
-    const response = await fetch(`/user/rateProduct?rating=${rating}&review=${review}&productid=${productid}`, {
+    const response = await fetch(`/user/rateProduct?rating=${rating}&review=${review}&productid=${productid}&orderId=${orderId}`, {
         method: 'GET',
        
     })
    if(!response.ok)
    {
-    throw new Error('response not ok')
+    Swal.fire({
+            title: 'Oops!',
+            text: 'You have already posted a review for this product!',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        });
+        document.getElementById(`tr${i}`).style.display = 'none'
    }
    const responseData = await response.json()
    console.log('response success')

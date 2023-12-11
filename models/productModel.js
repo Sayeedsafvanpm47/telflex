@@ -91,18 +91,20 @@ let productSchema = new mongoose.Schema({
 	features : {
 		type : String
 	},
-	rating : {
-
-		type : String
-
-	},
+	rating : [{
+		review : String,
+		rating : Number,
+		userId :{ type: mongoose.Schema.Types.ObjectId,
+		ref: 'USER'
+		},
+		reviewedOn :{type:Date,default : Date.now()}
+		
+	}],
 	rated : {
 		type : Boolean,
 		default : false
 	},
-	review : {
-		type : String
-	}
+	
 });
 
 module.exports = mongoose.model("products", productSchema);

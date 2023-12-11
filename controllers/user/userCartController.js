@@ -332,6 +332,30 @@ if (products) {
             console.error(error);
             return res.status(500).json({ error: 'Internal server error' });
         }
+    },
+    userLastStock : async (req,res)=>{
+        try {
+            const {stock,_id} = req.query
+            console.log(stock)
+            console.log(id)
+            const stockUpdate = await cartModel.findOne({userId:req.session.userId})
+            let changeStock = stockUpdate.products.find(item => item.single_id.toString() == _id)
+            if(changeStock)
+            {
+                changeStock.lastStock = stock
+                console.log('sheryay myre')
+                await changeStock.save()
+            }
+            else
+            {
+                console.log('product not found')
+            }
+            
+
+                } 
+                catch (error) {
+            console.log(error)
+        }
     }
       
 }

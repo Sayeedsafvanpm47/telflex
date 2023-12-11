@@ -1,6 +1,7 @@
 const userModel = require('../../models/userModel')
 const productModel = require('../../models/productModel')
 const categoryModel = require('../../models/categoryModel')
+const { USER } = require('../../utils/constants/schemaName');
 
 module.exports = {
 
@@ -316,11 +317,41 @@ numberOfDocs = req.session.pagination
                       {
                         userlogged = true
                       }
-
-                     
                       
-                      const products = await productModel.findById(_id).populate({path:'category',model:'categories',select:'_id categoryName published'})
+                      console.log(_id)
+
+                     let fivestar = 0
+                     let fourstar = 0
+                     let threestar = 0
+                     let twostar = 0
+                     let onestar = 0
+                      
+                      const products = await productModel.findById(_id).populate({path:'category',model:'categories',select:'_id categoryName published'}).populate({path:'rating.userId',model:USER,select:'firstname'})
                       const related = products.category
+                      const sum = products.rating.reduce((acc, item) => {
+                        if (item.rating === 5) fivestar++;
+                        else if (item.rating === 4) fourstar++;
+                        else if (item.rating === 3) threestar++;
+                        else if (item.rating === 2) twostar++;
+                        else onestar++;
+                      
+                        return acc + item.rating;
+                      }, 0);
+                      
+                      const overallrating = sum / products.rating.length;
+                      
+                      console.log('Overall rating:', overallrating);
+                      console.log('Five Stars:', fivestar);
+                      console.log('Four Stars:', fourstar);
+                      console.log('Three Stars:', threestar);
+                      console.log('Two Stars:', twostar);
+                      console.log('One Star:', onestar);
+                  
+                    
+                      
+                      
+                     
+
 
                     //   const lastStock = await cartModel.findOne({userId:req.session.userId}) || 50
                     //  let productStock = lastStock.products.find( stock => stock.product_id.toString() == _id)
@@ -331,19 +362,19 @@ numberOfDocs = req.session.pagination
                       if(!req.session.addToCartError){
                       if(products){
                      
-                      res.render('user/user/productdetails',{products,category,relatedProducts,errors,userlogged})
+                      res.render('user/user/productdetails',{products,category,relatedProducts,errors,userlogged,overallrating,fivestar,fourstar,threestar,twostar,onestar})
                       }
                       else
                       {
                        errors = 'Unable to fetch the data!'
-                       res.render('user/user/productdetails',{products,category,relatedProducts,errors,userlogged})
+                       res.render('user/user/productdetails',{products,category,relatedProducts,errors,userlogged,overallrating,fivestar,fourstar,threestar,twostar,onestar})
                       }
                     }else
                     {
                       const errors = 'Failed To add Item to Cart'
                       
                       delete req.session.addToCartError
-                      res.render('user/user/productdetails', { products, category, relatedProducts, errors ,userlogged});
+                      res.render('user/user/productdetails', { products, category, relatedProducts, errors ,userlogged,overallrating,fivestar,fourstar,threestar,twostar,onestar});
                       
 
                     }

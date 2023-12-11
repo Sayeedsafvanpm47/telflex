@@ -40,7 +40,21 @@ let orderSchema = new mongoose.Schema({
 				type:String,
 				default:null
 			},
-			returnExpiry : Date
+			returnExpiry : Date,
+			rated : {
+				type : Boolean,
+				default : false
+			},
+			rating : {
+				type : Number
+			},
+			review : {
+				type : String
+			},
+			ratedBefore : {
+				type : Boolean,
+				default : false
+			}
 		}
 	],
 	orderId: { 

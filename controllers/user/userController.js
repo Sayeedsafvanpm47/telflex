@@ -12,6 +12,7 @@ const otpGenerator = require("../../utils/otpGenerator");
 const sendOtp = require("../../utils/generateAndSendOtp");
 const mongoose = require('mongoose')
 const {checkReturnExpiry} = require('../../helpers/cronJob')
+const { USER } = require('../../utils/constants/schemaName');
 
 
 module.exports = {
@@ -537,16 +538,76 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 	},
 	rateProduct : async (req,res)=>{
 		try {
-			const {rating,review,productid} = req.query
+			const {rating,review,productid,orderId} = req.query
 			console.log(rating)
 			console.log(productid)
 			console.log(review)
-			const product = await productModel.findOne({_id:productid})
+			let productExists = false
+
+			const existingProduct = await productModel.findOne({
+				_id: productid,
+				'rating.userId': req.session.userId 
+			      });
+			  
+		        
+			      if (existingProduct) {
+				console.log('Review already exists for this product. Not adding it again.');
+
+				productExists = true
+				const orders = await orderModel.find({ userId: req.session.userId });
+
+
+				for (const order of orders) {
+					const orderFound = order.items.find(item => item._id.toString() === orderId);
+					if (orderFound) {
+					    orderFound.ratedBefore = true;
+					    await order.save(); // Save the parent document to persist changes in the subdocument
+					    console.log('Order found and updated:', orderFound);
+					}
+				      }
+				
+				return res.status(400).json({ error: 'Review already exists for this product' });
+			      }
+		        
+
+
+
+
+			const product = await productModel.findOne({_id:productid}).populate({
+				path:'userId',
+				model : USER,
+				select : 'firstname'
+			})
 			product.rated = 'true'
-			product.rating = rating
-			product.review = review
+			product.rating.push({
+				review : review,
+				rating : rating,
+				userId : req.session.userId
+			})
 			await product.save()
+			const orders = await orderModel.find({ userId: req.session.userId });
+
+
+orders.forEach(async (order) => {
+    const orderFound = order.items.find(item => item._id.toString() === orderId);
+    if (orderFound) {
+        orderFound.review = review;
+        orderFound.rating = rating;
+        orderFound.rated = true;
+     
+        await order.save(); 
+        console.log('Order found and updated:', orderFound);
+    }
+   
+    else {
+        console.log('Order not found');
+    }
+   
+});
+
+
 			console.log(product)
+
 		} catch (error) {
 			
 		}
@@ -557,14 +618,16 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 			const userId = req.session.userId;
 			const users = await userModel.findById(userId);
 			const product = await productModel.find({})
-			let rated = ''
+		let rated = []
 			const orders = await orderModel.find({ userId }).sort({orderDate:-1}).populate({
-				
+			
 				path: 'items.productId',
             model: 'products',
             select: 'images productName size productDiscount',
 			})
+			
 
+			
 	
 			await checkReturnExpiry(orders);
 			const refferal = await userModel.findOne({_id:userId},{refferalCode : 1})
@@ -572,25 +635,29 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 			const code = refferal.refferalCode
 			console.log(code)
 			let delivered = []
+			
 			for (let i = 0; i < orders.length; i++) {
 				for (let j = 0; j < orders[i].items.length; j++) {
 				  if (orders[i].items[j].status === 'Delivered') {
 				    delivered.push(orders[i].items[j]);
+				   
 				  }
 				}
 			        }
 
 			        console.log('this is delivered:');
 console.log(delivered);
+
+
 			
 		        
       
 	        
 	        
-			console.log(`This is orders :  ${orders}`)
+			// console.log(`This is orders :  ${orders}`)
 			
 		  
-			res.render('user/user/account', { users, orders,code,delivered,rated }) || ''
+			res.render('user/user/account', { users, orders,code,delivered }) || ''
 		  
 			
 		      } catch (error) {

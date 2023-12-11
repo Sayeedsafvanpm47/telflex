@@ -1,6 +1,7 @@
 const productModel = require("../../models/productModel");
 const categoryModel = require("../../models/categoryModel");
 const imageController = require('../../controllers/imageController')
+const cartModel = require('../../models/cartModel')
 
 
 
@@ -183,6 +184,9 @@ if(!productname || !features || !featured || !tags || !model ||  !description ||
 			if (!result) {
 				return res.status(404).send("Product not found");
 			}
+
+
+
 
 			res.redirect("/admin/viewProducts");
 		}
