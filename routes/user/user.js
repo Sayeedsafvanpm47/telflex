@@ -51,7 +51,8 @@ router.get('/home',controller.homepage)
 router.get('/about',controller.getAbout)
 router.get('/dealer',controller.getDealers)
 router.get('/contact',controller.getContact)
-router.get('/updateLastStock',cartController.userLastStock)
+// router.get('/updateLastStock',cartController.userLastStock)
+router.get('updateLastStock',cartController.updateLastStock)
 
 
 router.get('/',productController.productGridView)

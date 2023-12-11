@@ -140,9 +140,9 @@
                                              
                                                     <% if(!userlogged){ %>
 
-                                             <br><span>Stock:</span>     <span class="save-price font-md color3 ml-15" id=""><%= products.size[0].stock %></span>
+                                             <br><span>Stock:</span>     <span class="save-price font-md color3 ml-15" id="stockView2"><%= products.size[0].stock %></span>
                                           <% }else{ %>
-                                            <br><span>Stock:</span>     <span class="save-price font-md color3 ml-15" id="stockView2"><%= products.size[0].stock %></span>
+                                            <br><span>Stock:</span>     <span class="save-price font-md color3 ml-15" id="stockView2"><%= products.size[0].lastStock %></span>
                                             <% } %>
                                             <input type="text" id="productTarget" name="productTarget" value="<%= products.size[0]._id %>" hidden>
                                             <% break %>

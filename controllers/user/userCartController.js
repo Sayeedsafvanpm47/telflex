@@ -333,29 +333,39 @@ if (products) {
             return res.status(500).json({ error: 'Internal server error' });
         }
     },
-    userLastStock : async (req,res)=>{
-        try {
-            const {stock,_id} = req.query
-            console.log(stock)
-            console.log(id)
-            const stockUpdate = await cartModel.findOne({userId:req.session.userId})
-            let changeStock = stockUpdate.products.find(item => item.single_id.toString() == _id)
-            if(changeStock)
-            {
-                changeStock.lastStock = stock
-                console.log('sheryay myre')
-                await changeStock.save()
-            }
-            else
-            {
-                console.log('product not found')
-            }
+    // userLastStock : async (req,res)=>{
+    //     try {
+    //         const {stock,_id} = req.query
+    //         console.log(stock)
+    //         console.log(id)
+    //         const stockUpdate = await cartModel.findOne({userId:req.session.userId})
+    //         let changeStock = stockUpdate.products.find(item => item.single_id.toString() == _id)
+    //         if(changeStock)
+    //         {
+    //             changeStock.lastStock = stock
+    //             console.log('sheryay myre')
+    //             await changeStock.save()
+    //         }
+    //         else
+    //         {
+    //             console.log('product not found')
+    //         }
             
 
-                } 
-                catch (error) {
-            console.log(error)
-        }
+    //             } 
+    //             catch (error) {
+    //         console.log(error)
+    //     }
+    // }
+    updateLastStock : async (req,res)=>{
+        const {id,lastStock} = req.query
+//         console.log('this is the id')
+//         console.log(id)
+//         console.log('last stock')
+//         console.log(lastStock)
+// console.log('end')
+// didnt used this
+
     }
       
 }

@@ -64,7 +64,7 @@
                                                <script>
 
                                                 
-                                                    function increase(productId,i) {
+                                                   async function increase(productId,i) {
                                                         var target = document.getElementById('quantity' + productId);
                                                         var newQuantity = document.getElementById('newQuantity' + productId)
                                                         target.value = parseInt(target.value) + 1;
@@ -72,6 +72,7 @@
 
                                                         let checkStock = parseInt(document.getElementById(`laststock${i}`).value)
                                                         stockChange.value = parseInt(checkStock) - 1
+                                                        let lastStock = stockChange.value
                                                         if(stockChange <=0)
                                                         {
                                                             
@@ -84,20 +85,23 @@
                                                             document.getElementById(`inc_btn${i}`).style.display = 'none'
                                                             document.getElementById(`stockAlert${i}`).innerHTML = 'Sorry, Stock out'
                                                         }
-                                                       
+
+                                                    
                                                         calc(productId,i); 
                                                         
                                                         newQuantity.innerHTML = target.value
                                                     }
                                                 
-                                                    function decrease(productId,i) {
+                                                   async function decrease(productId,i) {
                                                         var target = document.getElementById('quantity' + productId);
                                                         if (parseInt(target.value) > 1) {
                                                             target.value = parseInt(target.value) - 1;
                                                             var newQuantity = document.getElementById('newQuantity' + productId)
                                                             let checkStock = document.getElementById(`laststock${i}`)
                                                             checkStock.value = parseInt(checkStock.value) + 1
+                                                            let lastStock = checkStock.value
                                                         newQuantity.innerHTML = target.value
+                                                     
                                                             calc(productId,i); 
                                                         }
                                                     }
