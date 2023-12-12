@@ -1,58 +1,7 @@
 ﻿<%- include('partials/head') %>
 <body>
     <%- include('partials/header') %>
-    <div class="mobile-header-active mobile-header-wrapper-style">
-        <div class="mobile-header-wrapper-inner">
-            <div class="mobile-header-top">
-                <div class="mobile-header-logo">
-                    <a href="index.html"><img src="/user/imgs/theme/logo.svg" alt="logo"></a>
-                </div>
-                <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
-                    <button class="close-style search-close">
-                        <i class="icon-top"></i>
-                        <i class="icon-bottom"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="mobile-header-content-area">
-                <div class="mobile-search search-style-3 mobile-header-border">
-                    <form action="#">
-                        <input type="text" placeholder="Search for items…">
-                        <button type="submit"><i class="fi-rs-search"></i></button>
-                    </form>
-                </div>
-                <div class="mobile-menu-wrap mobile-header-border">
-                    <div class="main-categori-wrap mobile-header-border">
-                        <a class="categori-button-active-2" href="#">
-                            <span class="fi-rs-apps"></span> Browse Categories
-                        </a>
-                     
-                    </div>
-                    <!-- mobile menu start -->
-                    <%- include('partials/navlogin') %>
-                </div>
-                <div class="mobile-header-info-wrap mobile-header-border">
-                    <div class="single-mobile-header-info mt-30">
-                        <a  href="page-contact.html"> Our location </a>
-                    </div>
-                    <div class="single-mobile-header-info">
-                        <a href="page-login-register.html">Log In / Sign Up </a>
-                    </div>
-                    <div class="single-mobile-header-info">
-                        <a href="#">(+01) - 2345 - 6789 </a>
-                    </div>
-                </div>
-                <div class="mobile-social-icon">
-                    <h5 class="mb-15 text-grey-4">Follow Us</h5>
-                    <a href="#"><img src="/user/imgs/theme/icons/icon-facebook.svg" alt=""></a>
-                    <a href="#"><img src="/user/imgs/theme/icons/icon-twitter.svg" alt=""></a>
-                    <a href="#"><img src="/user/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-                    <a href="#"><img src="/user/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-                    <a href="#"><img src="/user/imgs/theme/icons/icon-youtube.svg" alt=""></a>
-                </div>
-            </div>
-        </div>
-    </div>
+  
   
     <% if (typeof(errors) !== 'undefined' && errors.length > 0) { %>
         <div id="error-message" class="alert alert-danger">
@@ -68,6 +17,7 @@
         <div class="container d-flex justify-content-center mt-5 mb-5">
        
                         <div class="col-lg-5">
+                            <div><a class="text-dark" href="/user/logintemp"><i class="fa-solid fa-backward"></i> Go back</a></div>
                             <div class="login_wrap widget-taber-content p-30 background-white border-radius-10 mb-md-5 mb-lg-0 mb-sm-5">
                                 <div class="padding_eight_all bg-white">
                                     <div class="heading_s1">
@@ -76,17 +26,17 @@
                                     <form method="post" action="/user/updatePass">
                                         <div class="form-group">
                                             <input type="password" name="password" placeholder="Password">
-   <input type="password" name="chkpassword" placeholder="Confirm Password">
+   <input class="mt-20" type="password" name="chkpassword" placeholder="Confirm Password">
   <input type="hidden" name="email" value="<%=email%>">
                                            
                                         </div>
                                         
                                     
-                                            <a class="text-muted" href="/user/logintemp">Go back</a>
+                                            
                                            
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login">Submit</button>
+                                            <button  type="submit"  style="background-color: black; color: whitesmoke;" class="btn btn-fill-out btn-block hover-up" name="login">Submit</button>
                                         </div>
                                     </form>
                                 </div>
@@ -97,44 +47,9 @@
                        
     <%- include('partials/footerlogin') %>
     <!-- Preloader Start -->
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="text-center">
-                    <h5 class="mb-5">Now Loading</h5>
-                    <div class="loader">
-                        <div class="bar bar1"></div>
-                        <div class="bar bar2"></div>
-                        <div class="bar bar3"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="/scripts/hideerror.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Vendor JS-->
-    <script src="/user/js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="/user/js/vendor/jquery-3.6.0.min.js"></script>
-    <script src="/user/js/vendor/jquery-migrate-3.3.0.min.js"></script>
-    <script src="/user/js/vendor/bootstrap.bundle.min.js"></script>
-    <script src="/user/js/plugins/slick.js"></script>
-    <script src="/user/js/plugins/jquery.syotimer.min.js"></script>
-    <script src="/user/js/plugins/wow.js"></script>
-    <script src="/user/js/plugins/jquery-ui.js"></script>
-    <script src="/user/js/plugins/perfect-scrollbar.js"></script>
-    <script src="/user/js/plugins/magnific-popup.js"></script>
-    <script src="/user/js/plugins/select2.min.js"></script>
-    <script src="/user/js/plugins/waypoints.js"></script>
-    <script src="/user/js/plugins/counterup.js"></script>
-    <script src="/user/js/plugins/jquery.countdown.min.js"></script>
-    <script src="/user/js/plugins/images-loaded.js"></script>
-    <script src="/user/js/plugins/isotope.js"></script>
-    <script src="/user/js/plugins/scrollup.js"></script>
-    <script src="/user/js/plugins/jquery.vticker-min.js"></script>
-    <script src="/user/js/plugins/jquery.theia.sticky.js"></script>
-    <!-- Template  JS -->
-    <script src="/user/js/maind134.js?v=3.4"></script>
+  
+  
+        <%- include('partials/mainScripts') %>
 </body>
 
 

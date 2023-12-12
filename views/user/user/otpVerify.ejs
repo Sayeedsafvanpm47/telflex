@@ -76,7 +76,7 @@
                                     </div>
                                     <form method="post" action="/user/verifyOtp">
                                         <div class="form-group">
-                                            <input type="text" name="enteredOTP" placeholder="Enter OTP" required>
+                                            <input type="number" name="enteredOTP" placeholder="Enter OTP" required>
                                             <input type="hidden" name="email" value="<%= email %>">
                                             <span>Otp expires in : </span>  <span id="timer">120</span>s
                                            

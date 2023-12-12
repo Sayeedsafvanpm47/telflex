@@ -322,7 +322,7 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 
 			res.render('user/user/otpVerify',{errors,email:email})
 		}
-		if (user.otp === enteredOTP) {
+		if (user.otp == enteredOTP) {
 			user.otp = null;
 			user.otpExpires = null;
 			user.otpAttempts = 0;
@@ -343,11 +343,13 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 
 				})
 				await refferal.save()
+				delete req.session.loginOk
 				await res.redirect("/user/shop");
 			}
 			else if (req.session.forgotOk) {
 				req.session.email = email
 				req.session.createPass = true
+				delete req.session.forgotOk
 
 				await res.redirect('/user/showCreatePass')
 			}
@@ -450,6 +452,7 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 		req.session.isForgot = true;
 		req.session.email = email
 		// res.render("user/user/otpVerify", { email: email });
+		console.log('user forgot the pass')
 		res.redirect('/user/showOtp')
 		}
 			
@@ -468,7 +471,7 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 
 				const email = req.session.email;
 				delete req.session.isForgot;
-				delete req.session.email;
+				
 				req.session.forgotOk = true
 			    
 
@@ -478,7 +481,7 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 			else if(req.session.isLogin){
 				const email = req.session.email
 				delete req.session.isLogin
-				delete req.session.email
+				
 				req.session.loginOk = true
 				res.render("user/user/otpVerify", { email: email });
 
