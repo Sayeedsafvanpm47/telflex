@@ -1,13 +1,13 @@
 
 <header class="header-area header-style-5" >
-          <div class="header-top header-top-ptb-1 d-none d-lg-block" >
+          <div style="background-color: rgba(7, 7, 8, 0.895); color: whitesmoke;" class="header-top header-top-ptb-1 d-none d-lg-block" >
               <div class="container" >
                   <div class="row align-items-center" >
                       <div class="col-xl-3 col-lg-4">
                           <div class="header-info" >
                               <ul>
-                                  <li><i class="fi-rs-smartphone"></i> <a href="#">+91 7025053170</a></li>
-                                  <li><i class="fi-rs-marker"></i><a  href="page-contact.html">Our location</a></li>
+                                  <li><i class="fi-rs-smartphone text-white"></i> <a class="text-white" href="#">+91 7025053170</a></li>
+                                  <li><i class="fi-rs-marker text-white"></i><a class="text-white"  href="page-contact.html">Our location</a></li>
                               </ul>
                           </div>
                       </div>
@@ -15,9 +15,9 @@
                           <div class="text-center">
                               <div id="news-flash" class="d-inline-block">
                                   <ul>
-                                      <li>Get great furnitures up to 50% off <a href="shop-grid-right.html">View details</a></li>
-                                      <li>Supper Value Deals - Save more with coupons</li>
-                                      <li>Comfy luxury mattresses at mindblowing discounts <a href="shop-grid-right.html">Shop now</a></li>
+                                      <li>Get great furnitures of different models <a style="color: rgb(186, 5, 5);" href="/"> View details</a></li>
+                                      <li>Supper Value Deals - Save more with coupons <a style="color: rgb(186, 5, 5);" href="/"> Grab Offers</a></li>
+                                      <li>Comfy luxury mattresses at mindblowing discounts <a style="color: rgb(186, 5, 5);;" href="/"> Shop now</a></li>
                                   </ul>
                               </div>
                           </div>
@@ -25,22 +25,23 @@
                       <div class="col-xl-3 col-lg-4">
                         <div class="header-info header-info-right">
                           <div class="dropdown">
-                            <a href="#" role="button" id="loginDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                              <i class="fi-rs-user"></i> User 
+                            <a style="color: rgb(255, 249, 249);" href="#" role="button" id="loginDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i style="color: rgb(255, 255, 255);" class="fi-rs-user"></i> User 
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="loginDropdown">
-                              <!-- Dropdown items for logged-in user -->
+                            <ul style="background-color: rgba(7, 7, 8, 0.895);" class="dropdown-menu" aria-labelledby="loginDropdown">
+                        
                               <% if (loggedIn) { %>
-                                <li><a class="dropdown-item" href="/user/account">Profile</a></li>
-                                <li><a class="dropdown-item" href="/user/showwishlist">Wishlist</a></li>
+                                <li><a class="dropdown-item text-white" href="/user/account"><i class="fa-solid fa-user"></i>Profile</a></li>
+                                <li><a class="dropdown-item text-white" href="/user/showwishlist"><i class="fa-solid fa-heart"></i>Wishlist</a></li>
+                                <li><a class="dropdown-item text-white" href="/user/showCart"><i class="fa-solid fa-cart-shopping"></i>Cart</a></li>
                               
-                                <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
+                                <li><a class="dropdown-item text-white" href="/user/logout"><i class="fa fa-sign-out"></i>Logout</a></li>
                               <% } else { %>
-                                <!-- Dropdown items for logged-out user -->
-                                <li><a class="dropdown-item" href="/user/shop">Login</a></li>
-                                <li><a class="dropdown-item" href="/user/getsignup">Register</a></li>
+                             
+                                <li><a class="dropdown-item text-white" href="/user/shop"><i class="fa-solid fa-user"></i>Login</a></li>
+                                <li><a class="dropdown-item text-white" href="/user/getsignup"><i class="fa fa-sign-in" aria-hidden="true"></i>Register</a></li>
                               <% } %>
-                              <!-- Additional dropdown items can be added here -->
+                           
                             </ul>
                           </div>
                         </div>
@@ -78,14 +79,11 @@
                     
                     
                       <div class="header-action-right">
-                          <div class="search-style-2">
+                          <div class="search-style-2" style="width: 30rem; border-radius: 10px; 
+                          box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);">
                               <form action="/user/searchProducts" method="post">
-                                  <select class="select-active">
-                                      <option>Search in</option>
-                                      <option>Mattress</option>
-                                      
-                                  </select>
-                                  <input type="text" placeholder="Search for items.." name="searchTerm">
+                                
+                                  <input type="text"  placeholder="Search for items.." name="searchTerm">
                               </form>
                           </div>
                           <div class="header-action-2">
@@ -118,6 +116,8 @@
                                       <span class="burger-icon-bottom"></span>
                                   </div>
                               </div>
+
+                             
                           </div>
                       </div>
                   </div>
@@ -147,7 +147,7 @@
                 </div>
                 <div class="mobile-menu-wrap mobile-header-border">
                   
-                    <!-- mobile menu start -->
+                
                     <nav>
                         <ul class="mobile-menu">
                             <li class="menu-item-has-children"><span class="menu-expand"></span><a href="/user/home">Home</a>
@@ -168,30 +168,35 @@
                            
                         </ul>
                     </nav>
-                    <!-- mobile menu end -->
+               
                 </div>
                 <div class="mobile-header-info-wrap mobile-header-border">
-                    <div class="single-mobile-header-info mt-30">
-                        <a  href="page-contact.html"> Our location </a>
+                    <div class="">
+                        <a  class="text-dark" href="page-contact.html"><i class="fa-solid fa-location-dot"></i> Our location </a>
                     </div>
-                    <div class="single-mobile-header-info">
-                        <ul class="dropdown-menu" aria-labelledby="loginDropdown">
-                            <!-- Dropdown items for logged-in user -->
+                   
+                        <ul class="" aria-labelledby="">
+                        
                             <% if (loggedIn) { %>
-                              <li><a class="dropdown-item" href="/user/account">Profile</a></li>
-                              <li><a class="dropdown-item" href="/user/showwishlist">Wishlist</a></li>
+                                <div>  <li><a class="text-dark" href="/user/account"><i class="fa-solid fa-user"></i>Profile</a></li></div>
+                                <div>  <li><a class="text-dark" href="/user/showwishlist"><i class="fa-solid fa-heart"></i>Wishlist</a></li></div>
+                            <div> <li><a class="text-dark" href="/user/logout"><i class="fa fa-sign-out"></i>Logout</a></li></div>
                             
-                              <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
+                            
+                             
                             <% } else { %>
-                              <!-- Dropdown items for logged-out user -->
-                              <li><a class="dropdown-item" href="/user/shop">Login</a></li>
-                              <li><a class="dropdown-item" href="/user/getsignup">Register</a></li>
+                                <div><li><a class="text-dark" href="/user/shop"><i class="fa-solid fa-user"></i>Login</a></li></div>
+                                <div><li><a class="text-dark" href="/user/getsignup"><i class="fa fa-sign-in" aria-hidden="true"></i>
+                                    Register</a></li></div>
+                           
+                              
+                              
                             <% } %>
-                            <!-- Additional dropdown items can be added here -->
+                           
                           </ul>
-                    </div>
+                    
                     <div class="single-mobile-header-info">
-                        <a href="#"> +91 7025053170 </a>
+                        <a href="#" class="text-dark"><i class="fa-solid fa-phone"></i> +91 7025053170 </a>
                     </div>
                 </div>
                 <div class="mobile-social-icon">
@@ -199,35 +204,13 @@
                     <a href="#"><img src="/user/imgs/theme/icons/icon-facebook.svg" alt=""></a>
                     <a href="#"><img src="/user/imgs/theme/icons/icon-twitter.svg" alt=""></a>
                     <a href="#"><img src="/user/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-                    <a href="#"><img src="/user/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-                    <a href="#"><img src="/user/imgs/theme/icons/icon-youtube.svg" alt=""></a>
                 </div>
             </div>
         </div>
     </div>
+    <script src="/user/js/activelinkheaderpage.js"></script>
 
-      <script>
-        function setUnderlineForActiveLink() {
-            const links = document.querySelectorAll('.main-menu ul li a');
-            const currentUrl = window.location.pathname;
+
     
-            links.forEach(function(link) {
-                const linkUrl = link.getAttribute('href');
-                if (currentUrl === linkUrl) {
-                    link.classList.add('active-link'); 
-                }
-            });
-        }
     
-      
-        window.addEventListener('load', setUnderlineForActiveLink);
-    </script>
-    
-    <style>
-       
-        .main-menu ul li a.active-link {
-            text-decoration: underline;
-            color: rgba(7, 59, 136, 0.889);
-        }
-    </style>
     
