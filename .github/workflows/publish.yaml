@@ -3,7 +3,7 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - master
+      - aws
 
 jobs:
   deploy:
@@ -20,5 +20,5 @@ jobs:
           sudo docker compose down 
           cd telflex
           git fetch
-          git reset --hard origin/master
+          git reset --hard origin/aws
           sudo docker compose up --build -d '
