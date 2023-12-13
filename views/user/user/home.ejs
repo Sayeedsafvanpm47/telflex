@@ -12,22 +12,22 @@
                 <% if(banners){ %>
                 <% for(let i=0; i<banners.images.length; i++){ %>
                 <div class="single-hero-slider single-animation-wrap">
-                    <div class="container" style="background-color: rgba(169, 23, 23, 0.921); border-radius: 10px; box-shadow: inset;">
+                    <div class="container" style="background-color: rgba(0, 0, 0, 0.921); border-radius: 10px; box-shadow: inset;">
                       
                         <div class="row align-items-center slider-animated-1">
                         
                             <div class="col-lg-5 col-md-6">
                              
-                                <div class="hero-slider-content-2">
+                                <div class="hero-slider-content-2" >
                                     <h4 class="animated"></h4>
                                   
                                     <h2 style="color: rgb(255, 255, 255);" class="animated fw-900"><%= banners.bannerTitle[i]  %></h2>
                                    
                                    
-                                    <h3 class="animated fw-900 text-brand"><%= banners.bannerPhrase[i]  %></h3>
+                                    <h3 style="color: rgb(174, 9, 9);" class="animated fw-900"><%= banners.bannerPhrase[i]  %></h3>
                                    
                                    
-                                    <h5 class="animated"><%= banners.bannerSubText[i]  %></h5>
+                                    <h5 style="color: white;" class="animated"><%= banners.bannerSubText[i]  %></h5>
                                  
                                    
                                     <a class="animated btn btn-brush btn-brush-3 text-white" href="/user/"> <%= banners.bannerAction[i]  %> </a>
@@ -239,7 +239,7 @@
         </div>
         </section>
 
-        <section class="mb-50 mt-10" style="background-color: rgb(173, 7, 7);">
+        <section class="mb-50 mt-10" style="background-color: rgb(0, 0, 0);">
             <div class="container"  style="background-color: rgb(255, 255, 255);">
                 <div class="row">
                     <div class="col-12">
