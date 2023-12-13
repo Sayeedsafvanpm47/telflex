@@ -2,4 +2,57 @@
           background-color: black;
           color: whitesmoke; 
       }
-      
+/* Reset default select styles */
+.selectionshop {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    padding: 8px 16px; /* Adjust padding as needed */
+    font-size: 16px; /* Adjust font size */
+    border: red;
+    border-radius: 4px; /* Rounded corners */
+    outline: none; /* Remove default focus outline */
+    cursor: pointer;
+    color: red;
+  }
+  
+  /* Style when the select is open */
+  .selectinshop:focus {
+    border-color: #000000; /* Change border color when focused */
+  
+  }
+  
+  /* Hover effect */
+  .selectinshop:hover {
+    border-color: #000000; /* Change border color on hover */
+  }
+  
+  /* Arrow icon (you can use an image or an icon font) */
+  .selectinshop::after {
+    content: '\25BC'; /* Unicode for down arrow */
+    position: absolute;
+    top: calc(50% - 8px); /* Adjust vertically */
+    right: 10px; /* Adjust horizontally */
+    font-size: 16px; /* Adjust size */
+    pointer-events: none; /* Prevent icon from being selectable */
+  }
+  
+  .selectinshop option {
+    background-color: #090909; /* Background color */
+    color: #a60909; /* Text color */
+  
+}
+
+/* Style for when hovering over options */
+.selectinshop option:hover {
+    background-color: #1a1a1a; /* Change background color on hover */
+    color: #ff0000; /* Change text color on hover */
+}
+
+/* Style for selected option */
+.selectinshop option:checked {
+    background-color: #000000; /* Change background color of selected option */
+    color: #ffffff; /* Change text color of selected option */
+}
+  

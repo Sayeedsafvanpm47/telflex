@@ -3,14 +3,7 @@
 <body>
     <%- include('partials/header') %>
     <main class="main">
-        <div class="page-header breadcrumb-wrap">
-            <div class="container">
-                <div class="breadcrumb">
-                    <a href="index.html" rel="nofollow">Home</a>
-                    <span></span> Shop
-                </div>
-            </div>
-        </div>
+       
         <section class="mt-50 mb-50">
             <div class="container">
                 <div class="row flex-row-reverse">
@@ -21,15 +14,15 @@
                             </div>
                             <div class="sort-by-product-area">
                                 <div class="sort-by-cover mr-10">
-                                    <div class="sort-by-product-wrap">
+                                    <div class="sort-by-product-wrap"  style="background-color: black;">
                                         <div class="sort-by">
-                                            <span onclick="showSelect()"><i  class="fi-rs-apps"></i>Show:
+                                            <span style="color: white;" onclick="showSelect()"><i  class="fi-rs-apps"></i>Show:
                                             
                                            
                                             </span>
                                             <span  style="display: none;" id="paginationspan">
-                                                <select onchange="paginate()" name="pagination" id="paginationnumber" >
-                                                    <option   value=""></option>
+                                                <select class="selectionshop" style="color: rgba(196, 56, 56, 0.779); " onchange="paginate()" name="pagination" id="paginationnumber" >
+                                                    <option value="">Click To View</option>
                                                     <option value="2">2</option>
                                                     <option value="5">5</option>
                                                     <option value="10">10</option>
@@ -53,49 +46,21 @@
                                      
                                 </div>
                                
-<script>
-     let clicked = false;
-    function showSelect()
-    {
-        const select = document.getElementById('paginationspan');
 
-if (!clicked) {
-  select.style.display = 'block'; 
-} else {
-  select.style.display = 'none'; 
-}
 
-clicked = !clicked; 
-    }
-
-    function showSelect2()
-    {
-        const select = document.getElementById('sortspan');
-
-if (!clicked) {
-  select.style.display = 'block'; 
-} else {
-  select.style.display = 'none'; 
-}
-
-clicked = !clicked; 
-    }
-
-</script>
-
-                                <div class="sort-by-cover">
-                                    <div class="sort-by-product-wrap">
+                                <div class="sort-by-cover" >
+                                    <div class="sort-by-product-wrap" style="background-color: black;">
                                         <div class="sort-by">
-                                            <span onclick="showSelect2()"><i class="fi-rs-apps-sort"></i>Sort by:</span>
+                                            <span style="color: white;" onclick="showSelect2()"><i class="fi-rs-apps-sort"></i>Sort by:</span>
                                            
          
         
                                             </span>
                                             <span  style="display: none;" id="sortspan">
-                                                <select onchange="sortBy()" name="pagination" id="sortBy" >
-                                                    <option   value="">View</option>
-                                                    <option value="low">Price : Low To High</option>
-                                                    <option value="high">Price : High To Low</option>
+                                                <select class="selectionshop" style="color: rgba(196, 56, 56, 0.779);" onchange="sortBy()" name="pagination" id="sortBy" >
+                                                    <option   value="">Click To View</option>
+                                                    <option value="low">Price: Low To High</option>
+                                                    <option value="high">Price: High To Low</option>
                                                     <option value="new">Newest First</option>
                                                     <option value="old">Oldest First</option>
                                                   </select>
@@ -197,15 +162,15 @@ clicked = !clicked;
                         
 
                     </div>
-                    <div class="col-lg-3 primary-sidebar sticky-sidebar">
-                        <div class="widget-category mb-30">
-                            <h5 class="section-title style-1 mb-30 wow fadeIn animated">Category</h5>
+                    <div class="col-lg-3 primary-sidebar sticky-sidebar" style="border: 10px;">
+                        <div class="widget-category mb-30"  style="background-color: rgba(2, 2, 2, 0.967); border-radius: 20px;">
+                            <h5 class="section-title text-white style-1 mb-30 wow fadeIn animated">Category</h5>
                             <ul class="categories">
-                                <li><a href="/user/">View All</a></li>
+                                <li><a style="color: white;" href="/user/">View All</a></li>
                                 <% category.forEach(categoryItem => { %>
                                     <% if (categoryItem && categoryItem.published === true) { %>
                                         <li>
-                                            <a href="/user/sortCategory?categoryId=<%= categoryItem._id %>">
+                                            <a style="color: white;" href="/user/sortCategory?categoryId=<%= categoryItem._id %>">
                                                 <%= categoryItem.categoryName %>
                                             </a>
                                         </li>
@@ -215,15 +180,15 @@ clicked = !clicked;
                             
                         </div>
                         <!-- Fillter By Price -->
-                        <div class="sidebar-widget price_range range mb-30">
-                            <div class="widget-header position-relative mb-20 pb-10">
-                                <h5 class="widget-title mb-10">Fill by price</h5>
+                        <div class="sidebar-widget price_range range mb-30" style="background-color: rgba(14, 14, 15, 0.962); border-radius: 20px;">
+                            <div class="widget-header position-relative mb-20 pb-10" >
+                                <h5 style="color: white;" class="widget-title mb-10">Fill by price</h5>
                                 <div class="bt-1 border-color-1"></div>
                             </div>
                             <div class="price-filter">
                                 <div class="price-filter-inner">
                                     <form action="/user/sortPrice" method="POST"> 
-                                      <select name="sortingLogic">
+                                      <select class="selectionshop" style="color: rgba(196, 56, 56, 0.779);" name="sortingLogic">
                                         <option value="noprice">Select a price</option>
                                         <option value="price1">0-5000</option>
                                         <option value="price2">5001-20000</option>
@@ -235,7 +200,7 @@ clicked = !clicked;
 
 
 
-                                      <button type="submit" class="btn btn-sm btn-default"><i class="fi-rs-filter mr-5"></i> Fillter</button>
+                                      <button type="submit" style="background-color: black; color: whitesmoke;" class="btn mt-15 btn-sm btn-default"><i class="fi-rs-filter mr-5"></i> Fillter</button>
                                     </form>
                                   </div>
                                   
@@ -252,137 +217,10 @@ clicked = !clicked;
             </div>
         </section>
     </main>
-    <footer class="main">
-        <section class="newsletter p-30 text-white wow fadeIn animated">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-7 mb-md-3 mb-lg-0">
-                        <div class="row align-items-center">
-                            <div class="col flex-horizontal-center">
-                                <img class="icon-email" src="/user/imgs/theme/icons/icon-email.svg" alt="">
-                                <h4 class="font-size-20 mb-0 ml-3">Sign up to Newsletter</h4>
-                            </div>
-                            <div class="col my-4 my-md-0 des">
-                                <h5 class="font-size-15 ml-4 mb-0">...and receive <strong>$25 coupon for first shopping.</strong></h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-5">
-                        <!-- Subscribe Form -->
-                        <form class="form-subcriber d-flex wow fadeIn animated">
-                            <input type="email" class="form-control bg-white font-small" placeholder="Enter your email">
-                            <button class="btn bg-dark text-white" type="submit">Subscribe</button>
-                        </form>
-                        <!-- End Subscribe Form -->
-                    </div>
-                </div>
-            </div>
-        </section>
 
+    <%- include('partials/footerlogin') %>
+    <%- include('partials/preloader') %>
 
-
-
-        
-        <section class="section-padding footer-mid">
-            <div class="container pt-15 pb-20">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="widget-about font-md mb-md-5 mb-lg-0">
-                            <div class="logo logo-width-1 wow fadeIn animated">
-                                <a href="index.html"><img src="/user/imgs/theme/logo.svg" alt="logo"></a>
-                            </div>
-                            <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">Contact</h5>
-                            <p class="wow fadeIn animated">
-                                <strong>Address: </strong>562 Wellington Road, Street 32, San Francisco
-                            </p>
-                            <p class="wow fadeIn animated">
-                                <strong>Phone: </strong>+01 2222 365 /(+91) 01 2345 6789
-                            </p>
-                            <p class="wow fadeIn animated">
-                                <strong>Hours: </strong>10:00 - 18:00, Mon - Sat
-                            </p>
-                            <h5 class="mb-10 mt-30 fw-600 text-grey-4 wow fadeIn animated">Follow Us</h5>
-                            <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0">
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-facebook.svg" alt=""></a>
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-twitter.svg" alt=""></a>
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-youtube.svg" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3">
-                        <h5 class="widget-title wow fadeIn animated">About</h5>
-                        <ul class="footer-list wow fadeIn animated mb-sm-5 mb-md-0">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Delivery Information</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms &amp; Conditions</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Support Center</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-2  col-md-3">
-                        <h5 class="widget-title wow fadeIn animated">My Account</h5>
-                        <ul class="footer-list wow fadeIn animated">
-                            <li><a href="#">Sign In</a></li>
-                            <li><a href="#">View Cart</a></li>
-                            <li><a href="#">My Wishlist</a></li>
-                            <li><a href="#">Track My Order</a></li>
-                            <li><a href="#">Help</a></li>
-                            <li><a href="#">Order</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-4">
-                        <h5 class="widget-title wow fadeIn animated">Install App</h5>
-                        <div class="row">
-                            <div class="col-md-8 col-lg-12">
-                                <p class="wow fadeIn animated">From App Store or Google Play</p>
-                                <div class="download-app wow fadeIn animated">
-                                    <a href="#" class="hover-up mb-sm-4 mb-lg-0"><img class="active" src="/user/imgs/theme/app-store.jpg" alt=""></a>
-                                    <a href="#" class="hover-up"><img src="/user/imgs/theme/google-play.jpg" alt=""></a>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
-                                <p class="mb-20 wow fadeIn animated">Secured Payment Gateways</p>
-                                <img class="wow fadeIn animated" src="/user/imgs/theme/payment-method.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <div class="container pb-20 wow fadeIn animated">
-            <div class="row">
-                <div class="col-12 mb-20">
-                    <div class="footer-bottom"></div>
-                </div>
-                <div class="col-lg-6">
-                    <p class="float-md-left font-sm text-muted mb-0">&copy; 2022, <strong class="text-brand">Evara</strong> - HTML Ecommerce Template </p>
-                </div>
-                <div class="col-lg-6">
-                    <p class="text-lg-end text-start font-sm text-muted mb-0">
-                        Designed by <a href="http://alithemes.com/" target="_blank">Alithemes.com</a>. All rights reserved
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Preloader Start -->
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="text-center">
-                    <h5 class="mb-5">Now Loading</h5>
-                    <div class="loader">
-                        <div class="bar bar1"></div>
-                        <div class="bar bar2"></div>
-                        <div class="bar bar3"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Vendor JS-->
     <script src="/user/js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="/user/js/vendor/jquery-3.6.0.min.js"></script>
@@ -409,27 +247,7 @@ clicked = !clicked;
     <script src="/user/js/shopd134.js?v=3.4"></script>
 
     <script>
-        async function paginate() {
-          const pagination = parseInt(document.getElementById('paginationnumber').value);
-          try {
-            const response = await fetch(`/user/paginate?pagination=${pagination}`, {
-              method: 'GET'
-            });
-      
-            if (!response.ok) {
-              throw new Error('Error occurred');
-            }
-      location.reload()
-            const responseData = await response.json();
-           console.log('response ok')
-         
-            console.log(responseData);
-           
-          } catch (error) {
-            // Handle error appropriately
-            console.error(error.message);
-          }
-        }
+    
       </script>
 
 
@@ -439,26 +257,8 @@ clicked = !clicked;
                            
 
 
-<script>
-async function sortBy()
- {
-     const sort = document.getElementById('sortBy').value
+<script src="/user/js/shopgridjs/paginationselect.js">
 
-     const response = await fetch(`/user/sortBy?sort=${sort}`,{
-         method : 'GET'
-     })
-     if(!response.ok)
-     {
-         throw new Error('response not ok')
-
-     }
-     location.reload()
-     console.log('response success')
-     const responseData = await response.json()
-     console.log(responseData)
-
-
- }
 </script>
 
 </body>
