@@ -85,6 +85,7 @@ const orders = await orderModel
                         
                     );
                    
+
                     
 
                
@@ -98,7 +99,7 @@ const orders = await orderModel
                     const canceledItem = orderTarget.items.find(item => item._id.toString() === _id);
                    
                   const proId = canceledItem.productId
-                  const refundamount = canceledItem.price
+                  let refundamount = canceledItem.price
                   console.log(proId)
                   const prosize = canceledItem.size
                   const proquantity = canceledItem.quantity
@@ -115,9 +116,31 @@ const orders = await orderModel
                         { $set: { modifiedAt: new Date().toISOString() } }
                       );
                       if(refund.paymentStatus === 'Paid'){
-                    await orderModel.updateOne({_id:orderId}, {$inc: {
-                        'refundAmount': refundamount 
-                      }})
+                   
+                      if(refund.couponApplied === true)
+                      {
+                        
+                         refundamount = refund.totalAmount;
+
+  refund.items.forEach((item) => {
+    if (item.status !== 'Cancelled') {
+      item.status = 'Cancelled';
+     
+    }
+  });
+
+  refund.orderStatus = 'Cancelled';
+  await refund.save();
+                       
+
+                      }
+                      await orderModel.updateOne(
+                        { _id: orderId },
+                        {
+                           
+                            $inc: { 'refundAmount': refundamount }
+                        }
+                    )
                       }
                       console.log(`Refund Price: ${refundamount}`);
                       console.log(`Payment Status: ${refund.paymentStatus}`);

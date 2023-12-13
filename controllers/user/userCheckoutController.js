@@ -66,6 +66,8 @@ placeOrder: async (req, res) => {
     const userId = req.session.userId;
     const ordered = [];
     let total = 0;
+    // let priceEach
+    let couponDiscountAvailed
     const currentDate = new Date();
     // const returnExpiry = new Date(currentDate.getTime() + (2 * 60 * 1000));
       
@@ -90,6 +92,7 @@ console.log(payment_option)
         console.log(cart.couponCode)
         let couponName
        let applied
+      
        if(cart.couponApplied === 'true')
        {
         console.log('true')
@@ -100,6 +103,11 @@ console.log(payment_option)
             { couponCode: couponName },
             { $push: { redemptionHistory: {userId:userId,redeemedAt:new Date()} } }
           );
+          const couponTarget = await couponModel.findOne({couponCode:couponName})
+          couponDiscountAvailed = couponTarget.discount
+  
+         console.log(couponDiscountAvailed)
+  
           console.log(couponName)
           
        }
@@ -109,7 +117,9 @@ console.log(payment_option)
         couponName = null
         applied = false
        }
-
+ 
+       
+    
       
 
         if (cart && cart.products) {
@@ -117,6 +127,14 @@ console.log(payment_option)
 
             for (let i = 0; i < cart.products.length; i++) {
                 const product = cart.products[i];
+                const productTarget = await productModel.findOne({_id:product.product_id})
+                // let couponAmount
+                // let couponPricePerProduct = productTarget.size.find(item => parseInt(item.price) > parseInt(product.price))
+                // if(couponPricePerProduct)
+                // {
+                //     couponAmount = parseInt(item.price - product.price)
+                //     console.log(couponAmount)
+                // }
 
                 ordered.push({
                     productId: product.product_id,
@@ -125,8 +143,8 @@ console.log(payment_option)
                     size: product.size,
                     price: product.price,
                     mrp: product.mrp,
-                    returnExpiry : (returnExpiry).toISOString()
-                    
+                    returnExpiry : (returnExpiry).toISOString(),
+                    couponDiscount : couponDiscountAvailed                    
                 });
 
 
@@ -178,7 +196,8 @@ console.log(payment_option)
             address: address,
             orderDate : new Date(),
             couponName : couponName,
-            couponApplied : applied
+            couponApplied : applied,
+            couponDiscount : couponDiscountAvailed
 
             
             

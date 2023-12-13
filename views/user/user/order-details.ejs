@@ -169,7 +169,7 @@
                                                                 <span class="status" id="status"><%= item.status  %></span>
                                                                 
                                                             </td>
-                                                            <% if(order.couponApplied !== true){ %>
+                                                        
                                                             <% if(item.status !== 'Cancelled' && item.status !== 'Returned' && item.status !== 'Requested for cancellation'){ %>
                                                             <% if(item.status === 'Delivered' ) {%>
                                                                 <% if(item.returnExpiry !== null){ %>
@@ -232,9 +232,7 @@
                                                                     <td>Item Returned</td>
                                                                     <% } %>
                                                                     <% } %>
-                                                                    <% } else { %>
-                                                                        <td>You cannot cancel or return an item redeemed with coupon!</td>
-                                                                        <% } %>
+                                                              
 
                                                               
                                                        

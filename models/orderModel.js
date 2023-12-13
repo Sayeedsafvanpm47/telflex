@@ -54,7 +54,8 @@ let orderSchema = new mongoose.Schema({
 			ratedBefore : {
 				type : Boolean,
 				default : false
-			}
+			},
+			
 		}
 	],
 	orderId: { 
@@ -110,6 +111,9 @@ let orderSchema = new mongoose.Schema({
 		type : String,
 	
 	},
+	couponDiscount : {
+		type : Number
+	}
 	
          
 });
