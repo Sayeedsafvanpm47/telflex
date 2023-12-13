@@ -40,26 +40,40 @@ module.exports = {
                     }
           },
           productOffer : async (req,res)=>{
-                    const {newDiscount,newPrice,_id,variantId} = req.body
-                    console.log(newDiscount)
-                    console.log(newPrice)
-                    console.log(variantId)
+            try {
+              
+              const {newDiscount,newPrice,_id,variantId} = req.body
+              console.log(newDiscount)
+              console.log(newPrice)
+              console.log(variantId)
+              let updateProduct 
+              const productDiscountCheck = await productModel.findOne({_id:_id})
+              console.log(productDiscountCheck)
+              const verifyDisc = productDiscountCheck.size.find(item => parseInt(item.productDiscount) < parseInt(newDiscount))
+              console.log(verifyDisc)
 
-                    await productModel.updateOne(
-                              {
-                                _id: _id,
-                                'size._id': variantId 
-                              },
-                              {
-                                $set: {
-                                  'size.$.productDiscount': newDiscount, 
-                                  'size.$.productPrice': newPrice 
-                                }
-                              }
-                            );
+             if(verifyDisc)
+              {
+                updateProduct = true
+                verifyDisc.productDiscount = newDiscount
+                verifyDisc.productPrice = newPrice
+                await productDiscountCheck.save()
+                res.status(200).send({ message: 'Product details updated successfully.' });
+              }
+              else
+              {
+                console.log('verify disc not found')
+                res.status(400).send({ error : 'The entered discount is less than the existing discount!'});
+              }
+            } catch (error) {
+              console.log(error)
+            }
+                   
+                    
                          
                     
-    res.status(200).send({ message: 'Product details updated successfully.' });
+
+                           
                     
           },
           getCategoryOffer : async (req,res)=>{
@@ -75,27 +89,43 @@ module.exports = {
                               const { _id, discount } = req.body;
                               console.log(_id);
                               console.log(discount);
-                           
+                           let updateDiscount
     const products = await productModel.find({ category: _id });
-
-    for (let i = 0; i < products.length; i++) {
-      const product = products[i];
-      const updatedSize = product.size.map((item) => {
-     
-        return {
-          ...item,
-          productDiscount: discount,
-          productPrice: item.mrp - (item.mrp * (discount / 100))
-        };
-      });
+    const productsTarget = await productModel.findOne({ category: _id });
+    let checkData = productsTarget.size.find(item => parseInt(item.productDiscount) < parseInt(discount))
+    if (checkData) {
+      // Loop through products and update only if the product discount is less than the provided discount
+      for (let i = 0; i < products.length; i++) {
+        const product = products[i];
+        const updatedSize = product.size.map((item) => {
+          if (parseInt(item.productDiscount) < parseInt(discount)) {
+            return {
+              ...item,
+              productDiscount: discount,
+              productPrice: item.mrp - (item.mrp * (discount / 100))
+            };
+          }
+          return item; 
+        });
+    
+        product.size = updatedSize;
+        await product.save();
+      }
+    
+ 
+      await categoryModel.updateOne(
+        { _id: _id },
+        { $set: { discount: discount, offerDate: Date.now() } },
+        { upsert: true }
+      );
+    
+      res.status(200).json({ message: 'Category offer applied to relevant products.' });
+    } else {
+      res.status(400).json({ message: 'No products found with a lower discount.' });
+    }
+    
 
   
-      product.size = updatedSize;
-     await categoryModel.updateOne({_id:_id},{$set:{discount : discount,offerDate : Date.now()}},{upsert:true})
-    
-      await product.save();
-    }
-                              res.status(200).json({ message: 'Data received' });
                             } catch (error) {
                               console.log(error);
                               res.status(500).json({ error: 'Internal Server Error' });

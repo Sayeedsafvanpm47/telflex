@@ -186,6 +186,8 @@ href=
                      
       
       </section>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
       <script>
 
 function onlyNumberKey(evt) {
@@ -275,10 +277,25 @@ const variantId = document.getElementById('variantId_' + i).value
     }
 
     const responseData = await response.json();
-    window.location.assign('/admin/getProductOffers');
+    Swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: responseData.message, // Assuming responseData.message contains success message
+    }).then((result) => {
+      if (result.isConfirmed || result.isDismissed) {
+        window.location.assign('/admin/getProductOffers');
+      }
+    });
+
+   
     console.log('Request was successful:', responseData);
   } catch (error) {
   
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Please verify the enetered input again!',
+    });
     console.error('There was a problem with the fetch operation:', error);
   }
 }

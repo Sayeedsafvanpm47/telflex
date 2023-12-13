@@ -83,7 +83,8 @@
     
     </main>
     <%- include('partials/script') %>
-    <script src="/scripts/hideerror.js"></script>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
           async function categoryDiscount(categoryId,i) {
             try {
@@ -102,15 +103,31 @@
               });
         
               if (!response.ok) {
-                throw new Error('Network response was not ok!');
+                Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Please verify the inputs again!'
+    });
               }
+           
         
               const responseData = await response.json();
-              console.log(responseData)
-              console.log('Request was successful:', responseData);
-              location.reload()
+              Swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: responseData.message 
+    }).then((result) => {
+      if (result.isConfirmed || result.isDismissed) {
+        window.location.assign('/admin/getCategoryOffer');
+      }
+    });
             } catch (error) {
                     console.error('There was a problem with the fetch operation:', error);
+                    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'There was a problem with the operation!'
+    });
 
             }
           }
