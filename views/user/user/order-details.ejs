@@ -173,7 +173,9 @@
                                                             <% if(item.status !== 'Cancelled' && item.status !== 'Returned' && item.status !== 'Requested for cancellation'){ %>
                                                             <% if(item.status === 'Delivered' ) {%>
                                                                 <% if(item.returnExpiry !== null){ %>
-                                                                <td class="cancel" data-title="Cancel">
+                                                                 
+                                                             
+                                                                        <td class="cancel" data-title="Cancel">
                                                                     <button class="btn btn-danger" id="myBtn" >Return</button>
                                                                     <br>
                                                                     <span class="text-muted">Return request should  <br>
@@ -181,14 +183,15 @@
                                                                     
                                                                     <!-- <button class="btn btn-danger" style="background-color: rgba(166, 4, 4, 0.712)" onclick="returnOrder('<%= item._id %>')">Return</button> -->
                                                                 </td>
+                                                              
                                                                 <div id="myModal" class="modal">
 
                                                                     <!-- Modal content -->
                                                                     <div class="modal-content">
                                                                       <span class="close">&times;</span>
                                                                       <form>
-                                                                        <input type="text" name="cancellation" id="reasonForReturn" placeholder="Reason for cancellation">
-                                                                           <button class="btn btn-danger" onclick="returnOrder('<%= item._id %>')">Cancel</button>
+                                                                        <input type="text" name="cancellation" id="reasonForReturn" placeholder="Reason for returning the product?">
+                                                                           <button class="btn btn-danger" onclick="returnOrder('<%= item._id %>')">Request Return</button>
                                                                        
                                                                       </form>
                                                                     
@@ -290,7 +293,9 @@
                                                     <td class="cart_total_amount"><span id="showtotalamount" class="font-lg fw-900 text-brand">
 
                                                         <% if(order.couponApplied === true){ %>
-                                                            <span style="font-size: 8px;"> Coupon : <span style="font-size: 12px; color: black;"> <%=order.couponName%> </span>Applied!</span><br>
+                                                            <span style="font-size: 10px;" class="text-dark">Order availled with coupons will be cancelled upon cancelling or return of any of the product in the order</span>
+<br>
+                                                            <span  style="font-size: 8px; margin-top: -10px;"> Coupon : <span style="font-size: 12px; color: black;"> <%=order.couponName%> </span>Applied!</span><br>
                                                             <% } %>
                                                     </span><%= order.totalAmount  %></td>
                                                     <input type="number" name="totalamountcheckout" value="" id="totalinputfield" hidden>
@@ -299,8 +304,10 @@
                                         </table>
                                     </div>
                                    <div class="row">
-                                        <div class="col-2">
-                                    <input type="button" id="printbtn" onclick="window.print()" style="background-color: rgb(6, 75, 12); color: white; border: none; padding: 10px 20px; cursor: pointer;" value="Print Invoice">
+                                        <div class="col-lg-2 mt-10">
+                                            <% if(order.orderStatus === 'Delivered'){ %>
+                                    <input type="button" class="btn btn-primary" id="printbtn" onclick="window.print()"  value="Print Invoice">
+                                    <% } %>
                               </div>
                                    
                                    
@@ -319,21 +326,7 @@
     <% } %>
     <% } %>
   
-    <!-- Preloader Start -->
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="text-center">
-                    <h5 class="mb-5">Now Loading</h5>
-                    <div class="loader">
-                        <div class="bar bar1"></div>
-                        <div class="bar bar2"></div>
-                        <div class="bar bar3"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+ 
     <!-- Vendor JS-->
     <script src="/user/js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="/user/js/vendor/jquery-3.6.0.min.js"></script>

@@ -552,11 +552,12 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 
 			const existingProduct = await productModel.findOne({
 				_id: productid,
-				'rating.userId': req.session.userId 
+				
 			      });
+			    let ratingExist = existingProduct.rating.find(item => item.userId.toString() == req.session.userId)
 			  
 		        
-			      if (existingProduct) {
+			      if (ratingExist) {
 				console.log('Review already exists for this product. Not adding it again.');
 
 				productExists = true
@@ -567,7 +568,7 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 					const orderFound = order.items.find(item => item._id.toString() === orderId);
 					if (orderFound) {
 					    orderFound.ratedBefore = true;
-					    await order.save(); // Save the parent document to persist changes in the subdocument
+					    await order.save();
 					    console.log('Order found and updated:', orderFound);
 					}
 				      }
@@ -579,11 +580,7 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 
 
 
-			const product = await productModel.findOne({_id:productid}).populate({
-				path:'userId',
-				model : USER,
-				select : 'firstname'
-			})
+			const product = await productModel.findOne({_id:productid})
 			product.rated = 'true'
 			product.rating.push({
 				review : review,
@@ -615,7 +612,7 @@ orders.forEach(async (order) => {
 			console.log(product)
 
 		} catch (error) {
-			
+			console.log(error)
 		}
 	}
 	,

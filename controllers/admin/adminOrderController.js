@@ -125,6 +125,7 @@ const orders = await orderModel
   refund.items.forEach((item) => {
     if (item.status !== 'Cancelled') {
       item.status = 'Cancelled';
+      item.paymentStatus = 'Refunded'
      
     }
   });
@@ -159,6 +160,7 @@ const orders = await orderModel
                 }
 
                 else if (orderStatus === 'Returned') {
+                    const refund = await orderModel.findOne({_id:orderId})
                   
                     const orderItem = await orderModel.updateOne(
                         { 'items._id': _id },
@@ -179,6 +181,25 @@ const orders = await orderModel
                   {
                     refundPrice = canceledItem.price
                     console.log(refundPrice)
+                    
+                      if(refund.couponApplied === true)
+                      {
+                        
+                         refundPrice = refund.totalAmount;
+
+  refund.items.forEach((item) => {
+    if (item.status !== 'Cancelled') {
+      item.status = 'Cancelled';
+      item.paymentStatus = 'Refunded'
+     
+    }
+  });
+
+  refund.orderStatus = 'Cancelled';
+  await refund.save();
+                       
+
+                      }
                     await orderModel.updateOne({_id:orderId},{$inc:{'refundAmount':refundPrice}},{new:true})
                   }
 
