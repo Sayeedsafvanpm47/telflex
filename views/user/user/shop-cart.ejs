@@ -7,19 +7,74 @@
 
     
 <%- include('partials/header') %>
+
+<section class="home-slider position-relative pt-50">
+          
+    <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
+      
+       
+        <div class="">
+            <div class="container" style="background-color: rgba(169, 23, 23, 0.921); border-radius: 10px; box-shadow: inset;">
+              
+                <div class="row align-items-center slider-animated-1">
+                
+                    <div class="col-lg-5 col-md-6">
+                     
+                        <div class="hero-slider-content-2">
+                            <h4 class="animated"></h4>
+                          
+                            <h2 style="color: rgb(255, 255, 255);" class="animated fw-900">Order Soon before the Stock runs out!</h2>
+                           
+                           
+                         
+                           
+                           
+                            <h5 class="animated">Apply the coupons available to avail the best deal. Keep shopping the top notch quality products from Telflex Mattress</h5>
+                         
+                           
+                          
+                           
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-7 col-md-6">
+                       
+
+                        <div class="" >
+                          
+                            <img style="border-radius: 15px;" class="animated slider-1-1 p-10" src="/user/imgs/smiling-baby-lying-bed.jpg" alt="">
+
+                         
+                        </div>
+                    </div>
+                
+                </div>
+              
+            </div>
+        </div>
+        
+     
+    </div>
+   
+  
+  
+</section>
+
   
         <section class="mt-50 mb-50">
         
+        
             <div class="container">
+                <h2 class="text-dark mb-10"><i class="fa-solid fa-cart-shopping"></i> Your Cart</h2>
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
-                            <a href="/user/userWallet">this is user</a>
+                           
                             <table class="table shopping-summery text-center clean">
                                 <thead>
                                     <tr class="main-heading">
                                         <th scope="col">Image</th>
-                                        <th scope="col">Name</th>
+                                        <th scope="col">Product Details</th>
                                         <th scope="col">Price</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Subtotal</th>
@@ -118,10 +173,10 @@
 <td class="text-right" data-title="Cart">
     <input type="number" id="mul<%= cart[j].products[i]._id %>" value="<%= cart[j].products[i].price %>" hidden>
     <span class="calctotal" id="calcprice<%= cart[j].products[i]._id %>"><%= (cart[j].products[i].price) * (cart[j].products[i].quantity)%> </span>
-    <input type="text" id="productsingleid<%= i  %>" name="productsingleid" value="<%= cart[j].products[i].single_id  %>">
-    <input type="" id="productsizefind<%= i  %>" name="productsize" value="<%= cart[j].products[i].size  %>">
-    <input type="number" value="<%= cart[j].products[i].lastStock  %>" id="laststock<%= i %>" >
-    <input type="text" value="<%= cart[j].products[i].product_id._id  %>" id="productmainid<%= i  %>" >
+    <input type="text" id="productsingleid<%= i  %>" name="productsingleid" value="<%= cart[j].products[i].single_id  %>"hidden>
+    <input type="" id="productsizefind<%= i  %>" name="productsize" value="<%= cart[j].products[i].size  %>" hidden>
+    <input type="number" value="<%= cart[j].products[i].lastStock  %>" id="laststock<%= i %>" hidden>
+    <input type="text" value="<%= cart[j].products[i].product_id._id  %>" id="productmainid<%= i  %>" hidden >
 
   </td>
   <td class="action" data-title="Remove">
@@ -155,7 +210,7 @@
                                                     <td class="cart_total_label">Cart Subtotal</td>
                                                 
                                                     <td class="cart_total_amount"><span id="showtotal" class="font-lg fw-900 text-brand"></span></td>
-                                                    <input type="number" name="subtotalamountcheckout" value="" id="subtotalinputfield">
+                                                    <input type="number" name="subtotalamountcheckout" value="" id="subtotalinputfield" hidden>
                                                 </tr>
                                                 <tr>
                                                     <td class="cart_total_label">Shipping</td>
@@ -163,7 +218,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="cart_total_label">Total</td>
-                                                  <input type="" value="" id="appliedCouponName" name="appliedCoupon">
+                                                  <input type="" value="" id="appliedCouponName" name="appliedCoupon" hidden>
                                                     <td class="cart_total_amount">  <span style="font-size: 10px;" id="couponAppliedSpan"></span><br><span id="showtotalamount" class="font-lg fw-900 text-brand"></span></td>
                                                     <input type="number" name="totalamountcheckout" value="" id="totalinputfield" hidden>
                                                 </tr>
@@ -186,7 +241,7 @@
                                    
                                
                                 <div class="mb-30 mt-50">
-                                    <p style="font-size: 10px;" class="text-muted">Note : You cannot cancel or return an order applied with coupon! <span style="font-size: 8px;">(If the product is damaged, contact us and we will send a technician for the verification)</span></p>
+                                    <p style="font-size: 10px;" class="text-muted">Note : You can only apply a coupon once!</p>
                                     <div id="applyOther" style="display: none;"> <a href="/user/showCart">Apply another coupon?</a> </div>
                                     <div class="row"  id="showCouponDiv">
                  
@@ -249,132 +304,8 @@
             </form>
         </section>
     </main>
-    <footer class="main">
-        <section class="newsletter p-30 text-white wow fadeIn animated">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-7 mb-md-3 mb-lg-0">
-                        <div class="row align-items-center">
-                            <div class="col flex-horizontal-center">
-                                <img class="icon-email" src="/user/imgs/theme/icons/icon-email.svg" alt="">
-                                <h4 class="font-size-20 mb-0 ml-3">Sign up to Newsletter</h4>
-                            </div>
-                            <div class="col my-4 my-md-0 des">
-                                <h5 class="font-size-15 ml-4 mb-0">...and receive <strong>$25 coupon for first shopping.</strong></h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-5">
-                        <!-- Subscribe Form -->
-                        <form class="form-subcriber d-flex wow fadeIn animated">
-                            <input type="email" class="form-control bg-white font-small" placeholder="Enter your email">
-                            <button class="btn bg-dark text-white" type="submit">Subscribe</button>
-                     
-                        <!-- End Subscribe Form -->
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="section-padding footer-mid">
-            <div class="container pt-15 pb-20">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="widget-about font-md mb-md-5 mb-lg-0">
-                            <div class="logo logo-width-1 wow fadeIn animated">
-                                <a href="index.html"><img src="/user/imgs/theme/logo.svg" alt="logo"></a>
-                            </div>
-                            <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">Contact</h5>
-                            <p class="wow fadeIn animated">
-                                <strong>Address: </strong>562 Wellington Road, Street 32, San Francisco
-                            </p>
-                            <p class="wow fadeIn animated">
-                                <strong>Phone: </strong>+01 2222 365 /(+91) 01 2345 6789
-                            </p>
-                            <p class="wow fadeIn animated">
-                                <strong>Hours: </strong>10:00 - 18:00, Mon - Sat
-                            </p>
-                            <h5 class="mb-10 mt-30 fw-600 text-grey-4 wow fadeIn animated">Follow Us</h5>
-                            <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0">
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-facebook.svg" alt=""></a>
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-twitter.svg" alt=""></a>
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-youtube.svg" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3">
-                        <h5 class="widget-title wow fadeIn animated">About</h5>
-                        <ul class="footer-list wow fadeIn animated mb-sm-5 mb-md-0">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Delivery Information</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms &amp; Conditions</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Support Center</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-2  col-md-3">
-                        <h5 class="widget-title wow fadeIn animated">My Account</h5>
-                        <ul class="footer-list wow fadeIn animated">
-                            <li><a href="#">Sign In</a></li>
-                            <li><a href="#">View Cart</a></li>
-                            <li><a href="#">My Wishlist</a></li>
-                            <li><a href="#">Track My Order</a></li>
-                            <li><a href="#">Help</a></li>
-                            <li><a href="#">Order</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-4">
-                        <h5 class="widget-title wow fadeIn animated">Install App</h5>
-                        <div class="row">
-                            <div class="col-md-8 col-lg-12">
-                                <p class="wow fadeIn animated">From App Store or Google Play</p>
-                                <div class="download-app wow fadeIn animated">
-                                    <a href="#" class="hover-up mb-sm-4 mb-lg-0"><img class="active" src="/user/imgs/theme/app-store.jpg" alt=""></a>
-                                    <a href="#" class="hover-up"><img src="/user/imgs/theme/google-play.jpg" alt=""></a>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
-                                <p class="mb-20 wow fadeIn animated">Secured Payment Gateways</p>
-                                <img class="wow fadeIn animated" src="/user/imgs/theme/payment-method.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <div class="container pb-20 wow fadeIn animated">
-            <div class="row">
-                <div class="col-12 mb-20">
-                    <div class="footer-bottom"></div>
-                </div>
-                <div class="col-lg-6">
-                    <p class="float-md-left font-sm text-muted mb-0">&copy; 2022, <strong class="text-brand">Evara</strong> - HTML Ecommerce Template </p>
-                </div>
-                <div class="col-lg-6">
-                    <p class="text-lg-end text-start font-sm text-muted mb-0">
-                        Designed by <a href="http://alithemes.com/" target="_blank">Alithemes.com</a>. All rights reserved
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Preloader Start -->
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="text-center">
-                    <h5 class="mb-5">Now Loading</h5>
-                    <div class="loader">
-                        <div class="bar bar1"></div>
-                        <div class="bar bar2"></div>
-                        <div class="bar bar3"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <%- include('partials/footerlogin') %>
+
     <!-- Vendor JS-->
     <script src="/user/js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="/user/js/vendor/jquery-3.6.0.min.js"></script>

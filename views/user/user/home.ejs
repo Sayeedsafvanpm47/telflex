@@ -1,143 +1,7 @@
 ﻿<%- include('partials/head') %>
 
 <body>
-    <!-- Modal -->
-   
-
-
-    <!-- Quick view -->
-    <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12 col-xs-12">
-                            <div class="detail-gallery">
-                                <span class="zoom-icon"><i class="fi-rs-search"></i></span>
-                                <!-- MAIN SLIDES -->
-                                <div class="product-image-slider">
-                                    <figure class="border-radius-10">
-                                        <img src="/user/imgs/shop/product-16-2.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="/user/imgs/shop/product-16-1.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="/user/imgs/shop/product-16-3.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="/user/imgs/shop/product-16-4.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="/user/imgs/shop/product-16-5.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="/user/imgs/shop/product-16-6.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="/user/imgs/shop/product-16-7.jpg" alt="product image">
-                                    </figure>
-                                </div>
-                                <!-- THUMBNAILS -->
-                                <div class="slider-nav-thumbnails pl-15 pr-15">
-                                    <div><img src="/user/imgs/shop/thumbnail-3.jpg" alt="product image"></div>
-                                    <div><img src="/user/imgs/shop/thumbnail-4.jpg" alt="product image"></div>
-                                    <div><img src="/user/imgs/shop/thumbnail-5.jpg" alt="product image"></div>
-                                    <div><img src="/user/imgs/shop/thumbnail-6.jpg" alt="product image"></div>
-                                    <div><img src="/user/imgs/shop/thumbnail-7.jpg" alt="product image"></div>
-                                    <div><img src="/user/imgs/shop/thumbnail-8.jpg" alt="product image"></div>
-                                    <div><img src="/user/imgs/shop/thumbnail-9.jpg" alt="product image"></div>
-                                </div>
-                            </div>
-                            <!-- End Gallery -->
-                            <div class="social-icons single-share">
-                                <ul class="text-grey-5 d-inline-block">
-                                    <li><strong class="mr-10">Share this:</strong></li>
-                                    <li class="social-facebook"><a href="#"><img src="/user/imgs/theme/icons/icon-facebook.svg" alt=""></a></li>
-                                    <li class="social-twitter"> <a href="#"><img src="/user/imgs/theme/icons/icon-twitter.svg" alt=""></a></li>
-                                    <li class="social-instagram"><a href="#"><img src="/user/imgs/theme/icons/icon-instagram.svg" alt=""></a></li>
-                                    <li class="social-linkedin"><a href="#"><img src="/user/imgs/theme/icons/icon-pinterest.svg" alt=""></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-12 col-xs-12">
-                            <div class="detail-info">
-                                <h3 class="title-detail mt-30">Colorful Pattern Shirts HD450</h3>
-                                <div class="product-detail-rating">
-                                    <div class="pro-details-brand">
-                                        <span> Brands: <a href="shop-grid-right.html">Bootstrap</a></span>
-                                    </div>
-                                    <div class="product-rate-cover text-end">
-                                        <div class="product-rate d-inline-block">
-                                            <div class="product-rating" style="width:90%">
-                                            </div>
-                                        </div>
-                                        <span class="font-small ml-5 text-muted"> (25 reviews)</span>
-                                    </div>
-                                </div>
-                                <div class="clearfix product-price-cover">
-                                    <div class="product-price primary-color float-left">
-                                        <ins><span class="text-brand">$120.00</span></ins>
-                                        <ins><span class="old-price font-md ml-15">$200.00</span></ins>
-                                        <span class="save-price  font-md color3 ml-15">25% Off</span>
-                                    </div>
-                                </div>
-                                <div class="bt-1 border-color-1 mt-15 mb-15"></div>
-                                <div class="short-desc mb-30">
-                                    <p class="font-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam rem officia, corrupti reiciendis minima nisi modi,!</p>
-                                </div>
-
-                                <div class="attr-detail attr-color mb-15">
-                                    <strong class="mr-10">Color</strong>
-                                    <ul class="list-filter color-filter">
-                                        <li><a href="#" data-color="Red"><span class="product-color-red"></span></a></li>
-                                        <li><a href="#" data-color="Yellow"><span class="product-color-yellow"></span></a></li>
-                                        <li class="active"><a href="#" data-color="White"><span class="product-color-white"></span></a></li>
-                                        <li><a href="#" data-color="Orange"><span class="product-color-orange"></span></a></li>
-                                        <li><a href="#" data-color="Cyan"><span class="product-color-cyan"></span></a></li>
-                                        <li><a href="#" data-color="Green"><span class="product-color-green"></span></a></li>
-                                        <li><a href="#" data-color="Purple"><span class="product-color-purple"></span></a></li>
-                                    </ul>
-                                </div>
-                                <div class="attr-detail attr-size">
-                                    <strong class="mr-10">Size</strong>
-                                    <ul class="list-filter size-filter font-small">
-                                        <li><a href="#">S</a></li>
-                                        <li class="active"><a href="#">M</a></li>
-                                        <li><a href="#">L</a></li>
-                                        <li><a href="#">XL</a></li>
-                                        <li><a href="#">XXL</a></li>
-                                    </ul>
-                                </div>
-                                <div class="bt-1 border-color-1 mt-30 mb-30"></div>
-                                <div class="detail-extralink">
-                                    <div class="detail-qty border radius">
-                                        <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                        <span class="qty-val">1</span>
-                                        <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                    </div>
-                                    <div class="product-extra-link2">
-                                        <button type="submit" class="button button-add-to-cart">Add to cart</button>
-                                        <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
-                                        <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
-                                    </div>
-                                </div>
-                                <ul class="product-meta font-xs color-grey mt-50">
-                                    <li class="mb-5">SKU: <a href="#">FWM15VKT</a></li>
-                                    <li class="mb-5">Tags: <a href="#" rel="tag">Cloth</a>, <a href="#" rel="tag">Women</a>, <a href="#" rel="tag">Dress</a> </li>
-                                    <li>Availability:<span class="in-stock text-success ml-5">8 Items In Stock</span></li>
-                                </ul>
-                            </div>
-                            <!-- Detail Info -->
-                        </div>
-                    </div>
-                </div>
-        </div>
-        </div>
-    </div>
-
-    <%- include('partials/header') %>
+   <%- include('partials/header') %>
 
     <main class="main">
         <!-- banner 2 (loop the banners) -->
@@ -148,7 +12,7 @@
                 <% if(banners){ %>
                 <% for(let i=0; i<banners.images.length; i++){ %>
                 <div class="single-hero-slider single-animation-wrap">
-                    <div class="container">
+                    <div class="container" style="background-color: rgba(169, 23, 23, 0.921); border-radius: 10px; box-shadow: inset;">
                       
                         <div class="row align-items-center slider-animated-1">
                         
@@ -157,16 +21,16 @@
                                 <div class="hero-slider-content-2">
                                     <h4 class="animated"></h4>
                                   
-                                    <h2 class="animated fw-900"><%= banners.bannerTitle[i]  %></h2>
+                                    <h2 style="color: rgb(255, 255, 255);" class="animated fw-900"><%= banners.bannerTitle[i]  %></h2>
                                    
                                    
-                                    <h1 class="animated fw-900 text-brand"><%= banners.bannerPhrase[i]  %></h1>
+                                    <h3 class="animated fw-900 text-brand"><%= banners.bannerPhrase[i]  %></h3>
                                    
                                    
-                                    <p class="animated"><%= banners.bannerSubText[i]  %></p>
+                                    <h5 class="animated"><%= banners.bannerSubText[i]  %></h5>
                                  
                                    
-                                    <a class="animated btn btn-brush btn-brush-3" href="shop-product-right.html"> <%= banners.bannerAction[i]  %> </a>
+                                    <a class="animated btn btn-brush btn-brush-3 text-white" href="/user/"> <%= banners.bannerAction[i]  %> </a>
                                    
                                 </div>
                             </div>
@@ -174,9 +38,9 @@
                             <div class="col-lg-7 col-md-6">
                                
 
-                                <div class="single-slider-img single-slider-img-1">
+                                <div class="single-slider-img single-slider-img-1 mt-20">
                                   
-                                    <img class="animated slider-1-1" src="/<%= banners.images[i] %>" alt="">
+                                    <img style="border-radius: 15px;" class="animated slider-1-1" src="/<%= banners.images[i] %>" alt="">
 
                                  
                                 </div>
@@ -209,50 +73,55 @@
                             <button class="nav-link" id="nav-tab-three" data-bs-toggle="tab" data-bs-target="#tab-three" type="button" role="tab" aria-controls="tab-three" aria-selected="false">New added</button>
                         </li>
                     </ul>
-                    <a href="#" class="view-more d-none d-md-flex">View More<i class="fi-rs-angle-double-small-right"></i></a>
+                  
                 </div>
                 <!--End nav-tabs-->
                 <div class="tab-content wow fadeIn animated" id="myTabContent">
                     <div class="tab-pane fade show active" id="tab-one" role="tabpanel" aria-labelledby="tab-one">
-                        <div class="row product-grid-4">
+                        <h1>Featured Products!</h1>
+                        <br>
+                        <div class="row product-grid-4 mt-5">
                             <!-- featured -->
-                            <div class="col-lg-3 col-md-4 col-12 col-sm-6">
-                                <div class="product-cart-wrap mb-30">
-                                    <div class="product-img-action-wrap">
-                                        <div class="product-img product-img-zoom">
-                                            <a href="shop-product-right.html">
-                                                <img class="default-img" src="/user/imgs/shop/product-1-1.jpg" alt="">
-                                                <img class="hover-img" src="/user/imgs/shop/product-1-2.jpg" alt="">
-                                            </a>
+                            <div class="row product-grid-4">
+                                <% if(newproducts && newproducts.length>0) {%>
+                                    <% newproducts.forEach(item => {%>
+                                <div class="col-lg-3 col-md-4 col-12 col-sm-6">
+                                    <div class="product-cart-wrap mb-30">
+                                        <div class="product-img-action-wrap">
+                                            <div class="product-img product-img-zoom">
+                                                <a href="/user/productdetail?_id=<%=item._id  %>">
+                                                    <img class="default-img" src="/<%= item.images[0]  %>" alt="">
+                                                    <img class="hover-img" src="/<%= item.images[1]  %>" alt="">
+                                                </a>
+                                            </div>
+                                          
+                                            <div class="product-badges product-badges-position product-badges-mrg">
+                                                <span class="hot">Hot</span>
+                                            </div>
                                         </div>
-                                        <div class="product-action-1">
-                                            <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a>
-                                            <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
-                                            <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
-                                        </div>
-                                        <div class="product-badges product-badges-position product-badges-mrg">
-                                            <span class="hot">Hot</span>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-category">
-                                            <a href="shop-grid-right.html">Clothing</a>
-                                        </div>
-                                        <h2><a href="shop-product-right.html">Colorful Pattern Shirts</a></h2>
-                                        <div class="rating-result" title="90%">
-                                            <span>
-                                                <span>90%</span>
-                                            </span>
-                                        </div>
-                                        <div class="product-price">
-                                            <span>$238.85 </span>
-                                            <span class="old-price">$245.8</span>
-                                        </div>
-                                        <div class="product-action-1 show">
-                                            <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
+                                        <div class="product-content-wrap">
+                                            <div class="product-category">
+                                                <a><%= item.category.categoryName %></a>
+                                            </div>
+                                            <h2><a href="/user/productdetail?_id=<%=item._id  %>"><%= item.productName  %></a></h2>
+                                            <div class="rating-result" title="90%">
+                                                <span>
+                                                    <span><%= item.size[0].productDiscount  %>%</span>
+                                                </span>
+                                            </div>
+                                            <div class="product-price">
+                                                Offer Price :<span>&#8377;<%= item.size[0].productPrice  %> </span>
+                                                <br>
+                                                        Mrp :<span class="old-price">&#8377;<%= item.size[0].mrp  %></span>
+                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <% }) %>
+                            <% } %>
+                            
                             </div>
                            
                            
@@ -263,45 +132,41 @@
                     <!--En tab two (Popular)-->
                    
                     <div class="tab-pane fade" id="tab-three" role="tabpanel" aria-labelledby="tab-three">
-                        
-                        <div class="row product-grid-4">
+                        <h1>Newly Added Products</h1>
+                        <br>
+                        <div class="row product-grid-4 mt-5">
                             <% if(newproducts && newproducts.length>0) {%>
                                 <% newproducts.forEach(item => {%>
                             <div class="col-lg-3 col-md-4 col-12 col-sm-6">
                                 <div class="product-cart-wrap mb-30">
                                     <div class="product-img-action-wrap">
                                         <div class="product-img product-img-zoom">
-                                            <a href="shop-product-right.html">
+                                            <a href="/user/productdetail?_id=<%=item._id  %>">
                                                 <img class="default-img" src="/<%= item.images[0]  %>" alt="">
                                                 <img class="hover-img" src="/<%= item.images[1]  %>" alt="">
                                             </a>
                                         </div>
-                                        <div class="product-action-1">
-                                            <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a>
-                                            <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
-                                            <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
-                                        </div>
+                                      
                                         <div class="product-badges product-badges-position product-badges-mrg">
                                             <span class="hot">Hot</span>
                                         </div>
                                     </div>
                                     <div class="product-content-wrap">
                                         <div class="product-category">
-                                            <a href="shop-grid-right.html"><%= item.category.categoryName %></a>
+                                            <a><%= item.category.categoryName %></a>
                                         </div>
-                                        <h2><a href="shop-product-right.html"><%= item.productName  %></a></h2>
+                                        <h2><a href="/user/productdetail?_id=<%=item._id  %>"><%= item.productName  %></a></h2>
                                         <div class="rating-result" title="90%">
                                             <span>
                                                 <span><%= item.size[0].productDiscount  %>%</span>
                                             </span>
                                         </div>
                                         <div class="product-price">
-                                            <span><% item.size[0].productPrice  %> </span>
-                                            <span class="old-price"><%= item.size[0].mrp  %></span>
+                                            Offer Price :<span>&#8377;<%= item.size[0].productPrice  %> </span>
+                                            <br>
+                                                    Mrp :<span class="old-price">&#8377;<%= item.size[0].mrp  %></span>
                                         </div>
-                                        <div class="product-action-1 show">
-                                            <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -374,24 +239,27 @@
         </div>
         </section>
 
-        <section class="mb-50 mt-10">
-            <div class="container">
+        <section class="mb-50 mt-10" style="background-color: rgb(173, 7, 7);">
+            <div class="container"  style="background-color: rgb(255, 255, 255);">
                 <div class="row">
                     <div class="col-12">
                     <% if(fest !== '') { %>
-                        <div class="banner-bg wow fadeIn animated" style="background-color: rgba(36, 106, 171, 0.621);">
+                        <div class="banner-bg wow fadeIn animated">
                             <div class=" row banner-content">
                                 <div class="col">
-                                <h1 class="text-white-4 display mb-15"><%= fest.bannerTitle[0] %></h1>
+                                <h1 style="color: red;" class="text-white-4 display mb-15"><%= fest.bannerTitle[0] %></h1>
                                 <p><%= fest.bannerPhrase[0]  %></p>
                                 <br>
-                                <span><%= fest.bannerSubText[0]  %></span>
-                                <p><%= fest.bannerAction[0]  %></p>
+                                <span style="color: burlywood;"><%= fest.bannerSubText[0]  %></span>
+                                <br>
+                                <a class="animated btn btn-brush btn-brush-3" href="/user/">
+                               <%= fest.bannerAction[0]  %></a> 
                                 
-                                <h2 class="fw-600">Happy <span class="text-brand"><%= fest.bannerTitle[0]%></span>. Big Sale Up to 40%</h2>
+                                <h2 class="fw-600">Happy <span class="text-brand"><%= fest.bannerTitle[0]%></span>. Big Sale with exciting discounts!</h2>
                             </div>
-                            <div class="col">
-                                <img src="/<%= fest.images[0]  %>" alt="">
+                           
+                            <div class="col"  style="background-color: rgb(173, 7, 7); border-radius: 20px;">
+                                <img style="border-radius: 20px; padding: 10px; margin-top: 5px;" src="/<%= fest.images[0]  %>" alt="">
                             </div>
                             </div>
                         </div>
@@ -433,8 +301,12 @@
                             <img src="/<%= offer.images[i] %>" alt="">
                             <div class="banner-text" style="background-color: rgba(255, 255, 255, 0.573);" >
                                 <span><%= offer.bannerTitle[i]  %></span>
-                                <h4>Save 20% on %> on <br>Woman Bag</h4>
-                                <a href="shop-grid-right.html"><%= offer.bannerAction[0] %> <i class="fi-rs-arrow-right"></i></a>
+                                <h4><%= offer.bannerPhrase[i]  %></h4>
+                                <% if(categoryId && categoryId.length>0){ %>
+                                <a href="/user/sortCategory?categoryId=<%= categoryId[i]._id%>"><%= offer.bannerAction[0] %> <i class="fi-rs-arrow-right"></i></a>
+                            <% } else { %>
+                                <a href="/user/sortCategory?categoryId=<%= categoryId[0]._id%>"><%= offer.bannerAction[0] %> <i class="fi-rs-arrow-right"></i></a>
+<% } %>
                             </div>
                         </div>
                     </div>
@@ -458,17 +330,12 @@
                         <div class="product-cart-wrap small hover-up">
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
-                                    <a href="shop-product-right.html">
+                                    <a href="/user/productdetail?_id=<%= item._id  %>">
                                         <img class="default-img" src="/<%= item.images[0]  %>" alt="">
                                         <img class="hover-img" src="/<%= item.images[1]  %>" alt="">
                                     </a>
                                 </div>
-                                <div class="product-action-1">
-                                    <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal">
-<i class="fi-rs-eye"></i></a>
-                                    <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html" tabindex="0"><i class="fi-rs-heart"></i></a>
-                                    <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html" tabindex="0"><i class="fi-rs-shuffle"></i></a>
-                                </div>
+                                
                                 <div class="product-badges product-badges-position product-badges-mrg">
                                     <span class="hot">Hot</span>
                                 </div>
@@ -484,11 +351,11 @@
 
         </section>
         <hr>
-        <section class="deals section-padding" style="background-color: white;">
-            <div class="container" >
+        <section class="deals section-padding" style="background-color: rgb(173, 7, 7);">
+            <div class="container"  >
                 <% if(deals) { %>
                     <input type="text" id="expirydate" value="<%= deals.end %>" hidden>
-                    <div class="row deal wow fadeIn animated mb-md-4 mb-sm-4 d-flex" style="background-color: white;">
+                    <div class="row deal wow fadeIn animated mb-md-4 mb-sm-4 d-flex" style="background-color: white; border-radius: 20px;" >
                         <div class="col" style="background-color: white;">
                             <div class="deal-top">
                                 <h2 class="text-brand"><%= deals.bannerTitle[0] %></h2>
@@ -496,7 +363,7 @@
                             </div>
                             <div class="deal-content">
                                 <h6 class="product-title"><a href="shop-product-right.html"><%= deals.bannerSubText[0] %></a></h6>
-                                <div class="product-price"><span class="new-price"><%= deals.bannerDiscount[0] %></span></div>
+                                <div class="product-price"><span class="new-price"><%= deals.bannerDiscount[0] %>% Off</span></div>
                             </div>
                             <div class="deal-bottom">
                                 <p>Hurry Up! Offer End In:</p>
@@ -517,132 +384,7 @@
       
     
     </main>
-    <footer class="main">
-        <section class="newsletter p-30 text-white wow fadeIn animated">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-7 mb-md-3 mb-lg-0">
-                        <div class="row align-items-center">
-                            <div class="col flex-horizontal-center">
-                                <img class="icon-email" src="/user/imgs/theme/icons/icon-email.svg" alt="">
-                                <h4 class="font-size-20 mb-0 ml-3">Sign up to Newsletter</h4>
-                            </div>
-                            <div class="col my-4 my-md-0 des">
-                                <h5 class="font-size-15 ml-4 mb-0">...and receive <strong>$25 coupon for first shopping.</strong></h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-5">
-                        <!-- Subscribe Form -->
-                        <form class="form-subcriber d-flex wow fadeIn animated">
-                            <input type="email" class="form-control bg-white font-small" placeholder="Enter your email">
-                            <button class="btn bg-dark text-white" type="submit">Subscribe</button>
-                        </form>
-                        <!-- End Subscribe Form -->
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="section-padding footer-mid">
-            <div class="container pt-15 pb-20">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="widget-about font-md mb-md-5 mb-lg-0">
-                            <div class="logo logo-width-1 wow fadeIn animated">
-                                <a href="index.html"><img src="/user/imgs/theme/logo.svg" alt="logo"></a>
-                            </div>
-                            <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">Contact</h5>
-                            <p class="wow fadeIn animated">
-                                <strong>Address: </strong>562 Wellington Road, Street 32, San Francisco
-                            </p>
-                            <p class="wow fadeIn animated">
-                                <strong>Phone: </strong>+01 2222 365 /(+91) 01 2345 6789
-                            </p>
-                            <p class="wow fadeIn animated">
-                                <strong>Hours: </strong>10:00 - 18:00, Mon - Sat
-                            </p>
-                            <h5 class="mb-10 mt-30 fw-600 text-grey-4 wow fadeIn animated">Follow Us</h5>
-                            <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0">
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-facebook.svg" alt=""></a>
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-twitter.svg" alt=""></a>
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-                                <a href="#"><img src="/user/imgs/theme/icons/icon-youtube.svg" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3">
-                        <h5 class="widget-title wow fadeIn animated">About</h5>
-                        <ul class="footer-list wow fadeIn animated mb-sm-5 mb-md-0">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Delivery Information</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms &amp; Conditions</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Support Center</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-2  col-md-3">
-                        <h5 class="widget-title wow fadeIn animated">My Account</h5>
-                        <ul class="footer-list wow fadeIn animated">
-                            <li><a href="#">Sign In</a></li>
-                            <li><a href="#">View Cart</a></li>
-                            <li><a href="#">My Wishlist</a></li>
-                            <li><a href="#">Track My Order</a></li>
-                            <li><a href="#">Help</a></li>
-                            <li><a href="#">Order</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-4">
-                        <h5 class="widget-title wow fadeIn animated">Install App</h5>
-                        <div class="row">
-                            <div class="col-md-8 col-lg-12">
-                                <p class="wow fadeIn animated">From App Store or Google Play</p>
-                                <div class="download-app wow fadeIn animated">
-                                    <a href="#" class="hover-up mb-sm-4 mb-lg-0"><img class="active" src="/user/imgs/theme/app-store.jpg" alt=""></a>
-                                    <a href="#" class="hover-up"><img src="/user/imgs/theme/google-play.jpg" alt=""></a>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
-                                <p class="mb-20 wow fadeIn animated">Secured Payment Gateways</p>
-                                <img class="wow fadeIn animated" src="/user/imgs/theme/payment-method.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <div class="container pb-20 wow fadeIn animated">
-            <div class="row">
-                <div class="col-12 mb-20">
-                    <div class="footer-bottom"></div>
-                </div>
-                <div class="col-lg-6">
-                    <p class="float-md-left font-sm text-muted mb-0">&copy; 2022, <strong class="text-brand">Evara</strong> - HTML Ecommerce Template </p>
-                </div>
-                <div class="col-lg-6">
-                    <p class="text-lg-end text-start font-sm text-muted mb-0">
-                        Designed by <a href="http://alithemes.com/" target="_blank">Alithemes.com</a>. All rights reserved
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Preloader Start -->
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="text-center">
-                    <h5 class="mb-10">Now Loading</h5>
-                    <div class="loader">
-                        <div class="bar bar1"></div>
-                        <div class="bar bar2"></div>
-                        <div class="bar bar3"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <%- include('partials/footerlogin') %>
     <!-- Vendor JS-->
     <script src="/user/js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="/user/js/vendor/jquery-3.6.0.min.js"></script>

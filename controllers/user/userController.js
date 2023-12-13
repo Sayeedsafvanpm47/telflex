@@ -5,6 +5,7 @@ const refferalModel = require('../../models/refferalModel')
 const wishlistModel = require('../../models/wishlist')
 const bannerModel = require('../../models/bannerModel')
 const cartModel  = require('../../models/cartModel')
+const categoryModel = require('../../models/categoryModel')
 const sendOTPByEmail = require("../../utils/sendMail");
 const bcrypt = require("bcrypt");
 const { isEmailValid, isPasswordValid, isNamesValid, isPhoneValid, isCpassValid } = require("../../utils/validators/signUpValidator");
@@ -156,13 +157,15 @@ req.session.user = true
 			const newarrivals = await productModel.find({}).populate({
 				path:'category',
 				model : 'categories',
-				select:'categoryName'
+				select:'categoryName _id'
 			}).sort({CreatedOn:-1}).limit(12)
 // console.log(newproducts)
 
-
+                             const categoryId = await categoryModel.aggregate([{$group:{_id:'$_id'}}])
+		         console.log('this is categoryId')
+		         console.log(categoryId)
 			console.log(banners)
-			res.render('user/user/home',{products,banners,subbanner,newproducts,newarrivals,deals,offer,fest,about})
+			res.render('user/user/home',{products,banners,subbanner,newproducts,newarrivals,deals,offer,fest,about,categoryId})
 				
 			
 		} catch (error) {

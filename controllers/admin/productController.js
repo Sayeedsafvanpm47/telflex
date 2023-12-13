@@ -136,9 +136,11 @@ if(!productname || !features || !featured || !tags || !model ||  !description ||
 			console.log(result);
 			if (req.files.length !== 0) {
 				
-        for (let i = 0; i<req.files.length;i++) { 
-          result.images[result.images.length] = processedImages
-        }
+				for (let i = 0; i < req.files.length; i++) {
+					const imageUrl = processedImages[i]; 
+					result.images.push(imageUrl); 
+				        }
+				      
     
 
 			}
@@ -179,7 +181,7 @@ if(!productname || !features || !featured || !tags || !model ||  !description ||
         }
         
 				
-		await	result.save();
+		await result.save();
 
 			if (!result) {
 				return res.status(404).send("Product not found");

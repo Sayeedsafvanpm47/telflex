@@ -131,15 +131,15 @@ router.post('/dealsBanner',imageController.upload.array('images1'),checkImage.ch
 router.get('/banner',bannerController.showBanner),
 router.post('/mainAboutBanner',imageController.upload.array('images7'),checkImage.checkMainBanner,(req, res, next) => {
           
-  imageController.processImage(req, res, next, 1536, 500);
+  imageController.processImage(req, res, next, 731, 470);
 },bannerController.mainAboutBanner),
 router.post('/dealerBanner',imageController.upload.array('images8'),checkImage.checkMainBanner,(req, res, next) => {
           
-  imageController.processImage(req, res, next, 1536, 500);
+  imageController.processImage(req, res, next, 731, 470);
 },bannerController.dealerBanner),
 router.post('/contactBanner',imageController.upload.array('images9'),checkImage.checkMainBanner,(req, res, next) => {
           
-  imageController.processImage(req, res, next, 1536, 600);
+  imageController.processImage(req, res, next, 731, 470);
 },bannerController.contactBanner),
 
 
