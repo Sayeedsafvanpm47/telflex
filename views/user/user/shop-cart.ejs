@@ -72,7 +72,7 @@
                            
                             <table class="table shopping-summery text-center clean">
                                 <thead>
-                                    <tr class="main-heading">
+                                    <tr id="tablehead" class="main-heading">
                                         <th scope="col">Image</th>
                                         <th scope="col">Product Details</th>
                                         <th scope="col">Price</th>
@@ -85,18 +85,21 @@
                                     <% if (user) { %>
                                       <% if(cart && cart.length > 0){ %>
                                         <% for(let j = 0; j < cart.length; j++) { %>
+                                            <% if(cart[j].products && cart[j].products.length > 0){ %>
                                           <% for(let i = 0; i < cart[j].products.length; i++) { %>
                                             <tr>
                                                
                                                 <input type="text" value="<%= cart[j].products[i].product_id  %>" id="" hidden>
                                               <td class="image product-thumbnail">
+                                           
                                                 <img src="/<%= cart[j].products[i].product_id.images[0] %>" alt="#">
+                                            
                                               </td>
                                               <td class="product-des product-name">
                                                 <h5 class="product-name">
                                                   <a href="shop-product-right.html"><%= cart[j].products[i].product_id.productName %></a>
                                                 </h5>
-                                                <p class="font-xs">Size : <%= cart[j].products[i].size  %><br> <%= cart[j].products[i].product_id.shortDescription  %> </p>
+                                                <p class="font-xs">Size : <%= cart[j].products[i].size  %><br> <%= cart[j].products[i].product_id.model  %> </p>
                                               </td>
                                               <td class="price" data-title="Price"><span><%= cart[j].products[i].price %> </span></td>
                                               <td class="text-center" data-title="Stock">
@@ -186,10 +189,21 @@
 </td>
 
                                             </tr>
-                                          <% } %>
+                                            <% } %>
+                                        
                                         
                                    
                                   </tbody>
+                                  <% } else { %>
+                                    <br>
+                                        <tr>
+                                        <h1>You have no items in cart, Add new items and get the best deals fast </h1> 
+                                        <script>
+                                            document.getElementById('tablehead').style.display = 'none'
+
+                                        </script>
+                                        </tr>
+                                        <% } %>
                             </table>
                         </div>
                  
@@ -209,7 +223,7 @@
                                                 <tr>
                                                     <td class="cart_total_label">Cart Subtotal</td>
                                                 
-                                                    <td class="cart_total_amount"><span id="showtotal" class="font-lg fw-900 text-brand"></span></td>
+                                                    <td class="cart_total_amount"> &#8377;<span id="showtotal" class="font-lg fw-900 text-brand"></span></td>
                                                     <input type="number" name="subtotalamountcheckout" value="" id="subtotalinputfield" hidden>
                                                 </tr>
                                                 <tr>
@@ -219,14 +233,16 @@
                                                 <tr>
                                                     <td class="cart_total_label">Total</td>
                                                   <input type="" value="" id="appliedCouponName" name="appliedCoupon" hidden>
-                                                    <td class="cart_total_amount">  <span style="font-size: 10px;" id="couponAppliedSpan"></span><br><span id="showtotalamount" class="font-lg fw-900 text-brand"></span></td>
+                                                    <td class="cart_total_amount"><span style="font-size: 10px;" id="couponAppliedSpan"></span><br>&#8377;<span id="showtotalamount" class="font-lg fw-900 text-brand"></span></td>
                                                     <input type="number" name="totalamountcheckout" value="" id="totalinputfield" hidden>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                     <% } %>
-                                    <% } %>
+                                    <% } else { %>
+                                        <p>You have no items here!</p>
+                                        <% } %>
                                     <% } %>
                                     <% if(user && cart && cart.length > 0) { %>
                                         <button type="submit" onclick="updateTotalAndSubmit()" > <i class="fi-rs-box-alt mr-10"></i> Proceed To CheckOut</button>
@@ -241,7 +257,7 @@
                                    
                                
                                 <div class="mb-30 mt-50">
-                                    <p style="font-size: 10px;" class="text-muted">Note : You can only apply a coupon once!</p>
+                                    <p style="font-size: 10px;" class="text-muted">Note : You can only apply a coupon once! If you cancel an order applied with coupon, whole order will be returned.</p>
                                     <div id="applyOther" style="display: none;"> <a href="/user/showCart">Apply another coupon?</a> </div>
                                     <div class="row"  id="showCouponDiv">
                  

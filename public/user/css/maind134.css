@@ -883,7 +883,7 @@ button.submit, button[type='submit'] {
   color: #ffffff;
   border: none;
   background-color: black;
-  border: 1px solid red;
+  border: 1px solid rgb(0, 0, 0);
   border-radius: 5px;
 }
 

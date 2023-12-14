@@ -62,11 +62,12 @@
                                     <div class="detail-gallery">
                                         <span class="zoom-icon"><i class="fi-rs-search"></i></span>
                                         <!-- MAIN SLIDES -->
-                                     
-                                        <div class="product-image-slider">
+                                      
+                                        <div class="product-image-slider" style=" background-color: white;">
                                             <% if (products && products.images && products.images.length > 0) { %>
                                                 <% for (let i = 0; i < products.images.length; i++) { %>
-                                                    <a href="/<%= products.images[i] %>" class="MagicZoom"><img src="/<%= products.images[i] %>"></a>
+                                                    
+                                                    <a href="/<%= products.images[i] %>" class="MagicZoom"><img style="border-radius: 10px;" src="/<%= products.images[i] %>"></a>
                                                  
                                
                                             <% } %>
@@ -98,11 +99,11 @@
                                         <input id="id" name="_id" value="<%= products._id%>" hidden>
                                     <div class="detail-info">
                                         <input class="title-detail" name="productname" value="<%= products.productName%>" hidden>  <h2 class="title-detail"><%= products.productName%></h2>
-                                       <h4 class="title-detail"><%= products.shortDescription%></h2>
+                                    <br>   <h4 class="title-detail"><%= products.shortDescription%></h2>
                                         <div class="product-detail-rating">
                                             <div class="pro-details-brand">
                                                 <% if (products.category &&  products.category.categoryName) { %>
-                                                    <a href="shop-grid-right.html"><%= products.category.categoryName %></a>
+                                                  Category :  <a href="shop-grid-right.html"><%= products.category.categoryName %></a>
                                                 <% } else { %>
                                                     Category Not Available <!-- Display a message if category data is not present -->
                                                 <% } %>
@@ -152,12 +153,13 @@
                                             
                                             <% } %>
                                         </div>
-                                            <input type="number" min="0"  name="laststock" id="stockView3" value="<%= products.size[0].lastStock  %>">
+                                            <input type="number" min="0"  name="laststock" id="stockView3" value="<%= products.size[0].lastStock  %>" hidden>
                                        
                                         </div>
                                         <div class="bt-1 border-color-1 mt-15 mb-15"></div>
                                         <div class="short-desc mb-30">
-                                            <p><%= products.shortDescription  %></p>
+                                            <h6>Features</h6>
+                                            <p><%= products.features %></p>
                                         <div class="product_sort_info font-xs mb-30">
                                             <ul>
                                                 <li class="mb-10"><i class="fi-rs-crown mr-5"></i> 5 Year Warranty for every product</li>
@@ -165,26 +167,22 @@
                                                 <li><i class="fi-rs-credit-card mr-5"></i> Cash on Delivery available</li>
                                             </ul>
                                         </div>
-                                        <div class="attr-detail attr-color mb-15">
-                                            <strong class="mr-10">Color</strong>
-                                            <ul class="list-filter color-filter">
-                                                <li><a href="#" data-color="White"><span class="product-color-white"></span></a></li>
-                                                <li><a href="#" data-color="Black"><span class="product-color-black"></span></a></li>
-                                      
-                                            </ul>
-                                        </div>
+                                        <strong class="mr-10">Available Size Variants</strong>
+                                        <br>
                                         <div class="attr-detail attr-size">
-                                            <strong class="mr-10">Size</strong>
+                                           
                                            <ul>
                                               <% if (products && products.size && products.size.length > 0) { %>
-                                                <input type="number" value="<% products.size.length  %>" id="variantsnumber">
+                                                <input type="number" value="<% products.size.length  %>" id="variantsnumber" hidden>
                                                 <% for (let i = 0; i < products.size.length; i++) { %>
                                                    
-                                                    <input type="text" value="<%= products._id%>" id="productTargetId<%= i  %>">
-                                                  <button type="button" class="btn text-dark" style="background-color: white;" name="priceView" onclick="show('<%= i %>','<%= products._id %>')">
+                                                    <input type="text" value="<%= products._id%>" id="productTargetId<%= i  %>" hidden>
+                                                  <button type="button" class="btn btn-primary action-btn hover-up mt-10 mr-10" style="border: none; background-color: rgba(15, 14, 14, 0.748); color: rgb(255, 255, 255);" name="priceView" onclick="show('<%= i %>','<%= products._id %>')">
+                                                
                                                     <%= products.size[i].size %>
                                                 
                                                   </button>
+                                                  
                                                 <% } %>
                                               <% } %>
                                             </ul>
@@ -196,7 +194,7 @@
                                                 <input type="number" name="quantity" id="quantity" value="0" min="1" hidden>
                                                 <button id="dec_btn" style="height: 30px;  width: 30px; border-radius: 100px; background-color: rgba(230, 233, 230, 0);"  type="button" onclick="decrease()"><i class="fa-solid fa-minus"></i></button>
                                                
-                                                <span id="quantityvalue"></span>
+                                                <span id="quantityvalue">Select a quantity</span>
                                                 <button  style="height: 30px; width: 30px; border-radius: 100px;  background-color: rgb(13, 14, 13);"  type="button" id="inc_btn" onclick="increase()"><i class="fa-solid fa-plus text-white"></i></button>
                                               </div>
                                                 <script>
@@ -249,11 +247,12 @@ function decrease() {
 
                                                 </script>
 
-                                                <input type="text" value="" id="productsingle">
+                                                <input type="text" value="" id="productsingle" hidden>
                                          
-                                            <div class="product-extra-link2">
+                                            <div class="product-extra-link2 mt-10">
+                                              
                                                
-                                                <button type="submit" class="button button-add-to-cart">Add to cart</button>
+                                                <button  type="submit" class="button button-add-to-cart">Add to cart</button>
                                                 <a aria-label="Add To Wishlist" class="action-btn hover-up" onclick="addToWish()" ><i class="fi-rs-heart"></i></a>
                                                
                                             </div>
@@ -279,27 +278,27 @@ function decrease() {
                                             
                                         </ul>
                                       
-                                        <h4 class="mt-30">Packaging & Delivery</h4>
+                                        <h3 class="mt-30">Packaging & Delivery</h3>
                                         <hr class="wp-block-separator is-style-wide">
-                                        <p><strong>Packaging:</strong>
+                                        <h4><strong>Packaging</strong></h4>
 
-                                            <br> Quality Assurance: <br> Before your mattress is prepared for shipping, it undergoes a thorough quality inspection. We make sure it meets our high standards for comfort, durability, and cleanliness.
+                                             <span><u>Quality Assurance</u></span>  <br> Before your mattress is prepared for shipping, it undergoes a thorough quality inspection. We make sure it meets our high standards for comfort, durability, and cleanliness.
                                         
-                                            <br>   Vacuum Sealed: <br> To make the mattress more manageable for shipping, we use state-of-the-art vacuum-sealing technology. This reduces its size without compromising on quality.
+                                            <br> <span><u>Vacuum Sealed</u></span>    <br> To make the mattress more manageable for shipping, we use state-of-the-art vacuum-sealing technology. This reduces its size without compromising on quality.
                                         
-                                            <br> Protection Layers: <br> Your mattress is wrapped in protective layers to safeguard it during transit. This extra care ensures that it reaches you in the same pristine condition as when it left our facility.
+                                            <br> <span><u>Protection Layers</u></span>  <br> Your mattress is wrapped in protective layers to safeguard it during transit. This extra care ensures that it reaches you in the same pristine condition as when it left our facility.
                                         <br>
-                                       <strong>Delivery:</strong>
+                                      <h4> <strong>Delivery</strong> </h4>
                                         
-                                       <br> Fast and Reliable: <br> We understand that you're eager to experience a better night's sleep. That's why we partner with trusted delivery services to bring your mattress to your door as quickly as possible.
+                                        <span><u>Fast and Reliable</u></span>  <br> We understand that you're eager to experience a better night's sleep. That's why we partner with trusted delivery services to bring your mattress to your door as quickly as possible.
                                         
-                                       <br> Real-Time Tracking: <br> Stay informed about the status of your delivery with real-time tracking. You'll receive notifications about the progress of your order from the moment it's dispatched until it reaches your home.
+                                       <br> <span><u>Real-Time Tracking</u></span>  <br> Stay informed about the status of your delivery with real-time tracking. You'll receive notifications about the progress of your order from the moment it's dispatched until it reaches your home.
                                         
-                                       <br> Contactless Delivery: <br> In consideration of your safety and convenience, our delivery partners offer contactless delivery options. You can receive your mattress without physical contact, providing peace of mind.
+                                       <br> <span><u>Contactless Delivery</u></span>  <br> In consideration of your safety and convenience, our delivery partners offer contactless delivery options. You can receive your mattress without physical contact, providing peace of mind.
                                         
-                                       <br> White-Glove Delivery (Optional): <br> For those who prefer extra assistance, we offer an optional white-glove delivery service. Our professionals will not only deliver your mattress but also set it up in your bedroom, ensuring you're ready for a comfortable night's sleep.
+                                       <br> <span><u>White-Glove Delivery (Optional)</u></span>  <br> For those who prefer extra assistance, we offer an optional white-glove delivery service. Our professionals will not only deliver your mattress but also set it up in your bedroom, ensuring you're ready for a comfortable night's sleep.
                                         
-                                       <br> Environmentally Conscious: <br> We are committed to sustainability. Our packaging materials are eco-friendly, and we strive to minimize our carbon footprint in every aspect of our operations.
+                                       <br> <span><u>Environmentally Conscious</u></span>  <br> We are committed to sustainability. Our packaging materials are eco-friendly, and we strive to minimize our carbon footprint in every aspect of our operations.
                                         </p>
                                     </div>
                                     

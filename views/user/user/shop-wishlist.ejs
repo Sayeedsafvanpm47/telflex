@@ -13,7 +13,7 @@
                         <div class="table-responsive">
                             <table class="table shopping-summery text-center">
                                 <thead>
-                                    <tr class="main-heading">
+                                    <tr id="tablehead" class="main-heading">
                                         <th scope="col" colspan="2">Product</th>
                                         <th scope="col">Price</th>
                                         <th scope="col">Quantity</th>
@@ -23,6 +23,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <% if(wishlist){ %>
+                                    <% if(wishlist.products.length>0){ %>
                                     <% for(let i=0; i<wishlist.products.length; i++){ %>
                                     <tr>
                                         
@@ -31,11 +33,16 @@
                                         <td class="image product-thumbnail"><img src="/<%= wishlist.products[i].product_id.images[0]  %>" alt="#"></td>
                                         <td class="product-des product-name">
                                             <h5 class="product-name"><a href="shop-product-right.html"><%= wishlist.products[i].product_id.productName  %></a></h5>
-                                            <p class="font-xs"><%= wishlist.products[i].product_id.description  %><br> <%= wishlist.products[i].product_id.shortDescription  %>
+                                          <span><%= wishlist.products[i].size  %></span>
+                                            <p class="font-xs"> <%= wishlist.products[i].product_id.model %>
                                             </p>
                                         </td>
                                         <td class="price" data-title="Price"><span><%= wishlist.products[i].price  %></span></td>
+                                        <% if(wishlist.products[i].quantity < 1) {%>
+                                            <td class="price" data-title="Price"><span>1</span></td>
+                                            <%} else { %>
                                         <td class="price" data-title="Price"><span><%= wishlist.products[i].quantity %></span></td>
+                                        <% } %>
                                         <td class="text-center" data-title="Stock">
                                             <% if(wishlist.products[i].stock <=0){ %>
                                                 <span class="text-danger">Out of stock</span>
@@ -53,6 +60,24 @@
                                         <td><a href="/user/deleteWish?id=<%= wishlist.products[i].proid  %>"><i class="fi-rs-trash"></i></a></td>
                                     </tr>
                                     <% } %>
+                                    <% }else{ %>
+                                        <p>  <tr>
+                                            <h1>You have no items in cart, Add new items and get the best deals fast </h1> 
+                                            <script>
+                                                document.getElementById('tablehead').style.display = 'none'
+    
+                                            </script>
+                                            </tr></p>
+                                            <% } %>
+                                            <% } else { %>
+                                                <p>  <tr>
+                                                    <h1>You have no items in cart, Add new items and get the best deals fast </h1> 
+                                                    <script>
+                                                        document.getElementById('tablehead').style.display = 'none'
+            
+                                                    </script>
+                                                    </tr></p>
+                                                    <% } %>
                                     
                                 </tbody>
                             </table>
