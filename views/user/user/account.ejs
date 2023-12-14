@@ -278,9 +278,7 @@ if(review == '')
                                                                     <% } %>
                                                                 </tbody>
                                                             </table>
-                                                            <a href="/user/cancelledOrders">
-                                                                view cancelled order
-                                                            </a>
+                                                         
                                                         <% } %>
                                                     </div>
                                                 </div>
@@ -302,49 +300,48 @@ if(review == '')
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="card mb-3 mb-lg-0">
-                                                    <div class="card-header">
-                                                        <h5 class="mb-0">Billing Address</h5>
+                                                    <div class="card-header d-flex ">
+                                                        <div style="align-items: start;"> <h5 class="mb-0">Billing Address</h5></div>
+                                                        <div style="margin-left: 50%;">   <button style="width: 200px;" class="btn" id="showaddress">Add address</button></div>
+  
                                                     </div>
+                                                    <br>
+                                                   
                                          
-                                                   <button class="btn" id="showaddress">Add address</button>
-
-                                                 <form id="formshow" action="/user/addAddress" method="post">
+                                                  
+<div class="container p-40">
+                                                 <form id="formshow" style="display: none;" action="/user/addAddress" method="post">
                                                          <input type="text" value="Billing Address" name="addressmode" hidden>
                                                         <div class="address-collection-container">
                                                           <div class="address-row">
-                                                            <div class="address-field-with-label main-part margin-right">
-                                                              <label for="name">Name:</label>
-                                                              <input name="name" id="street" required>
+                                                            <div class="address-field-with-label main-part margin-right mt-10">
+                                                           
+                                                              <input name="name" placeholder="Enter your name" id="street" required>
                                                             </div>
                                                         
-                                                            <div class="address-field-with-label">
-                                                              <label for="phonenumber">Phone Number :</label>
-                                                              <input id="phonenumber" name="phonenumber" required>
+                                                            <div class="address-field-with-label mt-10">
+                                                              <input id="phonenumber" name="phonenumber" placeholder="Enter your phone" required>
                                                             </div>
                                                           </div>
                                                         
-                                                          <div class="address-row">
+                                                          <div class="address-row mt-10">
                                                             <div class="address-field-with-label main-part">
-                                                              <label for="address-additional">Pincode : </label>
-                                                              <input id="address-additional" name="pincode" required>
+                                                              <input id="address-additional" name="pincode" placeholder="Enter pincode" required>
                                                             </div>
                                                           </div>
                                                         
-                                                          <div class="address-row">
+                                                          <div class="address-row mt-10">
                                                             <div class="address-field-with-label main-part margin-right">
-                                                              <label for="address">Address :</label>
-                                                              <input id="address" name="address" required>
+                                                              <input id="address" name="address" placeholder="Enter Address" required>
                                                             </div>
                                                         
-                                                            <div class="address-field-with-label">
-                                                              <label for="city">City :</label>
-                                                              <input id="city" name="city" required />
+                                                            <div class="address-field-with-label mt-10">
+                                                              <input id="city" name="city" placeholder="Enter City" required />
                                                             </div>
                                                           </div>
                                                         
-                                                          <div class="address-row">
+                                                          <div class="address-row mt-10">
                                                             <div class="address-field-with-label main-part margin-right">
-                                                                <label for="inputState">State :</label>
                                                                 <select name="state" class="form-control" id="inputState" required>
                                                                                     <option value="SelectState">Select State</option>
                                                                                     <option value="Andra Pradesh">Andra Pradesh</option>
@@ -387,12 +384,11 @@ if(review == '')
                                                                                   </select>
                                                             </div>
                                                         
-                                                            <div class="address-field-with-label main-part">
-                                                              <label for="country">Landmark :</label>
-                                                              <input id="landmark" name="landmark" required >
+                                                            <div class="address-field-with-label main-part mt-10">
+                                                              <input id="landmark" placeholder="Enter landmark" name="landmark" required >
                                                             </div>
                                                           </div>
-                                                          <div class="address-type-container">
+                                                          <div class="address-type-container mt-10">
                                                             <label for="country">Address Type :</label>
                                                             <div>
                                                                <select name="addresstype" id="" required>
@@ -406,19 +402,25 @@ if(review == '')
                                                         
 
 
-                                                          <div id="message" class="message-container"></div>
-                                                          <div class="button-container"><input type="submit" value="submit"></div>
+                                                          <div id="message" class="message-container mt-10"></div>
+                                                          <div><input class="btn btn-primary" type="submit" value="submit"></div>
                                                         </div>
                                                     </form>
+                                                </div>
                                                 </div>
                                             </div>
     <hr>
        
     
     <div class="col-lg-12">
-        <div class="card">
+       
                                                         <% for(let i=0; i<users.address.length; i++) { %>
-                                                            <div class="card-body">
+                                                            <div class="card mt-15">
+                                                                <div class="card-header">
+                                                                 <h3> Address <%= i + +1  %></h3>
+                                                                    </div>
+                                                            <div class="card-body" style="font-size: 15px; color: black;">
+                                                              
                                                             <address>Name : <%= users.address[i].name %><br> Phone : <%= users.address[i].phone  %><br> Pincode : <%= users.address[i].pincode  %> <br> 
                                                             Address :  <%= users.address[i].Address  %> <br>
                                                             City : <%= users.address[i].city  %> <br>
@@ -427,10 +429,10 @@ if(review == '')
                                                             
                                                             </address>
                                                      
-                                                        <a href="/user/editAddress?_id=<%= users.address[i]._id%>" class="btn-small">Edit</a>
+                                                        <a href="/user/editAddress?_id=<%= users.address[i]._id%>" class="btn btn-primary">Edit</a>
                                                         <button 
-  style="margin-left: 30px; color: red;" 
-  class="btn-small delete-button" 
+  style="margin-left: 10px; color: red;" 
+  class="btn btn-primary" 
   data-address-id="<%= users.address[i]._id%>"
   onclick="confirmDelete(event)"
 >
@@ -438,10 +440,10 @@ if(review == '')
 </button>
  
                                                     </div>
-                                                        <hr>
+                                                    </div>
+                                                        
                                                         <% } %>
-                                                    
-                                                </div>
+                                               
                                             </div>
                                         </div>
                                     </div>
@@ -593,10 +595,10 @@ if(review == '')
       const form = document.getElementById('formshow');
     
       if (form.style.display === 'none') {
-        // 👇️ this SHOWS the form
+       
         form.style.display = 'block';
       } else {
-        // 👇️ this HIDES the form
+       
         form.style.display = 'none';
       }
     });

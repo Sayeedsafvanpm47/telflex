@@ -888,11 +888,11 @@ button.submit, button[type='submit'] {
 }
 
 button.submit:hover, button[type='submit']:hover {
-  background-color: red !important;
+  background-color: rgba(174, 19, 19, 0.933) !important;
 }
 
 .btn-brand:hover {
-  background-color: red !important;
+  background-color: rgba(174, 19, 19, 0.933) !important;
 }
 
 .btn-login {
@@ -927,7 +927,7 @@ button.submit:hover, button[type='submit']:hover {
   padding: 12px 30px;
   border-radius: 4px;
   color: #fff;
-  border: 1px solid red;
+  border: 1px solid rgb(3, 3, 3);
   background-color: black;
   cursor: pointer;
   -webkit-transition: all 300ms linear 0s;
@@ -936,7 +936,7 @@ button.submit:hover, button[type='submit']:hover {
 }
 
 .btn:hover, .button:hover {
-  background-color: red;
+  background-color: rgba(174, 19, 19, 0.933);
 }
 
 .btn.btn-sm, .button.btn-sm {
@@ -1225,12 +1225,12 @@ textarea:focus {
   color: #ffffff;
   border: none;
   background-color: black;
-  border: 1px solid red;
+  border: 1px solid rgb(4, 4, 4);
   border-radius: 5px;
 }
 
 .contact-from-area .contact-form-style button:hover {
-  background-color: red !important;
+  background-color: rgba(174, 19, 19, 0.933) !important;
 }
 
 .form-group {
@@ -1513,12 +1513,12 @@ label {
   color: #ffffff;
   border: none;
   background-color: black;
-  border: 1px solid red;
+  border: 1px solid rgb(0, 0, 0);
   border-radius: 4px;
 }
 
 .comment-form button:hover {
-  background-color: #3f81eb !important;
+  background-color: #116a38 !important;
   border: none !important;
 }
 

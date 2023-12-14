@@ -35,45 +35,42 @@
                             <h4>Billing Details</h4>
                         </div>
             
-
-                        <button class="btn" id="showaddress">Add address</button>
-
-                        <form id="formshow" action="/user/checkOutAddress" method="post">
+                       
+                        <div>   <button style="width: 200px;" class="btn" id="showaddress">Add address</button></div>
+                        <div id="formshow"  class="container p-40 mt-20 mb-20" style="box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.2); display: none;">
+                            
+                        <form  action="/user/checkOutAddress" method="post">
                             <input type="text" value="Billing Address" name="addressmode" hidden>
                            <div class="address-collection-container">
                              <div class="address-row">
-                               <div class="address-field-with-label main-part margin-right">
-                                 <label for="name">Name:</label>
-                                 <input name="name" id="street" required>
+                               <div class="address-field-with-label main-part margin-right mt-10">
+                                
+                                 <input placeholder="Enter your name" name="name" id="street" required>
                                </div>
                            
-                               <div class="address-field-with-label">
-                                 <label for="phonenumber">Phone Number :</label>
-                                 <input id="phonenumber" name="phonenumber" required>
-                               </div>
-                             </div>
-                           
-                             <div class="address-row">
-                               <div class="address-field-with-label main-part">
-                                 <label for="address-additional">Pincode : </label>
-                                 <input id="address-additional" name="pincode" required>
+                               <div class="address-field-with-label mt-10">
+                                 <input placeholder="Enter phone" id="phonenumber" name="phonenumber" required>
                                </div>
                              </div>
                            
                              <div class="address-row">
-                               <div class="address-field-with-label main-part margin-right">
-                                 <label for="address">Address :</label>
-                                 <input id="address" name="address" required>
-                               </div>
-                           
-                               <div class="address-field-with-label">
-                                 <label for="city">City :</label>
-                                 <input id="city" name="city" required/>
+                               <div class="address-field-with-label main-part mt-10">
+                                 <input placeholder="Enter pincode" id="address-additional" name="pincode" required>
                                </div>
                              </div>
                            
                              <div class="address-row">
-                               <div class="address-field-with-label main-part margin-right">
+                               <div class="address-field-with-label main-part margin-right mt-10">
+                                 <input id="address" name="address" placeholder="Enter Address" required>
+                               </div>
+                           
+                               <div class="address-field-with-label mt-10">
+                                 <input id="city" placeholder="Enter City" name="city" required/>
+                               </div>
+                             </div>
+                           
+                             <div class="address-row">
+                               <div class="address-field-with-label main-part margin-right mt-10">
                                    <label for="inputState">State :</label>
                                    <select name="state" class="form-control" id="inputState" required>
                                                        <option value="SelectState">Select State</option>
@@ -117,12 +114,11 @@
                                                      </select>
                                </div>
                            
-                               <div class="address-field-with-label main-part">
-                                 <label for="country">Landmark :</label>
-                                 <input id="landmark" name="landmark" required>
+                               <div class="address-field-with-label main-part mt-10">
+                                 <input id="landmark" placeholder="Enter landmark" name="landmark" required>
                                </div>
                              </div>
-                             <div class="address-type-container">
+                             <div class="address-type-container mt-10">
                                <label for="country">Address Type :</label>
                                <div>
                                   <select name="addresstype" id="" required>
@@ -136,17 +132,19 @@
                            
 
 
-                             <div id="message" class="message-container"></div>
-                             <div class="button-container"><input type="submit" value="submit"></div>
+                             <div id="message" class="message-container mt-10"></div>
+                             <div><input class="btn btn-primary" type="submit" value="submit"></div>
+
                            </div>
                        </form>
+                       </div>
 
 
                        <form id="orderForm">
                                 <% if (cart && cart.userId && cart.userId.address) { %>
                                   <% for (let i = 0; i < cart.userId.address.length; i++) { %>
                                 
-                                        <div style="display: flex; width: auto; background-color: rgba(204, 200, 200, 0.105);">
+                                        <div style="display: flex; width: auto; box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.3);" class="mt-20" >
                                             <div style="margin-left: 10px;" >
                                                 <input type="radio" style="height: 20px;" value="" id="address_<%=i%>" name="selectedAddress" onclick="selectAddress('<%= i %>')">
 

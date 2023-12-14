@@ -8,7 +8,13 @@ module.exports = {
           addToWish: async (req, res) => {
                     try {
                         const userId = req.session.userId;
-                        const { productId, size, price, mrp, quantity, disc, stock,id } = req.body;
+                        const { productId, size, price, mrp,  disc, stock,id } = req.body;
+                        let quantity = req.body.quantity
+                        if(quantity < 1)
+                        {
+                            quantity = 1
+                        }
+
                 
                         const existingWishlist = await wishlistModel.findOne({ userId: userId });
                 

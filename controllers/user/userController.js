@@ -217,7 +217,7 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 	},
 	postSignUp: async (req, res) => {
 		try {
-			const { email, password, firstname, lastname, phonenumber, chkpassword } = req.body;
+			const { email, password, firstname, lastname, phonenumber, chkpassword,refferal } = req.body;
 			const emailValid = isEmailValid(email);
 			const passwordValid = isPasswordValid(password);
 			const namesValid = isNamesValid(firstname, lastname);
