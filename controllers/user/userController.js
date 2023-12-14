@@ -232,9 +232,25 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 			{
 				errors.push('fill details properly')
 			}
+			let refferalok = false
+			let reffereeId
+const checkRefferal = await refferalModel.find({})
+checkRefferal.forEach(item => {
+	if(item.refferalCode === refferal)
+	{
+		refferalok = true
+		reffereeId = item.reffererId
 
-			
 
+	}
+})		
+console.log(refferalok)
+console.log(reffereeId)	
+if(refferalok)
+{
+	req.session.refferalDoneCheck = true
+	req.session.reffereeId = reffereeId
+}
 		if(emailCheck)
 {
 	if(emailCheck.isVerified){
@@ -318,7 +334,20 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 		try{
 		const { email, enteredOTP } = req.body;
 		const errors = []
-		
+		let reffereeId
+		let wallet = 0
+		let reffered = false
+		if(req.session.refferalDoneCheck)
+		{
+reffereeId = req.session.reffereeId
+wallet = 100
+reffered = true
+delete req.session.refferalDoneCheck
+
+
+		}
+		const updateUserWallet = await userModel.updateOne({_id:reffereeId},{$inc:{wallet:100}})
+		console.log(reffereeId)
 		const user = await userModel.findOne({ email });
 		if (!user || !user.otp || user.otpExpires <= new Date() || user.otpAttempts >= 3) {
 			errors.push('verification failed, try again..., or request for another otp')
@@ -330,6 +359,8 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 			user.otpExpires = null;
 			user.otpAttempts = 0;
 			user.isVerified = true
+			user.wallet = wallet
+			user.reffered = reffered
 			await user.save();
 			if (req.session.loginOk) {
 
