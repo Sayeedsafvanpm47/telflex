@@ -19,93 +19,90 @@ const { USER } = require('../../utils/constants/schemaName');
 module.exports = {
 	getLogin: async (req, res) => {
 		try {
-			if(!req.session.userId){
-			await res.render("user/user/login");
-			}else
-			{
-				await res.redirect('/')
-			}
+		  let errors;
+		  if (!req.session.userId) {
+		    if (req.session.errorWhileLogin) {
+		      errors = req.session.errors;
+		      delete req.session.errorWhileLogin;
+		      await res.render("user/user/login", { errors });
+		    } else {
+		      await res.render("user/user/login", { errors });
+		    }
+		  } else {
+		    await res.redirect('/');
+		  }
 		} catch (err) {
-			res.status(200).send("error occured");
+		  res.redirect('/user/error');
 		}
-	},
-	postLogin: async (req, res,next) => {
+	        },
+	        
+	        postLogin: async (req, res, next) => {
 		try {
 		  const { email, password } = req.body;
 		  const emailValid = isEmailValid(email);
 		  const passwordValid = isPasswordValid(password);
-		  const user = await userModel.findOne({ email });
-		  let errors = [];
+		  const user = await userModel.findOne({ email: email });
+		  let errors;
 	        
 		  if (!email || !password) {
-		    errors.push('Please fill out all fields');
+		    errors = 'Please fill out all fields';
 		  }
 	        
 		  if (!emailValid) {
-		    errors.push("Invalid email");
+		    errors = 'Invalid email';
 		  }
 		  if (!passwordValid) {
-		    errors.push("Invalid password");
+		    errors = 'Invalid password';
 		  }
 		  if (!user) {
-		    console.log("User not found");
-		    errors.push("Account doesn't exist");
+		    console.log('User not found');
+		    errors = 'Account does not exist';
 		  }
-		  if(user.otp !== null)
+		  if(user)
 		  {
-			errors.push('user account has not been verified yet')
+			if (user.otp !== null) {
+				errors = 'User account has not been verified yet';
+			        }
+			
+			        if (user.isBlocked == true) {
+				errors = 'The user is blocked';
+			        }
 		  }
-		  
-		  if (user.isBlocked === true) {
-		    console.log("User is Blocked");
-		    errors.push("This user is blocked");
-		  }
-
 	        
-		  if (errors.length > 0) {
-		    res.render("user/user/login", { errors });
-		// res.status(400).render('user/user/login',{errors})
-		
+		  if (errors) {
+		    req.session.errors = errors;
+		    req.session.errorWhileLogin = true;
+		    res.redirect('/user/shop');
 		  } else {
 		    const passwordMatch = await bcrypt.compare(password, user.password);
 		    if (passwordMatch) {
-
-    
-
-
-
-
-			req.session.userId = user._id
-req.session.user = true
-			
-
-			
-			console.log(req.session.userId)
-		      console.log("Login successful");
-		      if(req.session.cart){
-		      res.redirect("/user/showCart")
-		      }
-		      else
-		      {
-			res.redirect('/')
+		    
+	        
+		      req.session.userId = user._id;
+		      req.session.user = true;
+	        
+		      console.log(req.session.userId);
+		      console.log('Login successful');
+		      if (req.session.cart) {
+		        res.redirect('/user/showCart');
+		      } else {
+		        res.redirect('/');
 		      }
 		    } else {
-		      console.log("Invalid password");
-		      res.redirect("/user/shop");
-		   
-		      const error = new Error("No user data available");
-		    error.status = 400;
-		    error.isRestCall = true;
-		    throw error;
+		      console.log('Invalid password');
+		      res.redirect('/user/shop');
+		      const error = new Error('No user data available');
+		      error.status = 400;
+		      error.isRestCall = true;
+		      throw error;
 		    }
 		  }
 		} catch (err) {
-			console.error("Error in catch:", err);
-		 
-		  next(err)
-		//   res.redirect("/user/shop");
+		  console.error('Error in catch:', err);
+		  next(err);
 		}
 	        },
+	        
 	        
 	getHome: async (req, res) => {
 		try {
