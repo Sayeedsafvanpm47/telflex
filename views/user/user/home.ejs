@@ -5,6 +5,20 @@
 
     <main class="main">
         <!-- banner 2 (loop the banners) -->
+        <% if (typeof success !== '' && success) { %>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                Swal.fire({
+                    title: 'Success!',
+                    text: '<%= success %>', 
+                    icon: 'success',
+                    confirmButtonColor: '#4caf50', 
+                    background: '#f0f0f0', 
+                    confirmButtonText: 'OK'
+                });
+            </script>
+        <% } %>
+        
       
         <section class="home-slider position-relative pt-50">
           
@@ -135,8 +149,8 @@
                         <h1>Newly Added Products</h1>
                         <br>
                         <div class="row product-grid-4 mt-5">
-                            <% if(featured && featured.length>0) {%>
-                                <% featured.forEach(item => {%>
+                            <% if(newproducts && newproducts.length>0) {%>
+                                <% newproducts.forEach(item => {%>
                             <div class="col-lg-3 col-md-4 col-12 col-sm-6">
                                 <div class="product-cart-wrap mb-30">
                                     <div class="product-img-action-wrap">

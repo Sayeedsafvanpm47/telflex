@@ -35,7 +35,7 @@
                                 <li><a class="dropdown-item text-white" href="/user/showwishlist"><i class="fa-solid fa-heart"></i>Wishlist</a></li>
                                 <li><a class="dropdown-item text-white" href="/user/showCart"><i class="fa-solid fa-cart-shopping"></i>Cart</a></li>
                               
-                                <li><a class="dropdown-item text-white" href="/user/logout"><i class="fa fa-sign-out"></i>Logout</a></li>
+                                <li><a class="dropdown-item text-white" onclick="logout()"><i class="fa fa-sign-out"></i>Logout</a></li>
                               <% } else { %>
                              
                                 <li><a class="dropdown-item text-white" href="/user/shop"><i class="fa-solid fa-user"></i>Login</a></li>
@@ -46,8 +46,34 @@
                           </div>
                         </div>
                       </div>
-                      
+                      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                      <script>
                         
+                        function logout() {
+
+Swal.fire({
+title: 'Are you sure you want to logout?',
+icon: 'warning',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'Yes, logout!'
+}).then((result) => {
+if (result.isConfirmed) {
+    Swal.fire({
+title: 'Logout Successful',
+icon: 'success',
+
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+
+})
+
+window.location.href = '/user/logout'; 
+}
+});
+}
+                     </script>
 
 
                       </div>

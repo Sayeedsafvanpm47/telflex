@@ -22,7 +22,7 @@ router.get("/shop", controller.getLogin);
 router.post("/postLogin",controller.postLogin);
 
 router.get('/error',controller.error)
-router.get("/gethome",authMiddleWare.checkBlock,controller.getHome);
+
 router.get("/getsignup", controller.getSignUp);
 router.post("/signup", controller.postSignUp);
 router.get('/logout',controller.logout)
