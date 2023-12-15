@@ -183,7 +183,7 @@
 
   </td>
   <td class="action" data-title="Remove">
-    <a href="/user/deleteCart?productId=<%= cart[j].products[i]._id %>&productmainid=<%= cart[j].products[i].product_id._id %>&singleid=<%= cart[j].products[i].single_id %>" class="text-muted">
+    <a onclick="deleteCartItem('<%= cart[j].products[i]._id %>','<%= cart[j].products[i].product_id._id %>','<%= cart[j].products[i].single_id %>')" class="text-muted">
         <i class="fi-rs-trash"></i>
     </a>
 </td>
@@ -191,7 +191,32 @@
                                             </tr>
                                             <% } %>
                                         
-                                        
+                                  <script>
+                                    function deleteCartItem(cartId,productId,singleId)
+                                    {
+                                        Swal.fire({
+    title: 'Are you sure you want to remove this item from cart?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, Remove!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+        Swal.fire({
+title: 'Item Removed from cart',
+icon: 'success',
+
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+
+})
+     
+      window.location.href = `/user/deleteCart?productId=${cartId}&productmainid=${productId}&singleid=${singleId}`; 
+    }
+  });
+                                    }
+                                  </script>      
                                    
                                   </tbody>
                                   <% } else { %>

@@ -429,13 +429,48 @@ if(review == '')
 
 
                                                           <div id="message" class="message-container mt-10"></div>
-                                                          <div><input class="btn btn-primary" type="submit" value="submit"></div>
+                                                          <div><input class="btn btn-primary" onclick="submitForm()"  value="submit"></div>
                                                         </div>
                                                     </form>
                                                 </div>
                                                 </div>
                                             </div>
+
     <hr>
+    <script>
+       
+        function submitForm()
+        {
+            const addressnewform = document.getElementById('formshow')
+
+            Swal.fire({
+        title: 'Submit this address?',
+        text: 'You are about to add this address.',
+        icon: 'confirm',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, add it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+         addressnewform.submit()
+            Swal.fire({
+                title: 'Address added',
+                text: 'New address has been added',
+                icon: 'success',
+                showConfirmButton: false,
+                
+            } );
+        }
+    })
+ 
+
+    }
+
+
+        
+    </script>
        
     
     <div class="col-lg-12">
@@ -481,8 +516,8 @@ if(review == '')
                                                 <h5>Account Details</h5>
                                             </div>
                                             <div class="card-body">
-                                                <p>Already have an account? <a href="page-login-register.html">Log in instead!</a></p>
-                                                <form method="post" name="enq" action="/user/updateAccount">
+                                              
+                                                <form id="change" method="post" name="enq" action="/user/updateAccount">
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
                                                             <label>First Name <span class="required">*</span></label>
@@ -511,14 +546,47 @@ if(review == '')
                                                             <input required="" class="form-control square" name="confirmpassword" type="password">
                                                         </div>
                                                         <div class="col-md-12">
-                                                            <button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit">Save</button>
+                                                            <input onclick="changePassword()" class="btn btn-fill-out submit" name="submit" value="Submit">Save</button>
                                                         </div>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
+<script>
+  
+  function changePassword() {
+       
 
+    const addressnewform = document.getElementById('change')
+    console.log(addressnewform)
+        
+
+        Swal.fire({
+            title: 'Update account?',
+            text: 'You are about to change your account credentials.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, change it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+           
+            if (result.isConfirmed) {
+             
+                Swal.fire({
+                    title: 'Updated',
+                    text: 'Your account credentials have been updated',
+                    icon: 'success',
+                    showConfirmButton: false,
+                });
+                addressnewform.submit()
+            }
+        });
+    }
+
+</script>
 
 
                                     <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
@@ -613,7 +681,7 @@ if(review == '')
     <script src="/user/js/plugins/jquery.theia.sticky.js"></script>
     <!-- Template  JS -->
     <script src="/user/js/maind134.js?v=3.4"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     const btn = document.getElementById('showaddress');
 
@@ -632,16 +700,41 @@ if(review == '')
     
 <script>
     function confirmDelete(event) {
+
       const addressId = event.target.dataset.addressId;
+
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You are about to delete this address.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // The user confirmed the deletion
+            Swal.fire({
+                title: 'Deleted!',
+                text: 'The address has been deleted.',
+                icon: 'success',
+                showConfirmButton: false,
+                
+            });
+
+           
+                window.location.href = `/user/deleteAddress?_id=${addressId}`;
+         
+        }
+    });
       
-      if (confirm('Are you sure you want to delete this address?')) {
       
-        window.location.href = `/user/deleteAddress?_id=${addressId}`;
-      }
     }
   </script>
   <!-- Include SweetAlert CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 <script>
     async function applyrefferal() {
