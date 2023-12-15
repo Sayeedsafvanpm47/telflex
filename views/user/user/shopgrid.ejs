@@ -88,7 +88,7 @@
                                         </div>
                                       
                                         <div class="product-badges product-badges-position product-badges-mrg">
-                                            <span class="hot">Hot</span>
+                                            <span class="hot"><%= products.tags  %></span>
                                         </div>
                                     </div>
                                     <div class="product-content-wrap">
@@ -166,7 +166,7 @@
                         <div class="widget-category mb-30"  style="background-color: rgba(2, 2, 2, 0.967); border-radius: 20px;">
                             <h5 class="section-title text-white style-1 mb-30 wow fadeIn animated">Category</h5>
                             <ul class="categories">
-                                <li><a style="color: white;" href="/user/">View All</a></li>
+                                <li><a style="color: white;" href="/">View All</a></li>
                                 <% category.forEach(categoryItem => { %>
                                     <% if (categoryItem && categoryItem.published === true) { %>
                                         <li>

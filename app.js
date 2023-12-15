@@ -4,6 +4,7 @@ const path = require("path");
 const Swal = require('sweetalert2')
 const userRoute = require("./routes/user/user");
 const adminRoute = require("./routes/admin/admin");
+const rootRoute = require('./routes/root')
 const dbConnect = require("./config/database");
 const upload = require('./controllers/imageController')
 const {sessionMiddleware,setNoCache} = require('./middlewares/sessionMiddleware')
@@ -34,9 +35,10 @@ app.use(express.json())
 //         });
 // app.use(session({secret: "your-secret-key", resave: false, saveUninitialized: true}));
 
-
+app.use('/',rootRoute)
 app.use("/user", userRoute);
 app.use("/admin", adminRoute);
+
 
 
 

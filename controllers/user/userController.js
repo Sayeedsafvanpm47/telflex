@@ -23,7 +23,7 @@ module.exports = {
 			await res.render("user/user/login");
 			}else
 			{
-				await res.redirect('/user/')
+				await res.redirect('/')
 			}
 		} catch (err) {
 			res.status(200).send("error occured");
@@ -87,7 +87,7 @@ req.session.user = true
 		      }
 		      else
 		      {
-			res.redirect('/user/')
+			res.redirect('/')
 		      }
 		    } else {
 		      console.log("Invalid password");
@@ -152,20 +152,28 @@ req.session.user = true
 				path:'category',
 				model : 'categories',
 				select:'categoryName'
-			}).sort({CreatedOn:-1}).limit(4)
+			}).sort({CreatedOn:1}).limit(4)
 
 			const newarrivals = await productModel.find({}).populate({
 				path:'category',
 				model : 'categories',
 				select:'categoryName _id'
-			}).sort({CreatedOn:-1}).limit(12)
+			}).sort({CreatedOn:1}).limit(12)
+			
+			const featured = await productModel.find({featured:'Yes'}).populate({
+				path:'category',
+				model : 'categories',
+				select:'categoryName _id'
+			}).sort({CreatedOn:1}).limit(12)
+			
+			
 // console.log(newproducts)
 
                              const categoryId = await categoryModel.aggregate([{$group:{_id:'$_id'}}])
 		         console.log('this is categoryId')
 		         console.log(categoryId)
 			console.log(banners)
-			res.render('user/user/home',{products,banners,subbanner,newproducts,newarrivals,deals,offer,fest,about,categoryId})
+			res.render('user/user/home',{products,banners,subbanner,newproducts,newarrivals,deals,offer,fest,about,categoryId,featured})
 				
 			
 		} catch (error) {
@@ -208,11 +216,11 @@ const banners = await bannerModel.findOne({bannerType:'Main About Banner'})
 			await res.render("user/user/register");
 			}else
 			{
-				await res.redirect('/user/')
+				await res.redirect('/')
 			}
 		} catch (err) {
 			console.log(err)
-			res.redirect('/user/')
+			res.redirect('/')
 		}
 	},
 	postSignUp: async (req, res) => {
@@ -399,7 +407,7 @@ delete req.session.refferalDoneCheck
 		}
 	}catch(err){
 		console.log(err)
-		res.redirect('/user/')
+		res.redirect('/')
 	}
 	},
 
@@ -442,7 +450,7 @@ delete req.session.refferalDoneCheck
 		res.redirect("/user/showOtp");
 		} catch (error) {
 			console.log(error)
-			res.redirect('/user/')
+			res.redirect('/')
 		}
 		
 	},
@@ -457,7 +465,7 @@ delete req.session.refferalDoneCheck
 			res.render("user/user/forgotPassword");
 			}
 		} catch (error) {
-			res.redirect('/user')
+			res.redirect('/')
 		}
 		
 	}
@@ -465,11 +473,11 @@ delete req.session.refferalDoneCheck
 	logout : async (req,res)=>{
 		try {
 			delete req.session.userId
-			res.redirect('/user/')
+			res.redirect('/')
 			
 		} catch (error) {
 			console.log(error)
-			res.redirect('/user/')
+			res.redirect('/')
 		}
 	}
 	,
@@ -492,7 +500,7 @@ delete req.session.refferalDoneCheck
 			
 		} catch (error) {
 			console.log(error)
-			res.redirect('/user/')
+			res.redirect('/')
 		}
 		
 	},
@@ -559,7 +567,7 @@ delete req.session.refferalDoneCheck
 				res.redirect("/user/shop");
 			} catch (error) {
 				console.error("Error updating password:", error);
-				await res.redirect("/user/"); 
+				await res.redirect("/"); 
 			}
 		}
 		else {
@@ -1053,7 +1061,7 @@ res.redirect('/user/account');
 			}
 			else
 			{
-				res.redirect('/user/')
+				res.redirect('/')
 			}
 			
 		} catch (error) {

@@ -12,7 +12,7 @@ module.exports = {
       console.log(pagination);
       req.session.paginate = true;
       req.session.pagination = pagination;
-res.redirect('/user/')
+res.redirect('/')
     } catch (error) {
       res.status(500).json({ error: 'An error occurred' });
     }
@@ -153,7 +153,7 @@ numberOfDocs = req.session.pagination
       
           req.session.sortbymenu = true;
           req.session.sortBy = products;
-          return res.redirect('/user/');
+          return res.redirect('/');
         } catch (error) {
           console.log(error);
           // Handle the error appropriately, possibly redirecting to an error page
@@ -186,7 +186,7 @@ numberOfDocs = req.session.pagination
                        req.session.sort = true
                        req.session.sortedProducts = products
 
-                       res.redirect('/user/')
+                       res.redirect('/')
                   
                     
                  
@@ -262,7 +262,7 @@ numberOfDocs = req.session.pagination
                
                     
                     // res.render('user/user/shopgrid',{products,category,relatedProducts})
-                    res.redirect('/user/')
+                    res.redirect('/')
                   }
                   ,
                   searchProducts : async (req,res,next)=>{
@@ -271,7 +271,7 @@ numberOfDocs = req.session.pagination
                     
                     const searchTerm = req.body.searchTerm
                     if(searchTerm == ''){
-                      res.redirect('/user/')
+                      res.redirect('/')
                     }else
                     {
                     const products = await productModel.find({
@@ -284,7 +284,7 @@ numberOfDocs = req.session.pagination
                    
                     req.session.search = true
                     req.session.searchProducts = products
-                    res.redirect('/user/')
+                    res.redirect('/')
                  }else
                  {
                   const error = new Error("Unable to fetch the data");
