@@ -20,23 +20,18 @@ module.exports = {
 	getLogin: async (req, res) => {
 		try {
 			let errors;
-			let success
+			let success;
 			if (!req.session.userId) {
 				if (req.session.errorWhileLogin) {
 					errors = req.session.errors;
 					delete req.session.errorWhileLogin;
-					await res.render("user/user/login", { errors,success});
-				}
-				else if(req.session.registrationOk)
-				{
-					success = 'Succesfully registered';
+					await res.render("user/user/login", { errors, success });
+				} else if (req.session.registrationOk) {
+					success = "Succesfully registered";
 					delete req.session.registrationOk;
-					await res.render("user/user/login", { errors,success});
-
-				}
-				
-				else {
-					await res.render("user/user/login", { errors,success });
+					await res.render("user/user/login", { errors, success });
+				} else {
+					await res.render("user/user/login", { errors, success });
 				}
 			} else {
 				await res.redirect("/");
@@ -93,7 +88,7 @@ module.exports = {
 					if (req.session.cart) {
 						res.redirect("/user/showCart");
 					} else {
-					          req.session.loginSuccess  = true
+						req.session.loginSuccess = true;
 						res.redirect("/user/home");
 					}
 				} else {
@@ -122,7 +117,7 @@ module.exports = {
 				const offer = await bannerModel.findOne({ bannerType: "Offer Banner" });
 				const fest = (await bannerModel.findOne({ bannerType: "Festival Banner" })) || "";
 				const about = await bannerModel.findOne({ bannerType: "About Banner" });
-				let success
+				let success;
 
 				const newproducts = await productModel
 					.find({})
@@ -158,11 +153,9 @@ module.exports = {
 				console.log("this is categoryId");
 				console.log(categoryId);
 				console.log(banners);
-				if(req.session.loginSuccess)
-				{
-					success = 'Succesfully Logged In'
-					delete req.session.loginSuccess
-
+				if (req.session.loginSuccess) {
+					success = "Succesfully Logged In";
+					delete req.session.loginSuccess;
 				}
 				res.render("user/user/home", {
 					products,
@@ -212,30 +205,27 @@ module.exports = {
 	getDealers: async (req, res) => {
 		try {
 			const banners = await bannerModel.findOne({ bannerType: "Dealer Banner" });
-			if(banners){
-			res.render("user/user/dealer", { banners });
-			}else
-			{
+			if (banners) {
+				res.render("user/user/dealer", { banners });
+			} else {
 				console.log("dealer page fetching failed");
 				const error = new Error("No data available for this page");
 				error.status = 400;
 				error.isRestCall = true;
 				throw error;
-
 			}
 		} catch (error) {
-			console.log(error)
-			next(error)
+			console.log(error);
+			next(error);
 		}
 	},
 	// this is the page for contact form, this page also has a map, contact us form, etc
 	getContact: async (req, res) => {
 		try {
 			const banners = await bannerModel.findOne({ bannerType: "Contact Banner" });
-			if(banners){
-			res.render("user/user/contact", { banners });
-			}else
-			{
+			if (banners) {
+				res.render("user/user/contact", { banners });
+			} else {
 				console.log("contact page fetching failed");
 				const error = new Error("No data available for this page");
 				error.status = 400;
@@ -244,23 +234,21 @@ module.exports = {
 			}
 		} catch (error) {
 			console.log(error);
-			next(error)
+			next(error);
 		}
 	},
 	// page for rendering the signup
 	getSignUp: async (req, res) => {
 		try {
-			let errors
+			let errors;
 			if (!req.session.userId) {
 				if (req.session.errorWhileSignup) {
 					errors = req.session.errors;
 					delete req.session.errorWhileSignup;
-					await res.render("user/user/register",{errors});
-					
+					await res.render("user/user/register", { errors });
 				} else {
-					await res.render("user/user/register",{errors});
+					await res.render("user/user/register", { errors });
 				}
-				
 			} else {
 				await res.redirect("/");
 			}
@@ -280,9 +268,9 @@ module.exports = {
 			const emailCheck = await userModel.findOne({ email });
 			console.log(emailCheck);
 
-			let errors
+			let errors;
 			if (!email || !password || !firstname || !lastname || !phonenumber || !chkpassword) {
-				errors = "fill details properly"
+				errors = "fill details properly";
 			}
 			let refferalok = false;
 			let reffereeId;
@@ -301,7 +289,7 @@ module.exports = {
 			}
 			if (emailCheck) {
 				if (emailCheck.isVerified) {
-					errors = "email already exists"
+					errors = "email already exists";
 				}
 
 				if (emailCheck.isVerified == false) {
@@ -311,24 +299,24 @@ module.exports = {
 			}
 
 			if (!emailValid) {
-				errors = "Invalid email. Please enter a valid email address."
+				errors = "Invalid email. Please enter a valid email address.";
 			}
 			if (!passwordValid) {
-				errors = "Invalid password. Please enter password with atleast 8 charecters."
+				errors = "Invalid password. Please enter password with atleast 8 charecters.";
 			}
 			if (!namesValid) {
-				errors = "Fill in your details correctly"
+				errors = "Fill in your details correctly";
 			}
 			if (!phoneValid) {
-				errors = "Enter your contact number correctly"
+				errors = "Enter your contact number correctly";
 			}
 			if (!cpassValid) {
-				errors = "Password doesnt match"
+				errors = "Password doesnt match";
 			}
-			if (errors && errors!== null) {
+			if (errors && errors !== null) {
 				req.session.errors = errors;
 				req.session.errorWhileSignup = true;
-				res.redirect('/user/getsignup')
+				res.redirect("/user/getsignup");
 			}
 
 			if (emailValid && passwordValid && namesValid && phoneValid && cpassValid) {
@@ -357,10 +345,10 @@ module.exports = {
 					console.error("Error sending email:", error);
 				}
 			}
-			if(!req.session.errorWhileSignup){
-			req.session.isLogin = true;
-			req.session.email = email;
-			res.redirect("/user/showOtp");
+			if (!req.session.errorWhileSignup) {
+				req.session.isLogin = true;
+				req.session.email = email;
+				res.redirect("/user/showOtp");
 			}
 		} catch (err) {
 			console.error("Error:", err);
@@ -410,7 +398,7 @@ module.exports = {
 					});
 					await refferal.save();
 					delete req.session.loginOk;
-					req.session.registrationOk = true
+					req.session.registrationOk = true;
 					await res.redirect("/user/shop");
 				} else if (req.session.forgotOk) {
 					req.session.email = email;
@@ -447,7 +435,9 @@ module.exports = {
 				await res.render("user/user/forgotPassword", { errors });
 			}
 		} catch (error) {
-			await res.render("user/user/forgotPassword");
+			console.log(error);
+			req.session.passwordForgotError = true;
+			await res.redirect("/user/getForgotPassword");
 		}
 	},
 
@@ -473,7 +463,7 @@ module.exports = {
 				res.render("user/user/forgotPassword");
 			}
 		} catch (error) {
-			res.redirect("/");
+			res.redirect("/user/error");
 		}
 	},
 	logout: async (req, res) => {
@@ -482,25 +472,27 @@ module.exports = {
 			res.redirect("/");
 		} catch (error) {
 			console.log(error);
-			res.redirect("/");
+			res.redirect("/user/error");
 		}
 	},
 	forgotPassword: async (req, res) => {
 		try {
 			const { email } = req.body;
-			const emailExist = await userModel.findOne({ email: email });
-			if (!emailExist) {
-				req.session.forgotError = true;
-				res.redirect("/user/getForgotPassword");
-			} else {
-				await sendOtp(email);
 
-				req.session.isForgot = true;
-				req.session.email = email;
-				// res.render("user/user/otpVerify", { email: email });
-				console.log("user forgot the pass");
-				res.redirect("/user/showOtp");
-			}
+			const emailExist = await userModel.findOne({ email: email });
+			if (req.session.passwordForgotError)
+				if (!emailExist) {
+					req.session.forgotError = true;
+					res.redirect("/user/getForgotPassword");
+				} else {
+					await sendOtp(email);
+
+					req.session.isForgot = true;
+					req.session.email = email;
+
+					console.log("user forgot the pass");
+					res.redirect("/user/showOtp");
+				}
 		} catch (error) {
 			console.log(error);
 			res.redirect("/");
@@ -654,12 +646,9 @@ module.exports = {
 			console.log("this is delivered:");
 			console.log(delivered);
 
-			// console.log(`This is orders :  ${orders}`)
-
 			res.render("user/user/account", { users, orders, code, delivered }) || "";
 		} catch (error) {
 			console.error("Error fetching user account details:", error);
-			// Handle the error, perhaps by rendering an error page
 		}
 	},
 	updateAccount: async (req, res) => {
@@ -756,7 +745,6 @@ module.exports = {
 			const addressId = req.session.address;
 			const { name, phonenumber, pincode, address, city, state, landmark, addresstype } = req.body;
 
-			// Update the specific element in the array
 			const result = await userModel.updateOne(
 				{ "address._id": addressId },
 				{
@@ -879,15 +867,7 @@ module.exports = {
 			res.status(500).json({ error: "Internal server error" });
 		}
 	},
-	cancelledOrders: async (req, res) => {
-		const orders = await orderModel.find({}).populate({
-			path: "items.productId",
-			model: "products",
-			select: "images productName size productDiscount"
-		});
 
-		await res.render("user/user/cancelledOrders", { orders });
-	},
 	userWallet: async (req, res) => {
 		try {
 			const id = req.session.userId;
@@ -957,6 +937,9 @@ module.exports = {
 			} else {
 				res.redirect("/");
 			}
-		} catch (error) {}
+		} catch (error) {
+			console.log(error);
+			res.render("user/user/error", { error });
+		}
 	}
 };

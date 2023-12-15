@@ -43,7 +43,7 @@ router.get('/viewOrderDetails',authMiddleWare.checkSignIn,controller.viewOrderDe
 router.post('/updateCart',authMiddleWare.checkSignIn,cartController.updateCart)
 router.post('/cancelOrder',authMiddleWare.checkSignIn,controller.cancelOrder)
 router.get('/returnOrder',authMiddleWare.checkSignIn,controller.returnOrder)
-router.get('/cancelledOrders',authMiddleWare.checkSignIn,controller.cancelledOrders)
+
 router.get('/userWallet',authMiddleWare.checkSignIn,controller.userWallet)
 router.get('/refferalClaim',authMiddleWare.checkSignIn,controller.refferalClaim)
 router.get('/rateProduct',controller.rateProduct)
@@ -60,8 +60,10 @@ router.get('/paginate',productController.pagination)
 router.get('/sortBy',productController.sortBy)
 
 router.get('/sortCategory',productController.sortProducts)
+router.get('/sortedProducts',productController.sortedProducts)
 router.post('/sortPrice',productController.sortPrice)
 router.post('/searchProducts',productController.searchProducts)
+
 router.get('/productdetail',productController.productdetail)
 router.get('/showPrice',productController.showPrice)
 

@@ -148,13 +148,19 @@
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-start">
                                    
-                                    <% if(nopage == false ){ %>
+                                    
                                     <% for(let i=1; i<=totalPages; i++) { %>
+                                        <% if(categoryPagination){ %>
                                         <li class="page-item <%= currentPage === i ? 'active' : '' %>">
-                                            <a class="page-link" href="/user?page=<%= i %>"><%= i %></a>
+                                            <a class="page-link" href="/user/sortedProducts?page=<%= i %>"><%= i %></a>
                                         </li>
+                                        <% } else { %>
+                                            <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                                <a class="page-link" href="/user?page=<%= i %>"><%= i %></a>
+                                            </li>
+                                            <% } %>
                                     <% } %>
-                                    <% } %>
+                                   
                                 </ul>
                             </nav>
                         </div>
