@@ -1,0 +1,55 @@
+<%- include('partials/head') %>
+<body>
+    <div class="screen-overlay"></div>
+    <%- include('partials/aside') %>
+    <main class="main-wrap">
+        <%- include('partials/header') %> 
+        <div class="container-fluid">
+          <div class="container p-20">
+                  
+                              <div class="card">
+                                  <div class="card-header">
+                                      <h5>Account Details</h5>
+                                  </div>
+                                  <div class="card-body">
+                                    
+                                      <form id="change" method="post" name="enq" action="/user/updateAccount">
+                                          <div class="row">
+                                              <div class="form-group col-md-6">
+                                                  <label>First Name <span class="required">*</span></label>
+                                                  <input id="firstname" required="" class="form-control square" name="name" value="<%= users.firstname  %>" type="text">
+                                              </div>
+                                              <div class="form-group col-md-6">
+                                                  <label>Last Name <span class="required">*</span></label>
+                                                  <input id="lastname" required="" class="form-control square" name="phone" value="<%= users.lastname %>">
+                                              </div>
+                                            
+                                         
+                                              <div class="form-group col-md-12">
+                                                  <label>Email Address <span class="required">*</span></label>
+                                                  <input id="email" required="" class="form-control square" name="email" type="email" value="<%= users.email %>" readonly>
+                                              </div>
+                                              <div class="form-group col-md-12">
+                                                  <label>Current Password <span class="required">*</span></label>
+                                                  <input id="password" required="This field is required" class="form-control square" name="password" type="password">
+                                              </div>
+                                              <div class="form-group col-md-12">
+                                                  <label>New Password <span class="required">*</span></label>
+                                                  <input id="newpassword" required="" class="form-control square" name="newpassword" type="password">
+                                              </div>
+                                              <div class="form-group col-md-12">
+                                                  <label>Confirm Password <span class="required">*</span></label>
+                                                  <input id="confirmpassword" required="" class="form-control square" name="confirmpassword" type="password">
+                                              </div>
+                                              <div class="col-md-12">
+                                                  <input onclick="changePassword()" class="btn btn-fill-out submit" name="submit" value="Submit">
+                                              </div>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                    </div>
+          
+</body>
+</html>

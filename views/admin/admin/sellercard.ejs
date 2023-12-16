@@ -39,10 +39,11 @@
                             <thead>
                                 <tr>
                                     <th>Seller</th>
-                                    <th>Email</th>
+                                    <th>Contact</th>
                                     <th>Status</th>
                                     <th>Registered</th>
-                                    <th class="text-end"> Action </th>
+                                    <th>Wallet</th>
+                                    <th> Action </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,6 +73,11 @@
                                     <% } else { %>
                                       <p>Not an admin</p>
                                     <% } %></span></td>
+                                    <% if(item.wallet){ %>
+                                        <td><%= item.wallet  %></td>
+                                        <% }else{ %>
+                                            <td>0</td>
+                                            <% } %>
                                     <td>
                                       <a href="/admin/blockUser?email=<%= item.email%>"><i class="fa-solid fa-trash text-danger"></i></a>
                                   </td>

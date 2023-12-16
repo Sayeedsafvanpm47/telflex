@@ -18,14 +18,15 @@ module.exports = {
           checkOutPage : async (req,res)=>{
                     try {
                         if(req.session.checkOut){
-                            delete req.session.checkOut
+                           
 
                               const user = req.session.userId
+                            
                               console.log(user);
                               const cart = await cartModel.findOne({userId : user}).populate({
                                         path: 'userId',
                                         model: USER,
-                                        select: 'firstname email address', 
+                                        select: 'firstname email address wallet', 
                                       }).populate({
                                         path: 'products.product_id',
                                         model: 'products',
@@ -34,7 +35,8 @@ module.exports = {
                                    console.log(cart.total)
                                  
                               res.render('user/user/shop-checkout',{cart})
-                                }
+                                
+                            }
                                 else
                                 {
                                     res.redirect('/user/showCart')
@@ -47,7 +49,7 @@ module.exports = {
           addAddress : async (req,res)=>{
 
             try {
-        
+    
               const userId = req.session.userId
             const {name,phonenumber,pincode,address,city,state,landmark,addresstype,addressmode} = req.body
             await userModel.updateOne({_id : userId},{$push:{address : [{name:name,phone:phonenumber,pincode:pincode,Address:address,city:city,state:state,landmark:landmark,Addresstype:addresstype,addressmode:addressmode}]}})
@@ -81,7 +83,7 @@ console.log(payment_option)
         const cart = await cartModel.findOne({ userId: userId }).populate({
             path: 'userId',
             model: USER,
-            select: 'firstname email address',
+            select: 'firstname email address wallet',
         }).populate({
             path: 'products.product_id',
             model: 'products',
@@ -184,6 +186,20 @@ console.log(payment_option)
 
         return res.status(200).json({ order: razorpayOrder });
        }  
+
+       if(payment_option === 'Wallet')
+       {
+        paymentMethod = 'Wallet'
+
+        if (!selectedAddressDetails) {
+            return res.status(400).json({ error: 'Address details not selected' });
+        }
+        if(total > cart.userId.wallet)
+        {
+           return res.status(500).json({ message: 'Error placing order' });
+        }
+        await userModel.updateOne({_id:userId},{$inc:{wallet:-total}})
+       }
        
    
       
@@ -202,7 +218,7 @@ console.log(payment_option)
             
             
         });
-        if(payment_option ==='razorpay'){
+        if(payment_option ==='razorpay' || payment_option === 'Wallet'){
             order.paymentStatus = 'Paid'
         }
         if(cart.total<=0){

@@ -206,7 +206,7 @@
                                             <!-- Display the products subtotal -->
                                             <tr>
                                                 <th>SubTotal</th>
-                                                <td class="product-subtotal" colspan="2">$<%= productsTotal %></td>
+                                                <td class="product-subtotal" colspan="2">&#8377;<%= productsTotal %></td>
                                             </tr>
                                             <tr>
                                                 <th>Shipping</th>
@@ -217,9 +217,9 @@
                                                 <td colspan="2" class="product-subtotal">
                                                     <% if(cart.couponApplied == 'true'){ %>
                                                         <span class="text-muted" style="font-size: 8px;"><%= cart.couponCode%> coupon applied succesfully</span> <br>
-                                                    <span id="totalfieldload" class="font-xl text-brand fw-900">$<%= cart.total %></span>
+                                                    <span id="totalfieldload" class="font-xl text-brand fw-900">&#8377;<%= cart.total %></span>
                                                     <% } else { %>
-                                                        <span id="totalfieldload" class="font-xl text-brand fw-900">$<%= cart.total %></span>
+                                                        <span id="totalfieldload" class="font-xl text-brand fw-900">&#8377;<%= cart.total %></span>
                                                         <% } %>
                                                 </td>
                                             </tr>
@@ -257,7 +257,12 @@
                                     <div class="custome-radio">
                                         <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios8" value="Wallet" checked="">
                                         <label class="form-check-label" for="exampleRadios8" data-bs-toggle="collapse" data-target="#wallet" aria-controls="cod">Pay From Wallet</label>
-                                     
+                                       <br>
+                                        <% if(cart.total > cart.userId.wallet) {%>
+                                            <span class="text-danger">Insufficient wallet balance :- &#8377;<%= cart.userId.wallet  %></span>
+                                            <% }else{ %>
+                                     <span class="text-success">Wallet Balance :- &#8377;<%= cart.userId.wallet  %></span>
+                                     <% } %>
                                     </div>
 
                                 </div>

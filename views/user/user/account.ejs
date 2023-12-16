@@ -521,72 +521,128 @@ if(review == '')
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
                                                             <label>First Name <span class="required">*</span></label>
-                                                            <input required="" class="form-control square" name="name" value="<%= users.firstname  %>" type="text">
+                                                            <input id="firstname" required="" class="form-control square" name="name" value="<%= users.firstname  %>" type="text">
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>Last Name <span class="required">*</span></label>
-                                                            <input required="" class="form-control square" name="phone" value="<%= users.lastname %>">
+                                                            <input id="lastname" required="" class="form-control square" name="phone" value="<%= users.lastname %>">
                                                         </div>
                                                       
                                                    
                                                         <div class="form-group col-md-12">
                                                             <label>Email Address <span class="required">*</span></label>
-                                                            <input required="" class="form-control square" name="email" type="email" value="<%= users.email %>" readonly>
+                                                            <input id="email" required="" class="form-control square" name="email" type="email" value="<%= users.email %>" readonly>
                                                         </div>
                                                         <div class="form-group col-md-12">
                                                             <label>Current Password <span class="required">*</span></label>
-                                                            <input required="This field is required" class="form-control square" name="password" type="password">
+                                                            <input id="password" required="This field is required" class="form-control square" name="password" type="password">
                                                         </div>
                                                         <div class="form-group col-md-12">
                                                             <label>New Password <span class="required">*</span></label>
-                                                            <input required="" class="form-control square" name="newpassword" type="password">
+                                                            <input id="newpassword" required="" class="form-control square" name="newpassword" type="password">
                                                         </div>
                                                         <div class="form-group col-md-12">
                                                             <label>Confirm Password <span class="required">*</span></label>
-                                                            <input required="" class="form-control square" name="confirmpassword" type="password">
+                                                            <input id="confirmpassword" required="" class="form-control square" name="confirmpassword" type="password">
                                                         </div>
                                                         <div class="col-md-12">
-                                                            <input onclick="changePassword()" class="btn btn-fill-out submit" name="submit" value="Submit">Save</button>
+                                                            <input onclick="changePassword()" class="btn btn-fill-out submit" name="submit" value="Submit">
                                                         </div>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
-<script>
-  
-  function changePassword() {
-       
+                                    <script>
+                                        async function changePassword() {
+                                            const firstname = document.getElementById('firstname').value;
+                                            const lastname = document.getElementById('lastname').value;
+                                            const password = document.getElementById('password').value;
+                                            const newpassword = document.getElementById('newpassword').value;
+                                            const confirmpassword = document.getElementById('confirmpassword').value;
+                                        
+                                            if (newpassword !== confirmpassword) {
+                                                await Swal.fire({
+                                                    title: 'Passwords do not match!',
+                                                    text: 'Type the same password in both fields',
+                                                    icon: 'error',
+                                                    showCancelButton: true,
+                                                    confirmButtonText: 'Ok',
+                                                });
+                                                return; // Stop further execution if passwords don't match
+                                            }
+                                        
+                                            const confirmation = await Swal.fire({
+                                                title: 'Update account?',
+                                                text: 'You are about to change your account credentials.',
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#d33',
+                                                cancelButtonColor: '#3085d6',
+                                                confirmButtonText: 'Yes, change it!',
+                                                cancelButtonText: 'Cancel',
+                                            });
+                                        
+                                            if (confirmation.isConfirmed) {
+                                                const data = {
+                                                    password,
+                                                    newpassword,
+                                                    confirmpassword,
+                                                    firstname,
+                                                    lastname,
+                                                };
+                                        
+                                                const response = await fetch('/user/updateAccount', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json', // Fix typo here
+                                                    },
+                                                    body: JSON.stringify(data), // Convert data to JSON string
+                                                });
 
-    const addressnewform = document.getElementById('change')
-    console.log(addressnewform)
-        
+                                                if(response.status === 401)
+                                                {
+                                                    Swal.fire({
+                                                        title: 'Error',
+                                                        text: 'Error in updating credentials',
+                                                        icon: 'error',
+                                                        showCancelButton: true,
+                                                        confirmButtonText: 'Ok',
+                                                    });
+                                                    return;
 
-        Swal.fire({
-            title: 'Update account?',
-            text: 'You are about to change your account credentials.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, change it!',
-            cancelButtonText: 'Cancel'
-        }).then((result) => {
-           
-            if (result.isConfirmed) {
-             
-                Swal.fire({
-                    title: 'Updated',
-                    text: 'Your account credentials have been updated',
-                    icon: 'success',
-                    showConfirmButton: false,
-                });
-                addressnewform.submit()
-            }
-        });
-    }
+                                                }
+                                        
+                                                if (!response.ok) {
+                                                      Swal.fire({
+                                                        title: 'Error',
+                                                        text: 'Error in updating credentials',
+                                                        icon: 'error',
+                                                        showCancelButton: true,
+                                                        confirmButtonText: 'Ok',
+                                                    });
+                                                    return;
+                                                }
+                                               
+                                               
+                                                    Swal.fire({
+                                                    title: 'Updated',
+                                                    text: 'Your account credentials have been updated',
+                                                    icon: 'success',
+                                                    showConfirmButton: false,
+                                                });
+                                                window.location.reload()
 
-</script>
+                                                
+                                        
+                                                const responseData = await response.json();
+                                                console.log(responseData);
+                                        
+                                                  
+                                            }
+                                        }
+                                        </script>
+                                        
 
 
                                     <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">

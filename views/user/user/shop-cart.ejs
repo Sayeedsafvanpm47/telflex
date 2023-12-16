@@ -311,9 +311,9 @@ cancelButtonColor: '#d33',
                                                     <% for(let i=0; i<coupon.length; i++){ %>
                                                           <% let totalAmountCheck  %>
                                                      
-                                                        
+                                                        <% if(coupon.expiringAt !== null){ %>
                                                    <div id="coupon<%= i  %>" style="background-color: gainsboro; margin-top: 5px; width: 300px;"><span id="couponcodehide<%= i  %>"><%= coupon[i].couponCode  %> </span><span style="font-size: 8px;  color: #16020278;"> For purchase above <%= coupon[i].minimumPurchase%>, get <%= coupon[i].discount%>% off!</span></div>
-                                           
+                                           <% } %>
                                             
                                                      
                                                     <% } %>

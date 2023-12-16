@@ -18,32 +18,48 @@ function setNoCache(req,res,next){
           next()
 }
 
-async function checkSignIn(req, res, next) {
-  if (!req.session.user) {
-    await res.redirect('/user/shop');
-  } else {
-    next();
-  }
-}
-
 async function checkBlock(req, res, next) {
   try {
     if (req.session.user) {
       const blocked = await userModel.findOne({ _id: req.session.userId });
       console.log(blocked)
       console.log(blocked.isBlocked)
-      if (blocked.isBlocked) {
-        req.session.blocked = true;
-  res.redirect('/user/error')
+      if (blocked.isBlocked == true) {
+      res.render('/user/')
       } else {
         next();
       }
-    } else {
-      res.redirect('/user/shop');
     }
+   
   } catch (error) {
     res.redirect('/user/shop');
   }
 }
-module.exports = {sessionMiddleware,setNoCache,checkSignIn,checkBlock}
+
+async function checkSignIn(req, res, next) {
+  if (!req.session.user) {
+    await res.redirect('/user/shop');
+    if(req.session.blocked)
+    {
+      return res.redirect('/user/shop')
+    }
+  } else {
+ 
+    next();
+  }
+}
+
+async function checkAdminSignIn(req,res,next){
+  if(!req.session.admin)
+  {
+    await res.redirect('/user/shop')
+  }
+  else
+  {
+    next()
+  }
+}
+
+
+module.exports = {sessionMiddleware,setNoCache,checkSignIn,checkBlock,checkAdminSignIn}
 

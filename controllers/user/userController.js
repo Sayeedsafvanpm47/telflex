@@ -88,8 +88,16 @@ module.exports = {
 					if (req.session.cart) {
 						res.redirect("/user/showCart");
 					} else {
+
 						req.session.loginSuccess = true;
-						res.redirect("/user/home");
+						if(user.isAdmin === true){
+							req.session.admin = true
+							req.session.adminId = req.session.userId
+							res.redirect('/admin/home')
+						}else{
+							res.redirect("/user/home");
+						}
+						
 					}
 				} else {
 					console.log("Invalid password");
@@ -436,7 +444,7 @@ module.exports = {
 			}
 		} catch (error) {
 			console.log(error);
-			req.session.passwordForgotError = true;
+			
 			await res.redirect("/user/getForgotPassword");
 		}
 	},
@@ -480,11 +488,20 @@ module.exports = {
 			const { email } = req.body;
 
 			const emailExist = await userModel.findOne({ email: email });
-			if (req.session.passwordForgotError)
+			if(emailExist)
+			{
+				console.log('email exist')
+			}
+			else
+			{
+				console.log('doesnt exist')
+			}
+			
 				if (!emailExist) {
 					req.session.forgotError = true;
 					res.redirect("/user/getForgotPassword");
 				} else {
+					console.log('in this block')
 					await sendOtp(email);
 
 					req.session.isForgot = true;
@@ -662,28 +679,32 @@ module.exports = {
 
 			const currentPassword = user.password;
 			console.log("current password: ", currentPassword);
-			const { password, newpassword, confirmpassword } = req.body;
+			const { password, newpassword, confirmpassword,firstname,lastname } = req.body;
 
 			const passwordMatch = await bcrypt.compare(password, currentPassword);
 			console.log("Password Match:", passwordMatch);
 
-			if (!passwordMatch) {
-				console.log("Current password is incorrect");
-				return res.redirect("/user/account");
-			}
+			if (!passwordMatch || newpassword == '') {
+				return res.status(401).json({ error: 'Unauthorized access: Passwords do not match' });
+			      }
 
-			if (newpassword !== confirmpassword) {
-				console.log("New passwords do not match");
-				return res.redirect("/user/account");
-			}
+			
 			console.log(newpassword);
 			console.log(confirmpassword);
 			const hashedPassword = await bcrypt.hash(newpassword, 10);
 			console.log(hashedPassword);
 
-			await userModel.updateOne({ _id: userId }, { $set: { password: hashedPassword } });
+			if(passwordMatch && hashedPassword !== '')
+			{
+		
+
+			await userModel.updateOne({ _id: userId }, { $set: { password: hashedPassword,firstname:firstname,lastname:lastname } });
 
 			res.redirect("/user/account");
+			}else
+			{
+				return res.status(401).json({ error: 'Unauthorized access: Passwords do not match' });
+			}
 		} catch (error) {
 			console.error(error);
 			res.status(500).send("Internal Server Error");

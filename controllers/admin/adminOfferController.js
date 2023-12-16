@@ -134,8 +134,9 @@ module.exports = {
                   },
                   getCouponOffer : async (req,res)=>{
                     try {
-                      const coupon = await couponModel.find({})
+                      const coupon = await couponModel.find({}) || ''
                       await checkCouponExpiry(coupon)
+
                       res.render('admin/admin/couponOffers',{coupon})
                     } catch (error) {
                       console.log(error)

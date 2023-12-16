@@ -1,91 +1,17 @@
 
-<!DOCTYPE html>
-<html class="no-js" lang="en">
 
 
-<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/blog-category-fullwidth.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:11:15 GMT -->
-<head>
-    <meta charset="utf-8">
-    <title>Evara - eCommerce HTML Template</title>
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="">
-    <meta property="og:type" content="">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script> 
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="/user/imgs/theme/favicon.svg">
-    <!-- Template CSS -->
-    <link rel="stylesheet" href="/user/css/maind134.css?v=3.4">
-  
-    <link rel="stylesheet" href="/user/magiczoomplus.css">
-  
-    <script src="/user/magiczoomplus.js"></script>
 
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>  
 
-   
-<link rel="stylesheet" href="/css/map.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
- 
-<!-- JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/zoomove/1.2.1/zoomove.min.js"></script>
-
-<style>
-    body {font-family: Arial, Helvetica, sans-serif;}
-    
-    /* The Modal (background) */
-    .modal {
-      display: none; /* Hidden by default */
-      position: fixed; /* Stay in place */
-      z-index: 1; /* Sit on top */
-      padding-top: 100px; /* Location of the box */
-      left: 0;
-      top: 0;
-      width: 100%; /* Full width */
-      height: 100%; /* Full height */
-      overflow: auto; /* Enable scroll if needed */
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    }
-    
-    /* Modal Content */
-    .modal-content {
-      background-color: #fefefe;
-      margin: auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 40%;
-      margin-top: 15%;
-    }
-    
-    /* The Close Button */
-    .close {
-      color: #aaaaaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-    
-    .close:hover,
-    .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    </style>
-
-</head>
-
+<%- include('partials/head') %>
 
 
 
 <body>
-  
+
+
+
+
         
                         
           <div class="d-flex justify-content-center">
@@ -138,7 +64,7 @@
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Subtotal</th>
                                         <th scope="col">Status</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col" id="returnhideheader">Action</th>
                                      
                                     </tr>
                                 </thead>
@@ -175,7 +101,7 @@
                                                                 <% if(item.returnExpiry !== null){ %>
                                                                  
                                                              
-                                                                        <td class="cancel" data-title="Cancel">
+                                                                        <td id="returnhide" class="cancel" data-title="Cancel">
                                                                     <button class="btn btn-danger" id="myBtn" >Return</button>
                                                                     <br>
                                                                     <span class="text-muted">Return request should  <br>
@@ -306,7 +232,7 @@
                                    <div class="row">
                                         <div class="col-lg-2 mt-10">
                                             <% if(order.orderStatus === 'Delivered'){ %>
-                                    <input type="button" class="btn btn-primary" id="printbtn" onclick="window.print()"  value="Print Invoice">
+                                    <input type="button" class="btn btn-primary" id="printbtn" onclick="printInvoice()"  value="Print Invoice">
                                     <% } %>
                               </div>
                                    
@@ -351,6 +277,15 @@
     <script src="/user/js/shopd134.js?v=3.4"></script>
 
 <!-- modal -->
+<script>
+    function printInvoice()
+    {
+        document.getElementById('returnhideheader').style.display = 'none'
+        document.getElementById('returnhide').style.display = 'none'
+        window.print()
+        
+    }
+</script>
 
 <script>
     // Get the modal

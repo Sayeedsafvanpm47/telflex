@@ -177,7 +177,7 @@ const categoryOrders = []
 	},
 	adminHome: async (req, res) => {
 		try {
-			if(req.session.admin){
+			
 		  const userData = await userModel.find({});
 		  const orderData = await orderModel.countDocuments();
 		  
@@ -245,10 +245,7 @@ const categoryOrders = []
                     currentPage,
 		 
 		  });
-		}else
-		{
-			res.redirect('/admin/')
-		}
+		
 		} catch (error) {
 		  console.log(error);
 		}
@@ -379,6 +376,21 @@ const categoryOrders = []
 			
 		} catch (error) {
 			console.log(error)
+		}
+	},
+	editProfile : async (req,res)=>{
+		try {
+			const users = await userModel.findOne({_id:req.session.adminId})
+			if(users.isAdmin === true){
+			res.render('admin/admin/editProfile',{users})
+			}
+			else
+			{
+				res.redirect('/admin/home')
+			}
+			
+		} catch (error) {
+			
 		}
 	}
 	
