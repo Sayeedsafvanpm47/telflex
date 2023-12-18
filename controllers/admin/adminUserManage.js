@@ -74,7 +74,7 @@ module.exports = {
 			user.isBlocked = !user.isBlocked;
 			await user.save();
 
-			res.redirect("/admin/viewCustomers");
+			res.status(200).send(`User status updated successfully`);
 		} catch (error) {
 			console.error("Error:", error);
 			res.status(500).send("Internal Server Error");

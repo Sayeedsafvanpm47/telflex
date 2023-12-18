@@ -150,7 +150,7 @@ href=
                                                               <span class="close" onclick="closeModal('<%= i %>')">&times;</span>
                                                               <!-- Your form content here -->
                                                               <form id="modalForm<%= i %>">
-                                                                      <form id="modalForm">
+                                                                     
                                                                                 <label for="name">Coupon Name: </label>
                                                                                 <input type="text" id="couponname<%= i  %>" value="<%= coupon[i].couponCode%>" name="name" required><br><br>
                                                                                 <input type="number" onkeypress="return onlyNumberKey(event)" id="discount<%= i  %>" value="<%= coupon[i].discount%>" name="name" required><br><br>
@@ -172,8 +172,8 @@ href=
                                                                                 <input type="number" id="minimum<%= i  %>" value="<%= coupon[i].minimumPurchase  %>" name="email" required><br><br>
                                                                                 
                                                                                 
-                                                                                <input type="submit" value="Submit" onclick="updateCoupon('<%= coupon[i]._id%>','<%= i %>')">
-                                                                              </form>
+                                                                                <input type="submit" value="Submit" onclick="updateCoupon('<%= coupon[i]._id%>','<%= i %>',event)">
+                                                                            
                                                               </form>
                                                             </div>
                                                           </div>
@@ -210,7 +210,7 @@ href=
                                                           </span>
                                                       </div>
                                                   </td>
-                                                  <td><input style="width: 80px" type="number" placeholder="3000" value="" id="minimum" onkeypress="return onlyNumberKey(event)"></td>
+                                                  <td><input style="width: 80px" type="number" placeholder="3000" value="" id="minimum"></td>
                                                   <td><input type="text" placeholder="To be listed" style="width: 100px;" readonly></td>
                                               
                                                   <td><input style="width: 120px" type="" value="" readonly id="timestampField"></td>
@@ -335,10 +335,10 @@ function onlyNumberKey(evt) {
         var disc = parseInt(document.getElementById('discount').value)
         var issued = document.getElementById('showFromDate').innerText;
         var expiry = document.getElementById('showToDate').innerText;
-        var usage = parseInt(document.getElementById('usage').value)
+
         var minimum = parseInt(document.getElementById('minimum').value)
         console.log(typeof disc)
-        console.log(typeof usage)
+       
 console.log(typeof minimum)
         // Make the POST request to the backend
         const response = await fetch('/admin/saveCoupon', {
@@ -346,7 +346,7 @@ console.log(typeof minimum)
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({ code, disc, issued, expiry, usage, minimum })
+            body: JSON.stringify({ code, disc, issued, expiry, minimum })
         });
 
         if (!response.ok) {
@@ -357,6 +357,7 @@ console.log(typeof minimum)
         const responseData = await response.json();
      
         console.log('Request was successful:', responseData);
+        await Swal.fire('Success', 'Coupon saved succesfully!', 'success');
         window.location.reload();
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
@@ -400,12 +401,13 @@ for (let i = 0; i <= 1; i++) {
 
 
 
-async function updateCoupon(couponid,i) {
+async function updateCoupon(couponid,i,event) {
   try {
     console.log(i)
+    event.preventDefault()
     const id = couponid;
     const couponname = document.getElementById(`couponname${i}`).value;
-    const usage = document.getElementById(`usage${i}`).value;
+  const form = document.getElementById(`modalForm${i}`)
     const minimum = document.getElementById(`minimum${i}`).value;
     const discount = document.getElementById(`discount${i}`).value;
     const dateupdate = new Date(document.getElementById(`updateDate${i}`).value);
@@ -416,12 +418,12 @@ async function updateCoupon(couponid,i) {
     console.log(discount);
     console.log(minimum);
     console.log(couponname);
-    console.log(usage);
+
 
     const data = {
       id,
       couponname,
-      usage,
+   
       minimum,
       discount,
       dateupdate: isoDateString,
@@ -429,6 +431,20 @@ async function updateCoupon(couponid,i) {
 
     console.log(data);
     console.log(JSON.stringify(data));
+
+    const confirmResult = await Swal.fire({
+title: 'Edit Coupon',
+text: 'Are you sure you want to edit this coupon?',
+icon: 'question',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'Yes, edit it!'
+});
+
+
+if(confirmResult){
+
 
     const response = await fetch('/admin/updateCoupon', {
       method: 'POST',
@@ -441,7 +457,7 @@ async function updateCoupon(couponid,i) {
    
 
     if (response.status === 404) {
-   
+   form.submit()
       const responseData = await response.json();
       console.log('Request was unsuccessful:', responseData);
 
@@ -457,8 +473,10 @@ async function updateCoupon(couponid,i) {
      
       const responseData = await response.json();
       console.log('Request was successful:', responseData);
+      await Swal.fire('Success', 'Coupon updated succesfully!', 'success');
       location.reload()
     }
+  }
   } catch (error) {
     console.log(error);
     Swal.fire({
@@ -472,6 +490,18 @@ async function updateCoupon(couponid,i) {
 async function changeStatus(couponId) {
   try {
     const id = couponId;
+
+    const confirmResult = await Swal.fire({
+title: 'Edit Coupon',
+text: 'Are you sure you want to edit status of this coupon?',
+icon: 'question',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'Yes, edit it!'
+});
+
+if(confirmResult){
 
     const response = await fetch(`/admin/couponStatus?id=${id}`, {
       method: 'GET'
@@ -493,6 +523,7 @@ async function changeStatus(couponId) {
     },1200)
   
     console.log(responseData);
+  }
   } catch (error) {
     console.error('Error:', error.message);
     

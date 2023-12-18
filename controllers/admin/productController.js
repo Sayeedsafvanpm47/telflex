@@ -225,6 +225,7 @@ if(!productname || !features || !featured || !tags || !model ||  !description ||
 	deleteImage: async (req, res) => {
 		try {
 			const { _id, imagePath } = req.query;
+			
 
 			const product = await productModel.findOneAndUpdate(
 				{ _id: _id },

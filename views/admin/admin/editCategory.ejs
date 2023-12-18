@@ -28,7 +28,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-3">
-                            <form action="/admin/editCategory?categoryId=<%= category._id%>" method="POST">
+                            <form id="editcategoryform" action="/admin/editCategory?categoryId=<%= category._id%>" method="POST">
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Category Name</label>
                                     <input type="text" placeholder="Type here" class="form-control" id="product_name" name="categoryname" value="<%= category.categoryName %>" />
@@ -39,7 +39,7 @@
                                     <textarea placeholder="Type here" class="form-control" name="description"><%= category.description %></textarea>
                                 </div>
                                 <div class="d-grid">
-                                    <button class="btn btn-primary">Edit category</button>
+                                    <button onclick="editCategory(event)" class="btn btn-primary">Edit category</button>
                                 </div>
                             </form>
                         </div>
@@ -73,13 +73,13 @@
                                                   
                                               </td>
                                               <td>
-                                                <a href="/admin/toggleunList?categoryId=<%= item._id%>"><span>List</span>
+                                                <a  onclick="list('<%= item._id %>')"><span><i class="fa fa-check text-dark mb-1" aria-hidden="true"></i></span>
                                                  
                                                 </a>
                                               </td>
                                              
                                               <td>
-                                                <a href="/admin/deleteCategory?categoryId=<%= item._id%>"><span>Delete</span>
+                                                <a  onclick="deleteCategory('<%= item._id %>')"><span><i class="fa fa-trash text-danger mb-1" aria-hidden="true"></i></span>
                                                   
                                                 </a>
                                               </td>
@@ -101,21 +101,111 @@
                 </div> <!-- card body .// -->
             </div> <!-- card .// -->
         </section> <!-- content-main end// -->
-        <footer class="main-footer font-xs">
-            <div class="row pb-30 pt-15">
-                <div class="col-sm-6">
-                    <script>
-                    document.write(new Date().getFullYear())
-                    </script> ©, Evara - HTML Ecommerce Template .
-                </div>
-                <div class="col-sm-6">
-                    <div class="text-sm-end">
-                        All rights reserved
-                    </div>
-                </div>
-            </div>
-        </footer>
+    
     </main>
+    <script>
+        async function editCategory(event)
+        {
+            try {
+      event.preventDefault()
+      const confirmResult = await Swal.fire({
+      title: 'Edit Category',
+      text: 'Are you sure you want to edit this category?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, edit it!'
+      });
+      
+      if (confirmResult.isConfirmed) {
+      const form = document.getElementById('editcategoryform')
+      form.submit()
+      
+      
+      
+      
+      
+        await Swal.fire('Success', 'Category edited successfully!', 'success');
+      
+      
+      }
+      } catch (error) {
+      console.error('Error editing category:', error);
+      
+      await Swal.fire('Error', 'An error occurred while editing the category', 'error');
+      }
+      
+            
+      
+        }
+      </script>
+
+<script>
+    async function list(Id)
+    {
+        try {
+
+            const confirmResult = await Swal.fire({
+  title: 'Edit Category',
+  text: 'Are you sure you want to change the visibility of this category?',
+  icon: 'question',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, change it!'
+  });
+  
+  if (confirmResult.isConfirmed) {
+     await fetch(`/admin/toggleList?categoryId=${Id}`,{method:'GET'})
+    await Swal.fire('Success', 'Category visibility changed successfully!', 'success');
+    location.reload()
+  
+  }
+            
+        } catch (error) {
+
+            console.log(error)
+            await Swal.fire('Error', 'Error while performing operation!', 'error');
+            
+        }
+     
+
+    }
+   async function deleteCategory(Id)
+    {
+
+        try {
+
+const confirmResult = await Swal.fire({
+title: 'Edit Category',
+text: 'Are you sure you want to delete this category?',
+icon: 'question',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'Yes, deleete it!'
+});
+
+if (confirmResult.isConfirmed) {
+await fetch(`/admin/deleteCategory?categoryId=${Id}`,{
+method:'get'})
+await Swal.fire('Success', 'Category deleted successfully!', 'success');
+location.reload()
+
+}
+
+} catch (error) {
+
+console.log(error)
+await Swal.fire('Error', 'Error while performing operation!', 'error');
+
+}
+
+
+    }
+</script>
+      
     <%- include('partials/script') %>
 </body>
 

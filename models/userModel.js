@@ -21,7 +21,7 @@ let userSchema = new mongoose.Schema({
 		required: true
 	},lastname : {
 		type: String,
-		required: true
+		
 	},
 	phonenumber: {
 		type: Number,

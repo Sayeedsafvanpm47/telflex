@@ -10,9 +10,19 @@ module.exports = {
           getproductOffer : async (req,res)=>{
                     try {
                       let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
-                      let numberOfDocs = 2
-                      const totalProductsCount = await productModel.countDocuments();
+                      let numberOfDocs = 10
+                      const totalproducts = await productModel.aggregate([
+                        { $unwind: '$size' },
+                        { $project: { 'size.size': 1 } },
+                        { $count: 'total' } 
+                      ]);
+                      const totalProductsCount = totalproducts[0].total
+                      console.log('this is total products count')
+                      console.log(totalproducts)
+                      console.log(totalProductsCount)
+                      
                       const totalPages = Math.ceil(totalProductsCount / numberOfDocs); 
+                      let skipCount = (currentPage - 1) * numberOfDocs
                                 
                               // const products = await productModel.find({})
                               const products = await productModel.aggregate([{$unwind:'$size'},{$project:{'size.size' : 1,
@@ -28,8 +38,8 @@ module.exports = {
                     'shortDescription' : 1,
                     'size.productDiscount' : 1
 
-                    }}]).skip((currentPage - 1) * numberOfDocs)
-                    .limit(numberOfDocs)
+                    }}, { $skip: skipCount },
+                    { $limit: numberOfDocs },])
                   
                              
                               res.render('admin/admin/productOffers',{products,productCount: totalProductsCount,
@@ -144,7 +154,7 @@ module.exports = {
                   },
                   saveCoupon : async (req,res)=>{
                     try {
-                      const {code,disc,issued,expiry,usage,minimum}  = req.body
+                      const {code,disc,issued,expiry,minimum}  = req.body
                       const couponCode = code.replace(/\W/g, '').toUpperCase();
                       const issuedParts = issued.split('/');
                       const issuedDate = new Date(
@@ -154,7 +164,7 @@ module.exports = {
                       )
                       console.log(typeof disc)
                       console.log(typeof minimum)
-                      console.log(typeof usage)
+                     
                     
               
                      
@@ -175,7 +185,7 @@ module.exports = {
                       console.log(disc)
                       console.log(issued)
                       console.log(expiry)
-                      console.log(usage)
+                     
                       console.log(minimum)
                     
               
@@ -184,13 +194,13 @@ module.exports = {
                       console.log(expiryDate)
                       
                       const newDisc = isNaN(parseFloat(disc)) ? disc : parseFloat(disc);
-                      const newUsage = isNaN(parseFloat(usage)) ? usage : parseFloat(usage);
+                   
                       const newMinimum = isNaN(parseFloat(minimum)) ? minimum : parseFloat(minimum);
               
                       if (isNaN(issuedDate) || isNaN(expiryDate) || issuedDate >= expiryDate || issuedDate < currentDate) {
                           return res.status(400).json({ error: 'Invalid date range. Please select valid dates.' });
                       }
-                      else if(isNaN(newDisc) || isNaN(newMinimum) || isNaN(newUsage) ||code === '' || disc === '' || usage === '' || minimum === ''){
+                      else if(isNaN(newDisc) || isNaN(newMinimum) ||code === '' || disc === ''  || minimum === ''){
                         return res.status(400).json({ error: 'Fill in all data properly and ensure numeric values for discount, usage, and minimum'  });
                       }
                      else if(code.length > 12){
@@ -206,7 +216,7 @@ module.exports = {
                             discount: newDisc,
                             issuedAt: issuedDate,
                             expiringAt: expiryDate,
-                            usageLimit: newUsage,
+                         
                             minimumPurchase: newMinimum
                         };
                         
@@ -228,10 +238,10 @@ module.exports = {
                   },
                   updateCoupon: async (req, res) => {
                     try {
-                      const { id, couponname, usage, minimum, discount, dateupdate } = req.body;
+                      const { id, couponname, minimum, discount, dateupdate } = req.body;
                       console.log(id)
                       console.log(couponname)
-                      console.log(usage)
+                     
                       console.log(minimum)
                       console.log(discount)
                       console.log(dateupdate)
@@ -248,7 +258,7 @@ module.exports = {
                       if (checkDate < currentDate) {
                         console.log('date part is not okay')
                         return res.status(400).json({ message: 'The updated date is before the expiration date. Please select a valid date.' });
-                      } else if (couponname === '' || isNaN(usage) || isNaN(minimum) || isNaN(discount)) {
+                      } else if (couponname === '' || isNaN(minimum) || isNaN(discount)) {
                         console.log('something is missing here')
                         return res.status(400).json({ message: 'Fill in details properly' });
                       }
@@ -263,7 +273,7 @@ module.exports = {
                         {
                           $set: {
                             couponCode: couponCode,
-                            usageLimit: usage,
+                          
                             minimumPurchase: minimum,
                             discount: discount,
                             expiringAt: dateupdate,

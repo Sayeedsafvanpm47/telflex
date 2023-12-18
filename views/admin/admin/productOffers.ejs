@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+  <!DOCTYPE HTML>
 <html lang="en">
 
 
@@ -14,7 +14,7 @@
     <meta property="og:url" content="">
     <meta property="og:image" content="">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="/admin/imgs/theme/favicon.svg">
+    <link rel="shortcut icon" type="image/x-icon" href="/user/imgs/theme/logo.png">
     <!-- Template CSS -->
     <link href="/admin/css/main.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="/user/css/maind134.css?v=3.4">
@@ -164,6 +164,7 @@ href=
                                         <a class="page-link" href="/admin/getproductOffers?page=<%= i %>"><%= i %></a>
                                     </li>
                                 <% } %>
+                                
                            
                             </ul>
                         </nav>
@@ -264,6 +265,18 @@ const variantId = document.getElementById('variantId_' + i).value
   };
 
   try {
+    
+    const confirmResult = await Swal.fire({
+  title: 'Change discount?',
+  text: 'Are you sure you want to change the discount of this product?',
+  icon: 'question',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, change it!'
+  });
+  
+  if (confirmResult.isConfirmed) {
     const response = await fetch('/admin/productOffer', {
       method: 'POST',
       headers: {
@@ -289,6 +302,7 @@ const variantId = document.getElementById('variantId_' + i).value
 
    
     console.log('Request was successful:', responseData);
+  }
   } catch (error) {
   
     Swal.fire({

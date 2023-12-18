@@ -93,6 +93,19 @@
                 _id: categoryId,
                 discount: discount
               };
+
+              
+            const confirmResult = await Swal.fire({
+  title: 'Update category discount?',
+  text: 'Are you sure you want to set new category discount?',
+  icon: 'question',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, change it!'
+  });
+  
+  if (confirmResult.isConfirmed) {
         
               const response = await fetch('/admin/offerCategory', {
                 method: 'POST',
@@ -121,6 +134,7 @@
         window.location.assign('/admin/getCategoryOffer');
       }
     });
+  }
             } catch (error) {
                     console.error('There was a problem with the fetch operation:', error);
                     Swal.fire({

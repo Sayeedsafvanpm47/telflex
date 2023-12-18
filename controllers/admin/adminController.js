@@ -412,7 +412,7 @@ const categoryOrders = []
 		try {
 			
 			delete req.session.admin
-			res.redirect('/admin/')
+			res.redirect('/user/shop')
 			
 			
 		} catch (error) {

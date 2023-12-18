@@ -79,12 +79,12 @@
                                                                 </h5>
                                                                 <p class="font-xs"><%= item.size  %><br> <%= item.productId.shortDescription  %></p>
                                                             </td>
-                                                            <td class="price" data-title="Price"><span><%= item.price %></span></td>
+                                                            <td class="price" data-title="Price"><span>&#8377;<%= item.price %></span></td>
                                                             <td class="quantity" data-title="Quantity"><span><%= item.quantity %></span>
                                                            
                                                             </td>
                                                             <td class="text-right" data-title="Cart">
-                                                                <span class="calctotal" id="calcprice"><%= item.price * item.quantity %></span>
+                                                                <span class="calctotal fs-5" id="calcprice">&#8377;<%= item.price * item.quantity %></span>
                                                             </td>
                                                             <td class="text-right" data-title="Status">
                                                                 <span class="status" id="status"><%= item.status %></span>
@@ -120,6 +120,7 @@
                                                        
                                                             
                                                         </tr>
+                                                        <hr>
                                                
                                                 <% }) %>
                                             <% } %>
@@ -161,15 +162,15 @@
                                                 <tr>
                                                     <td class="cart_total_label">Bill Subtotal</td>
                                                 <input type="number" value="<%= totalAmount %>" name="totalAmount" hidden>
-                                                    <td class="cart_total_amount"><span id="showtotal" class="font-lg fw-900 text-brand"></span><%= totalAmount %></td>
+                                                    <td class="cart_total_amount"><span id="showtotal" class="font-lg fw-900 text-brand"></span>&#8377;<%= totalAmount %></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="cart_total_label">Shipping</td>
-                                                    <td class="cart_total_amount"> <i class="ti-gift mr-5"></i> Free Shipping</td>
+                                                    <td class="cart_total_amount"> <i class="ti-gift mr-5"></i><p class="text-start">Free Shipping</p> </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="cart_total_label">Total</td>
-                                                    <td class="cart_total_amount"><span id="showtotalamount" class="font-lg fw-900 text-brand"></span><%= totalAmount  %></td>
+                                                    <td class="cart_total_amount"><span id="showtotalamount" class="font-lg fw-900 text-brand"></span>&#8377;<%= totalAmount  %></td>
                                                     <input type="number" name="totalamountcheckout" value="" id="totalinputfield" hidden>
                                                 </tr>
                                             </tbody>
