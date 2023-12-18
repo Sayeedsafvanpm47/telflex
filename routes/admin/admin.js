@@ -19,7 +19,8 @@ const imageController = require('../../controllers/imageController')
 const dashboardController = require('../../controllers/admin/adminDashboardController')
 const offerController = require('../../controllers/admin/adminOfferController')
 const bannerController = require('../../controllers/admin/adminBannerController')
-const sessionCheck = require('../../middlewares/sessionMiddleware')
+const sessionCheck = require('../../middlewares/sessionMiddleware');
+const productController = require("../../controllers/admin/productController");
 // admin
 router.get("/", controller.getAdminLogin);
 router.post("/postLogin",controller.postAdminLogin);
@@ -30,7 +31,7 @@ router.post("/updatePass", controller.updatePass);
 router.post("/resendOtp", controller.resendOtp);
 router.get('/home',sessionCheck.checkAdminSignIn,controller.adminHome)
 router.get('/chart',sessionCheck.checkAdminSignIn,controller.chart)
-router.get('/reviews',sessionCheck.checkAdminSignIn,controller.reviews)
+
 router.get('/logout',controller.logout)
 router.get('/sellers',(req,res)=>{
   res.render('admin/admin/sellerslist')
@@ -152,7 +153,8 @@ router.get('/viewSaved',sessionCheck.checkAdminSignIn,async (req,res)=>{
 })
 
 router.get('/editProfile',sessionCheck.checkAdminSignIn,controller.editProfile)
-
+router.get('/reviews',sessionCheck.checkAdminSignIn,productController.reviews)
+router.get('/reviewVisibility',sessionCheck.checkAdminSignIn,productController.reviewVisibility)
 
 
 module.exports = router;

@@ -97,6 +97,10 @@ let productSchema = new mongoose.Schema({
 		userId :{ type: mongoose.Schema.Types.ObjectId,
 		ref: 'USER'
 		},
+		hidden:{
+			type:Boolean,
+			default : false
+		},
 		reviewedOn :{type:Date,default : Date.now()}
 		
 	}],

@@ -2,6 +2,8 @@ const productModel = require("../../models/productModel");
 const categoryModel = require("../../models/categoryModel");
 const imageController = require('../../controllers/imageController')
 const cartModel = require('../../models/cartModel')
+const { USER } = require('../../utils/constants/schemaName');
+
 
 
 
@@ -335,5 +337,46 @@ res.redirect('/admin/searchProductsView')
       res.send('product not found')
     }
     res.redirect('/admin/viewProducts')
-  }
+  },
+  reviews: async(req,res)=>{
+	try {
+		let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
+		let numberOfDocs = 10
+		const totalProductsCount = await productModel.countDocuments({rated:true})
+		const totalPages = Math.ceil(totalProductsCount / numberOfDocs); 
+		const reviews = await productModel.find({}).populate({path:'rating.userId',model:USER,select:'firstname'}).skip((currentPage - 1) * numberOfDocs)
+		.limit(numberOfDocs)
+		console.log(reviews)
+
+		res.render('admin/admin/page-reviews',{reviews,totalPages,currentPage,})
+		
+	} catch (error) {
+		console.log(error)
+	}
+},
+reviewVisibility : async (req,res)=>{
+	try {
+		const {reviewId,productId} = req.query
+		console.log(reviewId)
+		console.log(productId)
+
+		
+		const reviewVisibility = await productModel.findOne({_id:productId})
+		const changeReviewStatus = reviewVisibility.rating.find(review => review._id.toString() == reviewId)
+		
+		if(changeReviewStatus)
+		{
+			changeReviewStatus.hidden = !changeReviewStatus.hidden;
+			await reviewVisibility.save()
+
+		}
+		else
+		{
+			console.log('could not update')
+		}
+		
+	} catch (error) {
+		console.log(error)
+	}
+}
 };

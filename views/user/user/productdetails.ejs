@@ -320,12 +320,13 @@ function decrease() {
                                                 <div class="comment-list">
                                                     <% if(products.rating && products.rating.length>0 && products.rated === true){ %>
                                                         <% products.rating.forEach((item,index)=>{%>
+                                                            <% if(item.hidden !== true){ %>
                                                     <div class="single-comment justify-content-between d-flex">
                                                         <div class="user justify-content-between d-flex">
                                                             <div class="thumb text-center">
                                                                 <img src="/user/imgs/page/avatar-6.jpg" alt="">
                                                                 <h6><a href="#"><%= item.userId.firstname%></a></h6>
-                                                                <p class="font-xxs">Since 2012</p>
+                                                            
                                                             </div>
                                                             <div class="desc d-block">
                                                               
@@ -344,7 +345,7 @@ function decrease() {
                                                                 <p><%= item.review  %></p>
                                                                 <div class="d-flex justify-content-between">
                                                                     <div class="d-flex align-items-center">
-                                                                        <p class="font-xs mr-30">December 4, 2020 at 3:12 pm </p>
+                                                                        <p class="font-xs mr-30"> <%= (item.reviewedOn).toString().slice(0,16) %> </p>
                                                                        
                                                                   
                                                                     
@@ -353,6 +354,7 @@ function decrease() {
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <% } %>
                                                     <% }) %>
                                                     <% } %>
                                                 
@@ -405,7 +407,7 @@ function decrease() {
                                                     <div class="progress-bar" id="oneStarBar" role="progressbar" style="width: 0%;" aria-valuemin="0" aria-valuemax="100">0%</div>
                                                 </div>
                                                 
-                                                <a href="#" class="font-xs text-muted">How are ratings calculated?</a>
+                                                
                                             </div>
                                         </div>
                                     </div>

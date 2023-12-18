@@ -392,7 +392,8 @@ const categoryOrders = []
 		} catch (error) {
 			
 		}
-	}
+	},
+	
 	
 
 	
