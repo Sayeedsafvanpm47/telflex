@@ -198,6 +198,19 @@ const categoryOrders = []
 		      }
 		    }
 		  ]);
+		  const totalRefund = await orderModel.aggregate([ { $unwind: '$items' },    { $match: { 'items.status': { $in: ['Cancelled', 'Returned'] } } },
+		  {
+		    $group: {
+		      _id: null,
+		      totalAmount: { $sum: '$refundAmount' }
+		    }
+		  }
+		]);
+		const revenueGenerated = totalRevenue[0].totalAmount - totalRefund[0].totalAmount
+		console.log('check this')
+		console.log(totalRefund)
+		console.log(revenueGenerated)
+
 		  const totalProductsSold = await orderModel.aggregate([
 			{ $unwind: '$items' },
 			{ $match: { 'items.status': { $nin: ['Cancelled', 'Returned'] } } },
@@ -212,23 +225,48 @@ const categoryOrders = []
 		  console.log('totalProducts')
 		  console.log(totalProductsSold)
 		  const monthlyEarnings = await orderModel.aggregate([
-		    {
-		      $match: {
-		        orderDate: { $gte: new Date('2023-01-01'), $lte: new Date('2023-12-31') }
-		      }
-		    },
-		    {
-			$unwind: '$items'
-		      },
-		      { $match: { 'items.status': { $nin: ['Cancelled', 'Returned'] } } },
-		    {
-		      $group: {
-		        _id: { $month: '$orderDate' },
-		        totalEarnings: { $sum: { $multiply: ["$items.price", "$items.quantity"] } }
-		      }
-		    }
-		  ]);
-
+			{
+			  $match: {
+			    orderDate: { $gte: new Date('2023-01-01'), $lte: new Date('2023-12-31') }
+			  }
+			},
+			{ $unwind: '$items' },
+			{
+			  $group: {
+			    _id: { $month: '$orderDate' },
+			    totalEarnings: {
+			      $sum: {
+			        $cond: [
+				{ $in: ['$items.status', ['Cancelled', 'Returned']] },
+				0,
+				{ $multiply: ['$items.price', '$items.quantity'] }
+			        ]
+			      }
+			    },
+			    totalRefunds: {
+			      $sum: {
+			        $cond: [
+				{ $in: ['$items.status', ['Cancelled', 'Returned']] },
+				'$refundAmount',
+				0
+			        ]
+			      }
+			    }
+			  }
+			},
+			{
+			  $project: {
+			    _id: 1,
+			    totalEarnings: 1,
+			    totalRefunds: 1,
+			    netEarnings: { $subtract: ['$totalEarnings', '$totalRefunds'] }
+			  }
+			}
+		        ]);
+		        console.log(monthlyEarnings)
+		        
+		        
+		
 
 	        
 		
@@ -243,6 +281,9 @@ const categoryOrders = []
 		    productCount: orderData,
                     totalPages,
                     currentPage,
+		revenueGenerated,
+		totalRefund
+		
 		 
 		  });
 		

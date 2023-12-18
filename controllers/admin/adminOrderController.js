@@ -1,6 +1,7 @@
 const orderModel = require('../../models/orderModel');
 const productModel = require('../../models/productModel');
-const { listeners } = require('../../models/userModel');
+const userModel = require('../../models/userModel')
+
 const { USER } = require('../../utils/constants/schemaName');
 module.exports = {
           orderDetails : async (req,res)=>{
@@ -135,6 +136,7 @@ const orders = await orderModel
                        
 
                       }
+                      const userId = refund.userId
                       await orderModel.updateOne(
                         { _id: orderId },
                         {
@@ -142,6 +144,7 @@ const orders = await orderModel
                             $inc: { 'refundAmount': refundamount }
                         }
                     )
+                    await userModel.updateOne({_id:userId},{$inc:{'wallet':refundamount}},{new:true})
                       }
                       console.log(`Refund Price: ${refundamount}`);
                       console.log(`Payment Status: ${refund.paymentStatus}`);
@@ -200,7 +203,9 @@ const orders = await orderModel
                        
 
                       }
+                      const userId = refund.userId
                     await orderModel.updateOne({_id:orderId},{$inc:{'refundAmount':refundPrice}},{new:true})
+                    await userModel.updateOne({_id:userId},{$inc:{'wallet':refundPrice}},{new:true})
                   }
 
 

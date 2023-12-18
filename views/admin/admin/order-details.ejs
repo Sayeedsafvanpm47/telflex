@@ -90,33 +90,33 @@
                                                                 <span class="status" id="status"><%= item.status %></span>
                                                                 
                                                             </td>
-                                                            <td>
+                                                         
                                                             <form id="formSubmit" method="post" action="/admin/updateOrderStatus?_id=<%= item._id%>">
                                                                 <div class="col-lg-2 col-6 col-md-3">
                                                                    <input type="text" name="orderId" value="<%= orders[i]._id%>" hidden>
                                                                    <% if(item.status !== 'Cancelled' && item.status !== 'Returned') { %>
-                                                                    <select style="width: 100px;" name="orderStatus" onchange="this.form.submit()" class="form-select">
+                                                                    <td> <select style="width: 100px;" name="orderStatus" onchange="this.form.submit()" class="form-select">
                                                                         <option value=""><%= orders[i].orderStatus %></option>
                                                                         <option>Placed</option>
                                                                         <option>Shipped</option>
                                                                         <option>Delivered</option>
                                                                         <option>Cancelled</option>
                                                                         <option>Returned</option>
-                                                                    </select>
+                                                                    </select></td>
                                                                 <% } else { %>
                                                                     <% if(item.status === 'Cancelled'){ %>
-                                                                        <p>Item Cancelled</p>
-                                                                        <br>
-                                                                        <span><%= item.reason  %></span>
-                                                                        <% } else { %>
-                                                                            <p>Item Returned</p>
+                                                                        <td> <p>Item Cancelled</p>
                                                                             <br>
-                                                                            <span><%= item.reason  %></span>
+                                                                            <span>Reason for cancel : <%= item.reason  %></span></td>
+                                                                        <% } else { %>
+                                                                           <td> <p>Item Returned</p>
+                                                                            <br>
+                                                                            <span>Reason for return : <%= item.reason  %></span></td>
                                                                             <% } %>
                                                                 <% } %>
                                                                 </div>
                                                             </form>
-                                                        </td>
+                                                        
                                                        
                                                             
                                                         </tr>
