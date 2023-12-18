@@ -109,11 +109,22 @@
                                                 <% } %>
                                             </div>
                                             <div class="product-rate-cover text-end">
-                                                <div class="product-rate d-inline-block">
-                                                    <div class="product-rating" style="width:90%">
-                                                    </div>
+                                                <% if(products.rated == true){ %>
+                                                <div class="rating" id="star">
+                                                    <% for (let i = 1; i <= 5; i++) { %>
+                                                        <% if (i <= parseInt(overallrating)) { %>
+                                                            <span class="star" style="color: gold;" data-value="<%= i %>">&#9733;</span>
+                                                        <% } else { %>
+                                                            <span class="star" style="color: gray;" onclick="" data-value="<%= i %>">&#9733;</span>
+                                                        <% } %>
+                                                    <% } %>
+                                               
+                                                
                                                 </div>
-                                                <span class="font-small ml-5 text-muted"> (25 reviews)</span>
+                                                <span class="font-small ml-5 text-muted"> (<%= products.rating.length  %> reviews)</span>
+                                                <% }else{ %>
+                                                    <p>No info available on ratings</p>
+                                                    <% } %>
                                             </div>
                                         </div>
                                         <div class="clearfix product-price-cover">
@@ -447,10 +458,28 @@ function decrease() {
                                                                     </div>
                                                                     <div class="product-content-wrap">
                                                                         <h2><a href="shop-product-right.html" tabindex="0"><%= items.productName %></a></h2>
-                                                                        <div class="rating-result" title="90%">
-                                                                            <span>
-                                                                            </span>
+                                                                        <% if(items.rated == true){ %>
+                                                                            <% let sum = 0 %>
+                                                                            <% sum = items.rating.reduce((acc, item) => acc + item.rating, 0) %>
+                            
+                            
+                                                                        <div class="rating" id="star">
+                                                                            <% for (let i = 1; i <= 5; i++) { %>
+                                                                            
+                                                                                <% if (i <= parseInt(sum)) { %>
+                                                                                    <span class="star" style="color: gold;" data-value="<%= i %>">&#9733;</span>
+                                                                                <% } else { %>
+                                                                                    <span class="star" style="color: gray;" onclick="" data-value="<%= i %>">&#9733;</span>
+                                                                                <% } %>
+                                                                            <% } %>
+                                                                       
+                                                                        
                                                                         </div>
+                                                                        <% } else { %>
+                                                                            <p>No rating available yet</p>
+                                                                            <% } %>
+                                                                      
+                            
                                                                         <div class="product-price">
                                                                          sale price: &#8377;<span><%= items.size[0].productPrice%> </span>
                                                                            <br> mrp: &#8377; <span class="old-price"><%=items.size[0].mrp  %></span>

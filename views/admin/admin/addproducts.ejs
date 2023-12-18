@@ -83,7 +83,7 @@
                                     
                                     <label for="product_name" class="form-label">Product Size</label>
                                     <input style="width: 15%;" type="text" placeholder="Type here" class="form-control" id="product_name" name="numberSize">
-                                    <input type="button" class="btn btn-primary" id="showSizeButton" value="Show size">
+                                    <input type="button" class="btn btn-primary mt-10" id="showSizeButton" value="Show size">
                                     <div id="sizeFieldsContainer" style="padding: 10px;"></div>
 
                                  
@@ -107,7 +107,11 @@
                                 </div>
                                 <div class="mb-4">
                                   <label for="product_name" class="form-label">Feature the product?</label>
-                                  <input type="text" placeholder="Type here" value="No" class="form-control" id="product_name" name="featured" >
+                                  <select name="featured" id="">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                  </select>
+                                 
                               </div>
                               
                                
@@ -121,7 +125,12 @@
                                 </div>
                                 <div class="d-grid">
                                     <label for="file-upload" class="custom-file-upload">
-                                        <img src="/admin/imgs/theme/upload.svg" alt="Upload Image">
+                                      <div class="row">
+                                        <h3>Selected Images</h3>
+                                        <div class="col-sm-12">
+                                          <div class="preview-images"></div>
+                                        </div>
+                                      </div>
                                     <input type="file" name="images" class="form-control-file border" accept="image/*" id="input-images" multiple >
                                 </div>
                               
@@ -133,11 +142,7 @@
                         </div>
                     </div> <!-- card end// -->
                  
-                    <div class="row">
-                        <div class="col-sm-12">
-                          <div class="preview-images"></div>
-                        </div>
-                      </div>
+                   
 
                 </div>
                

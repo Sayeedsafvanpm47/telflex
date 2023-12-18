@@ -215,16 +215,21 @@ href=
                                       <label for="product_name" class="form-label">Product Discount</label>
                                       <input type="text" value="<%= deal.bannerDiscount[0]  %>" placeholder="Type here" class="form-control" id="discount1" name="discount1">
                                   </div>
+                                   
 
-                                  
-                                  <% if (deal.images.length > 0) { %>
-                                    <% for (let j = 0; j < deal.images.length; j++) { %>
-                                        <span>
-                                            <img style="width: 100px; height: 100px;" src="/<%= deal.images[j] %>" alt="">
-                                        </span>
+                                  <div>
+                                    <h2>Uploaded Images</h2>
+                                    <% if (deal.images.length > 0) { %>
+                                        <% for (let j = 0; j < deal.images.length; j++) { %>
+                                            <span>
+                                                <img style="width: 100px; height: 100px;" src="/<%= deal.images[j] %>" alt="">
+                                            </span>
+                                        <% } %>
                                     <% } %>
-                                <% } %>
-                                 
+                                     
+                                  </div>
+                                  
+                               
 
                                  
                                   
@@ -411,7 +416,8 @@ href=
                            
                         
                          
-                          
+                          <div>
+                            <h2>Uploaded Images</h2>
                             <% if (banners.images.length > 0) { %>
                                 <% for (let j = 0; j < banners.images.length; j++) { %>
                                     <span>
@@ -419,6 +425,8 @@ href=
                                     </span>
                                 <% } %>
                             <% } %>
+                          </div>
+                           
                             
                             
                            
@@ -505,7 +513,20 @@ href=
                                             <input type="text" value="<%= sub.bannerAction[0]  %>" placeholder="Type here" class="form-control" id="btn" name="action3">
                                         </div>
                                        
-                                        
+                                        <div>
+
+                                            <h2>Uploaded Images</h2>
+
+                                            <% if (sub.images.length > 0) { %>
+                                                <% for (let j = 0; j < sub.images.length; j++) { %>
+                                                    <span>
+                                                        <img style="width: 100px; height: 100px;" src="/<%= sub.images[j] %>" alt="">
+                                                    </span>
+                                                <% } %>
+                                            <% } %>
+
+                                        </div>
+                                       
                                      
     
                                      
@@ -593,14 +614,17 @@ href=
                                     <input type="text" value="<%= offer.bannerAction  %>" placeholder="Type here" class="form-control" id="btn" name="action4">
                                 </div>
                                
-                                
-                                <% if (offer.images.length > 0) { %>
-                                    <% for (let j = 0; j < offer.images.length; j++) { %>
-                                        <span>
-                                            <img style="width: 100px; height: 100px;" src="/<%= offer.images[j] %>" alt="">
-                                        </span>
+                                <div>
+                                    <h2>Uploaded Images</h2>
+                                    <% if (offer.images.length > 0) { %>
+                                        <% for (let j = 0; j < offer.images.length; j++) { %>
+                                            <span>
+                                                <img style="width: 100px; height: 100px;" src="/<%= offer.images[j] %>" alt="">
+                                            </span>
+                                        <% } %>
                                     <% } %>
-                                <% } %>
+                                </div>
+                               
     
                              
                               
@@ -682,14 +706,19 @@ href=
                                     <label for="product_name" class="form-label">Banner Action</label>
                                     <input type="text" value="<%= fest.bannerAction[0]  %>" placeholder="Type here" class="form-control" id="btn" name="action5">
                                 </div>
-                               
-                                <% if (fest.images.length > 0) { %>
-                                    <% for (let j = 0; j < fest.images.length; j++) { %>
-                                        <span>
-                                            <img style="width: 100px; height: 100px;" src="/<%= fest.images[j] %>" alt="">
-                                        </span>
+
+                                <div>
+                                    <h2>Uploaded Images</h2>
+                                    <% if (fest.images.length > 0) { %>
+                                        <% for (let j = 0; j < fest.images.length; j++) { %>
+                                            <span>
+                                                <img style="width: 100px; height: 100px;" src="/<%= fest.images[j] %>" alt="">
+                                            </span>
+                                        <% } %>
                                     <% } %>
-                                <% } %>
+                                </div>
+                               
+                               
                                 
                              
 
@@ -737,15 +766,19 @@ href=
                                           <div class="preview-images6"></div>
                                         </div>
                                       </div>
-                                      <% if(about !== ''){ %>
-                                      <% if (about && about.images.length > 0) { %>
-                                        <% for (let j = 0; j < about.images.length; j++) { %>
-                                            <span>
-                                                <img style="width: 100px; height: 100px;" src="/<%= about.images[j] %>" alt="">
-                                            </span>
-                                        <% } %>
-                                    <% } %>
-                                    <% } %>
+                                      <div>
+                                        <h2>Uploaded Images</h2>
+                                        <% if(about !== ''){ %>
+                                            <% if (about && about.images.length > 0) { %>
+                                              <% for (let j = 0; j < about.images.length; j++) { %>
+                                                  <span>
+                                                      <img style="width: 100px; height: 100px;" src="/<%= about.images[j] %>" alt="">
+                                                  </span>
+                                              <% } %>
+                                          <% } %>
+                                          <% } %>
+                                      </div>
+                                    
 
                                     <input type="file" name="images6" class="form-control-file border" accept="image/*" id="input-images6" multiple >
                                 </div>
@@ -805,15 +838,19 @@ href=
                                   <div class="preview-images7"></div>
                                 </div>
                               </div>
-                              <% if(mainabout !== ''){ %>
-                              <% if (mainabout && mainabout.images.length > 0) { %>
-                                <% for (let j = 0; j < mainabout.images.length; j++) { %>
-                                    <span>
-                                        <img style="width: 100px; height: 100px;" src="/<%= mainabout.images[j] %>" alt="">
-                                    </span>
-                                <% } %>
-                            <% } %>
-                            <% } %>
+                              <div>
+                                <h2>Uploaded Images</h2>
+                                <% if(mainabout !== ''){ %>
+                                    <% if (mainabout && mainabout.images.length > 0) { %>
+                                      <% for (let j = 0; j < mainabout.images.length; j++) { %>
+                                          <span>
+                                              <img style="width: 100px; height: 100px;" src="/<%= mainabout.images[j] %>" alt="">
+                                          </span>
+                                      <% } %>
+                                  <% } %>
+                                  <% } %>
+                              </div>
+                             
 
                             <input type="file" name="images7" class="form-control-file border" accept="image/*" id="input-images7" multiple >
                         </div>
@@ -843,15 +880,19 @@ href=
                                       <div class="preview-images8"></div>
                                     </div>
                                   </div>
-                                  <% if(dealer !== ''){ %>
-                                  <% if (dealer && dealer.images.length > 0) { %>
-                                    <% for (let j = 0; j < dealer.images.length; j++) { %>
-                                        <span>
-                                            <img style="width: 100px; height: 100px;" src="/<%= dealer.images[j] %>" alt="">
-                                        </span>
-                                    <% } %>
-                                <% } %>
-                                <% } %>
+                                  <div>
+                                    <h2>Uploaded Images</h2>
+                                    <% if(dealer !== ''){ %>
+                                        <% if (dealer && dealer.images.length > 0) { %>
+                                          <% for (let j = 0; j < dealer.images.length; j++) { %>
+                                              <span>
+                                                  <img style="width: 100px; height: 100px;" src="/<%= dealer.images[j] %>" alt="">
+                                              </span>
+                                          <% } %>
+                                      <% } %>
+                                      <% } %>
+                                  </div>
+                                 
 
                                 <input type="file" name="images8" class="form-control-file border" accept="image/*" id="input-images8" multiple >
                             </div>
@@ -889,15 +930,19 @@ href=
                                        <div class="preview-images9"></div>
                                      </div>
                                    </div>
-                                   <% if(contact !== ''){ %>
-                                   <% if (contact && contact.images.length > 0) { %>
-                                     <% for (let j = 0; j < contact.images.length; j++) { %>
-                                         <span>
-                                             <img style="width: 100px; height: 100px;" src="/<%= contact.images[j] %>" alt="">
-                                         </span>
-                                     <% } %>
-                                 <% } %>
-                                 <% } %>
+                                   <div>
+                                    <h2>Uploaded Images</h2>
+                                    <% if(contact !== ''){ %>
+                                        <% if (contact && contact.images.length > 0) { %>
+                                          <% for (let j = 0; j < contact.images.length; j++) { %>
+                                              <span>
+                                                  <img style="width: 100px; height: 100px;" src="/<%= contact.images[j] %>" alt="">
+                                              </span>
+                                          <% } %>
+                                      <% } %>
+                                      <% } %>
+                                   </div>
+                                 
  
                                  <input type="file" name="images9" class="form-control-file border" accept="image/*" id="input-images9" multiple >
                              </div>

@@ -400,7 +400,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                
-                fetch(`/user/cancelOrder`, {
+                fetch(`/user/returnOrder`, {
                         method: 'POST',
                         headers: {
                             'Content-type': 'application/json',

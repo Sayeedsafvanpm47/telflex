@@ -42,7 +42,7 @@ router.post('/updateAddress',authMiddleWare.checkSignIn,controller.updateAddress
 router.get('/viewOrderDetails',authMiddleWare.checkSignIn,controller.viewOrderDetails)
 router.post('/updateCart',authMiddleWare.checkSignIn,cartController.updateCart)
 router.post('/cancelOrder',authMiddleWare.checkSignIn,controller.cancelOrder)
-router.get('/returnOrder',authMiddleWare.checkSignIn,controller.returnOrder)
+router.post('/returnOrder',authMiddleWare.checkSignIn,controller.returnOrder)
 
 router.get('/userWallet',authMiddleWare.checkSignIn,controller.userWallet)
 router.get('/refferalClaim',authMiddleWare.checkSignIn,controller.refferalClaim)

@@ -247,7 +247,7 @@ if(!productname || !features || !featured || !tags || !model ||  !description ||
 		  const categories = await categoryModel.find({});
 		  const selectedCategory = req.query.category;
 		  let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
-		  let numberOfDocs = 2
+		  let numberOfDocs = 8
 		  const totalProductsCount = await productModel.countDocuments();
 		  const totalPages = Math.ceil(totalProductsCount / numberOfDocs); 
 		  let search = false

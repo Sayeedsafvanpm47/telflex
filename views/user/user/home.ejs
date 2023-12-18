@@ -118,7 +118,29 @@
                                                 <a><%= item.category.categoryName %></a>
                                             </div>
                                             <h2><a href="/user/productdetail?_id=<%=item._id  %>"><%= item.productName  %></a></h2>
-                                            <div class="rating-result" title="90%">
+                                            <div title="90%">
+
+                                                <% if(item.rated == true){ %>
+                                                    <% let sum = 0 %>
+                                                    <% sum = item.rating.reduce((acc, item) => acc + item.rating, 0) %>
+    
+    
+                                                <div class="rating" id="star">
+                                                    <% for (let i = 1; i <= 5; i++) { %>
+                                                    
+                                                        <% if (i <= parseInt(sum)) { %>
+                                                            <span class="star" style="color: gold;" data-value="<%= i %>">&#9733;</span>
+                                                        <% } else { %>
+                                                            <span class="star" style="color: gray;" onclick="" data-value="<%= i %>">&#9733;</span>
+                                                        <% } %>
+                                                    <% } %>
+                                               
+                                                
+                                                </div>
+                                                <% } else { %>
+                                                    <p>No rating available yet</p>
+                                                    <% } %>
+                                              
                                                 <span>
                                                     <span><%= item.size[0].productDiscount  %>%</span>
                                                 </span>
@@ -170,7 +192,29 @@
                                             <a><%= item.category.categoryName %></a>
                                         </div>
                                         <h2><a href="/user/productdetail?_id=<%=item._id  %>"><%= item.productName  %></a></h2>
-                                        <div class="rating-result" title="90%">
+                                        <div title="90%">
+                                            <% if(item.rated == true){ %>
+                                                <% let sum = 0 %>
+                                                <% sum = item.rating.reduce((acc, item) => acc + item.rating, 0) %>
+
+
+                                            <div class="rating" id="star">
+                                                <% for (let i = 1; i <= 5; i++) { %>
+                                                
+                                                    <% if (i <= parseInt(sum)) { %>
+                                                        <span class="star" style="color: gold;" data-value="<%= i %>">&#9733;</span>
+                                                    <% } else { %>
+                                                        <span class="star" style="color: gray;" onclick="" data-value="<%= i %>">&#9733;</span>
+                                                    <% } %>
+                                                <% } %>
+                                           
+                                            
+                                            </div>
+                                            <% } else { %>
+                                                <p>No rating available yet</p>
+                                                <% } %>
+                                          
+
                                             <span>
                                                 <span><%= item.size[0].productDiscount  %>%</span>
                                             </span>

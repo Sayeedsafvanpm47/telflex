@@ -75,7 +75,7 @@
                         </div>
                         <div class="row product-grid-3">
                             
-                            <% products.forEach(products=>{%>
+                            <% products.forEach((products,index)=>{%>
                              <% if(products && products.isListed === true){ %>
                                 <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                 <div class="product-cart-wrap mb-30">
@@ -94,19 +94,40 @@
                                     <div class="product-content-wrap">
                                         <div class="product-category">
                                             <% if (products.category &&  products.category.categoryName) { %>
-                                                <a href="shop-grid-right.html"><%= products.category.categoryName %></a>
+                                                <a href=""><%= products.category.categoryName %></a>
                                             <% } else { %>
                                                 Category Not Available <!-- Display a message if category data is not present -->
                                             <% } %>
                                         </div>
-                                        <h2><a href="shop-product-right.html"><%= products.productName %>   -  <span class="text-muted" style="font-size: 15px;"><%= products.model  %></span></a></h2>
+                                        <h2><a><%= products.productName %>   -  <span class="text-muted" style="font-size: 15px;"><%= products.model  %></span></a></h2>
                                         <div>
                                             <% if (products.size && products.size.length > 0 && products.size[0].size) { %>
                                                 <span style="font-size: 20px; color: black;"><%= products.size[0].size %></span>
                                             
                                             <% } %>
                                         </div>
-                                        <div class="rating-result" title="90%">
+                                        <div  title="90%">
+
+                                            <% if(products.rated == true){ %>
+                                                <% let sum = 0 %>
+                                                <% sum = products.rating.reduce((acc, item) => acc + item.rating, 0) %>
+
+
+                                            <div class="rating" id="star">
+                                                <% for (let i = 1; i <= 5; i++) { %>
+                                                
+                                                    <% if (i <= parseInt(sum)) { %>
+                                                        <span class="star" style="color: gold;" data-value="<%= i %>">&#9733;</span>
+                                                    <% } else { %>
+                                                        <span class="star" style="color: gray;" onclick="" data-value="<%= i %>">&#9733;</span>
+                                                    <% } %>
+                                                <% } %>
+                                           
+                                            
+                                            </div>
+                                            <% } else { %>
+                                                <p>No rating available yet</p>
+                                                <% } %>
                                           
 
                                             <span>

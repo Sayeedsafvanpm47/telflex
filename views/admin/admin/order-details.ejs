@@ -106,8 +106,12 @@
                                                                 <% } else { %>
                                                                     <% if(item.status === 'Cancelled'){ %>
                                                                         <p>Item Cancelled</p>
+                                                                        <br>
+                                                                        <span><%= item.reason  %></span>
                                                                         <% } else { %>
                                                                             <p>Item Returned</p>
+                                                                            <br>
+                                                                            <span><%= item.reason  %></span>
                                                                             <% } %>
                                                                 <% } %>
                                                                 </div>
