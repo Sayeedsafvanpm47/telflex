@@ -62,45 +62,7 @@
     </main>
     <%- include('partials/script') %>
     <script src="/scripts/hideerror.js"></script>
-    <script>
-          async function categoryDiscount(categoryId,i) {
-            try {
-              const discount = document.getElementById(`categoryDiscount${i}`).value;
-              const data = {
-                _id: categoryId,
-                discount: discount
-              };
-        
-              const response = await fetch('/admin/offerCategory', {
-                method: 'POST',
-                headers: {
-                  'Content-type': 'application/json'
-                },
-                body: JSON.stringify(data)
-              });
-        
-              if (!response.ok) {
-                throw new Error('Network response was not ok!');
-              }
-        
-              const responseData = await response.json();
-              console.log(responseData)
-              console.log('Request was successful:', responseData);
-            } catch (error) {
-                    console.error('There was a problem with the fetch operation:', error);
-
-            }
-          }
-          function onlyNumberKey(evt) {
-    let ASCIICode = (evt.which) ? evt.which : evt.keyCode;
-    if (ASCIICode >= 48 && ASCIICode <= 57) { // Numbers from 0 to 9
-        return true;
-    } else {
-        return false;
-    }
-}
-
-        </script>
+   
         
 </body>
 
