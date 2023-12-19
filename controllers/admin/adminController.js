@@ -2,26 +2,9 @@ const userModel = require("../../models/userModel");
 const orderModel = require('../../models/orderModel')
 const categoryModel = require('../../models/categoryModel')
 const messageModel = require('../../models/messageModel')
-const sendOTPByEmail = require("../../utils/sendMail");
-const bcrypt = require("bcrypt");
-const otpGenerator = require("../../utils/otpGenerator");
-const sendOtp = require("../../utils/generateAndSendOtp");
-const { isEmailValid, isPasswordValid } = require("../../utils/validators/signUpValidator");
+
 module.exports = {
-	getAdminLogin: async (req, res) => {
-		try {
-			if(!req.session.admin){
-			await res.render("admin/admin/login");
-			}else
-			{
-				res.redirect('/admin/home')
-			}
-			
-		} catch (error) {
-			res.status(404).send('error occured')
-		}
-		
-	},
+	
 	chart : async (req,res)=>{
 		try {
 			const userData = await userModel.find({});
@@ -294,113 +277,10 @@ const categoryOrders = []
 	        },
 	        
 	
-	postAdminLogin: async (req, res) => {
-		const { email, password } = req.body;
-		const errors = [];
-                     if(!email || !password){
-			errors.push('fill the fields properly')
-		 }
-		// Validation checks
-		if (!email) {
-			errors.push("Enter an email");
-		}
+	
+	
+	
 
-		if (!password) {
-			errors.push("Enter a password");
-		}
-
-		if (errors.length > 0) {
-			return res.render("admin/admin/login", { errors });
-		}
-
-		try {
-			const user = await userModel.findOne({ email });
-			if (user) {
-				const passCheck = await bcrypt.compare(password, user.password);
-				if (user.isAdmin === true && passCheck) {
-					console.log(user.isAdmin);
-					req.session.admin = true
-					res.redirect('/admin/home')
-				} else {
-					errors.push("Invalid credentials");
-					res.render("admin/admin/login", { errors });
-				}
-			} else {
-				errors.push("User not found");
-				res.render("admin/admin/login", { errors });
-			}
-		} catch (err) {
-			console.error(err);
-			res.status(500).send("Internal Server Error");
-		}
-	},
-	verifyOtp: async (req, res) => {
-		const { email, enteredOTP } = req.body;
-		const user = await userModel.findOne({ email });
-		if (!user || !user.otp || user.otpExpires <= new Date() || user.otpAttempts >= 3) {
-			res.send("OTP verification failed");
-		}
-		if (user.otp === enteredOTP) {
-			user.otp = null;
-			user.otpExpires = null;
-			user.otpAttempts = 0;
-			await user.save();
-
-			await res.render("admin/admin/createPass", { email: email });
-		} else {
-			user.otpAttempts += 1;
-			await user.save();
-			res.send("Invalid OTP");
-		}
-	},
-	resendOtp: async (req, res) => {
-		const { email } = req.body;
-		await sendOtp(email);
-		res.render("admin/admin/otpVerify", { email: email });
-	},
-	getForgotPassAdmin: async (req, res) => {
-		await res.render("admin/admin/forgotPassword");
-	},
-	postForgotPassAdmin: async (req, res) => {
-		try {
-			const { email } = req.body;
-			const user = await userModel.findOne({ email });
-
-			if (!user) {
-				return res.send("User not found");
-			}
-
-			if (user.isAdmin === true) {
-				// If user is an admin, proceed with OTP sending and rendering the verification page
-				await sendOtp(email);
-				res.render("admin/admin/otpVerify", { email: email });
-			} else {
-				res.send("User is not an admin");
-			}
-		} catch (error) {
-			console.error(error);
-			res.status(500).send("Internal Server Error");
-		}
-	},
-	updatePass: async (req, res) => {
-		const { password, chkpassword, email } = req.body;
-		const user = await userModel.findOne({ email });
-
-		if (password === chkpassword) {
-			try {
-				const hashedPass = await bcrypt.hash(password, 10);
-				user.password = hashedPass;
-				await user.save();
-
-				res.send("welcome admin");
-			} catch (error) {
-				console.error("Error updating password:", error);
-				res.redirect("/admin/createPass");
-			}
-		} else {
-			res.redirect("/admin/createPass");
-		}
-	},
 	reviews : async (req,res)=>{
 		try {
 			res.render('admin/admin/reviews')
@@ -432,6 +312,8 @@ const categoryOrders = []
 			}
 			
 		} catch (error) {
+
+			console.log(error)
 			
 		}
 	},

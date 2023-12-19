@@ -22,13 +22,8 @@ const bannerController = require('../../controllers/admin/adminBannerController'
 const sessionCheck = require('../../middlewares/sessionMiddleware');
 const productController = require("../../controllers/admin/productController");
 // admin
-router.get("/", controller.getAdminLogin);
-router.post("/postLogin",controller.postAdminLogin);
-router.get("/getForgotPassword",controller.getForgotPassAdmin);
-router.post("/forgotPassword", controller.postForgotPassAdmin);
-router.post("/verifyOtp", controller.verifyOtp);
-router.post("/updatePass", controller.updatePass);
-router.post("/resendOtp", controller.resendOtp);
+
+
 router.get('/home',sessionCheck.checkAdminSignIn,controller.adminHome)
 router.get('/chart',sessionCheck.checkAdminSignIn,controller.chart)
 
