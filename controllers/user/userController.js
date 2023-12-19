@@ -385,7 +385,7 @@ module.exports = {
 			if (!user || !user.otp || user.otpExpires <= new Date() || user.otpAttempts >= 3) {
 				errors.push("verification failed, try again..., or request for another otp");
 
-				res.render("user/user/otpVerify", { errors, email: email });
+				return res.render("user/user/otpVerify", { errors, email: email });
 			}
 			if (user.otp == enteredOTP) {
 				user.otp = null;
@@ -424,7 +424,7 @@ module.exports = {
 
 				errors.push(attempts + "attempts left");
 
-				res.render("user/user/otpVerify", { errors, email: email });
+				return res.render("user/user/otpVerify", { errors, email: email });
 			}
 		} catch (err) {
 			console.log(err);

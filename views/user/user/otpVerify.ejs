@@ -36,12 +36,12 @@
                                            
                                         </div>
                                         <div class="form-group">
-                                            <input type="submit" class="btn btn-fill-out btn-block hover-up" name="login" value="Verify Otp" >
+                                            <input type="submit" id="verifyotp" class="btn btn-fill-out btn-block hover-up" name="login" value="Verify Otp" >
                                         </div>
                                     </form>
                                     <form method="POST" action="/user/resendOtp">
                                         <input type="hidden" name="email" value="<%= email %>">
-                                        <input id="resend" type="submit" value="Resend Otp" hidden>
+                                        <input id="resend" type="submit" value="Resend Otp" style="display: none;">
                                       </form>
                                 </div>
                             </div>
@@ -67,10 +67,13 @@
                 timeInSeconds--;
                 localStorage.setItem('timer', timeInSeconds);
             } else {
-                $('#resendForm').show();
+              
                 timeInSeconds = 120; 
-                location.reload()
+                document.getElementById('resend').style.display = 'block'
+                document.getElementById('verifyotp').style.display = 'none'
+
             }
+           
         }
 
         let countdownInterval = setInterval(updateTimer, 1000);
