@@ -44,7 +44,7 @@ module.exports = {
 			let searchProducts;
 
 			if (req.session.search) {
-				searchProducts = req.session.searchProducts;
+				searchProducts = req.session.searchProducts || ''
 				nopage = true;
 				delete req.session.search;
 			} else if (req.session.sortPrice) {
@@ -82,7 +82,8 @@ module.exports = {
 					totalPages,
 					currentPage,
 					nopage,
-					categoryPagination
+					categoryPagination,
+					
 				});
 			}
 
@@ -374,7 +375,14 @@ module.exports = {
 					req.session.search = true;
 					req.session.searchProducts = products;
 					res.redirect("/");
-				} else {
+				} else if(products.length == 0)
+				{
+					req.session.search = true;
+					req.session.searchProducts = ''
+					res.redirect("/");
+
+				}
+				else {
 					const error = new Error("Unable to fetch the data");
 					error.status = 400;
 					error.isRestCall = true;

@@ -74,9 +74,10 @@
                             </div>
                         </div>
                         <div class="row product-grid-3">
-                            
+                            <% if(products !== ''){ %>
                             <% products.forEach((products,index)=>{%>
                              <% if(products && products.isListed === true){ %>
+                                
                                 <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                 <div class="product-cart-wrap mb-30">
                                     <div class="product-img-action-wrap">
@@ -156,6 +157,9 @@
                            <% } %>
 
                           <%  }); %>
+                          <% }else{ %>
+                            <p>No results found!</p>
+                            <% } %>
                         
                             
            
@@ -164,7 +168,7 @@
 
                     
 
-                    
+                     <% if(products !== '' && !nopage){ %>
                         <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-start">
@@ -185,6 +189,7 @@
                                 </ul>
                             </nav>
                         </div>
+                        <% } %>
                      
                         
 

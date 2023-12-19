@@ -18,7 +18,7 @@ module.exports = {
 				let productExist = false;
 
 				for (const item of existingWishlist.products) {
-					if (item.product_id == id) {
+					if (item.proid == productId) {
 						productExist = true;
 
 						item.quantity += +quantity;
@@ -95,34 +95,45 @@ module.exports = {
 	// controller logic for adding from wishlist
 	addFromWish: async (req, res) => {
 		try {
-			let productFound = false;
-			const userId = req.session.userId;
-			const { id } = req.query;
-			console.log(id);
-			const list = await wishlistModel.findOne({ userId: userId });
-			console.log(list);
-			console.log(list.products);
-			const cart = [];
-			for (const product of list.products) {
-				if (product.proid.toString() === id) {
-					productFound = true;
-					cart.push(product);
-					break;
-				}
-			}
-
-			if (productFound) {
-				const cartFound = await cartModel.findOne({ userId: userId });
-
-				cartFound.products = cartFound.products.concat(cart);
-
-				await cartFound.save();
-				res.redirect("/user/showCart");
-			} else {
-				res.redirect("/user/showwishlist");
-			}
+		    let productFound = false;
+		    const userId = req.session.userId;
+		    const { id } = req.query;
+		    console.log(id);
+		    const list = await wishlistModel.findOne({ userId: userId });
+		    console.log(list);
+		    console.log(list.products);
+		    let singleId;
+		    let quantity
+		    const cart = [];
+	      
+		    for (const product of list.products) {
+		        if (product.proid.toString() === id) {
+			  productFound = true;
+			  singleId = product.proid;
+			
+		        }
+		    }
+	      
+		    if (productFound) {
+		        const cartFound = await cartModel.findOne({ userId: userId });
+	      
+		        let searchForItem = cartFound.products.find(item => item.single_id === singleId);
+		        if (searchForItem) {
+			   searchForItem.quantity += +quantity
+			  return res.redirect("/user/showCart");
+		        } else {
+			  // If the product doesn't exist in the cart, add it to the cart and save
+			  cartFound.products = cartFound.products.concat(cart);
+			  await cartFound.save();
+			  return res.redirect("/user/showCart");
+		        }
+		    } else {
+		        // If the product is not found in the wishlist, redirect to showwishlist
+		        return res.redirect("/user/showwishlist");
+		    }
 		} catch (error) {
-			console.log(error);
+		    console.log(error);
 		}
-	}
+	      }
+	      
 };
