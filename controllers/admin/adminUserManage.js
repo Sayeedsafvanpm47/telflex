@@ -1,5 +1,6 @@
 const userModel = require("../../models/userModel");
 module.exports = {
+	// controller for viewing the customers
 	viewCustomers: async (req, res) => {
 		try {
 			let currentPage = req.query.page ? parseInt(req.query.page) : 1;
@@ -18,7 +19,7 @@ module.exports = {
 			console.log(error);
 		}
 	},
-
+// controller for blocking the customer
 	blockUser: async (req, res) => {
 		try {
 			const { email } = req.query;
@@ -37,6 +38,7 @@ module.exports = {
 			res.status(500);
 		}
 	},
+	// controller for searching the customer
 	searchUser: async (req, res) => {
 		try {
 			const { searchTerm } = req.body;
@@ -48,6 +50,7 @@ module.exports = {
 			res.status(500);
 		}
 	},
+	// controller for viewing the search results
 	searchView: async (req, res) => {
 		try {
 			let currentPage = req.query.page ? parseInt(req.query.page) : 1;
@@ -79,6 +82,7 @@ module.exports = {
 			console.log(err);
 		}
 	},
+	// controller for sorting the user
 	sortUser: async (req, res) => {
 		try {
 
@@ -92,6 +96,7 @@ module.exports = {
 		}
 		
 	},
+	// controller for viewing the sorted results
 	sortUserView: async (req, res) => {
 		try {
 

@@ -45,12 +45,16 @@ router.get("/searchView",sessionCheck.checkAdminSignIn, controllerUserManage.sea
 router.post("/sortUser",sessionCheck.checkAdminSignIn, controllerUserManage.sortUser);
 router.get("/sortUserView",sessionCheck.checkAdminSignIn, controllerUserManage.sortUserView);
 
-// adminuserManage routes ends
+// adminuserManage routes ends...
 
-// 
+// admindashboard routes begins
+
 router.get('/salesReport',sessionCheck.checkAdminSignIn,dashboardController.salesReport)
 router.post('/getReport',sessionCheck.checkAdminSignIn,dashboardController.getReport)
 router.get('/getReportResults',sessionCheck.checkAdminSignIn,dashboardController.getReportResults)
+
+// admindasboard routes ends...
+
 // product and category management
 router.get("/createCategory", sessionCheck.checkAdminSignIn,controllerCategory.createCategory);
 router.post("/submitCategory", sessionCheck.checkAdminSignIn,controllerCategory.submitCategory);
