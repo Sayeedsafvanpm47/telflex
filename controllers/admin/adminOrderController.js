@@ -4,6 +4,7 @@ const userModel = require('../../models/userModel')
 
 const { USER } = require('../../utils/constants/schemaName');
 module.exports = {
+  // controller for viewing the orders
           orderDetails : async (req,res)=>{
                     try {
                         let currentPage = req.query.page ? parseInt(req.query.page) : 1
@@ -51,6 +52,7 @@ const orders = await orderModel
                               console.log(error)
                     }
           },
+          // controller for viewing the order details
           viewOrderDetails : async (req,res)=>{
                    
                         try {
@@ -70,6 +72,7 @@ const orders = await orderModel
                             console.log(error)
                         }
           },
+          // controller for updating the order status
           updateOrderStatus: async (req, res) => {
             try {
                 const _id = req.query._id;
@@ -325,9 +328,17 @@ const orders = await orderModel
                 console.log(error);
             }
         },
+        // controller for serching in orders
         orderSearchResults : async (req,res)=>{
+          try {
+            
             req.session.search = true
             req.session.searchTerm = req.body.searchTerm
             res.redirect('/admin/orderDetails')
+          } catch (error) {
+            console.log(error)
+            
+          }
+        
         }
           }                              

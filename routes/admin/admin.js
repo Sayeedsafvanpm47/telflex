@@ -85,11 +85,14 @@ router.get('/toggleListProducts',sessionCheck.checkAdminSignIn,controllerProduct
 
 // product and category management routes ends...
 
+// admin order controller routes begins 
 
 router.get('/orderDetails',sessionCheck.checkAdminSignIn,adminOrderController.orderDetails)
 router.get('/viewOrderDetails',sessionCheck.checkAdminSignIn,adminOrderController.viewOrderDetails)
 router.post('/updateOrderStatus',sessionCheck.checkAdminSignIn,adminOrderController.updateOrderStatus)
 router.post('/orderSearchResults',sessionCheck.checkAdminSignIn,adminOrderController.orderSearchResults)
+
+// admin order controller routes ends...
 
 
 // offers
