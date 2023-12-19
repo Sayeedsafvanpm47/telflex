@@ -11,7 +11,6 @@ const controllerUserManage = require("../../controllers/admin/adminUserManage");
 const controllerCategory = require("../../controllers/admin/categoryController");
 const controllerProducts = require("../../controllers/admin/productController");
 const adminOrderController = require("../../controllers/admin/adminOrderController");
-const productModel = require("../../models/productModel");
 const imageController = require("../../controllers/imageController");
 const dashboardController = require("../../controllers/admin/adminDashboardController");
 const offerController = require("../../controllers/admin/adminOfferController");

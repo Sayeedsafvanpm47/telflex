@@ -1,149 +1,128 @@
-const wishlistModel = require('../../models/wishlist')
-const cartModel = require('../../models/cartModel')
-
-
-
+const wishlistModel = require("../../models/wishlist");
+const cartModel = require("../../models/cartModel");
 
 module.exports = {
-          addToWish: async (req, res) => {
-                    try {
-                        const userId = req.session.userId;
-                        const { productId, size, price, mrp,  disc, stock,id } = req.body;
-                        let quantity = req.body.quantity
-                        if(quantity < 1)
-                        {
-                            quantity = 1
-                        }
+	// controller logic for adding to wishlist
+	addToWish: async (req, res) => {
+		try {
+			const userId = req.session.userId;
+			const { productId, size, price, mrp, disc, stock, id } = req.body;
+			let quantity = req.body.quantity;
+			if (quantity < 1) {
+				quantity = 1;
+			}
 
-                
-                        const existingWishlist = await wishlistModel.findOne({ userId: userId });
-                
-                        if (existingWishlist) {
-                            let productExist = false;
-                
-                            for (const item of existingWishlist.products) {
-                                if (item.product_id == id) {
-                                    productExist = true;
-                                  
-                                    item.quantity += +quantity;
-                                    break;
-                                }
-                            }
-                
-                            if (!productExist) {
-                                existingWishlist.products.push({
-                                    product_id: id,
-                                    stock: stock,
-                                    quantity: quantity,
-                                    price: price,
-                                    size: size,
-                                    disc: disc,
-                                    mrp: mrp,
-                                    proid : productId
-                                });
-                            }
-                
-                            await existingWishlist.save();
-                        } else {
-                            const newWishList = new wishlistModel({
-                                userId: userId,
-                                products: [{
-                                    product_id: id,
-                                    stock: stock,
-                                    quantity: quantity,
-                                    price: price,
-                                    size: size,
-                                    disc: disc,
-                                    mrp: mrp,
-                                    proid : productId
-                                }]
-                            });
-                
-                            await newWishList.save();
-                        }
-                res.status(200).json({message : 'success'})
-                       
-                    } catch (error) {
-                        console.log(error);
-                        // Handle the error
-                        res.status(500).send('Internal Server Error');
-                    }
-                }
-,                
-showWishList : async (req,res)=>{
-          try {
-                  
-                    if(req.session.userId)
-                    {
-                              const userId = req.session.userId
-                              const wishlist = await wishlistModel.findOne({userId:userId}).populate(
-                                        'products.product_id'
+			const existingWishlist = await wishlistModel.findOne({ userId: userId });
 
-                              )
-                           
-                              res.render('user/user/shop-wishlist',{wishlist})
-                    }
-                    
-          } catch (error) {
-                    console.log(error)
-          }
-},
-deleteWish : async (req,res)=>{
-          try {
-                    const { id } = req.query; 
-                  
-                    await wishlistModel.updateOne(
-                        { userId: req.session.userId }, 
-                        { $pull: { products: { proid : id } } }
-                    );
-            
-                    res.redirect('/user/showwishlist')
-                } catch (error) {
-                    console.error(error);
-                    res.status(500).json({ error: 'Internal Server Error' });
-                }
-          
-},
-addFromWish : async (req,res)=>{
-    try{
-        let productFound = false
-    const userId = req.session.userId
-    const { id } = req.query
-    console.log(id)
-    const list = await wishlistModel.findOne({userId:userId})
-    console.log(list)
-    console.log(list.products)
-    const cart = []
-    for (const product of list.products) {
-        if (product.proid.toString() === id) { 
-            productFound = true;
-            cart.push(product); 
-            break;
-        }
-    }
+			if (existingWishlist) {
+				let productExist = false;
 
-    if(productFound)
-    {
+				for (const item of existingWishlist.products) {
+					if (item.product_id == id) {
+						productExist = true;
 
-        const cartFound = await cartModel.findOne({ userId: userId });
+						item.quantity += +quantity;
+						break;
+					}
+				}
 
-        
-        cartFound.products = cartFound.products.concat(cart);
+				if (!productExist) {
+					existingWishlist.products.push({
+						product_id: id,
+						stock: stock,
+						quantity: quantity,
+						price: price,
+						size: size,
+						disc: disc,
+						mrp: mrp,
+						proid: productId
+					});
+				}
 
-        await cartFound.save();
-        res.redirect('/user/showCart');
+				await existingWishlist.save();
+			} else {
+				const newWishList = new wishlistModel({
+					userId: userId,
+					products: [
+						{
+							product_id: id,
+							stock: stock,
+							quantity: quantity,
+							price: price,
+							size: size,
+							disc: disc,
+							mrp: mrp,
+							proid: productId
+						}
+					]
+				});
 
-    }
-    else
-    {
-        res.redirect('/user/showwishlist')
-    }
-}catch (error)
-{
-    console.log(error)
-}
+				await newWishList.save();
+			}
+			res.status(200).json({ message: "success" });
+		} catch (error) {
+			console.log(error);
 
-},
+			res.status(500).send("Internal Server Error");
+		}
+	},
+	//controller logic for showing the wishlist
+	showWishList: async (req, res) => {
+		try {
+			if (req.session.userId) {
+				const userId = req.session.userId;
+				const wishlist = await wishlistModel.findOne({ userId: userId }).populate("products.product_id");
 
+				res.render("user/user/shop-wishlist", { wishlist });
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	},
+	// controller logic for deleting the wishlist
+	deleteWish: async (req, res) => {
+		try {
+			const { id } = req.query;
 
-}
+			await wishlistModel.updateOne({ userId: req.session.userId }, { $pull: { products: { proid: id } } });
+
+			res.redirect("/user/showwishlist");
+		} catch (error) {
+			console.error(error);
+			res.status(500).json({ error: "Internal Server Error" });
+		}
+	},
+	// controller logic for adding from wishlist
+	addFromWish: async (req, res) => {
+		try {
+			let productFound = false;
+			const userId = req.session.userId;
+			const { id } = req.query;
+			console.log(id);
+			const list = await wishlistModel.findOne({ userId: userId });
+			console.log(list);
+			console.log(list.products);
+			const cart = [];
+			for (const product of list.products) {
+				if (product.proid.toString() === id) {
+					productFound = true;
+					cart.push(product);
+					break;
+				}
+			}
+
+			if (productFound) {
+				const cartFound = await cartModel.findOne({ userId: userId });
+
+				cartFound.products = cartFound.products.concat(cart);
+
+				await cartFound.save();
+				res.redirect("/user/showCart");
+			} else {
+				res.redirect("/user/showwishlist");
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}
+};

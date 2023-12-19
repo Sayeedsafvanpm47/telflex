@@ -1,7 +1,6 @@
 const { json } = require("express");
-const userModel = require("../../models/userModel");
 const orderModel = require("../../models/orderModel");
-const productModel = require("../../models/productModel");
+
 
 module.exports = {
 	// controller for viewing the sales report

@@ -1,7 +1,5 @@
 const productModel = require("../../models/productModel");
 const categoryModel = require("../../models/categoryModel");
-const imageController = require("../../controllers/imageController");
-const cartModel = require("../../models/cartModel");
 const { USER } = require("../../utils/constants/schemaName");
 
 module.exports = {
