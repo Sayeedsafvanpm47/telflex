@@ -1,339 +1,337 @@
 ﻿<%- include('partials/head') %>
 
-<body>
-    <!-- Modal -->
-   
+    <body>
+        <!-- Modal -->
 
 
- 
-    <%- include('partials/header') %>
 
-    <main class="main">
-        <!-- banner 2 (loop the banners) -->
 
-        <section class="home-slider position-relative pt-50">
-          
-            <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
-                <% if(banners){ %>
-                <% for(let i=0; i<banners.images.length; i++){ %>
-                <div class="single-hero-slider single-animation-wrap">
-                    <div class="container" style="background-color: rgba(11, 11, 11, 0.921); border-radius: 10px; box-shadow: inset;">
-                      
-                        <div class="row align-items-center slider-animated-1">
-                        
-                            <div class="col-lg-5 col-md-6">
-                             
+        <%- include('partials/header') %>
+
+            <main class="main">
+                <!-- banner 2 (loop the banners) -->
+
+                <section class="home-slider position-relative pt-50">
+
+                    <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
+                        <% if(banners){ %>
+                            <% for(let i=0; i<banners.images.length; i++){ %>
+                                <div class="single-hero-slider single-animation-wrap">
+                                    <div class="container"
+                                        style="background-color: rgba(11, 11, 11, 0.921); border-radius: 10px; box-shadow: inset;">
+
+                                        <div class="row align-items-center slider-animated-1">
+
+                                            <div class="col-lg-5 col-md-6">
+
+                                                <div class="hero-slider-content-2">
+                                                    <h4 class="animated"></h4>
+
+                                                    <h2 style="color: rgb(255, 255, 255);" class="animated fw-900">Get
+                                                        To Know Us More</h2>
+
+
+
+
+
+                                                    <h5 style="color: rgb(204, 25, 25);" class="animated">explore our
+                                                        history, ceo, factories, shops, manufacturing process..</h5>
+
+
+
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-7 col-md-6">
+
+
+                                                <div class="single-slider-img single-slider-img-1 mt-20">
+
+                                                    <img style="border-radius: 15px;" class="animated slider-1-1"
+                                                        src="/<%= banners.images[i] %>" alt="">
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <% } %>
+                                    <% } %>
+                    </div>
+
+
+
+                </section>
+
+
+
+
+
+
+                <section>
+                    <div class="container pt-30">
+                        <div class="row">
+
+                            <div class="col">
+
                                 <div class="hero-slider-content-2">
-                                    <h4 class="animated"></h4>
-                                  
-                                    <h2 style="color: rgb(255, 255, 255);" class="animated fw-900">Get To Know Us More</h2>
-                                   
-                                   
-                                 
-                                   
-                                   
-                                    <h5 style="color: rgb(204, 25, 25);" class="animated">explore our history, ceo, factories, shops, manufacturing process..</h5>
-                                 
-                                   
-                                  
-                                   
+                                    <img src="/user/imgs/ceo.jpg" alt="">
+
                                 </div>
                             </div>
-                            
-                            <div class="col-lg-7 col-md-6">
-                               
 
-                                <div class="single-slider-img single-slider-img-1 mt-20">
-                                  
-                                    <img style="border-radius: 15px;" class="animated slider-1-1" src="/<%= banners.images[i] %>" alt="">
+                            <div class="col">
 
-                                 
+                                <div class="hero-slider-content-2">
+                                    <h1>
+                                        CEO & Founder
+                                    </h1>
+                                    <p>Meet Mr Nizar KK, the CEO and Founder of Telflex Mattress. Mr Nizar has an
+                                        experience of over 25 years in this mattress manufacturing field.
+                                        His venture of mattress production in his home town has helped in providing many
+                                        people from his place with jobs in Telflex.
+                                        Mr Nizar is a person who doesn’t compromise on the quality of the products from
+                                        Telflex. He aims on leveraging the company’s brand value by providing the high
+                                        quality products which aims on pleasing the customers.
+
+                                    </p>
+
                                 </div>
                             </div>
-                        
+
                         </div>
-                      
-                    </div>
-                </div>
-                
-                <% } %>
-                <% } %>
-            </div>
-           
-          
-          
-        </section>
 
-      
-  
-     
-     
-
-        <section>
-            <div class="container pt-30">
-            <div class="row">
-
-                <div class="col">
-                             
-                    <div class="hero-slider-content-2">
-                    <img src="/user/imgs/ceo.jpg" alt="">
-                       
                     </div>
-                </div>
+                </section>
+                <style>
+                    /* Default styles for the text */
+                    .text-style {
+                        color: red;
+                        font-size: 20px;
+                        line-height: 40px;
+                    }
 
-                <div class="col">
-                             
-                    <div class="hero-slider-content-2">
-                      <h1>
-                       CEO & Founder
-                      </h1>
-                      <p>Meet Mr Nizar KK, the CEO and Founder of Telflex Mattress. Mr Nizar has an experience of over 25 years in this mattress manufacturing field. 
-                        His venture of mattress production in his home town has helped in providing many people from his place with jobs in Telflex.
-                        Mr Nizar is a person who doesn’t compromise on the quality of the products from Telflex. He aims on leveraging the company’s brand value by providing the high quality products which aims on pleasing the customers.
-                        
-                        </p>
-                       
-                    </div>
-                </div>
+                    /* Media query for smaller devices */
+                    @media screen and (max-width: 768px) {
+                        .text-style {
+                            font-size: 16px;
+                            line-height: 25px;
+                        }
+                    }
+                </style>
 
-            </div>
-           
-        </div>
-        </section>
-        <style>
-            /* Default styles for the text */
-            .text-style {
-                color: red;
-                font-size: 20px;
-                line-height: 40px;
-            }
-            
-            /* Media query for smaller devices */
-            @media screen and (max-width: 768px) {
-                .text-style {
-                    font-size: 16px; 
-                    line-height: 25px;
-                }
-            }
-            </style>
-
-        <section class="mb-50 mt-10">
-            <div class="container">
-                <h1 class="display-1"><span style="color: red;">Why</span> Choose Telflex ?</h1>
-                <div class="row">
-               
-                    <div class="col">
-                        <p class="text-style"><i class="fa-solid fa-truck-fast"></i> Free and fast delivery all over Kerala. Delivery will be done on precise date.</p>
-                    </div>
-                    <div class="col">
-                        <p class="text-style"><i class="fa-solid fa-money-bill"></i> Fast and reliable refund policy. Customer can return the purchased item within a span of 10 days.</p>
-                    </div>
-                    <div class="col">
-                        <p class="text-style"><i class="fa-solid fa-award"></i> All products come with a warranty period. So you can buy and use without worrying about the product’s life.</p>
-                    </div>
-                    
-                    <div class="row mt-20">
-                        <div class="col">
-                            <p class="text-style"><i class="fa-solid fa-sliders"></i> Customer can provide query for customization, manager will collect details and furnish accordingly</p>
-                        </div>
-                        <div class="col">
-                            <p class="text-style"><i class="fa-solid fa-hand-holding-dollar"></i> Best value for money products. You can get guaranteed high-quality products at a very affordable price range.</p>
-                        </div>
-                        <div class="col">
-                            <p class="text-style"><i class="fa-solid fa-face-laugh-beam"></i> 100% customer satisfaction guaranteed. Every customer we had keeps on purchasing from us as we provide the best quality at a very affordable price.</p>
-                        </div>
-                    </div>
-           </div>
-        </section>
-       <hr>
-
-        <!-- banner part 3 (single banner) -->
-   
-     
-     
-      
-        
-    <section class="p-20 m-20">
-        <div class="container">
-            <h1 class="display-2"> <span style="color: red;">Manufacturing</span> Samples</h1>
-        </div>
-        <section class="home-slider position-relative pt-50">
-          
-            <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
-                <% if(manufacturing){ %>
-                <% for(let i=0; i<manufacturing.images.length; i++){ %>
-                <div class="single-hero-slider single-animation-wrap">
+                <section class="mb-50 mt-10">
                     <div class="container">
-                      
-                        <div class="row slider-animated-1 align-items-center">
-                            <div class="col-lg-5 col-md-6">
-                             
-                                <div class="hero-slider-content-2">
-                                    <h4 class="animated"></h4>
-                                  
-                                    <h2 style="color: rgb(14, 14, 14);" class="animated fw-900">Manufacturing Snippets!</h2>
-                                   
-                                   
-                                 
-                                   
-                                   
-                                    <h5 style="color: rgb(204, 25, 25);" class="animated">Here is a few pictures of the manufacturing process going on in our company</h5>
-                                 
-                                   
-                                  
-                                   
-                                </div>
+                        <h1 class="display-1"><span style="color: red;">Why</span> Choose Telflex ?</h1>
+                        <div class="row">
+
+                            <div class="col">
+                                <p class="text-style"><i class="fa-solid fa-truck-fast"></i> Free and fast delivery all
+                                    over Kerala. Delivery will be done on precise date.</p>
                             </div>
-                        
-                           
-                            <div class="col-lg-7 col-md-6 align-items-center">
-                               
-
-                                <div class="single-slider-img single-slider-img-1">
-                                  
-                                    <img style="border-radius: 15px;" class="animated slider-1-1" src="/<%= manufacturing.images[i] %>" alt="">
-
-                                 
-                                </div>
-
-                               
-     
+                            <div class="col">
+                                <p class="text-style"><i class="fa-solid fa-money-bill"></i> Fast and reliable refund
+                                    policy. Customer can return the purchased item within a span of 10 days.</p>
+                            </div>
+                            <div class="col">
+                                <p class="text-style"><i class="fa-solid fa-award"></i> All products come with a
+                                    warranty period. So you can buy and use without worrying about the product’s life.
+                                </p>
                             </div>
 
-                          
-                            
-                        
-                       
-                    </div>
-                      
-                    </div>
-                </div>
-                
-                <% } %>
-                <% } %>
-            </div>
-           
-          
-          
-        </section>
-       
-    </section>
-        
-     <section class="p-20 m-20">
-        <div class="container">
-            <h1 class="display-2"> <span style="color: red;"> Factory </span> & Retails</h1>
+                            <div class="row mt-20">
+                                <div class="col">
+                                    <p class="text-style"><i class="fa-solid fa-sliders"></i> Customer can provide query
+                                        for customization, manager will collect details and furnish accordingly</p>
+                                </div>
+                                <div class="col">
+                                    <p class="text-style"><i class="fa-solid fa-hand-holding-dollar"></i> Best value for
+                                        money products. You can get guaranteed high-quality products at a very
+                                        affordable price range.</p>
+                                </div>
+                                <div class="col">
+                                    <p class="text-style"><i class="fa-solid fa-face-laugh-beam"></i> 100% customer
+                                        satisfaction guaranteed. Every customer we had keeps on purchasing from us as we
+                                        provide the best quality at a very affordable price.</p>
+                                </div>
+                            </div>
+                        </div>
+                </section>
+                <hr>
 
-        </div>
+                <!-- banner part 3 (single banner) -->
 
-        <section class="home-slider position-relative pt-50">
-          
-            <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
-                <% if(factory){ %>
-                <% for(let i=0; i<factory.images.length; i++){ %>
-                <div class="single-hero-slider single-animation-wrap">
+
+
+
+
+                <section class="p-20 m-20">
                     <div class="container">
-                      
-                        <div class="row slider-animated-1 align-items-center">
-
-                            <div class="col-lg-5 col-md-6">
-                             
-                                <div class="hero-slider-content-2">
-                                    <h4 class="animated"></h4>
-                                  
-                                    <h2 style="color: rgb(14, 14, 14);" class="animated fw-900">These are our shops</h2>
-                                   
-                                   
-                                 
-                                   
-                                   
-                                    <h5 style="color: rgb(204, 25, 25);" class="animated">Here is a few pictures of the retail shops that we have...</h5>
-                                 
-                                   
-                                  
-                                   
-                                </div>
-                            </div>
-                        
-                           
-                            <div class="col-lg-7 col-md-6 align-items-center">
-                               
-
-                                <div class="single-slider-img single-slider-img-1">
-                                  
-                                    <img style="border-radius: 15px;" class="animated slider-1-1" src="/<%= factory.images[i] %>" alt="">
-
-                                 
-                                </div>
-
-                               
-     
-                            </div>
-
-                          
-                            
-                        
-                       
+                        <h1 class="display-2"> <span style="color: red;">Manufacturing</span> Samples</h1>
                     </div>
-                      
+                    <section class="home-slider position-relative pt-50">
+
+                        <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
+                            <% if(manufacturing){ %>
+                                <% for(let i=0; i<manufacturing.images.length; i++){ %>
+                                    <div class="single-hero-slider single-animation-wrap">
+                                        <div class="container">
+
+                                            <div class="row slider-animated-1 align-items-center">
+                                                <div class="col-lg-5 col-md-6">
+
+                                                    <div class="hero-slider-content-2">
+                                                        <h4 class="animated"></h4>
+
+                                                        <h2 style="color: rgb(14, 14, 14);" class="animated fw-900">
+                                                            Manufacturing Snippets!</h2>
+
+
+
+
+
+                                                        <h5 style="color: rgb(204, 25, 25);" class="animated">Here is a
+                                                            few pictures of the manufacturing process going on in our
+                                                            company</h5>
+
+
+
+
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-lg-7 col-md-6 align-items-center">
+
+
+                                                    <div class="single-slider-img single-slider-img-1">
+
+                                                        <img style="border-radius: 15px;" class="animated slider-1-1"
+                                                            src="/<%= manufacturing.images[i] %>" alt="">
+
+
+                                                    </div>
+
+
+
+                                                </div>
+
+
+
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <% } %>
+                                        <% } %>
+                        </div>
+
+
+
+                    </section>
+
+                </section>
+
+                <section class="p-20 m-20">
+                    <div class="container">
+                        <h1 class="display-2"> <span style="color: red;"> Factory </span> & Retails</h1>
+
                     </div>
-                </div>
-                
-                <% } %>
-                <% } %>
-            </div>
-           
-          
-          
-        </section>
-       </section>
-      
-      
-    
-    </main>
+
+                    <section class="home-slider position-relative pt-50">
+
+                        <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
+                            <% if(factory){ %>
+                                <% for(let i=0; i<factory.images.length; i++){ %>
+                                    <div class="single-hero-slider single-animation-wrap">
+                                        <div class="container">
+
+                                            <div class="row slider-animated-1 align-items-center">
+
+                                                <div class="col-lg-5 col-md-6">
+
+                                                    <div class="hero-slider-content-2">
+                                                        <h4 class="animated"></h4>
+
+                                                        <h2 style="color: rgb(14, 14, 14);" class="animated fw-900">
+                                                            These are our shops</h2>
 
 
-    <!-- Vendor JS-->
-    <script src="/user/js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="/user/js/vendor/jquery-3.6.0.min.js"></script>
-    <script src="/user/js/vendor/jquery-migrate-3.3.0.min.js"></script>
-    <script src="/user/js/vendor/bootstrap.bundle.min.js"></script>
-    <script src="/user/js/plugins/slick.js"></script>
-    <script src="/user/js/plugins/jquery.syotimer.min.js"></script>
-    <script src="/user/js/plugins/wow.js"></script>
-    <script src="/user/js/plugins/jquery-ui.js"></script>
-    <script src="/user/js/plugins/perfect-scrollbar.js"></script>
-    <script src="/user/js/plugins/magnific-popup.js"></script>
-    <script src="/user/js/plugins/select2.min.js"></script>
-    <script src="/user/js/plugins/waypoints.js"></script>
-    <script src="/user/js/plugins/counterup.js"></script>
-    <script src="/user/js/plugins/jquery.countdown.min.js"></script>
-    <script src="/user/js/plugins/images-loaded.js"></script>
-    <script src="/user/js/plugins/isotope.js"></script>
-    <script src="/user/js/plugins/scrollup.js"></script>
-    <script src="/user/js/plugins/jquery.vticker-min.js"></script>
-    <script src="/user/js/plugins/jquery.theia.sticky.js"></script>
-    <script src="/user/js/plugins/jquery.elevatezoom.js"></script>
-    <!-- Template  JS -->
-    <script src="/user/js/maind134.js?v=3.4"></script>
-    <script src="/user/js/shopd134.js?v=3.4"></script>
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Include jQuery Countdown plugin -->
-
-    
-    
-
-   
-
-<%- include('partials/footerlogin') %>
-
-    
+                                                        <h5 style="color: rgb(204, 25, 25);" class="animated">Here is a
+                                                            few pictures of the retail shops that we have...</h5>
 
 
-</body>
 
 
-<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:09:48 GMT -->
-</html>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-lg-7 col-md-6 align-items-center">
+
+
+                                                    <div class="single-slider-img single-slider-img-1">
+
+                                                        <img style="border-radius: 15px;" class="animated slider-1-1"
+                                                            src="/<%= factory.images[i] %>" alt="">
+
+
+                                                    </div>
+
+
+
+                                                </div>
+
+
+
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <% } %>
+                                        <% } %>
+                        </div>
+
+
+
+                    </section>
+                </section>
+
+
+
+            </main>
+
+
+
+
+
+
+
+            <%- include('partials/mainScripts') %>
+
+
+
+
+                <%- include('partials/footerlogin') %>
+
+
+
+
+    </body>
+
+
+    </html>
