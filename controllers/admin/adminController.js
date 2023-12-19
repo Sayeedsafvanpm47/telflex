@@ -1,6 +1,7 @@
 const userModel = require("../../models/userModel");
 const orderModel = require('../../models/orderModel')
 const categoryModel = require('../../models/categoryModel')
+const messageModel = require('../../models/messageModel')
 const sendOTPByEmail = require("../../utils/sendMail");
 const bcrypt = require("bcrypt");
 const otpGenerator = require("../../utils/otpGenerator");
@@ -434,6 +435,46 @@ const categoryOrders = []
 			
 		}
 	},
+	customerenquiry : async (req,res)=>{
+		try {
+			let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
+			let numberOfDocs = 10
+			const totalCount = await messageModel.countDocuments({type:'Contact'})
+			const totalPages = Math.ceil(totalCount / numberOfDocs); 
+			const message = await messageModel.find({type:'Contact'}).skip((currentPage - 1) * numberOfDocs)
+			
+		.limit(numberOfDocs);
+
+                            
+			res.render('admin/admin/customerenquiry',{message,totalPages,currentPage})
+			
+
+		} catch (error) {
+
+			console.log(error)
+			
+		}
+	},
+	dealerenquiry : async (req,res)=>{
+		try {
+			let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
+			let numberOfDocs = 10
+			const totalCount = await messageModel.countDocuments({type:'Dealer'})
+			const totalPages = Math.ceil(totalCount / numberOfDocs); 
+			const message = await messageModel.find({type:'Dealer'}).skip((currentPage - 1) * numberOfDocs)
+			
+		.limit(numberOfDocs);
+
+                            
+			res.render('admin/admin/dealerenquiry',{message,totalPages,currentPage})
+			
+
+		} catch (error) {
+
+			console.log(error)
+			
+		}
+	}
 	
 	
 

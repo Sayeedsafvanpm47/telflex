@@ -1,0 +1,83 @@
+<%- include('partials/head') %>
+<body>
+    <div class="screen-overlay"></div>
+    <%- include('partials/aside') %>
+    <main class="main-wrap">
+        <%- include('partials/header') %> 
+        <section class="content-main">
+            <div class="content-header">
+                <h2 class="content-title">Dealer Enquiry</h2>
+            
+            </div>
+            <div class="card mb-4">
+                
+             
+                  
+
+                  <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Message</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                              <% for(let i=0; i<message.length; i++){%>
+
+                                <tr>
+                                  <td><%= message[i].name  %></td>
+                                  <td><%= message[i].email  %></td>
+                                  <td><%= message[i].phone  %></td>
+                                  <td><%= message[i].address %></td>
+                                  <td><%= message[i].query  %></td>
+                                </tr>
+
+
+
+                                <% } %>
+                              
+                             
+                              
+                            </tbody>
+                        </table> <!-- table-responsive.// -->
+                    </div>
+                </div> 
+
+        
+                <div class="pagination-area mt-15 mb-50">
+                  <nav aria-label="Page navigation example">
+                      <ul class="pagination justify-content-start">
+                     
+                        <% for(let i=1; i<=totalPages; i++) { %>
+                          <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                              <a class="page-link" href="/admin/dealerenquiry?page=<%= i %>"><%= i %></a>
+                          </li>
+                   
+                      <% } %>
+                      </ul>
+                  </nav>
+              </div>
+        
+                  
+                
+           
+        </section> <!-- content-main end// -->
+
+       
+    </main>
+  
+    <%- include('partials/script') %>
+
+   
+</body>
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-sellers-cards.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:23 GMT -->
+</html>

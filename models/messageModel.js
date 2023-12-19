@@ -4,7 +4,7 @@ let messageSchema = new mongoose.Schema({
 
         name : String,
         email : String,
-        phonenumber : String,
+        phone : String,
         address: String,
         query : String,
         type : String

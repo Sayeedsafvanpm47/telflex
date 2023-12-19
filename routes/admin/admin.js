@@ -166,6 +166,8 @@ router.get('/viewSaved',sessionCheck.checkAdminSignIn,async (req,res)=>{
 router.get('/editProfile',sessionCheck.checkAdminSignIn,controller.editProfile)
 router.get('/reviews',sessionCheck.checkAdminSignIn,productController.reviews)
 router.get('/reviewVisibility',sessionCheck.checkAdminSignIn,productController.reviewVisibility)
+router.get('/customerenquiry',sessionCheck.checkAdminSignIn, controller.customerenquiry)
+router.get('/dealerenquiry' ,sessionCheck.checkAdminSignIn ,controller.dealerenquiry)
 
 
 module.exports = router;
