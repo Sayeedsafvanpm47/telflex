@@ -5,6 +5,7 @@ const messageModel = require('../../models/messageModel')
 
 module.exports = {
 	
+	// controller for the charts
 	chart : async (req,res)=>{
 		try {
 			const userData = await userModel.find({});
@@ -159,6 +160,7 @@ const categoryOrders = []
 			res.status(500).json({ error: 'Internal server error' }); // Handle error response
 		        }
 	},
+	// controller for the dashboard
 	adminHome: async (req, res) => {
 		try {
 			
@@ -279,7 +281,7 @@ const categoryOrders = []
 	
 	
 	
-	
+	// controller for reviews view and management
 
 	reviews : async (req,res)=>{
 		try {
@@ -288,6 +290,7 @@ const categoryOrders = []
 			console.log(error)
 		}
 	}
+	// controller for logout
 	,
 	logout : async (req,res)=>{
 		try {
@@ -300,6 +303,7 @@ const categoryOrders = []
 			console.log(error)
 		}
 	},
+	// controller for editing admin profile
 	editProfile : async (req,res)=>{
 		try {
 			const users = await userModel.findOne({_id:req.session.adminId})
@@ -317,6 +321,7 @@ const categoryOrders = []
 			
 		}
 	},
+	// controller for customer enquiry viewing
 	customerenquiry : async (req,res)=>{
 		try {
 			let currentPage = req.query.page ? parseInt(req.query.page) : 1; 
@@ -337,6 +342,7 @@ const categoryOrders = []
 			
 		}
 	},
+	// controller for dealer enquiry
 	dealerenquiry : async (req,res)=>{
 		try {
 			let currentPage = req.query.page ? parseInt(req.query.page) : 1; 

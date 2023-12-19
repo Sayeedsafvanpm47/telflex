@@ -21,26 +21,33 @@ const offerController = require('../../controllers/admin/adminOfferController')
 const bannerController = require('../../controllers/admin/adminBannerController')
 const sessionCheck = require('../../middlewares/sessionMiddleware');
 const productController = require("../../controllers/admin/productController");
-// admin
 
+
+// admincontroller routes begins
 
 router.get('/home',sessionCheck.checkAdminSignIn,controller.adminHome)
 router.get('/chart',sessionCheck.checkAdminSignIn,controller.chart)
-
 router.get('/logout',controller.logout)
-router.get('/sellers',(req,res)=>{
-  res.render('admin/admin/sellerslist')
-})
+router.get('/editProfile',sessionCheck.checkAdminSignIn,controller.editProfile)
+router.get('/reviews',sessionCheck.checkAdminSignIn,productController.reviews)
+router.get('/reviewVisibility',sessionCheck.checkAdminSignIn,productController.reviewVisibility)
+router.get('/customerenquiry',sessionCheck.checkAdminSignIn, controller.customerenquiry)
+router.get('/dealerenquiry' ,sessionCheck.checkAdminSignIn ,controller.dealerenquiry)
 
-// customer management
+//admincontroller routes ends...
+
+// adminUserManage routes begins
+
 router.get("/viewCustomers", sessionCheck.checkAdminSignIn,controllerUserManage.viewCustomers);
-// router.get("/editCustomers", controllerUserManage.editCustomers);
-router.post("/updateUser", sessionCheck.checkAdminSignIn,controllerUserManage.updateUser);
 router.get("/blockUser", sessionCheck.checkAdminSignIn,controllerUserManage.blockUser);
 router.post("/searchUser", sessionCheck.checkAdminSignIn,controllerUserManage.searchUser);
 router.get("/searchView",sessionCheck.checkAdminSignIn, controllerUserManage.searchView);
 router.post("/sortUser",sessionCheck.checkAdminSignIn, controllerUserManage.sortUser);
 router.get("/sortUserView",sessionCheck.checkAdminSignIn, controllerUserManage.sortUserView);
+
+// adminuserManage routes ends
+
+// 
 router.get('/salesReport',sessionCheck.checkAdminSignIn,dashboardController.salesReport)
 router.post('/getReport',sessionCheck.checkAdminSignIn,dashboardController.getReport)
 router.get('/getReportResults',sessionCheck.checkAdminSignIn,dashboardController.getReportResults)
@@ -158,11 +165,6 @@ router.get('/viewSaved',sessionCheck.checkAdminSignIn,async (req,res)=>{
           res.render('admin/productsShow',{products})
 })
 
-router.get('/editProfile',sessionCheck.checkAdminSignIn,controller.editProfile)
-router.get('/reviews',sessionCheck.checkAdminSignIn,productController.reviews)
-router.get('/reviewVisibility',sessionCheck.checkAdminSignIn,productController.reviewVisibility)
-router.get('/customerenquiry',sessionCheck.checkAdminSignIn, controller.customerenquiry)
-router.get('/dealerenquiry' ,sessionCheck.checkAdminSignIn ,controller.dealerenquiry)
 
 
 module.exports = router;
