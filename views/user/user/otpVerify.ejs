@@ -55,26 +55,28 @@
     <%- include('partials/mainScripts') %>
 
   
-  
- 
+
+    
     <script>
+         document.addEventListener('DOMContentLoaded', function() {
+        let timeInSeconds = localStorage.getItem('timer') || 120;
 
+        function updateTimer() {
+            $('#timer').text(timeInSeconds);
+            if (timeInSeconds > 0) {
+                timeInSeconds--;
+                localStorage.setItem('timer', timeInSeconds);
+            } else {
+                $('#resendForm').show();
+                timeInSeconds = 120; 
+                location.reload()
+            }
+        }
 
-
-    let time = parseInt(document.getElementById('timer').textContent);
-
-function updateTimer() {
-    if (time > 0) {
-        time--;
-        document.getElementById('timer').textContent = time;
-    } else {
-        clearInterval(countdownInterval);
-        document.getElementById('resend').removeAttribute('hidden');
-    }
-}
-
-let countdownInterval = setInterval(updateTimer, 1000);
+        let countdownInterval = setInterval(updateTimer, 1000);
+    });
     </script>
+    
 </body>
 
 
