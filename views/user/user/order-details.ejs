@@ -116,7 +116,7 @@
                                                                     <div class="modal-content">
                                                                       <span class="close">&times;</span>
                                                                       <form>
-                                                                        <input type="text" name="cancellation" id="reasonForReturn" placeholder="Reason for returning the product?">
+                                                                        <input type="text" style="margin-bottom: 30px;" name="cancellation" id="reasonForReturn" placeholder="Reason for returning the product?">
                                                                            <button class="btn btn-danger" onclick="returnOrder('<%= item._id %>')">Request Return</button>
                                                                        
                                                                       </form>
@@ -141,8 +141,8 @@
                                                                 <div class="modal-content">
                                                                   <span class="close">&times;</span>
                                                                   <form>
-                                                                    <input type="text" name="cancellation" id="reason" placeholder="Reason for cancellation">
-                                                                       <button class="btn btn-danger" onclick="cancelOrder('<%= item._id %>')">Cancel</button>
+                                                                    <input type="text" style="margin-bottom: 30px;" name="cancellation" id="reason" placeholder="Reason for cancellation">
+                                                                       <button class="btn btn-danger m-10 p-10" onclick="cancelOrder('<%= item._id %>')">Cancel</button>
                                                                     <button>
                                                                   </form>
                                                                 </div>
@@ -253,187 +253,25 @@
     <% } %>
   
  
-    <!-- Vendor JS-->
-    <script src="/user/js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="/user/js/vendor/jquery-3.6.0.min.js"></script>
-    <script src="/user/js/vendor/jquery-migrate-3.3.0.min.js"></script>
-    <script src="/user/js/vendor/bootstrap.bundle.min.js"></script>
-    <script src="/user/js/plugins/slick.js"></script>
-    <script src="/user/js/plugins/jquery.syotimer.min.js"></script>
-    <script src="/user/js/plugins/wow.js"></script>
-    <script src="/user/js/plugins/jquery-ui.js"></script>
-    <script src="/user/js/plugins/perfect-scrollbar.js"></script>
-    <script src="/user/js/plugins/magnific-popup.js"></script>
-    <script src="/user/js/plugins/select2.min.js"></script>
-    <script src="/user/js/plugins/waypoints.js"></script>
-    <script src="/user/js/plugins/counterup.js"></script>
-    <script src="/user/js/plugins/jquery.countdown.min.js"></script>
-    <script src="/user/js/plugins/images-loaded.js"></script>
-    <script src="/user/js/plugins/isotope.js"></script>
-    <script src="/user/js/plugins/scrollup.js"></script>
-    <script src="/user/js/plugins/jquery.vticker-min.js"></script>
-    <!-- Template  JS -->
-    <script src="/user/js/maind134.js?v=3.4"></script>
-    <script src="/user/js/shopd134.js?v=3.4"></script>
+    <%- include('partials/mainScripts') %>
+
 
 <!-- modal -->
-<script>
-    function printInvoice()
-    {
-        document.getElementById('returnhideheader').style.display = 'none'
-        document.getElementById('returnhide').style.display = 'none'
-        window.print()
-        
-    }
+<script src="/user/helpers/orderDetails.js">
+  
 </script>
 
-<script>
-    // Get the modal
-    var modal = document.getElementById("myModal");
-    
-    // Get the button that opens the modal
-    var btn = document.getElementById("myBtn");
-    
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-    
-    // When the user clicks the button, open the modal 
-    btn.onclick = function() {
-      modal.style.display = "block";
-    }
-    
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-      modal.style.display = "none";
-    }
-    
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    }
-    </script>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-    <script>
-        function cancelOrder(orderId) {
-            event.preventDefault();
-            const reason = document.getElementById('reason').value;
-            console.log(reason)
-            const data = {
-                reason: reason,
-                _id: orderId
-            };
     
-            Swal.fire({
-                icon: 'warning',
-                title: 'Are you sure?',
-                text: 'Do you want to cancel this order?',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, cancel it!',
-                cancelButtonText: 'No, keep it'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    fetch(`/user/cancelOrder`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-type': 'application/json',
-                        },
-                        body: JSON.stringify(data)
-                    })
-                    .then((res) => {
-                        if (!res.ok) {
-                            throw new Error('response was not okay');
-                        }
-                        return res.json();
-                    })
-                    .then((data) => {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Order Cancelled',
-                            text: 'Your order has been cancelled successfully!',
-                        });
-                        console.log(data);
-                        window.location.href = 'account';
-                    })
-                    .catch((error) => {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Something went wrong! Unable to cancel the order.',
-                            footer: `<p>${error.message}</p>`,
-                        });
-                        console.log(error);
-                    });
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire('Cancelled', 'Your order is safe :)', 'info');
-                }
-            });
-        }
-    </script>
+
+    
     
 
 
 
-<script>
-    function returnOrder(orderId) {
-        event.preventDefault();
-            const reason = document.getElementById('reasonForReturn').value;
-            console.log(reason)
-            const data = {
-                reason: reason,
-                _id: orderId
-            };
-    
-        Swal.fire({
-            icon: 'warning',
-            title: 'Are you sure?',
-            text: 'Do you want to return this product?',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, confirm!',
-            cancelButtonText: 'No, keep it'
-        }).then((result) => {
-            if (result.isConfirmed) {
-               
-                fetch(`/user/returnOrder`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-type': 'application/json',
-                        },
-                        body: JSON.stringify(data)
-                    })
-                .then((data) => {
-                 
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Request for return submitted',
-                        text: 'Your order will soon be collected by the team, hang in there, Cheers!',
-                    });
-                    console.log(data); 
-                    window.location.href = 'account'
-                })
-                .catch((error) => {
-                   
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong! Unable to cancel the order.',
-                        footer: `<p>${error.message}</p>`,
-                    });
-                    console.log(error);
-                });
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-             
-                Swal.fire('Cancelled', 'Your order is safe :)', 'info');
-            }
-        });
-    }
-</script>
 
 
 
@@ -452,5 +290,4 @@
 </body>
 
 
-<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/shop-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:07 GMT -->
 </html>

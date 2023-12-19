@@ -1,209 +1,229 @@
 <%- include('partials/head') %>
 
-<body>
-  
-  
+    <body>
 
-    <%- include('partials/header') %>
 
-    <main class="main">
-        <!-- banner 2 (loop the banners) -->
 
-        <section class="home-slider position-relative pt-50">
-          
-            <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
-                <% if(banners){ %>
-                <% for(let i=0; i<banners.images.length; i++){ %>
-                <div class="single-hero-slider single-animation-wrap">
-                    <div class="container" style="background-color: rgba(11, 11, 11, 0.921);  border-radius: 10px; box-shadow: inset;">
-                      
-                        <div class="row align-items-center slider-animated-1">
-                        
-                            <div class="col-lg-5 col-md-6">
-                             
+        <%- include('partials/header') %>
+
+            <main class="main">
+                <!-- banner 2 (loop the banners) -->
+
+                <section class="home-slider position-relative pt-50">
+
+                    <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
+                        <% if(banners){ %>
+                            <% for(let i=0; i<banners.images.length; i++){ %>
+                                <div class="single-hero-slider single-animation-wrap">
+                                    <div class="container"
+                                        style="background-color: rgba(11, 11, 11, 0.921);  border-radius: 10px; box-shadow: inset;">
+
+                                        <div class="row align-items-center slider-animated-1">
+
+                                            <div class="col-lg-5 col-md-6">
+
+                                                <div class="hero-slider-content-2">
+                                                    <h4 class="animated"></h4>
+
+                                                    <h2 style="color: rgb(255, 255, 255);" class="animated fw-900">
+                                                        Contact Us</h2>
+
+
+
+
+
+                                                    <h5 class="animated" style="color: rgb(192, 16, 16);">wanna
+                                                        customize? have any doubts? wanna know more about the
+                                                        manufacturing process? Dont hesitate.. Just submit your details,
+                                                        we will catch up with you.. Or call us or come visit us in our
+                                                        location.</h5>
+
+
+
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-7 col-md-6">
+
+
+                                                <div class="single-slider-img single-slider-img-1 mt-20">
+
+                                                    <img style="border-radius: 15px;" class="animated slider-1-1"
+                                                        src="/<%= banners.images[i] %>" alt="">
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <% } %>
+                                    <% } %>
+                    </div>
+
+
+
+                </section>
+
+
+
+                <section>
+                    <div class="container pt-30">
+                        <h1>
+                            Have any queries? Give us a call now!
+                        </h1>
+                        <div class="row">
+
+                            <div class="col">
+
                                 <div class="hero-slider-content-2">
-                                    <h4 class="animated"></h4>
-                                  
-                                    <h2 style="color: rgb(255, 255, 255);" class="animated fw-900">Contact Us</h2>
-                                   
-                                   
-                                 
-                                   
-                                   
-                                    <h5 class="animated" style="color: rgb(192, 16, 16);">wanna customize? have any doubts? wanna know more about the manufacturing process? Dont hesitate.. Just submit your details, we will catch up with you.. Or call us or come visit us in our location.</h5>
-                                 
-                                   
-                                  
-                                   
+                                    <img src="/user/imgs/contactus.jpg" alt="">
+
                                 </div>
                             </div>
-                            
-                            <div class="col-lg-7 col-md-6">
-                               
 
-                                <div class="single-slider-img single-slider-img-1 mt-20">
-                                  
-                                    <img style="border-radius: 15px;" class="animated slider-1-1" src="/<%= banners.images[i] %>" alt="">
+                            <div class="col">
 
-                                 
+                                <div class="hero-slider-content-2">
+
+                                    <p>
+                                        If you have any doubts or inquiries regarding your purchase from us, we're here
+                                        to help! You can reach out to us in various ways:
+
+                                        <br> <b>Message Us:</b> Use the contact form on our website to send us a
+                                        message. We'll get back to you promptly.
+
+                                        <br><b> Contact Us Directly:</b> Feel free to call or email our customer service
+                                        team directly. We're available to assist you with any concerns.
+
+                                        <br> <b>Visit Our Location:</b> Come and visit us at our physical location
+                                        Kodungallur near Padakulam bypass road, Thrissur. Our team will be delighted to
+                                        assist you in person.
+                                        We're committed to providing excellent service and support for any problems or
+                                        queries you might have. Thank you for choosing Telflex. Happy shopping!
+
+                                    </p>
+
                                 </div>
                             </div>
-                        
+
                         </div>
-                      
+
                     </div>
-                </div>
-                
-                <% } %>
-                <% } %>
-            </div>
-           
-          
-          
-        </section>
- 
-     
+                </section>
 
-        <section>
-            <div class="container pt-30">
-                    <h1>
-                             Have any queries? Give us a call now!
-                             </h1>
-            <div class="row">
-
-                <div class="col">
-                             
-                    <div class="hero-slider-content-2">
-                    <img src="/user/imgs/contactus.jpg" alt="">
-                       
+                <section>
+                    <div class="container text-center">
+                        <p>Fill in the form below, and describe your approximate requirement, we will catch up to you
+                            with a quote</p>
+                        <h3 class="mt-20">WELCOME TO OUR TELFLEX COMMUNITY OF SUCCESSFUL DEALER PARTNERSHIPS</h3>
+                        <form id="contactform" action="">
+                            <div class="row">
+                                <div class="col">
+                                    <input style="border-radius: 10px;" id="name" class="mt-10" type="text" name="name"
+                                        placeholder="Enter your name" required>
+                                    <input style="border-radius: 10px;" id="email" class="mt-10" type="text"
+                                        name="email" placeholder="Email Address" required>
+                                    <input style="border-radius: 10px;" id="phone" class="mt-10" type="text"
+                                        name="phone" placeholder="Phone Number" required>
+                                    <input style="border-radius: 10px;" class="mt-10" type="text" name="address"
+                                        id="address" placeholder="Address" required>
+                                </div>
+                                <div class="col">
+                                    <textarea style="border-radius: 10px;" class="mt-15"
+                                        placeholder="Write your query regarding the purchase..." style="height: 240px;"
+                                        name="message" id="message" cols="50" rows="20" required></textarea>
+                                </div>
+                            </div>
+                            <button onclick="contact(event)" class="btn btn-primary mt-10">SUBMIT QUERY</button>
+                        </form>
                     </div>
-                </div>
+                </section>
+                <br>
+                <section>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
 
-                <div class="col">
-                             
-                    <div class="hero-slider-content-2">
-                     
-                      <p>
-                        If you have any doubts or inquiries regarding your purchase from us, we're here to help! You can reach out to us in various ways:
 
-                     <br>  <b>Message Us:</b>  Use the contact form on our website to send us a message. We'll get back to you promptly.
-                    
-                     <br><b> Contact Us Directly:</b>   Feel free to call or email our customer service team directly. We're available to assist you with any concerns.
-                    
-                      <br> <b>Visit Our Location:</b>  Come and visit us at our physical location Kodungallur near Padakulam bypass road, Thrissur. Our team will be delighted to assist you in person.
-                We're committed to providing excellent service and support for any problems or queries you might have. Thank you for choosing Telflex. Happy shopping!
+                                <h3> <i class="fa-solid fa-location-dot"></i> Shop Address</h3>
+                                <p>XL/176B, BYPASS JN, WEST PADAKULAM,<br> KODUNGALLUR, PIN: 680664,
+                                    HeadOffice : Psn Kavala, <br> PO Madavana,Kodungallur, Thrissur, Kerala, 680666.
 
-                        </p>
-                       
+                                </p>
+
+
+                            </div>
+                            <div class="col">
+
+
+                                <h3> <i class="fa-solid fa-clock"></i> Shop Hours</h3>
+                                <p>Mon-Sat - 8am to 9pm<br> Sun - Can be opened for special cases
+
+
+                                </p>
+
+
+
+                            </div>
+                            <div class="col">
+                                <h3><i class="fa-solid fa-address-book"></i> Contact Us</h3>
+                                <p>Phone :
+                                    +91 9745607406, 7025053170 <br>
+                                    <br> Lan : 0480 2806143
+                                    Email :
+                                    telflexmattress@gmail.com
+                                </p>
+
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </section>
+                <br>
+                <section>
+                    <div class="container">
+                        <h1>Visit us in shop</h1>
+                        <br>
+                        <div id="map" style="height: 400px; width: 100%;"></div>
 
-            </div>
-           
-        </div>
-        </section>
+                    </div>
+                </section>
 
-    <section>
-          <div class="container text-center">
-          <p>Fill in the form below, and describe your approximate requirement, we will catch up to you with a quote</p>
-          <h3 class="mt-20">WELCOME TO OUR TELFLEX COMMUNITY OF SUCCESSFUL DEALER PARTNERSHIPS</h3>
-          <form id="contactform" action="">
-                    <div class="row">
-                              <div class="col">
-                    <input style="border-radius: 10px;" id="name" class="mt-10"  type="text" name="name" placeholder="Enter your name" required>
-                    <input style="border-radius: 10px;" id="email"  class="mt-10" type="text" name="email" placeholder="Email Address" required>
-                    <input style="border-radius: 10px;" id="phone" class="mt-10"  type="text" name="phone" placeholder="Phone Number" required>
-                    <input style="border-radius: 10px;"  class="mt-10"  type="text" name="address" id="address" placeholder="Address" required>
-          </div>
-          <div class="col">
-                    <textarea style="border-radius: 10px;" class="mt-15" placeholder="Write your query regarding the purchase..." style="height: 240px;" name="message" id="message" cols="50" rows="20" required></textarea>
-          </div>
-          </div>
-                    <button onclick="contact(event)" class="btn btn-primary mt-10">SUBMIT QUERY</button>
-          </form>
-</div>
-    </section>
-    <br>
-    <section>
-        <div class="container">
-<div class="row">
-    <div class="col">
-    
-    
-        <h3>    <i class="fa-solid fa-location-dot"></i> Shop Address</h3>
-        <p>XL/176B, BYPASS JN, WEST PADAKULAM,<br> KODUNGALLUR, PIN: 680664, 
-           HeadOffice : Psn Kavala,  <br> PO Madavana,Kodungallur, Thrissur, Kerala, 680666.
-            
-            </p>
+                <hr>
+
+                <!-- banner part 3 (single banner) -->
 
 
-    </div>
-    <div class="col">
+                <script src="/user/helpers/contact.js">
 
-
-        <h3>   <i class="fa-solid fa-clock"></i> Shop Hours</h3>
-        <p>Mon-Sat - 8am to 9pm<br> Sun - Can be opened for special cases
-           
-            
-            </p>
+                </script>
 
 
 
-    </div>
-    <div class="col">
-        <h3><i class="fa-solid fa-address-book"></i> Contact Us</h3>
-        <p>Phone : 
-            +91 9745607406, 7025053170 <br>
-            <br> Lan : 0480 2806143
-            Email :
-            telflexmattress@gmail.com
-        </p>
-
-    </div>
-</div>
-    </div>
-</section>
-<br>
-    <section >
-        <div class="container">
-            <h1>Visit us in shop</h1>
-            <br>
-            <div id="map" style="height: 400px; width: 100%;"></div>
-          
-        </div>
-    </section>
-    
-       <hr>
-
-        <!-- banner part 3 (single banner) -->
-   
-     
-     <script src="/user/helpers/contact.js">
-      
-     </script>
-      
-   
-      
-      
-    
-    </main>
-    <%- include('partials/mainScripts') %>
-
- 
-    <%- include('partials/footerlogin') %>
-    
 
 
-    
-    
-
-   
-
- 
-    
+            </main>
+            <%- include('partials/mainScripts') %>
 
 
-</body>
+                <%- include('partials/footerlogin') %>
 
 
-</html>
+
+
+
+
+
+
+
+
+
+
+    </body>
+
+
+    </html>
