@@ -291,7 +291,7 @@ if (products) {
               }
               await cartModel.updateOne({userId:userId},{$set:{couponApplied:apply,couponCode:coupon},},{upsert:true})
 
-              req.session.checkOut = true
+              req.session.checkOutTrue = true
               res.redirect('/user/checkoutpage')
           } catch (error) {
               console.log(error);

@@ -18,7 +18,8 @@ module.exports = {
 	// controller logic for checkout page
 	checkOutPage: async (req, res) => {
 		try {
-			if (req.session.checkOut) {
+			console.log(req.session.checkOutTrue)
+			if (req.session.checkOutTrue) {
 				const user = req.session.userId;
 
 				console.log(user);
@@ -35,6 +36,7 @@ module.exports = {
 						select: "images productName size productDiscount"
 					});
 				console.log(cart.total);
+				delete req.session.checkOutTrue
 
 				res.render("user/user/shop-checkout", { cart });
 			} else {
@@ -69,7 +71,13 @@ module.exports = {
 					}
 				}
 			);
+			if(req.session.checkOut){
 			res.redirect("/user/checkoutpage");
+			}else
+			{
+				res.redirect("/user/showCart");
+
+			}
 		} catch (error) {
 			console.log(error);
 		}
