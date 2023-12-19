@@ -17,12 +17,11 @@ router.use((req, res, next) => {
           next();
         });
       
+// userController controller file routes begins 
 
 router.get("/shop", controller.getLogin);
 router.post("/postLogin",controller.postLogin);
-
 router.get('/error',controller.error)
-
 router.get("/getsignup", controller.getSignUp);
 router.post("/signup", controller.postSignUp);
 router.get('/logout',controller.logout)
@@ -43,7 +42,6 @@ router.get('/viewOrderDetails',authMiddleWare.checkSignIn,controller.viewOrderDe
 router.post('/updateCart',authMiddleWare.checkSignIn,cartController.updateCart)
 router.post('/cancelOrder',authMiddleWare.checkSignIn,controller.cancelOrder)
 router.post('/returnOrder',authMiddleWare.checkSignIn,controller.returnOrder)
-
 router.get('/userWallet',authMiddleWare.checkSignIn,controller.userWallet)
 router.get('/refferalClaim',authMiddleWare.checkSignIn,controller.refferalClaim)
 router.get('/rateProduct',controller.rateProduct)
@@ -51,8 +49,18 @@ router.get('/home',controller.homepage)
 router.get('/about',controller.getAbout)
 router.get('/dealer',controller.getDealers)
 router.get('/contact',controller.getContact)
-// router.get('/updateLastStock',cartController.userLastStock)
+router.get('/policy',controller.privacypolicy)
+router.get('/pageterms',controller.pageterms)
+router.get('/deliverydetails',controller.deliverydetails)
+router.post('/contactmessage',controller.contactmessage)
+router.post('/dealermessage',controller.dealermessage)
+
+// userController controller file routes ends...
+
+
+
 router.get('updateLastStock',cartController.updateLastStock)
+
 
 
 router.get('/',productController.productGridView)
@@ -85,12 +93,7 @@ router.post('/addToWish',authMiddleWare.checkSignIn,authMiddleWare.checkBlock,wi
 router.get('/deleteWish',authMiddleWare.checkSignIn,wishListController.deleteWish)
 router.get('/addfromwish',authMiddleWare.checkSignIn,wishListController.addFromWish)
 
-router.get('/policy',controller.privacypolicy)
-router.get('/pageterms',controller.pageterms)
-router.get('/deliverydetails',controller.deliverydetails)
 
-router.post('/contactmessage',controller.contactmessage)
-router.post('/dealermessage',controller.dealermessage)
 
 
 router.get('/blog',(req,res)=>{

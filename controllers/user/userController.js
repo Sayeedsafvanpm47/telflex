@@ -6,7 +6,7 @@ const wishlistModel = require("../../models/wishlist");
 const bannerModel = require("../../models/bannerModel");
 const cartModel = require("../../models/cartModel");
 const categoryModel = require("../../models/categoryModel");
-const messageModel = require('../../models/messageModel')
+const messageModel = require("../../models/messageModel");
 const sendOTPByEmail = require("../../utils/sendMail");
 const bcrypt = require("bcrypt");
 const { isEmailValid, isPasswordValid, isNamesValid, isPhoneValid, isCpassValid } = require("../../utils/validators/signUpValidator");
@@ -89,16 +89,14 @@ module.exports = {
 					if (req.session.cart) {
 						res.redirect("/user/showCart");
 					} else {
-
 						req.session.loginSuccess = true;
-						if(user.isAdmin === true){
-							req.session.admin = true
-							req.session.adminId = req.session.userId
-							res.redirect('/admin/home')
-						}else{
+						if (user.isAdmin === true) {
+							req.session.admin = true;
+							req.session.adminId = req.session.userId;
+							res.redirect("/admin/home");
+						} else {
 							res.redirect("/user/home");
 						}
-						
 					}
 				} else {
 					console.log("Invalid password");
@@ -196,10 +194,10 @@ module.exports = {
 	getAbout: async (req, res) => {
 		try {
 			const banners = await bannerModel.findOne({ bannerType: "Main About Banner" });
-			const manufacturing = await bannerModel.findOne({bannerType : 'manufacturing'})
-			const factory = await bannerModel.findOne({bannerType : 'factory'})
+			const manufacturing = await bannerModel.findOne({ bannerType: "manufacturing" });
+			const factory = await bannerModel.findOne({ bannerType: "factory" });
 			if (banners) {
-				res.render("user/user/about", { banners,manufacturing,factory });
+				res.render("user/user/about", { banners, manufacturing, factory });
 			} else {
 				console.log("about page fetching failed");
 				const error = new Error("No data available for this page");
@@ -268,6 +266,7 @@ module.exports = {
 			res.redirect("/user/error");
 		}
 	},
+	// controller for posting the signup
 	postSignUp: async (req, res) => {
 		try {
 			const { email, password, firstname, lastname, phonenumber, chkpassword, refferal } = req.body;
@@ -363,9 +362,9 @@ module.exports = {
 			}
 		} catch (err) {
 			console.error("Error:", err);
-			res.send("error");
 		}
 	},
+	// controller for otp verification
 
 	verifyOTP: async (req, res) => {
 		try {
@@ -432,6 +431,7 @@ module.exports = {
 			res.redirect("/user/error");
 		}
 	},
+	// controller for showCreatePassword
 
 	showCreatePass: async (req, res) => {
 		try {
@@ -447,11 +447,12 @@ module.exports = {
 			}
 		} catch (error) {
 			console.log(error);
-			
+
 			await res.redirect("/user/getForgotPassword");
 		}
 	},
 
+	// controller for resend otp
 	resendOtp: async (req, res) => {
 		try {
 			const { email } = req.body;
@@ -464,6 +465,7 @@ module.exports = {
 			res.redirect("/");
 		}
 	},
+	// controller for getting forgot password
 	getForgotPassword: async (req, res) => {
 		try {
 			if (req.session.forgotError) {
@@ -477,6 +479,7 @@ module.exports = {
 			res.redirect("/user/error");
 		}
 	},
+	// controller for user logout
 	logout: async (req, res) => {
 		try {
 			delete req.session.userId;
@@ -486,39 +489,37 @@ module.exports = {
 			res.redirect("/user/error");
 		}
 	},
+	// controller for forgot password
 	forgotPassword: async (req, res) => {
 		try {
 			const { email } = req.body;
 
 			const emailExist = await userModel.findOne({ email: email });
-			if(emailExist)
-			{
-				console.log('email exist')
+			if (emailExist) {
+				console.log("email exist");
+			} else {
+				console.log("doesnt exist");
 			}
-			else
-			{
-				console.log('doesnt exist')
+
+			if (!emailExist) {
+				req.session.forgotError = true;
+				res.redirect("/user/getForgotPassword");
+			} else {
+				console.log("in this block");
+				await sendOtp(email);
+
+				req.session.isForgot = true;
+				req.session.email = email;
+
+				console.log("user forgot the pass");
+				res.redirect("/user/showOtp");
 			}
-			
-				if (!emailExist) {
-					req.session.forgotError = true;
-					res.redirect("/user/getForgotPassword");
-				} else {
-					console.log('in this block')
-					await sendOtp(email);
-
-					req.session.isForgot = true;
-					req.session.email = email;
-
-					console.log("user forgot the pass");
-					res.redirect("/user/showOtp");
-				}
 		} catch (error) {
 			console.log(error);
 			res.redirect("/");
 		}
 	},
-
+	// controller for showOtp
 	showOtp: async (req, res) => {
 		try {
 			const errors = [];
@@ -549,7 +550,7 @@ module.exports = {
 			res.redirect("/user/getForgotPassword");
 		}
 	},
-
+	// controller for updating password
 	updatePass: async (req, res) => {
 		const { password, chkpassword, email } = req.body;
 		const user = await userModel.findOne({ email });
@@ -576,6 +577,7 @@ module.exports = {
 			await res.render("user/user/createPass", { errors, email });
 		}
 	},
+	// conteoller for rated products view
 	rateProduct: async (req, res) => {
 		try {
 			const { rating, review, productid, orderId } = req.query;
@@ -636,6 +638,7 @@ module.exports = {
 			console.log(error);
 		}
 	},
+	// controller for useraccount view
 	userAccount: async (req, res) => {
 		try {
 			const userId = req.session.userId;
@@ -671,6 +674,7 @@ module.exports = {
 			console.error("Error fetching user account details:", error);
 		}
 	},
+	// controller for updating user credentials
 	updateAccount: async (req, res) => {
 		try {
 			const userId = req.session.userId;
@@ -682,37 +686,33 @@ module.exports = {
 
 			const currentPassword = user.password;
 			console.log("current password: ", currentPassword);
-			const { password, newpassword, confirmpassword,firstname,lastname } = req.body;
+			const { password, newpassword, confirmpassword, firstname, lastname } = req.body;
 
 			const passwordMatch = await bcrypt.compare(password, currentPassword);
 			console.log("Password Match:", passwordMatch);
 
-			if (!passwordMatch || newpassword == '') {
-				return res.status(401).json({ error: 'Unauthorized access: Passwords do not match' });
-			      }
+			if (!passwordMatch || newpassword == "") {
+				return res.status(401).json({ error: "Unauthorized access: Passwords do not match" });
+			}
 
-			
 			console.log(newpassword);
 			console.log(confirmpassword);
 			const hashedPassword = await bcrypt.hash(newpassword, 10);
 			console.log(hashedPassword);
 
-			if(passwordMatch && hashedPassword !== '')
-			{
-		
+			if (passwordMatch && hashedPassword !== "") {
+				await userModel.updateOne({ _id: userId }, { $set: { password: hashedPassword, firstname: firstname, lastname: lastname } });
 
-			await userModel.updateOne({ _id: userId }, { $set: { password: hashedPassword,firstname:firstname,lastname:lastname } });
-
-			res.redirect("/user/account");
-			}else
-			{
-				return res.status(401).json({ error: 'Unauthorized access: Passwords do not match' });
+				res.redirect("/user/account");
+			} else {
+				return res.status(401).json({ error: "Unauthorized access: Passwords do not match" });
 			}
 		} catch (error) {
 			console.error(error);
 			res.status(500).send("Internal Server Error");
 		}
 	},
+	// controller for adding address
 	addAddress: async (req, res) => {
 		try {
 			const userId = req.session.userId;
@@ -742,14 +742,20 @@ module.exports = {
 			console.log(error);
 		}
 	},
+	// controller for deleting address
 	deleteAddress: async (req, res) => {
-		const user = req.session.userId;
-		const addressId = req.query._id;
+		try {
+			const user = req.session.userId;
+			const addressId = req.query._id;
 
-		await userModel.updateOne({ _id: user }, { $pull: { address: { _id: addressId } } });
+			await userModel.updateOne({ _id: user }, { $pull: { address: { _id: addressId } } });
 
-		res.redirect("/user/account");
+			res.redirect("/user/account");
+		} catch (error) {
+			console.log(error);
+		}
 	},
+	// controller for editing address
 	editAddress: async (req, res) => {
 		try {
 			const addressId = req.query._id;
@@ -761,9 +767,10 @@ module.exports = {
 			res.render("user/user/editAddress", { users });
 		} catch (error) {
 			console.log(error);
-			res.send("error occured");
+			res.redirect("/user/error");
 		}
 	},
+	// controller for updating address
 	updateAddress: async (req, res) => {
 		try {
 			const addressId = req.session.address;
@@ -788,13 +795,14 @@ module.exports = {
 			if (result) {
 				res.redirect("/user/account");
 			} else {
-				res.send("error");
+				res.redirect("/user/error");
 			}
 		} catch (error) {
 			console.log(error);
-			res.status(500).send("Error occurred");
+			res.status(500);
 		}
 	},
+	// controller for viewing order details
 	viewOrderDetails: async (req, res) => {
 		try {
 			const orderId = req.query.orderId;
@@ -810,6 +818,7 @@ module.exports = {
 			console.log(error);
 		}
 	},
+	// controller for cancelling order
 	cancelOrder: async (req, res) => {
 		try {
 			const _id = req.body._id;
@@ -839,6 +848,7 @@ module.exports = {
 			res.status(500).json({ error: "Internal server error" });
 		}
 	},
+	// controller for returning order
 	returnOrder: async (req, res) => {
 		try {
 			const _id = req.body._id;
@@ -891,7 +901,7 @@ module.exports = {
 			res.status(500).json({ error: "Internal server error" });
 		}
 	},
-
+	// controller for userwallet
 	userWallet: async (req, res) => {
 		try {
 			const id = req.session.userId;
@@ -906,6 +916,7 @@ module.exports = {
 			console.error("Error calculating total refund amount:", error);
 		}
 	},
+	// controller for refferal claim
 	refferalClaim: async (req, res) => {
 		try {
 			const { refferal } = req.query;
@@ -952,6 +963,7 @@ module.exports = {
 			res.status(500).json({ error: "Server error" });
 		}
 	},
+	// controller for error
 	error: async (req, res) => {
 		try {
 			if (req.session.errorOccured) {
@@ -966,86 +978,80 @@ module.exports = {
 			res.render("user/user/error", { error });
 		}
 	},
-	privacypolicy : async (req,res)=>{
+	// controller for privacy policy
+	privacypolicy: async (req, res) => {
 		try {
-		        res.render('user/user/policy')
-		        
+			res.render("user/user/policy");
 		} catch (error) {
-		        console.log(error)
-		        
+			console.log(error);
 		}
-	    },
-	    pageterms : async (req,res)=>{
-    
+	},
+	//     controller for page terms
+	pageterms: async (req, res) => {
 		try {
-		        res.render('user/user/page-terms')
-		        
+			res.render("user/user/page-terms");
 		} catch (error) {
-		        console.log(error)
+			console.log(error);
 		}
-	    },
-	    deliverydetails : async (req,res)=>{
+	},
+	//     controller for delivery details
+	deliverydetails: async (req, res) => {
 		try {
-		        
-		        res.render('user/user/deliveryinformation')
+			res.render("user/user/deliveryinformation");
 		} catch (error) {
-		        console.log(error)
+			console.log(error);
 		}
-	    },
-	    contactmessage : async (req,res)=>{
+	},
+	//     controller for contact message
+	contactmessage: async (req, res) => {
 		try {
-			const {email,phone,name,address,message} = req.body
-			console.log(email)
-			console.log(phone)
-			console.log(name)
-			console.log(address)
-			console.log(message)
+			const { email, phone, name, address, message } = req.body;
+			console.log(email);
+			console.log(phone);
+			console.log(name);
+			console.log(address);
+			console.log(message);
 			const queries = new messageModel({
-				email : email,
-				phone : phone,
-				name : name,
-				address : address,
-				query : message,
-				type : 'Contact'
-			})
-			console.log(queries)
-			await queries.save()
+				email: email,
+				phone: phone,
+				name: name,
+				address: address,
+				query: message,
+				type: "Contact"
+			});
+			console.log(queries);
+			await queries.save();
 
-			res.status(200)
-			
+			res.status(200);
 		} catch (error) {
-			
-			console.log(error)
-			res.status(500)
+			console.log(error);
+			res.status(500);
 		}
-
-	    },
-	    dealermessage : async (req,res)=>{
+	},
+	//     controller for dealer message
+	dealermessage: async (req, res) => {
 		try {
-			const {email,phone,name,address,message} = req.body
-			console.log(email)
-			console.log(phone)
-			console.log(name)
-			console.log(address)
-			console.log(message)
+			const { email, phone, name, address, message } = req.body;
+			console.log(email);
+			console.log(phone);
+			console.log(name);
+			console.log(address);
+			console.log(message);
 			const queries = new messageModel({
-				email : email,
-				phone : phone,
-				name : name,
-				address : address,
-				query : message,
-				type : 'Dealer'
-			})
-			console.log(queries)
-			await queries.save()
+				email: email,
+				phone: phone,
+				name: name,
+				address: address,
+				query: message,
+				type: "Dealer"
+			});
+			console.log(queries);
+			await queries.save();
 
-			res.status(200)
-			
+			res.status(200);
 		} catch (error) {
-			
-			console.log(error)
-			res.status(500)
+			console.log(error);
+			res.status(500);
 		}
-
-	    }
+	}
 };
