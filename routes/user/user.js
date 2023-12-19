@@ -39,7 +39,6 @@ router.get('/deleteAddress',authMiddleWare.checkSignIn,controller.deleteAddress)
 router.get('/editAddress',authMiddleWare.checkSignIn,controller.editAddress)
 router.post('/updateAddress',authMiddleWare.checkSignIn,controller.updateAddress)
 router.get('/viewOrderDetails',authMiddleWare.checkSignIn,controller.viewOrderDetails)
-router.post('/updateCart',authMiddleWare.checkSignIn,cartController.updateCart)
 router.post('/cancelOrder',authMiddleWare.checkSignIn,controller.cancelOrder)
 router.post('/returnOrder',authMiddleWare.checkSignIn,controller.returnOrder)
 router.get('/userWallet',authMiddleWare.checkSignIn,controller.userWallet)
@@ -57,11 +56,18 @@ router.post('/dealermessage',controller.dealermessage)
 
 // userController controller file routes ends...
 
+// userCartController controller file routes begins
 
+router.post('/addToCart',authMiddleWare.checkSignIn,authMiddleWare.checkBlock,cartController.addToCart)
+router.get('/showCart',authMiddleWare.checkSignIn,authMiddleWare.checkBlock,cartController.showCart)
+router.get('/deleteCart',authMiddleWare.checkSignIn,cartController.deleteCart)
+router.post('/checkOut',authMiddleWare.checkSignIn,cartController.checkOut)
+router.get('/applyCoupon',authMiddleWare.checkSignIn,cartController.applyCoupon)
+router.post('/updateCart',authMiddleWare.checkSignIn,cartController.updateCart)
 
-router.get('updateLastStock',cartController.updateLastStock)
+// userCartController controller file routes ends...
 
-
+// userproductController controller file routes begins
 
 router.get('/',productController.productGridView)
 router.get('/paginate',productController.pagination)
@@ -76,11 +82,7 @@ router.get('/productdetail',productController.productdetail)
 router.get('/showPrice',productController.showPrice)
 
 
-router.post('/addToCart',authMiddleWare.checkSignIn,authMiddleWare.checkBlock,cartController.addToCart)
-router.get('/showCart',authMiddleWare.checkSignIn,authMiddleWare.checkBlock,cartController.showCart)
-router.get('/deleteCart',authMiddleWare.checkSignIn,cartController.deleteCart)
-router.post('/checkOut',authMiddleWare.checkSignIn,cartController.checkOut)
-router.get('/applyCoupon',authMiddleWare.checkSignIn,cartController.applyCoupon)
+
 
 router.get('/checkoutPage',authMiddleWare.checkSignIn,authMiddleWare.checkBlock,userCheckoutController.checkOutPage)
 router.post('/checkOutAddress',authMiddleWare.checkSignIn,userCheckoutController.addAddress)

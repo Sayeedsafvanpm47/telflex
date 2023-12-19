@@ -4,6 +4,7 @@ const couponModel = require('../../models/couponModel')
 const productModel = require('../../models/productModel')
 
 module.exports = {
+    // controller for add to cart logic
           addToCart : async (req,res)=>{
                     try { 
                         const { _id, size, price, mrp, quantity, productname,stock,laststock,productTarget } = req.body;
@@ -47,7 +48,7 @@ module.exports = {
                       if (existingCart) {
                         const existingProductIndex = existingCart.products.findIndex(product => product.single_id.toString() == productTarget);
                         if (existingProductIndex !== -1) {
-                            // Product already exists in the cart
+                           
                             if (existingCart.products[existingProductIndex].lastStock !== 0) {
                                 existingCart.products[existingProductIndex].quantity += +quantity;
                             } else {
@@ -74,7 +75,7 @@ module.exports = {
                             }
                             else {
                                 res.redirect('/user/shop');
-                                return; // Exit the function early if lastStock is 0
+                                return; 
                             }
                         } 
                         
@@ -115,6 +116,7 @@ module.exports = {
                               console.log(error)
                     }
           } ,
+        //   controller logic for showing cart
           showCart: async (req, res) => {
                     try {
                       
@@ -140,7 +142,7 @@ module.exports = {
       
      const status = couponFound.status === 'active';
 
-    // Add the coupon if the user hasn't redeemed it and it's active
+
     if (!userRedeemed && status) {
         coupon.push(couponFound);
     }
@@ -155,6 +157,7 @@ module.exports = {
                       res.status(500).send('Internal Server Error');
                     }
                   },
+                //   controller logic for deleting cart
           deleteCart : async (req,res)=>{
                     try {
                            const {productId,singleid,productmainid} = req.query
@@ -192,6 +195,7 @@ module.exports = {
                               console.log(error)
                     }
           },
+        //   controller logic for updating cart
           updateCart: async (req, res) => {
             const productId = req.query.productId;
             const { quantity,lastStock,productsingleid,productmainid} = req.body;
@@ -256,7 +260,7 @@ if (products) {
                 res.status(500).json({ success: false, error: 'Internal Server Error' });
             }
         },
-        
+        // controller logic for checkout 
         checkOut: async (req, res) => {
           try {
               const userId = req.query.userId;
@@ -294,6 +298,7 @@ if (products) {
               res.status(500).json({ success: false, error: 'Internal Server Error' });
           }
       },
+    //   controller logic for applying coupon
       applyCoupon: async (req, res) => {
         try {
             const userId = req.session.userId
@@ -333,39 +338,7 @@ if (products) {
             return res.status(500).json({ error: 'Internal server error' });
         }
     },
-    // userLastStock : async (req,res)=>{
-    //     try {
-    //         const {stock,_id} = req.query
-    //         console.log(stock)
-    //         console.log(id)
-    //         const stockUpdate = await cartModel.findOne({userId:req.session.userId})
-    //         let changeStock = stockUpdate.products.find(item => item.single_id.toString() == _id)
-    //         if(changeStock)
-    //         {
-    //             changeStock.lastStock = stock
-    //             console.log('sheryay myre')
-    //             await changeStock.save()
-    //         }
-    //         else
-    //         {
-    //             console.log('product not found')
-    //         }
-            
 
-    //             } 
-    //             catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-    updateLastStock : async (req,res)=>{
-        const {id,lastStock} = req.query
-//         console.log('this is the id')
-//         console.log(id)
-//         console.log('last stock')
-//         console.log(lastStock)
-// console.log('end')
-// didnt used this
-
-    }
+ 
       
 }
