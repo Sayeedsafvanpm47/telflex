@@ -320,21 +320,25 @@ module.exports = {
 	// controller for hiding or showing the reviews
 	reviewVisibility: async (req, res) => {
 		try {
-			const { reviewId, productId } = req.query;
-			console.log(reviewId);
-			console.log(productId);
-
-			const reviewVisibility = await productModel.findOne({ _id: productId });
-			const changeReviewStatus = reviewVisibility.rating.find((review) => review._id.toString() == reviewId);
-
-			if (changeReviewStatus) {
-				changeReviewStatus.hidden = !changeReviewStatus.hidden;
-				await reviewVisibility.save();
-			} else {
-				console.log("could not update");
-			}
+		    const { reviewId, productId } = req.query;
+		    console.log(reviewId);
+		    console.log(productId);
+	      
+		    const reviewVisibility = await productModel.findOne({ _id: productId });
+		    const changeReviewStatus = reviewVisibility.rating.find((review) => review._id.toString() === reviewId);
+	      
+		    if (changeReviewStatus) {
+		        changeReviewStatus.hidden = !changeReviewStatus.hidden;
+		        await reviewVisibility.save();
+		        res.status(200).send('Visibility status updated');
+		    } else {
+		        console.log("Could not update");
+		        res.status(400).send('Could not update');
+		    }
 		} catch (error) {
-			console.log(error);
+		    console.log(error);
+		    res.status(500).send('An error occurred while processing your request');
 		}
-	}
+	      },
+	      
 };

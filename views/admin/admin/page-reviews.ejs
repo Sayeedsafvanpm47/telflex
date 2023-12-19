@@ -31,6 +31,7 @@
                                     <th>Review</th>
                                     <th>Date</th>
                                     <th>Visibility</th>
+                                    <th>Status</th>
                                     
                                 </tr>
                             </thead>
@@ -60,6 +61,11 @@
                                     <input hidden id="reviewid<%= i  %>" type="text" value="<%= item._id  %>">
                                     <td><a onclick="showOrHide('<%= i %>')"><i class="fa fa-eye-slash" aria-hidden="true"></a></i>
                                     </td>
+                                     <% if(item.hidden === false){ %>
+                                        <td>Visible</td>
+                                        <% }else{ %>
+                                            <td>Hidden</td>
+                                            <% } %>
                                    
                                 </tr>
                                 <% }) %>
@@ -70,20 +76,9 @@
                         </table>
                     </div> <!-- table-responsive//end -->
                 </div>
-                <script>
-                   async function showOrHide(index)
-                    {
-                           const reviewId = document.getElementById(`reviewid${index}`).value
-                           const productId = document.getElementById(`productid${index}`).value
-                           const response = await fetch(`/admin/reviewVisibility?reviewId=${reviewId}&productId=${productId}`)
-                           if(!response.ok)
-                           {
-                            throw new Error('not ok')
-                           }
-                           const responseData = await response.json()
-                           console.log('success')
 
-                    }
+                <script src="/admin/helpers/reviews.js">
+                 
                 </script>
                 <!-- card-body end// -->
             </div>
