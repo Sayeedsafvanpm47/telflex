@@ -38,7 +38,7 @@ const checkReturnExpiry = async (orders) => {
       const checkCouponExpiry = async (coupons) => {
         const currentDate = new Date();
       
-        for (const singleCoupon of coupons) { // Renamed loop variable to 'singleCoupon'
+        for (const singleCoupon of coupons) { 
           const couponCode = singleCoupon.couponCode;
           const couponExpiry = new Date(singleCoupon.expiringAt);
       
@@ -60,7 +60,7 @@ const checkReturnExpiry = async (orders) => {
         }
       };
       
-       cron.schedule('* * * * *', async () => {
+       cron.schedule('0 * * * *', async () => {
          
         const orders = await orderModel.find({}).populate('items.productId');
         const coupons = await couponModel.find({})
