@@ -145,6 +145,17 @@ router.post('/contactBanner',sessionCheck.checkAdminSignIn,imageController.uploa
 },bannerController.contactBanner),
 
 
+router.post('/manufacturing',sessionCheck.checkAdminSignIn,imageController.upload.array('images10'),(req, res, next) => {
+          
+  imageController.processImage(req, res, next, 731, 470);
+},bannerController.manufacturing),
+
+router.post('/factory',sessionCheck.checkAdminSignIn,imageController.upload.array('images11'),(req, res, next) => {
+          
+  imageController.processImage(req, res, next, 731, 470);
+},bannerController.factory),
+
+
 
 
 router.get('/viewSaved',sessionCheck.checkAdminSignIn,async (req,res)=>{

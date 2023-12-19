@@ -472,6 +472,87 @@ res.redirect('/admin/banner')
 
 
       
+},
+
+manufacturing : async(req,res)=>{
+
+
+        const { bannertype10} = req.body
+
+       
+        try {
+            const processedImages = req.processedImages || [];
+            const existingBanner = await bannerModel.findOne({bannerType : bannertype10})
+if(existingBanner){
+
+existingBanner.bannerType = bannertype10,
+
+
+existingBanner.images = processedImages
+
+await existingBanner.save()
+req.session.bannerAlert = true
+
+res.redirect('/admin/banner')
+
+}else{
+                 
+
+                  const banner = new bannerModel({
+                            bannerType : bannertype10,
+                          
+                            images : processedImages
+                  })
+                  await banner.save()
+                  req.session.bannerAlert = true
+               
+                 res.redirect('/admin/banner')
+                }
+        } catch (error) {
+                  console.log(error)
+                  
+        }
+
+},
+factory : async(req,res)=>{
+
+
+        const { bannertype11} = req.body
+
+       
+        try {
+            const processedImages = req.processedImages || [];
+            const existingBanner = await bannerModel.findOne({bannerType : bannertype11})
+if(existingBanner){
+
+existingBanner.bannerType = bannertype11,
+
+
+existingBanner.images = processedImages
+
+await existingBanner.save()
+req.session.bannerAlert = true
+
+res.redirect('/admin/banner')
+
+}else{
+                 
+
+                  const banner = new bannerModel({
+                            bannerType : bannertype11,
+                          
+                            images : processedImages
+                  })
+                  await banner.save()
+                  req.session.bannerAlert = true
+               
+                 res.redirect('/admin/banner')
+                }
+        } catch (error) {
+                  console.log(error)
+                  
+        }
+
 }
           ,
           showBanner : async (req,res)=>{
@@ -491,6 +572,8 @@ res.redirect('/admin/banner')
                               const mainabout = await bannerModel.findOne({bannerType : 'Main About Banner'}) || ''
                               const dealer = await bannerModel.findOne({bannerType : 'Dealer Banner'}) || ''
                               const contact = await bannerModel.findOne({bannerType : 'Contact Banner'}) || ''
+                              const manufacturing = await bannerModel.findOne({bannerType : 'manufacturing'}) || ''
+                              const factory = await bannerModel.findOne({bannerType : 'factory'}) || ''
                         
 
                             if(req.session.bannerError)
@@ -498,22 +581,24 @@ res.redirect('/admin/banner')
                                         const errors = req.session.errorMessageBanner
                                         console.log(errors)
                                        delete req.session.bannerError 
-                              res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer,sub,fest,about,mainabout,dealer,contact})
+                              res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer,sub,fest,about,mainabout,dealer,contact,factory,manufacturing})
                               }
                               else if(req.session.bannerAlert)
                               {
                                         success = 'Banner Upload Succesfull'
                                         delete req.session.bannerAlert
-                                        res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer,sub,fest,about,mainabout,dealer,contact}) 
+                                        res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer,sub,fest,about,mainabout,dealer,contact,factory,manufacturing}) 
                               }
                               else
                               {
                                         
-                                        res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer,sub,fest,about,mainabout,dealer,contact}) 
+                                        res.render('admin/admin/bannerManage',{banners,subbanner,errors,success,deal,offer,sub,fest,about,mainabout,dealer,contact,factory,manufacturing}) 
                               }
 
                     } catch (error) {
                               console.log(error)
                     }
-          }
+          },
+        
+
 }

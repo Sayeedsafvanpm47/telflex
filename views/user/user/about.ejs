@@ -153,18 +153,138 @@
      
       
         
-    <section>
+    <section class="p-20 m-20">
         <div class="container">
             <h1 class="display-2"> <span style="color: red;">Manufacturing</span> Samples</h1>
         </div>
+        <section class="home-slider position-relative pt-50">
+          
+            <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
+                <% if(manufacturing){ %>
+                <% for(let i=0; i<manufacturing.images.length; i++){ %>
+                <div class="single-hero-slider single-animation-wrap">
+                    <div class="container">
+                      
+                        <div class="row slider-animated-1 align-items-center">
+                            <div class="col-lg-5 col-md-6">
+                             
+                                <div class="hero-slider-content-2">
+                                    <h4 class="animated"></h4>
+                                  
+                                    <h2 style="color: rgb(14, 14, 14);" class="animated fw-900">Manufacturing Snippets!</h2>
+                                   
+                                   
+                                 
+                                   
+                                   
+                                    <h5 style="color: rgb(204, 25, 25);" class="animated">Here is a few pictures of the manufacturing process going on in our company</h5>
+                                 
+                                   
+                                  
+                                   
+                                </div>
+                            </div>
+                        
+                           
+                            <div class="col-lg-7 col-md-6 align-items-center">
+                               
+
+                                <div class="single-slider-img single-slider-img-1">
+                                  
+                                    <img style="border-radius: 15px;" class="animated slider-1-1" src="/<%= manufacturing.images[i] %>" alt="">
+
+                                 
+                                </div>
+
+                               
+     
+                            </div>
+
+                          
+                            
+                        
+                       
+                    </div>
+                      
+                    </div>
+                </div>
+                
+                <% } %>
+                <% } %>
+            </div>
+           
+          
+          
+        </section>
        
     </section>
         
-     <section>
+     <section class="p-20 m-20">
         <div class="container">
             <h1 class="display-2"> <span style="color: red;"> Factory </span> & Retails</h1>
 
         </div>
+
+        <section class="home-slider position-relative pt-50">
+          
+            <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
+                <% if(factory){ %>
+                <% for(let i=0; i<factory.images.length; i++){ %>
+                <div class="single-hero-slider single-animation-wrap">
+                    <div class="container">
+                      
+                        <div class="row slider-animated-1 align-items-center">
+
+                            <div class="col-lg-5 col-md-6">
+                             
+                                <div class="hero-slider-content-2">
+                                    <h4 class="animated"></h4>
+                                  
+                                    <h2 style="color: rgb(14, 14, 14);" class="animated fw-900">These are our shops</h2>
+                                   
+                                   
+                                 
+                                   
+                                   
+                                    <h5 style="color: rgb(204, 25, 25);" class="animated">Here is a few pictures of the retail shops that we have...</h5>
+                                 
+                                   
+                                  
+                                   
+                                </div>
+                            </div>
+                        
+                           
+                            <div class="col-lg-7 col-md-6 align-items-center">
+                               
+
+                                <div class="single-slider-img single-slider-img-1">
+                                  
+                                    <img style="border-radius: 15px;" class="animated slider-1-1" src="/<%= factory.images[i] %>" alt="">
+
+                                 
+                                </div>
+
+                               
+     
+                            </div>
+
+                          
+                            
+                        
+                       
+                    </div>
+                      
+                    </div>
+                </div>
+                
+                <% } %>
+                <% } %>
+            </div>
+           
+          
+          
+        </section>
        </section>
       
       

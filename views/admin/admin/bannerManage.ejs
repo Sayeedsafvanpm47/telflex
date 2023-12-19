@@ -964,6 +964,115 @@ href=
 
                             </div>
 
+
+
+                            <!-- manufacturing -->
+
+
+                            <div class="card-header">
+                  
+                                <h4>Manufacturing</h4>
+                            </div>
+                            <div class="card-body">
+                                <form action="/admin/manufacturing" method="Post" enctype="multipart/form-data">
+                               
+                                    <input type="text" value="manufacturing" hidden name="bannertype10">
+                                 <div class="mb-4">
+                                     <label for="product_name" class="form-label">Upload Image</label>
+                                     <div class="row">
+                                         <div class="col-sm-12">
+                                           <div class="preview-images10"></div>
+                                         </div>
+                                       </div>
+                                       <div>
+                                        <h2>Uploaded Images</h2>
+                                        <% if(manufacturing !== ''){ %>
+                                            <% if (manufacturing && manufacturing.images.length > 0) { %>
+                                              <% for (let j = 0; j < manufacturing.images.length; j++) { %>
+                                                  <span>
+                                                      <img style="width: 100px; height: 100px;" src="/<%= manufacturing.images[j] %>" alt="">
+                                                  </span>
+                                              <% } %>
+                                          <% } %>
+                                          <% } %>
+                                       </div>
+                                     
+     
+                                     <input type="file" name="images10" class="form-control-file border" accept="image/*" id="input-images10" multiple >
+                                 </div>
+                            
+                           
+     
+                              
+                               
+     
+               
+                                
+                                 <div class="">
+                                     <button type="submit" class="btn btn-primary">Update Banner</button>
+                                 </div>
+                           
+                                
+                             </form>
+    
+    
+                                </div>
+
+
+
+
+                            <!-- factory -->
+
+
+                            <div class="card-header">
+                  
+                                <h4>Factory</h4>
+                            </div>
+                            <div class="card-body">
+                                <form action="/admin/factory" method="Post" enctype="multipart/form-data">
+                               
+                                    <input type="text" value="factory" hidden name="bannertype11">
+                                 <div class="mb-4">
+                                     <label for="product_name" class="form-label">Upload Image</label>
+                                     <div class="row">
+                                         <div class="col-sm-12">
+                                           <div class="preview-images11"></div>
+                                         </div>
+                                       </div>
+                                       <div>
+                                        <h2>Uploaded Images</h2>
+                                        <% if(factory !== ''){ %>
+                                            <% if (factory && factory.images.length > 0) { %>
+                                              <% for (let j = 0; j < factory.images.length; j++) { %>
+                                                  <span>
+                                                      <img style="width: 100px; height: 100px;" src="/<%= factory.images[j] %>" alt="">
+                                                  </span>
+                                              <% } %>
+                                          <% } %>
+                                          <% } %>
+                                       </div>
+                                     
+     
+                                     <input type="file" name="images11" class="form-control-file border" accept="image/*" id="input-images11" multiple >
+                                 </div>
+                            
+                           
+     
+                              
+                               
+     
+               
+                                
+                                 <div class="">
+                                     <button type="submit" class="btn btn-primary">Update Banner</button>
+                                 </div>
+                           
+                                
+                             </form>
+    
+    
+                                </div>
+
            
 
                     
@@ -1018,6 +1127,12 @@ href=
         });
         $("#input-images9").on("change", function() {
           imagesPreview(this, "div.preview-images9");
+        });
+        $("#input-images10").on("change", function() {
+          imagesPreview(this, "div.preview-images10");
+        });
+        $("#input-images11").on("change", function() {
+          imagesPreview(this, "div.preview-images11");
         });
       });
       

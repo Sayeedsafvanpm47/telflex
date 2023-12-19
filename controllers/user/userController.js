@@ -6,6 +6,7 @@ const wishlistModel = require("../../models/wishlist");
 const bannerModel = require("../../models/bannerModel");
 const cartModel = require("../../models/cartModel");
 const categoryModel = require("../../models/categoryModel");
+const messageModel = require('../../models/messageModel')
 const sendOTPByEmail = require("../../utils/sendMail");
 const bcrypt = require("bcrypt");
 const { isEmailValid, isPasswordValid, isNamesValid, isPhoneValid, isCpassValid } = require("../../utils/validators/signUpValidator");
@@ -195,8 +196,10 @@ module.exports = {
 	getAbout: async (req, res) => {
 		try {
 			const banners = await bannerModel.findOne({ bannerType: "Main About Banner" });
+			const manufacturing = await bannerModel.findOne({bannerType : 'manufacturing'})
+			const factory = await bannerModel.findOne({bannerType : 'factory'})
 			if (banners) {
-				res.render("user/user/about", { banners });
+				res.render("user/user/about", { banners,manufacturing,factory });
 			} else {
 				console.log("about page fetching failed");
 				const error = new Error("No data available for this page");
@@ -962,5 +965,87 @@ module.exports = {
 			console.log(error);
 			res.render("user/user/error", { error });
 		}
-	}
+	},
+	privacypolicy : async (req,res)=>{
+		try {
+		        res.render('user/user/policy')
+		        
+		} catch (error) {
+		        console.log(error)
+		        
+		}
+	    },
+	    pageterms : async (req,res)=>{
+    
+		try {
+		        res.render('user/user/page-terms')
+		        
+		} catch (error) {
+		        console.log(error)
+		}
+	    },
+	    deliverydetails : async (req,res)=>{
+		try {
+		        
+		        res.render('user/user/deliveryinformation')
+		} catch (error) {
+		        console.log(error)
+		}
+	    },
+	    contactmessage : async (req,res)=>{
+		try {
+			const {email,phone,name,address,message} = req.body
+			console.log(email)
+			console.log(phone)
+			console.log(name)
+			console.log(address)
+			console.log(message)
+			const queries = new messageModel({
+				email : email,
+				phone : phone,
+				name : name,
+				address : address,
+				query : message,
+				type : 'Contact'
+			})
+			console.log(queries)
+			await queries.save()
+
+			res.status(200)
+			
+		} catch (error) {
+			
+			console.log(error)
+			res.status(500)
+		}
+
+	    },
+	    dealermessage : async (req,res)=>{
+		try {
+			const {email,phone,name,address,message} = req.body
+			console.log(email)
+			console.log(phone)
+			console.log(name)
+			console.log(address)
+			console.log(message)
+			const queries = new messageModel({
+				email : email,
+				phone : phone,
+				name : name,
+				address : address,
+				query : message,
+				type : 'Dealer'
+			})
+			console.log(queries)
+			await queries.save()
+
+			res.status(200)
+			
+		} catch (error) {
+			
+			console.log(error)
+			res.status(500)
+		}
+
+	    }
 };

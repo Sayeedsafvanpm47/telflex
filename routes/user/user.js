@@ -85,17 +85,23 @@ router.post('/addToWish',authMiddleWare.checkSignIn,authMiddleWare.checkBlock,wi
 router.get('/deleteWish',authMiddleWare.checkSignIn,wishListController.deleteWish)
 router.get('/addfromwish',authMiddleWare.checkSignIn,wishListController.addFromWish)
 
+router.get('/policy',controller.privacypolicy)
+router.get('/pageterms',controller.pageterms)
+router.get('/deliverydetails',controller.deliverydetails)
+
+router.post('/contactmessage',controller.contactmessage)
+router.post('/dealermessage',controller.dealermessage)
 
 
 router.get('/blog',(req,res)=>{
-          res.render('user/user/blog')
+          res.render('user/user/policy')
 })
 
 router.get('/index',(req,res)=>{
-          res.render('user/user/index')
+          res.render('user/user/page-terms')
 })
 router.get('/shopCompare',(req,res)=>{
-          res.render('user/user/shop-compare')
+          res.render('user/user/deliveryinformation')
 })
 router.get('/shopFilter',(req,res)=>{
           res.render('user/user/shop-filter')
