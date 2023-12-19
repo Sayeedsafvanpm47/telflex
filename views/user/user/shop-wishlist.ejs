@@ -32,7 +32,7 @@
 
                                         <td class="image product-thumbnail"><img src="/<%= wishlist.products[i].product_id.images[0]  %>" alt="#"></td>
                                         <td class="product-des product-name">
-                                            <h5 class="product-name"><a href="shop-product-right.html"><%= wishlist.products[i].product_id.productName  %></a></h5>
+                                            <h5 class="product-name"><a href=""><%= wishlist.products[i].product_id.productName  %></a></h5>
                                           <span><%= wishlist.products[i].size  %></span>
                                             <p class="font-xs"> <%= wishlist.products[i].product_id.model %>
                                             </p>
@@ -85,84 +85,19 @@
                     </div>
                 </div>
             </div>
-            <script>
-function deleteWish(id)
-{
-    Swal.fire({
-    title: 'Are you sure you want to remove this item from Wishlist?',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, Remove!'
-  }).then((result) => {
-    if (result.isConfirmed) {
-        Swal.fire({
-title: 'Item Removed from Wishlist',
-icon: 'success',
+            <script src="/user/helpers/shopwishlist.js">
 
-confirmButtonColor: '#3085d6',
-cancelButtonColor: '#d33',
-
-})
-     
-      window.location.href = `/user/deleteWish?id=${id}`; 
-    }
-  });
-}
             </script>
         </section>
     </main>
     <%- include('partials/footerlogin') %>
     <!-- Vendor JS-->
-    <script src="/user/js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="/user/js/vendor/jquery-3.6.0.min.js"></script>
-    <script src="/user/js/vendor/jquery-migrate-3.3.0.min.js"></script>
-    <script src="/user/js/vendor/bootstrap.bundle.min.js"></script>
-    <script src="/user/js/plugins/slick.js"></script>
-    <script src="/user/js/plugins/jquery.syotimer.min.js"></script>
-    <script src="/user/js/plugins/wow.js"></script>
-    <script src="/user/js/plugins/jquery-ui.js"></script>
-    <script src="/user/js/plugins/perfect-scrollbar.js"></script>
-    <script src="/user/js/plugins/magnific-popup.js"></script>
-    <script src="/user/js/plugins/select2.min.js"></script>
-    <script src="/user/js/plugins/waypoints.js"></script>
-    <script src="/user/js/plugins/counterup.js"></script>
-    <script src="/user/js/plugins/jquery.countdown.min.js"></script>
-    <script src="/user/js/plugins/images-loaded.js"></script>
-    <script src="/user/js/plugins/isotope.js"></script>
-    <script src="/user/js/plugins/scrollup.js"></script>
-    <script src="/user/js/plugins/jquery.vticker-min.js"></script>
-    <!-- Template  JS -->
-    <script src="/user/js/maind134.js?v=3.4"></script>
-    <script src="/user/js/shopd134.js?v=3.4"></script>
-    <!-- <script>
-        async function deleteFromWish(proid) {
-            try {
-                const id = proid;
-    
-                const response = await fetch(`/user/deleteWish?id=${id}`, {
-                    method: 'DELETE' // Change the method to DELETE
-                });
-    
-                if (!response.ok) {
-                    throw new Error('Failed to delete item from wishlist');
-                }
-    
-                const responseData = await response.json();
-                console.log(responseData);
-                // Handle success or update UI if needed
-    
-            } catch (error) {
-                console.error(error);
-                // Handle error gracefully or show a user-friendly message
-            }
-        }
-    </script> -->
+    <%- include('partials/mainScripts') %>
+   
+   
     
 
 </body>
 
 
-<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/shop-wishlist.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:05 GMT -->
 </html>
