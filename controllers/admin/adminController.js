@@ -276,20 +276,9 @@ const categoryOrders = []
 		} catch (error) {
 		  console.log(error);
 		}
-	        },
-	        
-	
-	
-	
-	// controller for reviews view and management
+	        }
 
-	reviews : async (req,res)=>{
-		try {
-			res.render('admin/admin/reviews')
-		} catch (error) {
-			console.log(error)
-		}
-	}
+	
 	// controller for logout
 	,
 	logout : async (req,res)=>{

@@ -29,8 +29,6 @@ router.get('/home',sessionCheck.checkAdminSignIn,controller.adminHome)
 router.get('/chart',sessionCheck.checkAdminSignIn,controller.chart)
 router.get('/logout',controller.logout)
 router.get('/editProfile',sessionCheck.checkAdminSignIn,controller.editProfile)
-router.get('/reviews',sessionCheck.checkAdminSignIn,productController.reviews)
-router.get('/reviewVisibility',sessionCheck.checkAdminSignIn,productController.reviewVisibility)
 router.get('/customerenquiry',sessionCheck.checkAdminSignIn, controller.customerenquiry)
 router.get('/dealerenquiry' ,sessionCheck.checkAdminSignIn ,controller.dealerenquiry)
 
@@ -55,16 +53,16 @@ router.get('/getReportResults',sessionCheck.checkAdminSignIn,dashboardController
 
 // admindasboard routes ends...
 
-// product and category management
+// product and category management routes begins
 router.get("/createCategory", sessionCheck.checkAdminSignIn,controllerCategory.createCategory);
 router.post("/submitCategory", sessionCheck.checkAdminSignIn,controllerCategory.submitCategory);
 router.get('/viewEditCategory',sessionCheck.checkAdminSignIn,controllerCategory.viewEditCategory)
 router.post('/editCategory',sessionCheck.checkAdminSignIn,controllerCategory.editCategory)
 router.get('/deleteCategory',sessionCheck.checkAdminSignIn,controllerCategory.deleteCategory)
 router.get('/toggleList',sessionCheck.checkAdminSignIn,controllerCategory.listToggle)
-
+router.get('/reviews',sessionCheck.checkAdminSignIn,productController.reviews)
+router.get('/reviewVisibility',sessionCheck.checkAdminSignIn,productController.reviewVisibility)
 router.get('/addproducts',sessionCheck.checkAdminSignIn,controllerProducts.addProductsView)
-// router.post('/saveproducts',imageController.upload.array('images'),imageController.processImage,controllerProducts.addProducts)
 router.post(
           '/saveproducts',sessionCheck.checkAdminSignIn,
           imageController.upload.array('images'),
@@ -84,7 +82,9 @@ router.post('/editProducts',sessionCheck.checkAdminSignIn,imageController.upload
           imageController.processImage(req, res, next, 720, 720);
         },controllerProducts.editProducts)
 router.get('/toggleListProducts',sessionCheck.checkAdminSignIn,controllerProducts.toggleList)
-router.get('/deleteProducts',sessionCheck.checkAdminSignIn,controllerProducts.deleteProducts)
+
+// product and category management routes ends...
+
 
 router.get('/orderDetails',sessionCheck.checkAdminSignIn,adminOrderController.orderDetails)
 router.get('/viewOrderDetails',sessionCheck.checkAdminSignIn,adminOrderController.viewOrderDetails)

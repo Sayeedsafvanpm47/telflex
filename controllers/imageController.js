@@ -44,7 +44,7 @@ const processImage = async (req, res, next, width, height) => {
             next();
           } catch (error) {
             console.error('Error processing image:', error);
-            res.status(500).send('Error processing image');
+            res.redirect('/user/error')
           }
         };
 
