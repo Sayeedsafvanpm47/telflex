@@ -1,6 +1,6 @@
 <aside class="navbar-aside" id="offcanvas_aside">
           <div class="aside-top">
-              <a href="index.html" class="brand-wrap">
+              <a href="" class="brand-wrap">
                 <a href=""><img src="/user/imgs/theme/logo.png" alt="logo"></a>
               </a>
               <div>
@@ -15,7 +15,7 @@
                       </a>
                   </li>
                   <li class="menu-item has-submenu">
-                      <a class="menu-link" href="/admin/viewproducts"> <i class="icon material-icons md-shopping_bag"></i>
+                      <a class="menu-link" > <i class="icon material-icons md-shopping_bag"></i>
                           <span class="text">Products</span>
                       </a>
                       <div class="submenu">
@@ -27,7 +27,7 @@
                       </div>
                   </li>
                   <li class="menu-item has-submenu">
-                    <a class="menu-link" href="/admin/getProductOffers"> <i class="fa fa-gift icon" aria-hidden="true"></i>
+                    <a class="menu-link" > <i class="fa fa-gift icon" aria-hidden="true"></i>
 
                         <span class="text">Offers</span>
                     </a>
@@ -63,7 +63,7 @@
                   </li>
                  
                   <li class="menu-item has-submenu">
-                      <a class="menu-link" href="/admin/userEnquiries"> <i class="fa fa-address-book icon" aria-hidden="true"></i>
+                      <a class="menu-link" > <i class="fa fa-address-book icon" aria-hidden="true"></i>
 
                           <span class="text">Enquiries</span>
                       </a>
@@ -101,28 +101,5 @@
           </nav>
       </aside>
     
-      <script>
-        // Get the current URL or pathname
-        let currentURL = window.location.pathname;
-    
-        // Get all the menu links including submenu links
-        const menuLinks = document.querySelectorAll('.menu-link');
-    
-        // Loop through each menu link and check if it matches the current URL
-        menuLinks.forEach(link => {
-            // Get the href of the link
-            let href = link.getAttribute('href');
-    
-            // Check if the current URL starts with the link's href (to handle submenus)
-            if (currentURL.startsWith(href)) {
-                // Add 'active' class to the parent 'li' element or the link itself
-                link.classList.add('active');
-                
-                // For submenu items, ensure the parent submenu is also expanded
-                if (link.closest('.has-submenu')) {
-                    link.closest('.has-submenu').classList.add('active'); // Add 'active' to the parent submenu
-                }
-            }
-        });
-    </script>
+  
     
