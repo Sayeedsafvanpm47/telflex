@@ -1,193 +1,226 @@
-
-
 <%- include('partials/head') %>
 
-<body>
+  <body>
     <div class="screen-overlay"></div>
     <%- include('partials/aside') %>
-    <main class="main-wrap">
-        <%- include('partials/header') %> 
+      <main class="main-wrap">
+        <%- include('partials/header') %>
 
 
-<section class="mt-50 mb-50">
-       
-          <div class="container">
-                    <button class="btn btn-primary" style="width: 40%" onclick="createField()">Create New</button>
+          <section class="mt-50 mb-50">
+
+            <div class="container">
+              <button class="btn btn-primary" style="width: 40%" onclick="createField()">Create New</button>
               <div class="row">
-                    
-                  <div class="col">
-                      <div class="table-responsive">
-                          <table class="table shopping-summery text-center clean" style="font-size: 12px">
-                              <thead>
-                                  <tr class="main-heading">
-                                      <th scope="col">Coupon Code</th>
-                                      <th scope="col">Discount</th>
-                                      <th scope="col">Issued Date</th>
-                                      <th scope="col">Expiry Date</th>
-                                     
-                                      <th scope="col">Minimum purchase</th>
-                                  
-                                      <th scope="col">Status</th>
-                                      <th scope="col">Created At</th>
-                                      <th scope="col">Last Updated</th>
-                                      <th scope="col">Action</th>
-                                      <th scope="col">Change Status</th>
-                                    
-                                   
-                                  </tr>
-                              </thead>
-                              <% if(coupon !== ''){ %>
-                              <tbody id="inputFields">
 
-                                      <% for(let i=0; i<coupon.length; i++){ %>
-                                            <tr>
-                                                <td><%= coupon[i].couponCode%></td>
-                                                <td><%= coupon[i].discount%></td>
-                                                <td><%= ((coupon[i].issuedAt).toString()).slice(0,16)%></td>
-                                                <% if(coupon[i].expiringAt !==null){ %>
-                                                <td><%= ((coupon[i].expiringAt).toString()).slice(0,16)%></td>
-                                                <% }else{ %>
-                                                <td>Coupon expired</td> 
-                                                  <% } %>
-                                            
-                                                <td><%= coupon[i].minimumPurchase%></td>
-                                                <td><%= coupon[i].status%></td>
-                                                <td><%= ((coupon[i].createdAt).toString()).slice(0,16)%></td>
-                                                
-                                                  <td><%= ((coupon[i].updatedAt).toString()).slice(0,16) %></td>
-                                                  
-                                                            <td><button class="btn btn-primary" id="modalBtn<%= i %>" onclick="openModal('<%= i %>')">Edit</button></td>
-                                                  <td><button class="btn btn-primary" onclick="changeStatus('<%= coupon[i]._id %>')">Status</button></td>
+                <div class="col">
+                  <div class="table-responsive">
+                    <table class="table shopping-summery text-center clean" style="font-size: 12px">
+                      <thead>
+                        <tr class="main-heading">
+                          <th scope="col">Coupon Code</th>
+                          <th scope="col">Discount</th>
+                          <th scope="col">Issued Date</th>
+                          <th scope="col">Expiry Date</th>
+
+                          <th scope="col">Minimum purchase</th>
+
+                          <th scope="col">Status</th>
+                          <th scope="col">Created At</th>
+                          <th scope="col">Last Updated</th>
+                          <th scope="col">Action</th>
+                          <th scope="col">Change Status</th>
 
 
+                        </tr>
+                      </thead>
+                      <% if(coupon !=='' ){ %>
+                        <tbody id="inputFields">
 
-                                                  <div class="modal" id="myModal<%= i %>">
-                                                            <div class="modal-content">
-                                                              <span class="close" onclick="closeModal('<%= i %>')">&times;</span>
-                                                              <!-- Your form content here -->
-                                                              <form id="modalForm<%= i %>">
-                                                                     
-                                                                                <label for="name">Coupon Name: </label>
-                                                                                <input type="text" id="couponname<%= i  %>" value="<%= coupon[i].couponCode%>" name="name" required><br><br>
-                                                                                <input type="number" onkeypress="return onlyNumberKey(event)" id="discount<%= i  %>" value="<%= coupon[i].discount%>" name="name" required><br><br>
-                                                                                
-                                                                                <label for="email">Expiry :</label> <br>
-                                                                                <div class="datepicker2 date input-group p-0 shadow-sm" style=" height: 45px; width: 175px">
-                                                                                      
-                                                                                          <input id="updateDate<%= i  %>" style="height: 45px;" value="<%= coupon[i].expiringAt  %>" type="text" class="form-control py-2 px-2" />
-                                                                                          <span id="showupdateDate" hidden></span>
-                                                                                          <span class="input-group-append">
-                                                                                              <span class="input-group-text px-2">
-                                                                                                  <i class="fa fa-calendar"></i>
-                                                                                              </span>
-                                                                                          </span>
-                                                                                      </div>
-                                                                                
-                                                                             
-                                                                                <label for="email">Minimum Purchase</label>
-                                                                                <input type="number" id="minimum<%= i  %>" value="<%= coupon[i].minimumPurchase  %>" name="email" required><br><br>
-                                                                                
-                                                                                
-                                                                                <input type="submit" value="Submit" onclick="updateCoupon('<%= coupon[i]._id%>','<%= i %>',event)">
-                                                                            
-                                                              </form>
-                                                            </div>
-                                                          </div>
+                          <% for(let i=0; i<coupon.length; i++){ %>
+                            <tr>
+                              <td>
+                                <%= coupon[i].couponCode%>
+                              </td>
+                              <td>
+                                <%= coupon[i].discount%>
+                              </td>
+                              <td>
+                                <%= ((coupon[i].issuedAt).toString()).slice(0,16)%>
+                              </td>
+                              <% if(coupon[i].expiringAt !==null){ %>
+                                <td>
+                                  <%= ((coupon[i].expiringAt).toString()).slice(0,16)%>
+                                </td>
+                                <% }else{ %>
+                                  <td>Coupon expired</td>
+                                  <% } %>
+
+                                    <td>
+                                      <%= coupon[i].minimumPurchase%>
+                                    </td>
+                                    <td>
+                                      <%= coupon[i].status%>
+                                    </td>
+                                    <td>
+                                      <%= ((coupon[i].createdAt).toString()).slice(0,16)%>
+                                    </td>
+
+                                    <td>
+                                      <%= ((coupon[i].updatedAt).toString()).slice(0,16) %>
+                                    </td>
+
+                                    <td><button class="btn btn-primary" id="modalBtn<%= i %>"
+                                        onclick="openModal('<%= i %>')">Edit</button></td>
+                                    <td><button class="btn btn-primary"
+                                        onclick="changeStatus('<%= coupon[i]._id %>')">Status</button></td>
 
 
 
-                                                 
+                                    <div class="modal" id="myModal<%= i %>">
+                                      <div class="modal-content">
+                                        <span class="close" onclick="closeModal('<%= i %>')">&times;</span>
+                                        <!-- Your form content here -->
+                                        <form id="modalForm<%= i %>">
 
-                                            </tr>
-                                            <% } %>
-                                            <tr id="createFields" hidden>
-                                                  <!-- Sample content with inputs -->
-                                                  <td><input class="shadow-sm"  placeholder="Coupon Code" style="width: 110px; " type="text" name="" id="couponCode" ></td>
-                                                  <td><input class="shadow-sm"  style="width: 100px" placeholder="0%" name="" type="number" id="discount" onkeypress="return onlyNumberKey(event)"></td>
-                                                  <td>
-                                                      <div class="datepicker date input-group p-0 shadow-sm" style="height: 45px; width: 130px">
-                                                          <input id="fromDate" style="height: 45px;" type="text" class="form-control py-2 px-2" />
-                                                          <span id="showFromDate" hidden></span>
-                                                          <span class="input-group-append">
-                                                              <span class="input-group-text px-2">
-                                                                  <i class="fa fa-calendar"></i>
-                                                              </span>
-                                                          </span>
-                                                      </div>
-                                                  </td>
-                                                  <td>
-                                                      <div class="datepicker date input-group p-0 shadow-sm" style=" height: 45px; width: 130px">
-                                                          <input id="toDate" style="height: 45px;" type="text" class="form-control py-2 px-2" />
-                                                          <span id="showToDate" hidden></span>
-                                                          <span class="input-group-append">
-                                                              <span class="input-group-text px-2">
-                                                                  <i class="fa fa-calendar"></i>
-                                                              </span>
-                                                          </span>
-                                                      </div>
-                                                  </td>
-                                                  <td><input style="width: 80px" type="number" placeholder="3000" value="" id="minimum"></td>
-                                                  <td><input type="text" placeholder="To be listed" style="width: 100px;" readonly></td>
-                                              
-                                                  <td><input style="width: 120px" type="" value="" readonly id="timestampField"></td>
-                                                  <td><input style="width: 120px;" type="text" value="no info" readonly></td>
-                                                  <td><button type="button" onclick="saveCoupon()" class="btn btn-primary"> SAVE </button></td>
-                                              </tr>
-                                      
+                                          <label for="name">Coupon Name: </label>
+                                          <input type="text" id="couponname<%= i  %>" value="<%= coupon[i].couponCode%>"
+                                            name="name" required><br><br>
+                                          <input type="number" onkeypress="return onlyNumberKey(event)"
+                                            id="discount<%= i  %>" value="<%= coupon[i].discount%>" name="name"
+                                            required><br><br>
 
-                                      </tbody>
-                                      <% } else { %>
-                                        <h1>No data</h1>
-                                        <% } %>
-                                 
-                              
-                              
-                          </table>
-                      </div>
-                    
-                      <script src="/admin/helpers/couponOffers.js">
-                          
+                                          <label for="email">Expiry :</label> <br>
+                                          <div class="datepicker2 date input-group p-0 shadow-sm"
+                                            style=" height: 45px; width: 175px">
 
-                          </script>
-                      <div id="myModal" class="modal">
-                              <div class="modal-content">
-                                <span class="close">&times;</span>
-                                <p id="modalMessage"></p>
-                              </div>
-                            </div>
-                     
-                      <div class="divider center_icon mt-50 mb-50"></div>
-                  
-                         
-                          </div>
-                      </div>
+                                            <input id="updateDate<%= i  %>" style="height: 45px;"
+                                              value="<%= coupon[i].expiringAt  %>" type="text"
+                                              class="form-control py-2 px-2" />
+                                            <span id="showupdateDate" hidden></span>
+                                            <span class="input-group-append">
+                                              <span class="input-group-text px-2">
+                                                <i class="fa fa-calendar"></i>
+                                              </span>
+                                            </span>
+                                          </div>
+
+
+                                          <label for="email">Minimum Purchase</label>
+                                          <input type="number" id="minimum<%= i  %>"
+                                            value="<%= coupon[i].minimumPurchase  %>" name="email" required><br><br>
+
+
+                                          <input type="submit" value="Submit"
+                                            onclick="updateCoupon('<%= coupon[i]._id%>','<%= i %>',event)">
+
+                                        </form>
+                                      </div>
+                                    </div>
+
+
+
+
+
+                            </tr>
+                            <% } %>
+                              <tr id="createFields" hidden>
+                                <!-- Sample content with inputs -->
+                                <td><input class="shadow-sm" placeholder="Coupon Code" style="width: 110px; "
+                                    type="text" name="" id="couponCode"></td>
+                                <td><input class="shadow-sm" style="width: 100px" placeholder="0%" name="" type="number"
+                                    id="discount" onkeypress="return onlyNumberKey(event)"></td>
+                                <td>
+                                  <div class="datepicker date input-group p-0 shadow-sm"
+                                    style="height: 45px; width: 130px">
+                                    <input id="fromDate" style="height: 45px;" type="text"
+                                      class="form-control py-2 px-2" />
+                                    <span id="showFromDate" hidden></span>
+                                    <span class="input-group-append">
+                                      <span class="input-group-text px-2">
+                                        <i class="fa fa-calendar"></i>
+                                      </span>
+                                    </span>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="datepicker date input-group p-0 shadow-sm"
+                                    style=" height: 45px; width: 130px">
+                                    <input id="toDate" style="height: 45px;" type="text"
+                                      class="form-control py-2 px-2" />
+                                    <span id="showToDate" hidden></span>
+                                    <span class="input-group-append">
+                                      <span class="input-group-text px-2">
+                                        <i class="fa fa-calendar"></i>
+                                      </span>
+                                    </span>
+                                  </div>
+                                </td>
+                                <td><input style="width: 80px" type="number" placeholder="3000" value="" id="minimum">
+                                </td>
+                                <td><input type="text" placeholder="To be listed" style="width: 100px;" readonly></td>
+
+                                <td><input style="width: 120px" type="" value="" readonly id="timestampField"></td>
+                                <td><input style="width: 120px;" type="text" value="no info" readonly></td>
+                                <td><button type="button" onclick="saveCoupon()" class="btn btn-primary"> SAVE </button>
+                                </td>
+                              </tr>
+
+
+                        </tbody>
+                        <% } else { %>
+                          <h1>No data</h1>
+                          <% } %>
+
+
+
+                    </table>
                   </div>
-                     
-      
-      </section>
 
-      
-        
-
-</body>
-<script>
-
-        </script>
-    
-        
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
-       
+                  <script src="/admin/helpers/couponOffers.js">
 
 
+                  </script>
+                  <div id="myModal" class="modal">
+                    <div class="modal-content">
+                      <span class="close">&times;</span>
+                      <p id="modalMessage"></p>
+                    </div>
+                  </div>
+
+                  <div class="divider center_icon mt-50 mb-50"></div>
 
 
-        </script>
-          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   <script>
-// Function to open the modal
+                </div>
+              </div>
+            </div>
 
 
-   </script>
-</html>
+          </section>
+
+
+
+
+  </body>
+  <script>
+
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+
+
+
+
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    // Function to open the modal
+
+
+  </script>
+
+  </html>
