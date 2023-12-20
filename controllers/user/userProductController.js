@@ -24,6 +24,7 @@ module.exports = {
 	productGridView: async (req, res) => {
 		try {
 			delete req.session.priceLogic;
+			delete req.session.sort
 			delete req.session.sortByInSort;
 			let categoryPagination;
 			let currentPage = req.query.page ? parseInt(req.query.page) : 1;
@@ -247,7 +248,7 @@ module.exports = {
 						.limit(numberOfDocs)
 						.populate({ path: "category", model: "categories", select: "_id categoryName published" });
 				}
-
+			
 				if (req.session.user) {
 					res.render("user/user/shopgrid", {
 						products: searchProducts,
@@ -271,6 +272,9 @@ module.exports = {
 						categoryPagination
 					});
 				}
+			}else
+			{
+				res.redirect('/')
 			}
 		} catch (error) {
 			console.log(error);
@@ -288,7 +292,7 @@ module.exports = {
 
 		if (!req.session.sort) {
 			if (sortingLogic === "noprice") {
-				products = await productModel.find({}).populate({ path: "category", model: "categories", select: "_id categoryName published" });
+				products = await productModel.find({}).populate({ path: "category", model: "categories", select: "_id categoryName published" }) || ''
 				console.log("product found : " + products);
 			} else if (sortingLogic === "price1") {
 				minprice = 0;
@@ -298,7 +302,7 @@ module.exports = {
 					.find({
 						"size.0.productPrice": { $gte: minprice, $lte: maxprice }
 					})
-					.populate({ path: "category", model: "categories", select: "_id categoryName published" });
+					.populate({ path: "category", model: "categories", select: "_id categoryName published" }) || ''
 				console.log("Products found: ", products);
 			} else if (sortingLogic === "price2") {
 				minprice = 5001;
@@ -307,7 +311,7 @@ module.exports = {
 					.find({
 						"size.0.productPrice": { $gte: minprice, $lte: maxprice }
 					})
-					.populate({ path: "category", model: "categories", select: "_id categoryName published" });
+					.populate({ path: "category", model: "categories", select: "_id categoryName published" }) || ''
 				console.log("product found : " + products);
 			} else if (sortingLogic === "price3") {
 				minprice = 20001;
@@ -316,7 +320,7 @@ module.exports = {
 					.find({
 						"size.0.productPrice": { $gte: minprice, $lte: maxprice }
 					})
-					.populate({ path: "category", model: "categories", select: "_id categoryName published" });
+					.populate({ path: "category", model: "categories", select: "_id categoryName published" }) || ''
 				console.log("product found : " + products);
 			} else if (sortingLogic === "price4") {
 				minprice = 40001;
@@ -325,7 +329,7 @@ module.exports = {
 					.find({
 						"size.0.productPrice": { $gte: minprice }
 					})
-					.populate({ path: "category", model: "categories", select: "_id categoryName published" });
+					.populate({ path: "category", model: "categories", select: "_id categoryName published" }) || ''
 				console.log("product found : " + products);
 			}
 			req.session.sortPrice = true;
@@ -354,6 +358,7 @@ module.exports = {
 			console.log("from sort price");
 			console.log(minprice);
 			console.log(maxprice);
+			
 			res.redirect("/user/sortedProducts");
 		}
 	},

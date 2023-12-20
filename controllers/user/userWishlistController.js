@@ -138,12 +138,7 @@ module.exports = {
 		       }
 		   }
 		    
-		//     if(existingCart)
-		//     {
-		// 	existingCart.quantity += +quantity
-                    //            await list.save()
-		// 	return res.redirect("/user/showCart");
-		//     }
+		
                          if(!existingCart){
 		   const noExistingItem = wish.products.find(item => item.proid.toString() == id)
 		   if(noExistingItem)
@@ -166,52 +161,7 @@ module.exports = {
 			      return res.redirect("/user/showCart");
 		    
 		   }
-		}
-		    
-
-
-
-
-		    
-
-
-
-
-
-
-		//     let singleId;
-		//     let quantity
-		//     const cart = [];
-	      
-		//     for (const product of list.products) {
-		//         if (product.proid.toString() === id) {
-		// 	  productFound = true;
-		// 	  singleId = product.proid;
-			
-		//         }
-		//     }
-	      
-		//     if (productFound) {
-		//         const cartFound = await cartModel.findOne({ userId: userId });
-	      
-		//         let searchForItem = cartFound.products.find(item => item.single_id === singleId);
-		//         if (searchForItem) {
-		// 	   searchForItem.quantity += +quantity
-		// 	  return res.redirect("/user/showCart");
-		//         } else {
-			  
-		// 	  cartFound.products = cartFound.products.concat(cart);
-		// 	  await cartFound.save();
-		// 	  return res.redirect("/user/showCart");
-		//         }
-		//     } else {
-		      
-		//         return res.redirect("/user/showwishlist");
-		//     }
-
-
-
-		
+		}		
 		} catch (error) {
 		    console.log(error);
 		}

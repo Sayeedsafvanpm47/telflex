@@ -114,7 +114,7 @@ module.exports = {
 	},
 
 	// controller logic for rendering the home page is shown here, in this i have the banners, new products, featured products etc
-	homepage: async (req, res) => {
+	homepage: async (req, res,next) => {
 		try {
 			const products = await productModel.find({});
 			if (products) {
@@ -191,7 +191,7 @@ module.exports = {
 		}
 	},
 	// this is the controller logic for about page
-	getAbout: async (req, res) => {
+	getAbout: async (req, res,next) => {
 		try {
 			const banners = await bannerModel.findOne({ bannerType: "Main About Banner" });
 			const manufacturing = await bannerModel.findOne({ bannerType: "manufacturing" });
@@ -211,7 +211,7 @@ module.exports = {
 		}
 	},
 	// this is the controller for dealers page, and this has a banner and i have handled the error handling here
-	getDealers: async (req, res) => {
+	getDealers: async (req, res,next) => {
 		try {
 			const banners = await bannerModel.findOne({ bannerType: "Dealer Banner" });
 			if (banners) {
@@ -229,7 +229,7 @@ module.exports = {
 		}
 	},
 	// this is the page for contact form, this page also has a map, contact us form, etc
-	getContact: async (req, res) => {
+	getContact: async (req, res,next) => {
 		try {
 			const banners = await bannerModel.findOne({ bannerType: "Contact Banner" });
 			if (banners) {
