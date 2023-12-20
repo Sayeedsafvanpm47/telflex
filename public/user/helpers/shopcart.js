@@ -1,5 +1,5 @@
 // increase and decrease
-
+let couponAppliedCheck = false
 async function increase(productId,i) {
           var target = document.getElementById('quantity' + productId);
           var newQuantity = document.getElementById('newQuantity' + productId)
@@ -114,6 +114,7 @@ function calc(productId,i) {
           
           var sum = document.getElementById('calcprice' + productId);
           var totalPrice = parseFloat(sum.innerText) || parseFloat(sum.textContent);
+          let minimumpurchasealert = document.getElementById('minimumpurchasealert').value
           
           var total = parseFloat(mul) * parseFloat(quantity);
           
@@ -171,9 +172,12 @@ function calc(productId,i) {
                   return response.json();
               })
               .then(data => {
-                  setTimeout(()=>{
-                      window.location.reload()
-                  },1500)
+                let totalAmount = parseInt(document.getElementById('showtotalamount').value)
+               if(couponAppliedCheck)
+               {
+                couponApplied()
+               }
+                  
                   console.log('Success:', data);
               })
               .catch(error => {
@@ -190,8 +194,10 @@ function calc(productId,i) {
               let couponset = false;
              
               const couponCode = document.getElementById('couponinput').value;
+              const totalamountcheck = document.getElementById('subtotalinputfield').value
               const coupon = couponCode.replace(/\W/g, '').toUpperCase();
-            
+              const couponspan = document.getElementById('couponAppliedSpan')
+
              
           
           
@@ -202,7 +208,7 @@ function calc(productId,i) {
               
           
                 
-                  const response = await fetch(`/user/applyCoupon?coupon=${coupon}`, {
+                  const response = await fetch(`/user/applyCoupon?coupon=${coupon}&total=${totalamountcheck}`, {
                       method: 'GET'
                   });
           
@@ -215,10 +221,12 @@ function calc(productId,i) {
                  
                
                   const disc = parseFloat(responseData.discount)
+                  const minimum = parseFloat(responseData.minimumpurchase)
+                  console.log(minimum)
                   console.log(disc)
                   const showTotal = document.getElementById('showtotalamount');
-                  const couponspan = document.getElementById('couponAppliedSpan')
                   const totalinput = document.getElementById('totalinputfield')
+                  const minimumpurchase = document.getElementById('minimumpurchasealert')
           const totalAmount = parseFloat(showTotal.innerText); 
           console.log(disc)
           console.log(typeof disc)
@@ -232,7 +240,15 @@ function calc(productId,i) {
               showTotal.innerHTML = discountedTotal.toFixed(2);
               couponspan.innerHTML = `${couponCode} coupon applied succesfully`
               totalinput.value =  discountedTotal.toFixed(2);
+              minimumpurchase.value = minimum
               couponset = true;
+
+              Swal.fire({
+                icon: 'success',
+                title: 'Coupon Applied',
+                text: `${couponCode} coupon applied successfully!`,
+            });
+            couponAppliedCheck = true
               
                 
                 
@@ -244,6 +260,7 @@ function calc(productId,i) {
                   btn.style.display = 'none';
                   var show = document.getElementById('applyOther')
                   show.style.display = 'block'
+                 
               }
                 
           
@@ -251,6 +268,15 @@ function calc(productId,i) {
                   console.error('Error:', error.message);
                   // Additional logging of error stack trace
                   console.error('Error Stack:', error.stack);
+                 couponset = false
+                 couponspan.innerHTML = ``
+
+                
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Coupon Error',
+                    text: 'Invalid coupon, try with another coupon'
+                });
               }
           }
           
@@ -279,13 +305,7 @@ function calc(productId,i) {
                     couponcode = document.getElementById(`couponcodehide${index}`);
                     checkAmount =parseInt(document.getElementById(`minimumPurchase${index}`).value)
                 
-                    if (amount < checkAmount) {
-                       
-                        let currentCode = couponcode.innerHTML;
-                       
-                            let newCode = currentCode.substring(0, 1) + '##########' ;
-                            couponcode.innerHTML = newCode;
-                    } 
+                  
                 }
                 
                                                                     

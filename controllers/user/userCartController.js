@@ -303,9 +303,13 @@ if (products) {
         try {
             const userId = req.session.userId
             const  coupon  = req.query.coupon;
+            const totalamount = req.query.total
+            let minimumpurchase
             console.log(coupon)
+            console.log(totalamount)
             const couponFound = await couponModel.findOne({ couponCode: coupon });
-            
+            console.log(minimumpurchase)
+            minimumpurchase = couponFound.minimumPurchase 
             
            
     
@@ -330,8 +334,15 @@ if (products) {
               console.log(couponFound)
               console.log(coupon.discount)
            const discount = couponFound.discount
+
+           if(totalamount > minimumpurchase){
            
-            return res.status(200).json({ discount });
+            return res.status(200).json({ discount,minimumpurchase });
+           }else {
+            console.log('didnt meet minimum req')
+            return res.status(404).json({ message: 'Coupon doesnt meet the minimum purchase requirement' });
+
+           }
     
         } catch (error) {
             console.error(error);
