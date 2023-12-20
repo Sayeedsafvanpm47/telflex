@@ -87,9 +87,20 @@ window.onload = function () {
             document.getElementById('showtotalamount').innerHTML =  sumtotal.toFixed(2);
             document.getElementById('subtotalinputfield').value = sumtotal.toFixed(2)
             document.getElementById('totalCheck').value = sumtotal.toFixed(2)
+            
     
         
           }
+          const total = document.getElementById('subtotalinputfield').value 
+          if(total > 0)
+          {
+            document.getElementById('proceedbtn').style.display = 'block'
+
+            document.getElementById('totaltable').style.display = 'block'
+
+          }
+
+
         };
 
 //         updatetotalandsubmit

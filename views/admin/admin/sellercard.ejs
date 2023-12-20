@@ -32,8 +32,9 @@
                     </select>
                 </div>
                   </form>
-
+                
                   <div class="card-body">
+                    <% if(user.length >0){ %>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
@@ -47,8 +48,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                              
-                              <%user.forEach((item) => { %>
+                            
+                              <%user.forEach((item,index) => { %>
                                 <tr>
                                   
                                     <td width="40%">
@@ -64,9 +65,9 @@
                                     </td>
                                     <td><%= item.phonenumber  %></td>
                                     <td><span class="badge rounded-pill alert-success"> <% if (item.isBlocked === true) { %>
-                                      <p>Blocked</p>
+                                      <p id="blocked">Blocked</p>
                                     <% } else { %>
-                                      <p>Active</p>
+                                      <p id="status<%= index  %>">Active</p>
                                     <% } %></span></td>
                                     <td><span class="badge rounded-pill alert-success"> <% if (item.isAdmin === true) { %>
                                       <p>Admin</p>
@@ -79,18 +80,24 @@
                                             <td>0</td>
                                             <% } %>
                                     <td>
-                                      <a onclick="blockuser('<%= item.email %>')"><i class="fa-solid fa-trash text-danger"></i></a>
+                                      <a onclick="blockuser('<%= item.email %>','<%= index %>')"><i class="fa-solid fa-trash text-danger"></i></a>
                                   </td>
                                     
                                 </tr>
                                 <% }) %>
+                              
                                 
                               
                             </tbody>
                         </table> <!-- table-responsive.// -->
                     </div>
+                    <% } else { %>
+                        <div>
+                        <p>No results found</p>
+                    </div>
+                        <% } %>
                 </div> 
-
+               
         
                 <div class="pagination-area mt-15 mb-50">
                   <nav aria-label="Page navigation example">
