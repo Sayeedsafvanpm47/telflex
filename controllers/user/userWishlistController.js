@@ -122,13 +122,13 @@ module.exports = {
 			   searchForItem.quantity += +quantity
 			  return res.redirect("/user/showCart");
 		        } else {
-			  // If the product doesn't exist in the cart, add it to the cart and save
+			  
 			  cartFound.products = cartFound.products.concat(cart);
 			  await cartFound.save();
 			  return res.redirect("/user/showCart");
 		        }
 		    } else {
-		        // If the product is not found in the wishlist, redirect to showwishlist
+		      
 		        return res.redirect("/user/showwishlist");
 		    }
 		} catch (error) {
