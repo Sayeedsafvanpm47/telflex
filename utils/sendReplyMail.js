@@ -1,7 +1,8 @@
 const nodemailer = require("nodemailer");
 const { isEmailValid } = require("../utils/validators/signUpValidator");
 
-async function sendOTPByEmail(email, otp) {
+
+async function sendreplyByEmail(email, reply) {
 	if (!isEmailValid(email)) {
 		return Promise.reject("Invalid email. Please enter a valid email address.");
 	}
@@ -17,8 +18,8 @@ async function sendOTPByEmail(email, otp) {
 	const mailOptions = {
 		from: "Telflex<sayeedportfolio47@gmail.com>",
 		to: email,
-		subject: "Sending email",
-		text: `Otp for login to your account ${otp}`
+		subject: "Sending reply for the query",
+		text: `We have recieved your enquiry, please go through this reponse mail :  ${reply}`
 	};
 
 	return new Promise((resolve, reject) => {
@@ -32,5 +33,5 @@ async function sendOTPByEmail(email, otp) {
 	});
 }
 
-module.exports = sendOTPByEmail;
-	
+
+module.exports = sendreplyByEmail;

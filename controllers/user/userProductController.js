@@ -289,6 +289,7 @@ module.exports = {
 			console.log(error);
 		}
 	},
+	// controller for viewing the sorted price
 	sortedPriceView : async (req,res)=>{
                     let sortpriceview
 		let currentPage = req.query.page ? parseInt(req.query.page) : 1;

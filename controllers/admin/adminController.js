@@ -2,6 +2,8 @@ const userModel = require("../../models/userModel");
 const orderModel = require('../../models/orderModel')
 const categoryModel = require('../../models/categoryModel')
 const messageModel = require('../../models/messageModel')
+const sendreplyByEmail = require("../../utils/sendReplyMail");
+
 
 module.exports = {
 	
@@ -348,6 +350,32 @@ const categoryOrders = []
 
 		} catch (error) {
 
+			console.log(error)
+			
+		}
+	},
+	sendReply : async (req,res)=>{
+		try {
+			const {reply,email,query} = req.query
+			console.log(reply)
+			console.log(email)
+			console.log(query)
+			const emailResponse = await sendreplyByEmail(email, reply);
+			console.log(emailResponse)
+			
+			
+			if (emailResponse) {
+				res.status(200).json({ message: 'Email sent successfully!' });
+			await messageModel.updateOne({query : query},{$set:{replystatus:'Replied!',reply : reply}},{upsert:true})
+			      } else {
+				
+				res.status(400).send({error:'Error occurred while sending email'});
+			      }
+
+
+			
+		} catch (error) {
+			res.status(500).send('Internal server error');
 			console.log(error)
 			
 		}

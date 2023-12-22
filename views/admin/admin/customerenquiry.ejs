@@ -24,6 +24,9 @@
                                     <th>Phone</th>
                                     <th>Address</th>
                                     <th>Message</th>
+                                    <th>Send Reply</th>
+                                    <th>Status</th>
+                                    <th>Reply Message</th>
                                     
                                 </tr>
                             </thead>
@@ -36,7 +39,20 @@
                                   <td><%= message[i].email  %></td>
                                   <td><%= message[i].phone  %></td>
                                   <td><%= message[i].address %></td>
-                                  <td><%= message[i].query  %></td>
+                                  <td id="query<%= i  %>"><%= message[i].query  %></td>
+                                  <% if(message[i].replystatus){ %>
+                                  <td id="replystatus<%= i  %>"><%= message[i].replystatus %></td>
+                                  <% } else { %>
+                                    <td id="replystatus<%= i  %>">Not yet replied</td>
+
+                                    <% } %>
+                                  <td><Textarea id="reply<%= i  %>"></Textarea><button onclick="sendreply('<%= message[i].email %>','<%= i %>')" class="btn btn-primary">Send</button></td>
+                                  <% if(message[i].reply){ %>
+                                    <td><%= message[i].reply  %></td>
+                                    <% }else{ %>
+                                      <td id="replymessage<%= i  %>">...</td>
+                                      <% } %>
+                                  
                                 </tr>
 
 
@@ -49,6 +65,9 @@
                         </table> <!-- table-responsive.// -->
                     </div>
                 </div> 
+                <script src="/admin/helpers/enquiry.js">
+                  
+                </script>
 
         
                 <div class="pagination-area mt-15 mb-50">

@@ -28,6 +28,7 @@ router.get("/logout", controller.logout);
 router.get("/editProfile", sessionCheck.checkAdminSignIn, controller.editProfile);
 router.get("/customerenquiry", sessionCheck.checkAdminSignIn, controller.customerenquiry);
 router.get("/dealerenquiry", sessionCheck.checkAdminSignIn, controller.dealerenquiry);
+router.get('/sendReply',sessionCheck.checkAdminSignIn,controller.sendReply)
 
 //admincontroller routes ends...
 
