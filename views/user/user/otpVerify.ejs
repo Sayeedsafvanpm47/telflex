@@ -2,16 +2,16 @@
 <body>
     <%- include('partials/header') %>
   
- 
-    <% if (typeof(errors) !== 'undefined' && errors.length > 0) { %>
-        <div id="error-message" class="alert alert-danger">
-            <span>
-                <% errors.forEach(error => { %>
-                    <p><%= error %></p>
-                <% }); %>
-            </span>
-        </div>
-    <% } %>
+    <% if (errors !== '') { %>
+    <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '<%= errors %>'
+            });
+       
+    </script>
+     <% } %>
   
     <section class="pt-150 pb-150">
         <div class="container d-flex justify-content-center mt-5 mb-5">
@@ -47,6 +47,8 @@
                             </div>
                         </div>
                         </div>
+                       
+                        <input type="text" value="<%= running  %>" id="runcheck">
                         </section>
                        
     <%- include('partials/footerlogin') %>
@@ -56,29 +58,37 @@
 
   
 
-    
     <script>
-         document.addEventListener('DOMContentLoaded', function() {
-        let timeInSeconds = localStorage.getItem('timer') || 120;
-
-        function updateTimer() {
-            $('#timer').text(timeInSeconds);
-            if (timeInSeconds > 0) {
-                timeInSeconds--;
-                localStorage.setItem('timer', timeInSeconds);
-            } else {
-              
-                timeInSeconds = 120; 
-                document.getElementById('resend').style.display = 'block'
-                document.getElementById('verifyotp').style.display = 'none'
-
+        document.addEventListener('DOMContentLoaded', function() {
+            let checkrunningstatus = document.getElementById('runcheck').value
+            let timeInSeconds
+            if(checkrunningstatus == 'true')
+            {
+                 timeInSeconds = localStorage.getItem('timer') || 120;
+            }else{
+                 timeInSeconds = 120
             }
-           
-        }
+     
 
-        let countdownInterval = setInterval(updateTimer, 1000);
-    });
-    </script>
+       function updateTimer() {
+           $('#timer').text(timeInSeconds);
+           if (timeInSeconds > 0) {
+               timeInSeconds--;
+               localStorage.setItem('timer', timeInSeconds);
+           } else {
+             
+               timeInSeconds = 120
+               document.getElementById('resend').style.display = 'block'
+               document.getElementById('verifyotp').style.display = 'none'
+
+           }
+          
+       }
+
+       let countdownInterval = setInterval(updateTimer, 1000);
+   });
+   </script> 
+    
     
 </body>
 

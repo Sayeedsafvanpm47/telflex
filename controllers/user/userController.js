@@ -22,6 +22,23 @@ module.exports = {
 		try {
 			let errors;
 			let success;
+			
+			if(req.session.verificationError)
+			{
+				
+
+				errors = 'Otp verification failed, please try requesting for a new otp'
+				delete req.session.verificationError
+				return res.render("user/user/login", { errors, success });
+
+
+			}
+			if(req.session.failedupdatingpassword)
+			{
+				errors = 'Failed updating password'
+				delete req.session.failedupdatingpassword
+				return res.render("user/user/login", { errors, success });
+			}
 			if (!req.session.userId) {
 				if (req.session.errorWhileLogin) {
 					errors = req.session.errors;
@@ -250,6 +267,9 @@ module.exports = {
 	getSignUp: async (req, res) => {
 		try {
 			let errors;
+			delete req.session.timerunning
+			
+
 			if (!req.session.userId) {
 				if (req.session.errorWhileSignup) {
 					errors = req.session.errors;
@@ -369,7 +389,8 @@ module.exports = {
 	verifyOTP: async (req, res) => {
 		try {
 			const { email, enteredOTP } = req.body;
-			const errors = [];
+			let errors = ''
+			
 			let reffereeId;
 			let wallet = 0;
 			let reffered = false;
@@ -382,10 +403,17 @@ module.exports = {
 			const updateUserWallet = await userModel.updateOne({ _id: reffereeId }, { $inc: { wallet: 100 } });
 			console.log(reffereeId);
 			const user = await userModel.findOne({ email });
-			if (!user || !user.otp || user.otpExpires <= new Date() || user.otpAttempts >= 3) {
-				errors.push("verification failed, try again..., or request for another otp");
+			if (!user || !user.otp || user.otpExpires <= new Date() || user.otpAttempts > 2) {
+				req.session.verificationError = true
+				req.session.timerunning = false
 
-				return res.render("user/user/otpVerify", { errors, email: email });
+			
+				return res.redirect('/user/shop')
+
+			
+
+
+				
 			}
 			if (user.otp == enteredOTP) {
 				user.otp = null;
@@ -422,9 +450,12 @@ module.exports = {
 				attempts = 3 - user.otpAttempts;
 				await user.save();
 
-				errors.push(attempts + "attempts left");
-
-				return res.render("user/user/otpVerify", { errors, email: email });
+				errors = attempts + "attempts left"
+				req.session.attemptError = true
+				req.session.timerunning = true
+				req.session.errormsg = errors
+                                        return res.redirect('/user/showOtp')
+			
 			}
 		} catch (err) {
 			console.log(err);
@@ -435,15 +466,32 @@ module.exports = {
 
 	showCreatePass: async (req, res) => {
 		try {
-			let errors = [];
+			const email = req.session.email;
+			let errors = ''
+			
 			if (req.session.createPass) {
-				const email = req.session.email;
+				if(req.session.mismatcherror)
+				{
+                                          errors = 'Passwords does not match'
+				  delete req.session.mismatcherror
+				  return res.render("user/user/createPass", { email: email,errors });
+
+
+				}
+				if(req.session.detailserror)
+				{
+					errors = 'Fill in details properly'
+					delete req.session.detailserror
+					return res.render("user/user/createPass", { email: email,errors });
+
+				}
+			
 				delete req.session.createPass;
 				delete req.session.email;
-				await res.render("user/user/createPass", { email: email });
+				await res.render("user/user/createPass", { email: email,errors });
 			} else {
-				errors.push("Failed updating the password, please try again");
-				await res.render("user/user/forgotPassword", { errors });
+				req.session.passwordupdationerror = true
+				return res.redirect('/user/getForgotPassword')
 			}
 		} catch (error) {
 			console.log(error);
@@ -459,6 +507,7 @@ module.exports = {
 			await sendOtp(email);
 			req.session.isForgot = true;
 			req.session.email = email;
+			
 			res.redirect("/user/showOtp");
 		} catch (error) {
 			console.log(error);
@@ -468,12 +517,15 @@ module.exports = {
 	// controller for getting forgot password
 	getForgotPassword: async (req, res) => {
 		try {
+			let errors = ''
+			delete req.session.timerunning
+			
 			if (req.session.forgotError) {
 				let errors = [];
 				errors.push("corrupt credentials or fill in details properly");
-				res.render("user/user/forgotPassword", { errors });
+				return res.render("user/user/forgotPassword", { errors });
 			} else {
-				res.render("user/user/forgotPassword");
+				res.render("user/user/forgotPassword",{errors});
 			}
 		} catch (error) {
 			res.redirect("/user/error");
@@ -493,7 +545,7 @@ module.exports = {
 	forgotPassword: async (req, res) => {
 		try {
 			const { email } = req.body;
-
+                            
 			const emailExist = await userModel.findOne({ email: email });
 			if (emailExist) {
 				console.log("email exist");
@@ -510,6 +562,7 @@ module.exports = {
 
 				req.session.isForgot = true;
 				req.session.email = email;
+				
 
 				console.log("user forgot the pass");
 				res.redirect("/user/showOtp");
@@ -522,31 +575,59 @@ module.exports = {
 	// controller for showOtp
 	showOtp: async (req, res) => {
 		try {
-			const errors = [];
+			let errors = ''
+			
+                             
+			let running
+			if(req.session.timerunning)
+			{
+                                 running = true
 
+			}
+
+			if(req.session.attemptError)
+	           
+			{
+				const email = req.session.email;
+
+                                        errors = req.session.errormsg
+				delete req.session.attemptError
+				return res.render("user/user/otpVerify", { email: email,errors,running});
+		
+
+			}
+			
 			if (req.session.isForgot) {
 				const email = req.session.email;
 				delete req.session.isForgot;
 
+
 				req.session.forgotOk = true;
 
-				res.render("user/user/otpVerify", { email: email });
+				return res.render("user/user/otpVerify", { email: email ,errors,running});
 			} else if (req.session.isLogin) {
 				const email = req.session.email;
 				delete req.session.isLogin;
 
 				req.session.loginOk = true;
-				res.render("user/user/otpVerify", { email: email });
+				return res.render("user/user/otpVerify", { email: email,errors,running });
 			} else {
 				if (req.session.forgotOk) {
-					errors.push("otp verification failed, request again");
-					res.render("user/user/forgotPassword", { errors });
+					errors = "otp verification failed, request again"
+					return res.render("user/user/forgotPassword", { errors });
 				} else if (req.session.loginOk) {
-					errors.push("otp verification failed, request again");
-					res.render("user/user/register", { errors });
+					errors= "otp verification failed, request again"
+					return res.render("user/user/register", { errors });
+				}
+				else
+				{
+					return res.redirect('/user/shop')
 				}
 			}
+			
 		} catch (error) {
+			console.log(error)
+			
 			res.redirect("/user/getForgotPassword");
 		}
 	},
@@ -554,27 +635,31 @@ module.exports = {
 	updatePass: async (req, res) => {
 		const { password, chkpassword, email } = req.body;
 		const user = await userModel.findOne({ email });
-		const errors = [];
-
+		const errors = ''
+                    req.session.createPass = true
 		if (password.length > 8 && chkpassword.length > 8) {
 			if (password === chkpassword) {
 				try {
+					console.log(password)
 					const hashedPass = await bcrypt.hash(password, 10);
 					user.password = hashedPass;
 					await user.save();
-
+                                                  console.log('password updated')
 					res.redirect("/user/shop");
 				} catch (error) {
-					console.error("Error updating password:", error);
-					await res.redirect("/");
+					req.session.failedupdatingpassword = true
+				
+				return res.redirect('/user/shop')
 				}
 			} else {
-				errors.push("password mismatch");
-				await res.render("user/user/createPass", { errors, email });
+				req.session.mismatcherror = true
+				
+				return res.redirect('/user/showCreatePass')
 			}
 		} else {
-			errors.push("fill in details properly");
-			await res.render("user/user/createPass", { errors, email });
+			
+			req.session.detailserror = true
+			return res.redirect('/user/showCreatePass')
 		}
 	},
 	// conteoller for rated products view
