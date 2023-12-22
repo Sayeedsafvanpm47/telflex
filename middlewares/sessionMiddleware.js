@@ -25,14 +25,16 @@ async function checkBlock(req, res, next) {
       console.log(blocked)
       console.log(blocked.isBlocked)
       if (blocked.isBlocked == true) {
-      res.render('/user/')
+        delete req.session.user
+      res.redirect('/user/logout')
       } else {
         next();
       }
     }
    
   } catch (error) {
-    res.redirect('/user/shop');
+    console.log(error)
+    res.redirect('/user/logout');
   }
 }
 
