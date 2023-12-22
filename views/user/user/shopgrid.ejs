@@ -182,10 +182,17 @@
                                         <li class="page-item <%= currentPage === i ? 'active' : '' %>">
                                             <a class="page-link" href="/user/sortedProducts?page=<%= i %>"><%= i %></a>
                                         </li>
+                                      <% }else if(sortpriceview){ %>
+                                        <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                            <a class="page-link" href="/user/sortPriceView?page=<%= i %>"><%= i %></a>
+                                        </li>
+                                    
                                         <% } else { %>
+                                            <% if(!nopage) {%>
                                             <li class="page-item <%= currentPage === i ? 'active' : '' %>">
                                                 <a class="page-link" href="/user?page=<%= i %>"><%= i %></a>
                                             </li>
+                                            <% } %>
                                             <% } %>
                                     <% } %>
                                    
@@ -203,7 +210,7 @@
                             <ul class="categories">
                                 <li><a style="color: white;" href="/">View All</a></li>
                                 <% category.forEach(categoryItem => { %>
-                                    <% if (categoryItem && categoryItem.published === true) { %>
+                                    <% if (categoryItem && categoryItem.published === true ) { %>
                                         <li>
                                             <a style="color: white;" href="/user/sortCategory?categoryId=<%= categoryItem._id %>">
                                                 <%= categoryItem.categoryName %>

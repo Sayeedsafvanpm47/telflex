@@ -8,7 +8,7 @@ module.exports = {
 	pagination: async (req, res) => {
 		try {
 			delete req.session.sortbymenu;
-
+ 
 			let pagination = req.query.pagination;
 			console.log(pagination);
 			req.session.paginate = true;
@@ -25,10 +25,13 @@ module.exports = {
 		try {
 			delete req.session.priceLogic;
 			delete req.session.sort
+			delete req.session.sortPrice
 			delete req.session.sortByInSort;
 			let categoryPagination;
+			let sortpriceview
 			let currentPage = req.query.page ? parseInt(req.query.page) : 1;
 			let numberOfDocs;
+			
 			if (req.session.paginate) {
 				numberOfDocs = req.session.pagination;
 			} else {
@@ -37,7 +40,7 @@ module.exports = {
 			const category = await categoryModel.find({});
 			console.log(category);
 			const totalProductsCount = await productModel.countDocuments({ isListed: true });
-			const totalPages = Math.ceil(totalProductsCount / numberOfDocs);
+			let totalPages = Math.ceil(totalProductsCount / numberOfDocs);
 
 			let nopage;
 			const relatedProducts = "";
@@ -46,13 +49,13 @@ module.exports = {
 
 			if (req.session.search) {
 				searchProducts = req.session.searchProducts || ''
+                                    
 				nopage = true;
+				
+
+				
 				delete req.session.search;
-			} else if (req.session.sortPrice) {
-				searchProducts = req.session.priceSort;
-				nopage = true;
-				delete req.session.sortPrice;
-			} else if (req.session.sortbymenu) {
+			}  else if (req.session.sortbymenu) {
 				searchProducts = req.session.sortBy;
 			} else {
 				nopage = false;
@@ -72,7 +75,8 @@ module.exports = {
 					totalPages,
 					currentPage,
 					nopage,
-					categoryPagination
+					categoryPagination,
+					sortpriceview
 				});
 			} else {
 				res.render("user/user/shopgrid", {
@@ -84,7 +88,7 @@ module.exports = {
 					currentPage,
 					nopage,
 					categoryPagination,
-					
+					sortpriceview
 				});
 			}
 
@@ -105,6 +109,7 @@ module.exports = {
 			let currentPage = req.query.page ? parseInt(req.query.page) : 1;
 			let numberOfDocs = 5;
 			let products;
+			
 			if (req.session.sort) {
 				req.session.sortByInSort = true;
 				if (sort === "low") {
@@ -195,6 +200,7 @@ module.exports = {
 
 				let nopage;
 				const relatedProducts = "";
+				let sortpriceview
 
 				let categoryPagination = true;
 				let searchProducts;
@@ -258,7 +264,9 @@ module.exports = {
 						totalPages,
 						currentPage,
 						nopage,
-						categoryPagination
+						categoryPagination,
+						sortpriceview
+						
 					});
 				} else {
 					res.render("user/user/shopgrid", {
@@ -269,7 +277,8 @@ module.exports = {
 						totalPages,
 						currentPage,
 						nopage,
-						categoryPagination
+						categoryPagination,
+						sortpriceview
 					});
 				}
 			}else
@@ -280,62 +289,113 @@ module.exports = {
 			console.log(error);
 		}
 	},
+	sortedPriceView : async (req,res)=>{
+                    let sortpriceview
+		let currentPage = req.query.page ? parseInt(req.query.page) : 1;
+			let numberOfDocs
+			
+			let totalProductsCount
+			if (req.session.paginate) {
+				numberOfDocs = req.session.pagination;
+			} else {
+				numberOfDocs = 5;
+			}
+			let categoryPagination
+
+		const category = await categoryModel.find({});
+			
+
+			minprice = req.session.minprice
+				maxprice = req.session.maxprice
+				totalProductsCount =  await productModel.countDocuments({"size.0.productPrice": { $gte: minprice, $lte: maxprice }})
+				totalPages = Math.ceil(totalProductsCount/ numberOfDocs);
+
+
+			
+			let searchProducts;
+			let relatedProducts
+			let nopage
+			
+
+			
+				sortpriceview = true
+				
+				
+				searchProducts = await productModel
+					.find({
+						"size.0.productPrice": { $gte: minprice, $lte: maxprice }
+					}).skip((currentPage - 1) * numberOfDocs)
+					.limit(numberOfDocs)
+					.populate({ path: "category", model: "categories", select: "_id categoryName published" }) || ''
+					
+				
+				
+
+
+				
+				
+
+				res.render("user/user/shopgrid", {
+					products: searchProducts,
+					category,
+					relatedProducts,
+					productCount: totalProductsCount,
+					totalPages,
+					currentPage,
+					nopage,
+					categoryPagination,
+					sortpriceview
+				});
+			
+	}
+
+
+
+	,
 
 	// controller logic for price sort
 	sortPrice: async (req, res) => {
 		let minprice;
 		let maxprice;
 
+		
+
 		const { sortingLogic } = req.body;
 
 		let products;
+		let count
 
 		if (!req.session.sort) {
+		
 			if (sortingLogic === "noprice") {
 				products = await productModel.find({}).populate({ path: "category", model: "categories", select: "_id categoryName published" }) || ''
 				console.log("product found : " + products);
 			} else if (sortingLogic === "price1") {
 				minprice = 0;
 				maxprice = 5000;
+				
+				
 
-				products = await productModel
-					.find({
-						"size.0.productPrice": { $gte: minprice, $lte: maxprice }
-					})
-					.populate({ path: "category", model: "categories", select: "_id categoryName published" }) || ''
-				console.log("Products found: ", products);
 			} else if (sortingLogic === "price2") {
 				minprice = 5001;
 				maxprice = 20000;
-				products = await productModel
-					.find({
-						"size.0.productPrice": { $gte: minprice, $lte: maxprice }
-					})
-					.populate({ path: "category", model: "categories", select: "_id categoryName published" }) || ''
-				console.log("product found : " + products);
+				
 			} else if (sortingLogic === "price3") {
-				minprice = 20001;
-				maxprice = 40000;
-				products = await productModel
-					.find({
-						"size.0.productPrice": { $gte: minprice, $lte: maxprice }
-					})
-					.populate({ path: "category", model: "categories", select: "_id categoryName published" }) || ''
+				
 				console.log("product found : " + products);
 			} else if (sortingLogic === "price4") {
 				minprice = 40001;
+				maxprice = 100000;
 
-				products = await productModel
-					.find({
-						"size.0.productPrice": { $gte: minprice }
-					})
-					.populate({ path: "category", model: "categories", select: "_id categoryName published" }) || ''
+				
 				console.log("product found : " + products);
 			}
 			req.session.sortPrice = true;
-			req.session.priceSort = products;
+			req.session.minprice = minprice
+			req.session.maxprice = maxprice
+			
 
-			res.redirect("/");
+			res.redirect("/user/sortPriceView");
 		} else {
 			let minprice;
 			let maxprice;

@@ -155,18 +155,18 @@ function download() {
       
       
 
-      document.addEventListener("DOMContentLoaded", () => {
-          let printLink = document.getElementById("printButton");
-          let container = document.getElementById("container");
+    //   document.addEventListener("DOMContentLoaded", () => {
+    //       let printLink = document.getElementById("printButton");
+    //       let container = document.getElementById("container");
       
-          printLink.addEventListener("click", event => {
-              event.preventDefault();
-              printLink.style.display = "none";
-              window.print();
-          }, false);
+    //       printLink.addEventListener("click", event => {
+    //           event.preventDefault();
+    //           printLink.style.display = "none";
+    //           window.print();
+    //       }, false);
       
-          container.addEventListener("click", event => {
-              printLink.style.display = "flex";
-          }, false);
+    //       container.addEventListener("click", event => {
+    //           printLink.style.display = "flex";
+    //       }, false);
       
-      }, false);
+    //   }, false);

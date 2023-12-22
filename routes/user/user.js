@@ -74,6 +74,7 @@ router.get("/sortBy", productController.sortBy);
 router.get("/sortCategory", productController.sortProducts);
 router.get("/sortedProducts", productController.sortedProducts);
 router.post("/sortPrice", productController.sortPrice);
+router.get('/sortPriceView',productController.sortedPriceView);
 router.post("/searchProducts", productController.searchProducts);
 router.get("/productdetail", productController.productdetail);
 router.get("/showPrice", productController.showPrice);
