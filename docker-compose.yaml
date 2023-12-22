@@ -7,6 +7,6 @@ services:
     container_name: telflex
     ports:
       - 8080:8080
-    restart: on-failure
+    restart: always
     env_file:
       - .env
