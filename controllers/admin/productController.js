@@ -166,7 +166,7 @@ module.exports = {
 					return res.status(404).send("Product not found");
 				}
 
-				res.redirect("/admin/viewProducts");
+				res.redirect("/admin/viewproducts");
 			}
 		} catch (error) {
 			console.error(error);
