@@ -166,7 +166,7 @@ module.exports = {
 					return res.status(404).send("Product not found");
 				}
 
-				res.redirect("/admin/viewproducts");
+				res.redirect("/admin/viewProducts");
 			}
 		} catch (error) {
 			console.error(error);
@@ -239,7 +239,7 @@ module.exports = {
 				res.redirect("/admin/searchProductsView");
 			}
 
-			res.render("admin/admin/viewProducts", {
+			res.render("admin/admin/viewproducts", {
 				products,
 				categories,
 				selectedCategory,
