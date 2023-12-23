@@ -22,6 +22,15 @@ module.exports = {
 		try {
 			let errors;
 			let success;
+			let blockalert = ''
+			if(req.session.blockedalert)
+			{
+				
+				blockalert = 'This user is blocked, try logging in as a different user!'
+				
+				return res.render("user/user/login", { errors, success,blockalert });
+			}
+		          
 			
 			if(req.session.verificationError)
 			{
@@ -29,7 +38,7 @@ module.exports = {
 
 				errors = 'Otp verification failed, please try requesting for a new otp'
 				delete req.session.verificationError
-				return res.render("user/user/login", { errors, success });
+				return res.render("user/user/login", { errors, success,blockalert });
 
 
 			}
@@ -37,19 +46,19 @@ module.exports = {
 			{
 				errors = 'Failed updating password'
 				delete req.session.failedupdatingpassword
-				return res.render("user/user/login", { errors, success });
+				return res.render("user/user/login", { errors, success,blockalert });
 			}
 			if (!req.session.userId) {
 				if (req.session.errorWhileLogin) {
 					errors = req.session.errors;
 					delete req.session.errorWhileLogin;
-					await res.render("user/user/login", { errors, success });
+					await res.render("user/user/login", { errors, success,blockalert });
 				} else if (req.session.registrationOk) {
 					success = "Succesfully registered";
 					delete req.session.registrationOk;
-					await res.render("user/user/login", { errors, success });
+					await res.render("user/user/login", { errors, success,blockalert });
 				} else {
-					await res.render("user/user/login", { errors, success });
+					await res.render("user/user/login", { errors, success,blockalert });
 				}
 			} else {
 				await res.redirect("/");
@@ -86,7 +95,8 @@ module.exports = {
 					errors = "User account has not been verified yet";
 				}
 
-				if (user.isBlocked == true) {
+				if (user.isBlocked == true || req.session.blockalert) {
+					
 					errors = "The user is blocked";
 				}
 			}
@@ -96,6 +106,7 @@ module.exports = {
 				req.session.errorWhileLogin = true;
 				res.redirect("/user/shop");
 			} else {
+				delete req.session.blockalert
 				const passwordMatch = await bcrypt.compare(password, user.password);
 				if (passwordMatch) {
 					req.session.userId = user._id;
@@ -534,6 +545,12 @@ module.exports = {
 	// controller for user logout
 	logout: async (req, res) => {
 		try {
+		        if(req.session.blockeduser)
+		        {
+			delete req.session.blockeduser
+			req.session.blockedalert = true
+			return res.redirect('/user/shop')
+		        }
 			delete req.session.userId;
 			res.redirect("/");
 		} catch (error) {

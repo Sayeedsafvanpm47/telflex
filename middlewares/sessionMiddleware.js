@@ -26,6 +26,7 @@ async function checkBlock(req, res, next) {
       console.log(blocked.isBlocked)
       if (blocked.isBlocked == true) {
         delete req.session.user
+        req.session.blockeduser = true
       res.redirect('/user/logout')
       } else {
         next();
@@ -39,12 +40,10 @@ async function checkBlock(req, res, next) {
 }
 
 async function checkSignIn(req, res, next) {
+  
   if (!req.session.user) {
     await res.redirect('/user/shop');
-    if(req.session.blocked)
-    {
-      return res.redirect('/user/shop')
-    }
+   
   } else {
  
     next();

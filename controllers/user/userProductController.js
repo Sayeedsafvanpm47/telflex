@@ -31,6 +31,11 @@ module.exports = {
 			let sortpriceview
 			let currentPage = req.query.page ? parseInt(req.query.page) : 1;
 			let numberOfDocs;
+			if(req.session.blockeduser)
+			{
+                                delete req.session.blockeduser
+			  res.redirect('/u')
+			}
 			
 			if (req.session.paginate) {
 				numberOfDocs = req.session.pagination;

@@ -40,6 +40,18 @@
                                                 });
                                             </script>
                                         <% } %>
+
+                                        <% if (blockalert !== '') { %>
+                                            
+                                            <script>
+                                                  Swal.fire({
+                                                    title: 'Blocked!',
+                                                    text: '<%= blockalert %>', 
+                                                    icon: 'fas fa-ban',
+                                                    confirmButtonText: 'OK'
+                                                });
+                                            </script>
+                                        <% } %>
                                
 
                                     <form method="post" action="/user/postLogin" >
