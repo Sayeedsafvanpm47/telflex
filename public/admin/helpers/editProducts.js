@@ -42,6 +42,15 @@ function changePrice(i) {
 async function editProduct(event)
 {
     try {
+      let imagesInput = document.getElementById('input-images')
+
+      if (imagesInput.files.length <= 0) {
+        event.preventDefault()
+
+        return Swal.fire('Error', 'Please upload an image!', 'error');
+      
+      
+      }
 event.preventDefault()
 const confirmResult = await Swal.fire({
 title: 'Edit Product',

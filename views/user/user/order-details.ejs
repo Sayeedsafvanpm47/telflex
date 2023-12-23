@@ -86,10 +86,10 @@
                                                                 </h5>
                                                                 <p class="font-xs"><%= item.size  %><br> <%= item.productId.shortDescription  %></p>
                                                             </td>
-                                                            <td class="price" data-title="Price"><span><%= item.price %></span></td>
+                                                            <td class="price" data-title="Price"><span>&#8377;<%= item.price %></span></td>
                                                             <td class="quantity" data-title="Quantity"><span><%= item.quantity %></span></td>
                                                             <td class="text-right" data-title="Cart">
-                                                                <span class="calctotal" id="calcprice"><%= item.price * item.quantity %></span>
+                                                                <span class="calctotal" id="calcprice">&#8377;<%= item.price * item.quantity %></span>
                                                             </td>
                                                             <td class="text-right" data-title="Status">
                                                                 <span class="status" id="status"><%= item.status  %></span>
@@ -208,7 +208,7 @@
                                                 <tr>
                                                     <td class="cart_total_label">Bill Subtotal</td>
                                                 <input type="number" value="<%= totalAmount %>" name="totalAmount" hidden>
-                                                    <td class="cart_total_amount"><span id="showtotal" class="font-lg fw-900 text-brand"></span><%= totalAmount %></td>
+                                                    <td class="cart_total_amount"><span id="showtotal" class="font-lg fw-900 text-brand"></span>&#8377;<%= totalAmount %></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="cart_total_label">Shipping</td>
@@ -223,7 +223,7 @@
 <br>
                                                             <span  style="font-size: 8px; margin-top: -10px;"> Coupon : <span style="font-size: 12px; color: black;"> <%=order.couponName%> </span>Applied!</span><br>
                                                             <% } %>
-                                                    </span><%= order.totalAmount  %></td>
+                                                    </span><span class="fs-4">&#8377;<%= order.totalAmount  %></span></td>
                                                     <input type="number" name="totalamountcheckout" value="" id="totalinputfield" hidden>
                                                 </tr>
                                             </tbody>

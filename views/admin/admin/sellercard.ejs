@@ -96,33 +96,37 @@
                         <p>No results found</p>
                     </div>
                         <% } %>
+
+                        <div class="pagination-area mt-15 mb-50">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-start">
+                                  <% if(!search) {%>
+                                  <% for(let i=1; i<=totalPages; i++) { %>
+                                    <li  class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                        <a style="width: 50px;" class="page-link" href="/admin/viewCustomers?page=<%= i %>"><%= i %></a>
+                                    </li>
+                                <% } %>
+                                <% }else{ %>
+                                  <% for(let i=1; i<=totalPages; i++) { %>
+                                    <li  class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                        <a style="width: 50px;" class="page-link" href="/admin/searchView?page=<%= i %>"><%= i %></a>
+                                    </li>
+                                <% } %>
+                                <% } %>
+                                </ul>
+                            </nav>
+                        </div>
                 </div> 
                
         
-                <div class="pagination-area mt-15 mb-50">
-                  <nav aria-label="Page navigation example">
-                      <ul class="pagination justify-content-start">
-                        <% if(!search) {%>
-                        <% for(let i=1; i<=totalPages; i++) { %>
-                          <li class="page-item <%= currentPage === i ? 'active' : '' %>">
-                              <a class="page-link" href="/admin/viewCustomers?page=<%= i %>"><%= i %></a>
-                          </li>
-                      <% } %>
-                      <% }else{ %>
-                        <% for(let i=1; i<=totalPages; i++) { %>
-                          <li class="page-item <%= currentPage === i ? 'active' : '' %>">
-                              <a class="page-link" href="/admin/searchView?page=<%= i %>"><%= i %></a>
-                          </li>
-                      <% } %>
-                      <% } %>
-                      </ul>
-                  </nav>
-              </div>
+               
         
                   
                 
            
         </section> <!-- content-main end// -->
+
+        
 
        
     </main>

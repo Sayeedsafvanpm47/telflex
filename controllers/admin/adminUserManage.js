@@ -32,7 +32,7 @@ module.exports = {
 			user.isBlocked = !user.isBlocked;
 			await user.save();
 
-			res.status(200).send(`User status updated successfully`);
+			res.status(200).send({message:`User status updated successfully`});
 		} catch (error) {
 			console.error("Error:", error);
 			res.status(500);

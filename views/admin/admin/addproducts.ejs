@@ -29,7 +29,7 @@
                                 </div>
                             <% } %>
 
-                            <form action="/admin/saveProducts" method="Post" enctype="multipart/form-data">
+                            <form id="addProductForm" action="/admin/saveProducts" method="Post" enctype="multipart/form-data">
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Product title</label>
                                     <input type="text" placeholder="Type here" class="form-control" id="product_name" name="productname">
@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="mb-4">
                                       <label for="product_name" class="form-label">Product Discount</label>
-                                      <input type="text" placeholder="Type here" class="form-control" id="product_disc" name="productdiscount">
+                                      <input onkeypress="return onlyNumberKey(event)"  placeholder="Type here" class="form-control" id="product_disc" name="productdiscount">
                                   </div>
                                     
                                     <label for="product_name" class="form-label">Product Size</label>
@@ -106,7 +106,7 @@
                                 </div>
                               
                                 <div class="d-grid">
-                                    <button class="btn btn-primary">Create Product</button>
+                                    <button  onclick="addProduct(event)"  class="btn btn-primary">Create Product</button>
                                 </div>
                                
                             </form>

@@ -268,10 +268,17 @@ module.exports = {
 	// controller for viewing the refferal offers
 	showRefferals: async (req, res) => {
 		try {
-			const refferals = await refferalModel.find({}).populate({ path: "reffererId", model: USER, select: "firstname" });
+			let currentPage = req.query.page ? parseInt(req.query.page) : 1;
+			let numberOfDocs = 10;
+			const userCount = await refferalModel.countDocuments();
+			const totalPages = Math.ceil(userCount / numberOfDocs);
+			const refferals = await refferalModel.find({}).skip((currentPage - 1) * numberOfDocs)
+			.limit(numberOfDocs).populate({ path: "reffererId", model: USER, select: "firstname" })
 			console.log(refferals);
+			
+			
 
-			res.render("admin/admin/refferalOffers", { refferals });
+			res.render("admin/admin/refferalOffers", { refferals,userCount, totalPages, currentPage });
 		} catch (error) {
 			console.log(error);
 			res.redirect("/user/error");

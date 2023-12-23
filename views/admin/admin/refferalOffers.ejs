@@ -42,10 +42,24 @@
                                     <tbody>
                                         <% refferals.forEach(item=>{ %>
                                                   <tr>
+                                                    <% if(item.reffererId.firstname){ %>
                                                 <td><%= item.reffererId.firstname  %></td> 
+                                                <% }else{ %>
+                                                    <td>Not available</td>
+                                                    <% } %>
+                                                    <% if(item.refferalCode){ %>
                                                 <td><%= item.refferalCode  %></td>
+                                                <% }else{ %>
+                                                    <td>Not available</td>
+                                                    <% } %>
+                                                    <% if(item.reffereeId){ %>
                                                 <td><%= item.reffereeId.length  %></td>
+
                                                 <td><%= item.reffereeId.length * 100  %></td>
+                                                <% } else { %>
+                                                    <td>Not available</td>
+                                                    <td>Not available</td>
+                                                    <% } %>
                                         </tr>
                                     <%   }) %>
                                        
@@ -55,7 +69,21 @@
                             </div>
                         </div> <!-- .col// -->
                     </div> <!-- .row // -->
+                    <div class="pagination-area mt-15 mb-50">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-start">
+                           
+                              <% for(let i=1; i<=totalPages; i++) { %>
+                                <li  class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                    <a style="width: 50px;" class="page-link" href="/admin/showRefferals?page=<%= i %>"><%= i %></a>
+                                </li>
+                           
+                            <% } %>
+                            </ul>
+                        </nav>
+                    </div>
                 </div> <!-- card body .// -->
+                
             </div> <!-- card .// -->
         </section> <!-- content-main end// -->
     

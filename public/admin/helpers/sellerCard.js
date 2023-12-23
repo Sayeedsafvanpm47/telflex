@@ -21,14 +21,14 @@ const blockuser = (() => {
               if (response.ok) {
                   await Swal.fire('Success', 'Usage status updated successfully!', 'success');
 
-                  // Toggle the block and update the status
+             
                   if (block) {
                       document.getElementById(`status${i}`).innerHTML = 'Blocked';
                   } else {
                       document.getElementById(`status${i}`).innerHTML = 'Active';
                   }
 
-                  // Toggle block status
+                
                   block = !block;
               } else {
                   await Swal.fire('Error', 'Failed to block/unblock the user', 'error');

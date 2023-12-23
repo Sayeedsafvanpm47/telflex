@@ -6,9 +6,17 @@ module.exports = {
 	// controller for creating the categories
 	createCategory: async (req, res) => {
 		try {
+			let errors = ''
 			const category = await categoryModel.find({});
+			if(req.session.errorOccured)
+			{
+				errors = req.session.errorincategory
+				delete req.session.errorOccured
+				return res.render("admin/admin/category", { category: category,errors });
 
-			res.render("admin/admin/category", { category: category });
+			}
+
+			res.render("admin/admin/category", { category: category,errors });
 		} catch (error) {
 			console.log(error);
 		}
@@ -16,7 +24,7 @@ module.exports = {
 	// controller for saving categories
 	submitCategory: async (req, res) => {
 		try {
-			let errors = [];
+			let errors = ''
 			let category;
 			const { categoryname, description } = req.body;
 			const categories = await categoryModel.find({});
@@ -25,13 +33,13 @@ module.exports = {
 				return category.categoryName.toLowerCase().replace(/\s+/g, "") === categoryNameToCompare;
 			});
 			if (categoryname === "" || description === "") {
-				errors.push("Fill in properly");
+				errors = "Fill in properly"
 			} else if (existingCategoryName) {
-				errors.push("existing category");
+				errors = "existing category"
 			}
-			if (errors.length > 0) {
+			if (errors !== '') {
 				req.session.errorOccured = true;
-				req.session.error = errors;
+				req.session.errorincategory = errors;
 				res.redirect("/admin/createCategory");
 			} else {
 				const category = await new categoryModel({
@@ -50,7 +58,7 @@ module.exports = {
 	// controller for editing the category
 	editCategory: async (req, res) => {
 		try {
-			let errors = [];
+			let errors = ''
 			const categoryId = req.query.categoryId;
 			const { categoryname, description } = req.body;
 			const categories = await categoryModel.find({});
@@ -59,13 +67,13 @@ module.exports = {
 				return category.categoryName.toLowerCase().replace(/\s+/g, "") === categoryNameToCompare;
 			});
 			if (categoryname === "" || description === "") {
-				errors.push("Fill in properly");
+				errors = "Fill in properly"
 			} else if (existingCategoryName) {
-				errors.push("existing category");
+				errors = "existing category"
 			}
-			if (errors.length > 0) {
+			if (errors !== '') {
 				req.session.errorOccured = true;
-				req.session.error = errors;
+				req.session.errorincategory = errors;
 				res.redirect("/admin/createCategory");
 			} else {
 				const category = await categoryModel.updateOne(

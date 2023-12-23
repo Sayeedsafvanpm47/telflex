@@ -17,9 +17,11 @@ module.exports = {
 	addProducts: async (req, res, next) => {
 		const errors = [];
 		const categories = await categoryModel.find({});
+	
 		try {
 			const sizes = [];
 			const processedImages = req.processedImages || [];
+			
 
 			for (let i = 0; req.body[`size_${i}`] && req.body[`productprice_${i}`] && req.body[`stock_${i}`]; i++) {
 				sizes.push({
@@ -50,7 +52,7 @@ module.exports = {
 				req.files.length === 0
 			) {
 				errors.push("fields must be properly filled");
-				res.render("admin/admin/addproducts", { errors, categories });
+				return res.render("admin/admin/addproducts", { errors, categories });
 			} else {
 				const products = await new productModel({
 					productName: productname,
@@ -75,7 +77,7 @@ module.exports = {
 		} catch (error) {
 			console.log(error);
 			errors.push("some error occured");
-			res.render("admin/admin/addproducts", { errors, categories });
+			return res.render("admin/admin/addproducts", { errors, categories });
 		}
 	},
 	// controller for viewing the edit products page

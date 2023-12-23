@@ -158,4 +158,87 @@ mrp.value = ''
     
   });
 });
+// discount validation
+function onlyNumberKey(evt) {
+  let inputValue = evt.target.value;
+  let ASCIICode = (evt.which) ? evt.which : evt.keyCode;
 
+
+  if ((ASCIICode >= 48 && ASCIICode <= 57) || ASCIICode === 8 || ASCIICode === 46 || (ASCIICode >= 37 && ASCIICode <= 40)) {
+
+      if ((inputValue.length === 0 && ASCIICode === 48) || (parseInt(inputValue + String.fromCharCode(ASCIICode)) >= 1 &&
+          parseInt(inputValue + String.fromCharCode(ASCIICode)) <= 99)) {
+          return true;
+      } else {
+          return false;
+      }
+  } else {
+      return false;
+  }
+}
+
+
+// addproducts
+function onlyNumberKey(evt) {
+          let inputValue = evt.target.value;
+          let ASCIICode = (evt.which) ? evt.which : evt.keyCode;
+      
+        
+          if ((ASCIICode >= 48 && ASCIICode <= 57) || ASCIICode === 8 || ASCIICode === 46 || (ASCIICode >= 37 && ASCIICode <= 40)) {
+      
+              if ((inputValue.length === 0 && ASCIICode === 48) || (parseInt(inputValue + String.fromCharCode(ASCIICode)) >= 1 &&
+                  parseInt(inputValue + String.fromCharCode(ASCIICode)) <= 99)) {
+                  return true;
+              } else {
+                  return false;
+              }
+          } else {
+              return false;
+          }
+      }
+      
+
+async function addProduct(event)
+{
+    try {
+      let imagesInput = document.getElementById('input-images')
+
+      if (imagesInput.files.length <= 0) {
+        event.preventDefault()
+
+        return Swal.fire('Error', 'Please upload an image!', 'error');
+      
+      
+      }
+event.preventDefault()
+const confirmResult = await Swal.fire({
+title: 'add Product',
+text: 'Are you sure you want to add this product?',
+icon: 'question',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'Yes, add it!'
+});
+
+if (confirmResult.isConfirmed) {
+const form = document.getElementById('addProductForm')
+form.submit()
+
+
+
+
+
+await Swal.fire('Success', 'Product added successfully!', 'success');
+
+
+}
+} catch (error) {
+console.error('Error adding product:', error);
+
+await Swal.fire('Error', 'An error occurred while adding the product', 'error');
+}
+
+    
+
+}

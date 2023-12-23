@@ -261,8 +261,8 @@
                                                     <div class="single-comment justify-content-between d-flex">
                                                         <div class="user justify-content-between d-flex">
                                                             <div class="thumb text-center">
-                                                                <img src="/user/imgs/page/avatar-6.jpg" alt="">
-                                                                <h6><a href="#"><%= item.userId.firstname%></a></h6>
+                                                                <div id="avatar"></div>
+                                                                <h6><a href=""><%= item.userId.firstname%></a></h6>
                                                             
                                                             </div>
                                                             <div class="desc d-block">
@@ -278,6 +278,7 @@
                                                                    
                                                                     
                                                                     </div>
+                                                                   
                                                                
                                                                 <p><%= item.review  %></p>
                                                                 <div class="d-flex justify-content-between">
@@ -288,6 +289,19 @@
                                                                     
                                                                     </div>
                                                                 </div>
+                                                                <div class="d-flex">
+                                                           
+                                                                    <div class="thumb text-center">
+                                                                    <img src="https://api.multiavatar.com/Starcrasher.png" alt="">
+                                                                    <h6><a href="#">Admin</a></h6>
+                                                                    </div>
+                                                                    <div>
+                                                                        <br>
+                                                                        <br>
+                                                                        <p>Thanks for the reply!</p>
+                                                                    </div>
+                                                                 
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -297,7 +311,7 @@
                                                 
                                                 </div>
                                             </div>
-                                          
+                                       
                                             <div class="col-lg-4">
                                                 <h4 class="mb-30">Customer reviews</h4>
                                                 <h6><%= overallrating  %> out of 5</h6>
@@ -347,7 +361,7 @@
                             </div>
                             <div class="row mt-60">
                                 <div class="col-12">
-                                    <h3 class="section-title style-1 mb-30">Related products</h3>
+                                    <h3 class="section-title style-1 mb-30">Related products <span class="text-muted" style="font-size: 10px;">(Category : <%= products.category.categoryName  %>)</span></h3>
                                 </div>
                                 <div class="col-12">
                                   
@@ -359,13 +373,17 @@
                                                 <div class="container wow fadeIn animated mb-50">
                                                     <!-- banner 6 -->
                                                   
-                                                    <h3 class="section-title mb-20"><span>New</span> Arrivals</h3>
+                                        
+                                                  
+                                                  
                                                     <div class="carausel-6-columns-cover position-relative">
                                                         <div class="slider-arrow slider-arrow-2 carausel-6-columns-arrow" id="carausel-6-columns-2-arrows"></div>
                                                         <div class="carausel-6-columns carausel-arrow-center" id="carausel-6-columns-2">
+                                                       
                                                             <% relatedProducts.forEach(items=>{ %>
                                                             <div class="product-cart-wrap small hover-up mr-30">
                                                                 <div class="product-img-action-wrap">
+                                                                  
                                                                     <div class="product-img product-img-zoom">
                                                                         <a href="">
                                                                             <img class="default-img" src="/<%= items.images[0]  %>" alt="">
@@ -376,6 +394,7 @@
                                                                     <div class="product-badges product-badges-position product-badges-mrg">
                                                                         <span class="hot"><%= items.tags  %></span>
                                                                     </div>
+                                                                   
                                                                     <div class="product-content-wrap">
                                                                         <h2><a href="" tabindex="0"><%= items.productName %></a></h2>
                                                                         <% if(items.rated == true){ %>
@@ -402,7 +421,7 @@
                             
                                                                         <div class="product-price">
                                                                          sale price: &#8377;<span><%= items.size[0].productPrice%> </span>
-                                                                           <br> mrp: &#8377; <span class="old-price"><%=items.size[0].mrp  %></span>
+                                                                           <br> mrp: <span class="old-price">&#8377;<%=items.size[0].mrp  %></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -440,6 +459,24 @@
             </div>
         </section>
     </main>
+    <script>
+        function generateMultiavatar(avatarId) {
+          fetch(`https://api.multiavatar.com/${encodeURIComponent(avatarId)}`)
+            .then(res => res.text())
+            .then(svg => {
+              const avatarElement = document.getElementById('avatar');
+              avatarElement.innerHTML = svg;
+            })
+            .catch(err => {
+              console.error('Error fetching Multiavatar:', err);
+            });
+        }
+      
+        // Call the function with your avatarId
+        let avatarId = 'Binx Bond';
+        generateMultiavatar(avatarId);
+      </script>
+      
 
  <%- include('partials/footerlogin')  %>
  <%- include('partials/mainScripts')  %>
