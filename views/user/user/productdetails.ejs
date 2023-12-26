@@ -191,6 +191,10 @@
                                                
                                                 <button  type="submit" class="button button-add-to-cart">Add to cart</button>
                                                 <a aria-label="Add To Wishlist" class="action-btn hover-up" onclick="addToWish()" ><i class="fi-rs-heart"></i></a>
+                                                <a aria-label="Share" class="action-btn hover-up" onclick="shareProduct('<%= products._id %>')">
+                                                    <i class="fi-rs-share"></i>
+                                                </a>
+                                                
                                                
                                             </div>
                                             
@@ -198,9 +202,13 @@
                                         </div>
                                         
                                     </div>
+                             
                                     <!-- Detail Info -->
                                 </div>
                             </div>
+                      
+                        
+                            
                             <div class="row">
                                 <div class="col-lg-10 m-auto entry-main-content">
                                     <h2 class="section-title style-1 mb-30">Description</h2>

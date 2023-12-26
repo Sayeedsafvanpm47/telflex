@@ -1155,5 +1155,24 @@ module.exports = {
 			console.log(error);
 			res.status(500);
 		}
-	}
+	},
+	sharerefferal : async (req,res)=>{
+
+		try {
+			const { code } = req.query; // Extract productId from query parameters
+			
+			if (!code) {
+			    throw new Error('Refferal code is missing or invalid');
+			}
+		  
+			
+			const whatsappLink = `https://api.whatsapp.com/send?text=Apply this refferal code while signing up or in rewards section and earn 100 rupees! Sign up now and share your code with your friends! ${(code)} , don't have an account? signup now : https://telflex.sayeedsafvan.tech/user/getsignup`;
+			
+			res.json({ whatsappLink });
+		      } catch (error) {
+			console.error('Error:', error.message);
+			res.status(500).json({ error: 'Internal server error' });
+		      }
+
+	      }
 };

@@ -149,6 +149,152 @@ function submitForm() {
       }
       
 
+    //   changepassword
+
+    async function changePassword() {
+        const firstname = document.getElementById('firstname').value;
+        const lastname = document.getElementById('lastname').value;
+        const password = document.getElementById('password').value;
+        const newpassword = document.getElementById('newpassword').value;
+        const confirmpassword = document.getElementById('confirmpassword').value;
+    
+        if (newpassword !== confirmpassword) {
+            await Swal.fire({
+                title: 'Passwords do not match!',
+                text: 'Type the same password in both fields',
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonText: 'Ok',
+            });
+            return; // Stop further execution if passwords don't match
+        }
+    
+        const confirmation = await Swal.fire({
+            title: 'Update account?',
+            text: 'You are about to change your account credentials.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, change it!',
+            cancelButtonText: 'Cancel',
+        });
+    
+        if (confirmation.isConfirmed) {
+            const data = {
+                password,
+                newpassword,
+                confirmpassword,
+                firstname,
+                lastname,
+            };
+    
+            const response = await fetch('/user/updateAccount', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', 
+                },
+                body: JSON.stringify(data), 
+            });
+
+            if(response.status === 401)
+            {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Error in updating credentials',
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ok',
+                });
+                return;
+
+            }
+    
+            if (!response.ok) {
+                  Swal.fire({
+                    title: 'Error',
+                    text: 'Error in updating credentials',
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ok',
+                });
+                return;
+            }
+           
+           
+                Swal.fire({
+                title: 'Updated',
+                text: 'Your account credentials have been updated',
+                icon: 'success',
+                showConfirmButton: false,
+            });
+            window.location.reload()
+
+            
+    
+            const responseData = await response.json();
+            console.log(responseData);
+    
+              
+        }
+    }
+
+    // whatsappshare
+
+   
+    async function shareRefferal(referralCode) {
+        try {
+            const code = referralCode; // Rename the parameter to avoid conflict
+            
+            const confirmed = await showConfirmation();
+
+            if (confirmed) {
+                const whatsappLink = await fetchWhatsAppLink(code);
+                if (whatsappLink) {
+                    window.open(whatsappLink, '_blank');              
+                  } else {
+                    console.log('WhatsApp link is not available');
+                }
+            } else {
+                console.log('Sharing via WhatsApp cancelled');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    async function showConfirmation() {
+        return Swal.fire({
+            title: 'Confirm Share',
+            text: 'Do you want to share this referral code via WhatsApp?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Share',
+            cancelButtonText: 'Cancel',
+        }).then((result) => {
+            return result.isConfirmed;
+        });
+    }
+
+    async function fetchWhatsAppLink(code) {
+        try {
+            const response = await fetch(`/user/sharerefferal?code=${code}`);
+                       
+            if (response.ok) {
+                const data = await response.json();
+                const whatsappLink = data.whatsappLink;
+                return whatsappLink;
+            } else {
+                console.log('Failed to generate WhatsApp link');
+                return null;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            return null;
+        }
+    }
+
+
 
 
 

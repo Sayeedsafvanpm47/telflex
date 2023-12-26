@@ -219,3 +219,58 @@ document.getElementById('oneStarBar').innerHTML = `${(one / 5) * 100}%`;
         
         
                 }
+
+                // whastapp share
+
+              
+                async function shareProduct(id) {
+try {
+const productId = id;
+const confirmed = await showConfirmation();
+
+if (confirmed) {
+const whatsappLink = await fetchWhatsAppLink(productId);
+if (whatsappLink) {
+    window.open(whatsappLink, '_blank');              
+} else {
+   console.log('WhatsApp link is not available');
+}
+} else {
+console.log('Sharing via WhatsApp cancelled');
+}
+} catch (error) {
+console.error('Error:', error);
+}
+}
+
+async function showConfirmation() {
+return Swal.fire({
+title: 'Confirm Share',
+text: 'Do you want to share this product via WhatsApp?',
+icon: 'question',
+showCancelButton: true,
+confirmButtonText: 'Share',
+cancelButtonText: 'Cancel',
+}).then((result) => {
+return result.isConfirmed;
+});
+}
+           
+               async function fetchWhatsAppLink(productId) {
+                   try {
+                       const response = await fetch(`/user/share?productId=${productId}`);
+                       
+                       if (response.ok) {
+                           const data = await response.json();
+                           const whatsappLink = data.whatsappLink;
+                           return whatsappLink;
+                       } else {
+                           console.log('Failed to generate WhatsApp link');
+                           return null;
+                       }
+                   } catch (error) {
+                       console.error('Error:', error);
+                       return null;
+                   }
+               }
+       

@@ -52,6 +52,8 @@ router.get("/pageterms", controller.pageterms);
 router.get("/deliverydetails", controller.deliverydetails);
 router.post("/contactmessage", controller.contactmessage);
 router.post("/dealermessage", controller.dealermessage);
+router.get('/sharerefferal',controller.sharerefferal)
+
 
 // userController controller file routes ends...
 
@@ -78,6 +80,8 @@ router.get('/sortPriceView',productController.sortedPriceView);
 router.post("/searchProducts", productController.searchProducts);
 router.get("/productdetail", productController.productdetail);
 router.get("/showPrice", productController.showPrice);
+router.get('/share',productController.shareWhatsapp)
+
 
 // userproductController controller file routes ends...
 

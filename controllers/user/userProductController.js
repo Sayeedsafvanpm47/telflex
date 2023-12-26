@@ -575,5 +575,24 @@ module.exports = {
 		} catch (error) {
 			console.log(error);
 		}
-	}
+	},
+	// share via whatsapp
+	shareWhatsapp: async (req, res) => {
+		try {
+		    const { productId } = req.query; // Extract productId from query parameters
+		    
+		    if (!productId) {
+		        throw new Error('Product ID is missing or invalid');
+		    }
+	      
+		    const productUrl = `https://telflex.sayeedsafvan.tech/user/productdetail?_id=${productId}`;
+		    const whatsappLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(productUrl)}`;
+		    
+		    res.json({ whatsappLink });
+		} catch (error) {
+		    console.error('Error:', error.message);
+		    res.status(500).json({ error: 'Internal server error' });
+		}
+	      },
+	   
 };
