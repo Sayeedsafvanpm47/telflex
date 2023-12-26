@@ -51,7 +51,8 @@
                                             <th>Category Name</th>
                                             <th>Description</th>
                                             <th>Edit</th>
-                                            <th>List</th>
+                                            <th>Toggle Status</th>
+                                          
                                         
                                             <th>Delete</th>
                                             <th>Status</th>
@@ -71,24 +72,25 @@
                                                   
                                               </td>
                                               <td>
-                                                <a onclick="list('<%= item._id %>')"><span>List</span>
-
+                                                <a  onclick="list('<%= item._id %>')"><span><i class="fa fa-check text-dark mb-1" aria-hidden="true"></i></span>
                                                  
-                                                </a>
-                                              </td>
-                                         
-                                              <td>
-                                                <a onclick="deleteCategory('<%= item._id %>')" ><span>Delete</span>
-                                                
-                                                </a>
-                                              </td>
-                                              <td>
-                                                <% if (item.published === true) { %>
-                                                  <span>Listed</span>
-                                                <% } else { %>
-                                                  <span>Unlisted</span>
-                                                <% } %>
-                                              </td>
+                                                </a></td>
+
+                                                <td>
+                                                    <a  onclick="deleteCategory('<%= item._id %>')"><span><i class="fa fa-trash text-danger mb-1" aria-hidden="true"></i></span>
+                                                      
+                                                    </a>
+                                                  </td>
+
+                                            
+                                                  <td>
+                                                    <% if (item.published === true) { %>
+                                                      <span>Listed</span>
+                                                    <% } else { %>
+                                                      <span>Unlisted</span>
+                                                    <% } %>
+                                                  </td>
+                                             
                                               
                                             </tr>
                                           <% }); %>

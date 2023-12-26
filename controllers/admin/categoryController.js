@@ -68,7 +68,7 @@ module.exports = {
 			});
 			if (categoryname === "" || description === "") {
 				errors = "Fill in properly"
-			} else if (existingCategoryName) {
+			} else if (existingCategoryName.length >1) {
 				errors = "existing category"
 			}
 			if (errors !== '') {
@@ -88,7 +88,9 @@ module.exports = {
 			}
 		} catch (err) {
 			console.log(err);
-			res.redirect("/user/error");
+			req.session.errorOccured = true;
+			req.session.errorincategory = 'Cant have same name as other category';
+			res.redirect("/admin/createCategory");
 		}
 	},
 
