@@ -579,7 +579,7 @@ module.exports = {
 	// share via whatsapp
 	shareWhatsapp: async (req, res) => {
 		try {
-		    const { productId } = req.query; // Extract productId from query parameters
+		    const { productId } = req.query; 
 		    
 		    if (!productId) {
 		        throw new Error('Product ID is missing or invalid');

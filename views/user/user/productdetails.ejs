@@ -97,7 +97,12 @@
                                                 </div>
                                                 <span class="font-small ml-5 text-muted"> (<%= products.rating.length  %> reviews)</span>
                                                 <% }else{ %>
-                                                    <p>No info available on ratings</p>
+                                                    <div class="rating" id="star">
+                                                    <% for (let i = 1; i <= 5; i++) { %>
+                                                        <span class="star" style="color: gray;" onclick="" data-value="<%= i %>">&#9733;</span>
+
+                                                        <% } %>
+                                                        </div>
                                                     <% } %>
                                             </div>
                                         </div>
@@ -315,14 +320,18 @@
                                                     </div>
                                                     <% } %>
                                                     <% }) %>
-                                                    <% } %>
+                                                    <% } else {%>
+                                                        <p>No reviews on this product :/</p>
+                                                        <% } %>
                                                 
                                                 </div>
                                             </div>
                                        
                                             <div class="col-lg-4">
                                                 <h4 class="mb-30">Customer reviews</h4>
-                                                <h6><%= overallrating  %> out of 5</h6>
+                                                <h6>
+                                                    <% if(overallrating){ %>
+                                                    <%= overallrating  %> out of 5<% }else { %> 0 out of 5 <% } %></h6>
                                                 <div class=" mb-30">
                                                    
                                                     <div class="rating" id="star">
@@ -423,7 +432,18 @@
                                                                         
                                                                         </div>
                                                                         <% } else { %>
-                                                                            <p>No rating available yet</p>
+                                                                          
+
+                                                                            <div class="rating" id="star">
+                                                                                <% for (let i = 1; i <= 5; i++) { %>
+                                                                                    <span class="star" style="color: gray;" onclick="" data-value="<%= i %>">&#9733;</span>
+                            
+                                                                                    <% } %>
+                                                                                    </div>
+                                                                              
+
+
+
                                                                             <% } %>
                                                                       
                             

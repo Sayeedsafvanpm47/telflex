@@ -11,7 +11,7 @@
                         <div class="shop-product-fillter">
                          
                             <div class="totall-product">
-                                <% if(products.length > 0){ %>
+                                <% if(products.length > 0 && !nopage){ %>
                                 <p> We found <%= productCount  %> items for you!</p>
                                 <% } %>
                             </div>
@@ -130,7 +130,12 @@
                                             
                                             </div>
                                             <% } else { %>
-                                                <p>No rating available yet</p>
+                                                <div class="rating" id="star">
+                                                <% for (let i = 1; i <= 5; i++) { %>
+                                                    <span class="star" style="color: gray;" onclick="" data-value="<%= i %>">&#9733;</span>
+
+                                                    <% } %>
+                                                    </div>
                                                 <% } %>
                                           
 
@@ -176,7 +181,7 @@
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-start">
                                    
-                                    
+                                    <% if(!nopage) {%>
                                     <% for(let i=1; i<=totalPages; i++) { %>
                                         <% if(categoryPagination){ %>
                                         <li class="page-item <%= currentPage === i ? 'active' : '' %>">
@@ -195,11 +200,13 @@
                                             <% } %>
                                             <% } %>
                                     <% } %>
+                                    <% } %>
                                    
                                 </ul>
                             </nav>
                         </div>
                         <% } %>
+                      
                      
                         
 
