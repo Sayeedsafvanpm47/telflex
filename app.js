@@ -8,10 +8,14 @@ const dbConnect = require("./config/database");
 const { sessionMiddleware, setNoCache } = require("./middlewares/sessionMiddleware");
 const errorMiddleware = require('./middlewares/errorMiddleware')
 const error = require("./middlewares/errorMiddleware");
+const morgan = require('morgan')
 
 app.use(setNoCache);
 
 app.use(sessionMiddleware);
+
+app.use(morgan('tiny'));
+
 
 
 
