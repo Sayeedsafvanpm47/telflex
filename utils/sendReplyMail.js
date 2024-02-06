@@ -16,7 +16,7 @@ async function sendreplyByEmail(email, reply) {
 	});
 
 	const mailOptions = {
-		from: "Telflex<sayeedportfolio47@gmail.com>",
+		from: "Telflex<sydsfn123@gmail.com>",
 		to: email,
 		subject: "Sending reply for the query",
 		text: `We have recieved your enquiry, please go through this reponse mail :  ${reply}`

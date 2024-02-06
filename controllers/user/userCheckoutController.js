@@ -144,7 +144,7 @@ module.exports = {
 				for (let i = 0; i < cart.products.length; i++) {
 					const product = cart.products[i];
 					const productTarget = await productModel.findOne({ _id: product.product_id });
-                                                   
+
 					ordered.push({
 						productId: product.product_id,
 						productName: product.productName,

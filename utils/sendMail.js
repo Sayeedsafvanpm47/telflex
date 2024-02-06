@@ -15,7 +15,7 @@ async function sendOTPByEmail(email, otp) {
 	});
 
 	const mailOptions = {
-		from: "Telflex<sayeedportfolio47@gmail.com>",
+		from: "Telflex<sydsfn123@gmail.com>",
 		to: email,
 		subject: "Sending email",
 		text: `Otp for login to your account ${otp}`

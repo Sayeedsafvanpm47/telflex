@@ -16,6 +16,7 @@ async function checkStock() {
               if (stock.value <= 0) {
                   document.getElementById('inc_btn').style.display = 'none';
                   document.getElementById('dec_btn').style.display = 'none';
+                  
   
                   let stockView2 = document.getElementById('stockView2');
                   stockView2.innerHTML = 'Can\'t add more, Please check your cart!';
